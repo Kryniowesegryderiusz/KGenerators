@@ -21,7 +21,7 @@ public class Commands implements CommandExecutor {
 	@Override
 	public boolean onCommand(final CommandSender sender, Command cmd, String label, String[] args) {
 		if (sender.hasPermission("kgenerators.commands")){
-			
+
 			if (args.length == 0){
 				LangUtils.sendHelpMessage(sender);
 				return false;
@@ -35,7 +35,6 @@ public class Commands implements CommandExecutor {
 							KGenerators.messagesFile = ConfigManager.getConfig("lang/"+KGenerators.lang+".yml", null, false);
 						} catch (FileNotFoundException e1) {
 							System.out.println("[KGenerators] !!! ERROR !!! Cant find lang/" + KGenerators.lang + ".yml file");
-							//e1.printStackTrace();
 						}
 				    	try {
 							KGenerators.config.loadConfig();
@@ -69,8 +68,10 @@ public class Commands implements CommandExecutor {
 					        LangUtils.sendMessage(sender, "commands.getall.recieved");
 						}
 						else
+						{
 							LangUtils.addReplecable("<permission>", "kgenerators.getall");
 							LangUtils.sendMessage(sender, "commands.getall.no-permission");
+						}
 					}
 					else
 					{
@@ -81,15 +82,17 @@ public class Commands implements CommandExecutor {
 						if (sender.hasPermission("kgenerators.list")){
 							String generatorrsPossible = LangUtils.getMessage("commands.list.listing", true);
 							String separator = LangUtils.getMessage("commands.list.separator", false);
-							//Player player = (Player) sender;
 					        for (HashMap.Entry<String, Generator> generatorhmap : KGenerators.generators.entrySet()) {
 					        	generatorrsPossible = generatorrsPossible + generatorhmap.getKey() + separator;
 					        }
 							sender.sendMessage(generatorrsPossible);
 						}
 						else
+						{
 							LangUtils.addReplecable("<permission>", "kgenerators.list");
 							LangUtils.sendMessage(sender, "commands.list.no-permission");
+						}
+							
 					break;
 				case "give":
 					if (sender.hasPermission("kgenerators.give")){

@@ -172,7 +172,6 @@ public class KGenerators extends JavaPlugin {
     	this.getServer().getPluginManager().registerEvents(new onCraftItemEvent(), this);
     	this.getServer().getPluginManager().registerEvents(new onBlockPistonEvent(), this);
     	
-
     	System.out.println("[KGenerators] Plugin loaded properly!");  
     }
     
