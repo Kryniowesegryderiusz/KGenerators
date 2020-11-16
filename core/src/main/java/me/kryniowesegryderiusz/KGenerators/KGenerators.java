@@ -18,7 +18,7 @@ import me.kryniowesegryderiusz.KGenerators.Listeners.onBlockPistonEvent;
 import me.kryniowesegryderiusz.KGenerators.Listeners.onBlockPlaceEvent;
 import me.kryniowesegryderiusz.KGenerators.Listeners.onCraftItemEvent;
 import me.kryniowesegryderiusz.KGenerators.MultiVersion.BlocksUtils;
-import me.kryniowesegryderiusz.KGenerators.MultiVersion.DependenciesUtils;
+import me.kryniowesegryderiusz.KGenerators.MultiVersion.WorldGuardUtils;
 import me.kryniowesegryderiusz.KGenerators.MultiVersion.RecipesLoader;
 import me.kryniowesegryderiusz.KGenerators.Utils.Config;
 import me.kryniowesegryderiusz.KGenerators.Utils.ConfigManager;
@@ -27,24 +27,16 @@ import me.kryniowesegryderiusz.KGenerators.Utils.Metrics;
 
 public class KGenerators extends JavaPlugin {
 
-	/*
-	 * 3.8
-	 * WG7 sup
-	 * better handling lang files with autoupdating, added prefix, displaying only help from commands player has permissions
-	 * 
-	 * */
 
-	//Tu sie tworza zmienne
 	private static KGenerators instance;
 	static Config config;	
 	static Config generatorsFile;
 	static Config messagesFile;
 	static Config recipesFile;
 
-	//id generatora i generator
 	public static HashMap<String, Generator> generators = new HashMap<String, Generator>();
-	//generated Miejsce generatora, id generatora
 	public static HashMap<Location, String> generatorsLocations = new HashMap<Location, String>();
+	
 	//do szybkiego checka materialsy generatorow do BlockPlace i craftingow
 	public static ArrayList<ItemStack> generatorsItemStacks = new ArrayList<ItemStack>();
 	
@@ -58,7 +50,7 @@ public class KGenerators extends JavaPlugin {
 	//Multiversion
 	private RecipesLoader recipesLoader;
 	private static BlocksUtils blocksUtils;
-	private static DependenciesUtils dependenciesUtils;
+	private static WorldGuardUtils worldGuardUtils;
 	
     @Override
     public void onEnable() {
@@ -78,11 +70,11 @@ public class KGenerators extends JavaPlugin {
     		dependencies.add("SuperiorSkyblock2");
     	}
     	
-    	if (KGenerators.getDependenciesUtils().isWorldGuardHooked()) {
+    	if (worldGuardUtils != null && KGenerators.getWorldGuardUtils().isWorldGuardHooked()) {
    			System.out.println("[KGenerators] Detected plugin WorldGuard. Hooking into it. Added kgenerators-pick-up flag!");
    			dependencies.add("WorldGuard");
     	}
-    	else
+    	else if (worldGuardUtils != null)
     	{
     		if (Bukkit.getPluginManager().isPluginEnabled("WorldGuard")) {
     			System.out.println("[KGenerators] Detected plugin WorldGuard, but couldnt hook into it! Search console for errors!");
@@ -200,9 +192,6 @@ public class KGenerators extends JavaPlugin {
     	
     	versioningSetup();
     	
-    	if (this.getServer().getPluginManager().getPlugin("WorldGuard") != null) {
-    		dependenciesUtils.worldGuardFlagAdd();
-    	}
     }
 
     @Override
@@ -233,8 +222,8 @@ public class KGenerators extends JavaPlugin {
     	return blocksUtils;
     }
     
-    public static DependenciesUtils getDependenciesUtils(){
-    	return dependenciesUtils;
+    public static WorldGuardUtils getWorldGuardUtils(){
+    	return worldGuardUtils;
     }
     
 	static void mkdir(String dir){
@@ -257,30 +246,34 @@ public class KGenerators extends JavaPlugin {
     	String packageName = KGenerators.class.getPackage().getName() + ".MultiVersion";
     	String recipesPackage;
     	String blocksPackage;
-    	String dependenciesPackage;
+    	String wgPackage;
     	
     	if (version.contains("1.8") || version.contains("1.9") || version.contains("1.10") || version.contains("1.11")) {
     		recipesPackage = packageName + ".RecipesLoader_1_8";
     		blocksPackage = packageName + ".BlocksUtils_1_8";
-    		dependenciesPackage = packageName + ".DependenciesUtils_1_8";
+    		wgPackage = packageName + ".WorldGuardUtils_1_8";
     	}
     	else if (version.contains("1.12"))
     	{
     		recipesPackage = packageName + ".RecipesLoader_1_12";
     		blocksPackage = packageName + ".BlocksUtils_1_8";
-    		dependenciesPackage = packageName + ".DependenciesUtils_1_8";
+    		wgPackage = packageName + ".WorldGuardUtils_1_8";
     	}
     	else
     	{
     		recipesPackage = packageName + ".RecipesLoader_1_13";
     		blocksPackage = packageName + ".BlocksUtils_1_13";
-    		dependenciesPackage = packageName + ".DependenciesUtils_1_13";
+    		wgPackage = packageName + ".WorldGuardUtils_1_13";
     	}
     	
     	try {
 			recipesLoader = (RecipesLoader) Class.forName(recipesPackage).newInstance();
 			blocksUtils = (BlocksUtils) Class.forName(blocksPackage).newInstance();
-			dependenciesUtils = (DependenciesUtils) Class.forName(dependenciesPackage).newInstance();
+			if (this.getServer().getPluginManager().getPlugin("WorldGuard") != null) {
+				worldGuardUtils = (WorldGuardUtils) Class.forName(wgPackage).newInstance();
+	    		worldGuardUtils.worldGuardFlagAdd();
+	    	}
+			
 		} catch (InstantiationException | IllegalAccessException | ClassNotFoundException e3) {
 			// TODO Auto-generated catch block
 			e3.printStackTrace();

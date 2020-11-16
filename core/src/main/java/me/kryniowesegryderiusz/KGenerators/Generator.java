@@ -21,6 +21,8 @@ public class Generator {
 	
 	private int afterPlaceWaitModifier = 0;
 	
+	private boolean allowPistonPush = false;
+	
 	HashMap<ItemStack, Double> chances = new HashMap<ItemStack, Double>();
 	  
 	Generator(ItemStack generatorBlock, ItemStack generatorItem, int delay, String type, HashMap<ItemStack, Double> chances) {
@@ -65,5 +67,13 @@ public class Generator {
 	
 	public void setAfterPlaceWaitModifier (int afterPlaceWaitModifier) {
 		this.afterPlaceWaitModifier = afterPlaceWaitModifier;
+	}
+	
+	public boolean isPistonPushAllowed() {
+		return this.allowPistonPush;
+	}
+	
+	public void setPistonPushAllowed (boolean allowPistonPush) {
+		this.allowPistonPush = allowPistonPush;
 	}
 }

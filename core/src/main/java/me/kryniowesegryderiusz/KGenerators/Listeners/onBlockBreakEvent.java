@@ -107,7 +107,7 @@ public class onBlockBreakEvent implements Listener {
 		}
 		else
 		{
-			if (!p.hasPermission("kgenerators.pickupbypass") && KGenerators.dependencies.contains("WorldGuard") && !KGenerators.getDependenciesUtils().worldGuardCheck(location, p))
+			if (!p.hasPermission("kgenerators.pickupbypass") && KGenerators.dependencies.contains("WorldGuard") && !KGenerators.getWorldGuardUtils().worldGuardCheck(location, p))
 			{
 				LangUtils.sendMessage(p, "generators.cant-pick-up");
 				return true;

@@ -16,26 +16,24 @@ public abstract class GenerateBlockFunction {
 	
 	//sprawdza tylko, czy moze zespawnic blok po czasie
 	public static void generateBlock (Location location, Generator generator, int immediately) {
+		
+		
+		
 		KGenerators.getInstance().getServer().getScheduler().scheduleSyncDelayedTask(KGenerators.getInstance(), new Runnable() {
 			  public void run() {
 				  
 				  
 				  ItemStack block = KGenerators.getBlocksUtils().getItemStackByBlock(location.getBlock());
 				  ItemStack air = XMaterial.AIR.parseItem();
+				  ItemStack pistonHead = XMaterial.PISTON_HEAD.parseItem();
 				  
 				  switch (generator.getType()) {
 				  case "single":
-						if (!block.equals(generator.getGeneratorBlock()))
-						{
-							if (!block.equals(air) && !KGenerators.generatingWhitelist.contains(block) && !block.equals(generator.getPlaceholder())) {
-								KGenerators.generatorsLocations.remove(location);
-							  	GeneratorsFileManger.removeGeneratorFromFile(location);
-							  
-							  	location.getWorld().dropItem(location, generator.getGeneratorItem());
-								return;
-							}
+					  if (!KGenerators.generatorsLocations.containsKey(location)) {
+							return;
 						}
-						if (!KGenerators.generatorsLocations.containsKey(location)) {
+						if (!block.equals(generator.getGeneratorBlock()) && !block.equals(air) && !KGenerators.generatingWhitelist.contains(block) && !block.equals(generator.getPlaceholder()) && !generator.getChances().containsKey(block) && !block.getType().equals(pistonHead.getType())) {
+							GeneratorsManager.removeGenerator(generator, location, true);
 							return;
 						}
 						break;
@@ -43,13 +41,9 @@ public abstract class GenerateBlockFunction {
 						Location underLocation = new Location(location.getWorld(),location.getX(),location.getY()-1,location.getZ());
 						if (!KGenerators.generatorsLocations.containsKey(underLocation)) {
 							  return;
-						  }
-						
-						if (!block.equals(air) && !KGenerators.generatingWhitelist.contains(block) && !block.equals(generator.getPlaceholder())) {
-							KGenerators.generatorsLocations.remove(underLocation);
-						  	GeneratorsFileManger.removeGeneratorFromFile(underLocation);
-						  	location.getWorld().dropItem(location, generator.getGeneratorItem());
-						  	KGenerators.getBlocksUtils().setBlock(underLocation, air);
+						}
+						if (!block.equals(air) && !KGenerators.generatingWhitelist.contains(block) && !block.equals(generator.getPlaceholder()) && !generator.getChances().containsKey(block) && !block.getType().equals(pistonHead.getType())) {
+							GeneratorsManager.removeGenerator(generator, location, true);
 							return;
 						}
 						break;
@@ -57,7 +51,15 @@ public abstract class GenerateBlockFunction {
 				  
 				  ItemStack drawedBlock = drawBlock(generator.getChances());
 				  
-				  KGenerators.getBlocksUtils().setBlock(location, drawedBlock);
+				  if (!generator.getChances().containsKey(block)) {
+					  if (block.getType().equals(pistonHead.getType())) {
+						  generateBlock(location, generator, 1);
+					  }
+					  else
+					  {
+						  KGenerators.getBlocksUtils().setBlock(location, drawedBlock);
+					  }
+				  }
 				  
 				  if (KGenerators.dependencies.contains("SuperiorSkyblock2")) {
 					  Island island = SuperiorSkyblockAPI.getGrid().getIslandAt(location);

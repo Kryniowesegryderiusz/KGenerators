@@ -47,17 +47,22 @@ abstract class ConfigLoader {
 		KGenerators.generators.clear();
     	ConfigurationSection mainSection = config.getConfigurationSection("generators");
     	for(String generatorID: mainSection.getKeys(false)){
+    		Boolean error = false;
     		
     		String generatorBlock = config.getString("generators."+generatorID+".generator");
     		int delay = config.getInt("generators."+generatorID+".delay");
     		String name = ChatColor.translateAlternateColorCodes('&', config.getString("generators."+generatorID+".name"));
-    		Boolean glow = config.getBoolean("generators."+generatorID+".glow");
     		String type = config.getString("generators."+generatorID+".type");
     		
     		if (!type.equals("single") && !type.equals("double")) {
     			System.out.println("[KGenerators] !!! CONFIGURATION ERROR !!! Type of " + generatorID + " is set to " + type + ". It should be single or double!");
+    			error = true;
     		}
     		
+    		Boolean glow = true;
+    		if (config.contains("generators."+generatorID+".glow")) {
+    			glow = config.getBoolean("generators."+generatorID+".glow");
+    		}
     		//tu tworze itemstack generatora
     		ItemStack generatorItem = new ItemStack(XUtils.parseItemStack(generatorBlock)); 
     		ArrayList<String> loreGot = new ArrayList<String>();
@@ -105,11 +110,12 @@ abstract class ConfigLoader {
     			}
     		}
     		
+    		Boolean allowPistonPush = false;
+    		if (config.contains("generators."+generatorID+".allow-piston-push")) {
+    			generator.setPistonPushAllowed(config.getBoolean("generators."+generatorID+".allow-piston-push"));
+    		}
     		
-    		//Check czy moze ity sie nie powtarzaja
-    		
-    		Boolean error = false;
-    		
+    		//Items Duplication check
     		for (Entry<String, Generator> entry : KGenerators.generators.entrySet()) {
     			if (entry.getValue().getGeneratorItem().equals(generatorItem)) {
     				error = true;

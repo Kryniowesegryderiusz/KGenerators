@@ -1,6 +1,7 @@
 package me.kryniowesegryderiusz.KGenerators;
 
 import org.bukkit.Location;
+import org.bukkit.block.Block;
 import org.bukkit.inventory.ItemStack;
 
 import me.kryniowesegryderiusz.KGenerators.XSeries.XMaterial;

@@ -8,9 +8,12 @@ import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
 import org.bukkit.event.block.BlockPistonExtendEvent;
 import org.bukkit.event.block.BlockPistonRetractEvent;
+import org.bukkit.inventory.ItemStack;
 
+import me.kryniowesegryderiusz.KGenerators.GenerateBlockFunction;
 import me.kryniowesegryderiusz.KGenerators.Generator;
 import me.kryniowesegryderiusz.KGenerators.KGenerators;
+import me.kryniowesegryderiusz.KGenerators.XSeries.XMaterial;
 
 public class onBlockPistonEvent implements Listener {
 
@@ -24,29 +27,51 @@ public class onBlockPistonEvent implements Listener {
 		e.setCancelled(pistonEvent(e.getBlocks()));
 	}
 	
+	/* Returns true if cancelled */
 	Boolean pistonEvent(List<Block> blocks) {
 		for (Block block : blocks) {
 			
-			Location blockLocation = block.getLocation();
-			Location belowBlockLocation = blockLocation.clone().add(0,-1,0);
+			Location location = block.getLocation();
+			Location bLocation = location.clone().add(0,-1,0);
+			
+			Generator generator = KGenerators.generators.get(KGenerators.generatorsLocations.get(location));
+			Generator bGenerator = KGenerators.generators.get(KGenerators.generatorsLocations.get(bLocation));
 			
 			//generator w tym miejscu
-			if (KGenerators.generatorsLocations.containsKey(blockLocation)) {
-				return true;
-			}
-			
-			//blok generowany przez generator double
-			if (KGenerators.generatorsLocations.containsKey(belowBlockLocation)) {
-				String generatorString = KGenerators.generatorsLocations.get(belowBlockLocation);
-				Generator generator = KGenerators.generators.get(generatorString);
-				
-				if (generator.getType().equals("double")) {
+			if (generator != null) {
+				if (generator.getType().equals("single") && generator.isPistonPushAllowed()) {
+					if (generator.getPlaceholder() == null || !generator.getPlaceholder().equals(KGenerators.getBlocksUtils().getItemStackByBlock(block))) {
+						GenerateBlockFunction.generateBlock(location, generator, 1);
+					}
+					else
+					{
+						return true;
+					}
+				}
+				else
+				{
 					return true;
 				}
 			}
 			
+			//blok generowany przez generator double
+			if (bGenerator != null) {
+				if (bGenerator.getType().equals("double") && bGenerator.isPistonPushAllowed())
+				{
+					if (bGenerator.getPlaceholder() == null || !bGenerator.getPlaceholder().equals(KGenerators.getBlocksUtils().getItemStackByBlock(block))) {
+						GenerateBlockFunction.generateBlock(location, bGenerator, 1);
+					}
+					else
+					{
+						return true;
+					}
+				}
+				else
+				{
+					return true;
+				}
+			}
 		}
-		
 		return false;
 	}
 }
