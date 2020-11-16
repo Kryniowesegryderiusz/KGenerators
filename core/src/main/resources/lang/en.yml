@@ -1,0 +1,37 @@
+messages:
+  #if you dont want any message just set ""
+  prefix: '&8[&6KGenerators&8] '
+  generators:
+    cant-break: '&cYou should sneak to pick up this generator!'
+    cant-pick-up: '&cYou cant pick up generator here!'
+    cant-craft: '&cYou cant craft anything from generator!'
+    picked-up: '&e<generator> &apicked up'
+    no-craft-permission: '&cYou dont have permission &8(&7<permission>&8)&c to craft <generator>&c!'
+  commands:
+    any:
+      wrong: '&cWrong command! Type /kgenerators for help'
+      no-permission: '&cYou dont have permission &8(&7<permission>&8)&c to use KGenerators commands'
+    list:
+      listing: '&aGenerators possible: &e'
+      separator: '&a, &e'
+      no-permission: '&cYou dont have permission &8(&7<permission>&8)&c to list generators'
+      help: List all generators
+    give:
+      player-not-online: '&cPlayer is not online'
+      generator-doesnt-exist: '&cThat generator doesn''t exist'
+      generator-given: '&aGenerator <generator> was given to <player>'
+      generator-recieved: '&aGenerator <generator> recieved!'
+      usage: '&cUsage: &e/kgenerators give <player> <generator>'
+      no-permission: '&cYou dont have permission &8(&7<permission>&8)&c to give generators'
+      help: Give generator to player
+    getall:
+      recieved: '&aGenerators recieved'
+      no-permission: '&cYou dont have permission &8(&7<permission>&8)&c to get all generators'
+      help: Get all generators
+    reload:
+      done: '&aConfig and messages reloaded'
+      no-permission: '&cYou dont have permission &8(&7<permission>&8)&c to reload config'
+      help: Reload config and messages
+    help:
+      label: '&6&lKGenerators &aCommands help:'
+      format: '&e/kgenerators <subcommand> &7<help>'
