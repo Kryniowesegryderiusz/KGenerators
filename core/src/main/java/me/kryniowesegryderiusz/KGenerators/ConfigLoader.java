@@ -25,7 +25,7 @@ abstract class ConfigLoader {
 	static void loadConfig() {
 		Config config = KGenerators.getPluginConfig();
 		
-		//SETTINGS
+		/* Settings */
 		if (config.contains("settings.can-generate-instead")) {
 			ArrayList<String> tempListString = new ArrayList<String>();
 			ArrayList<ItemStack> tempListItemStack = new ArrayList<ItemStack>();
@@ -43,7 +43,7 @@ abstract class ConfigLoader {
 			KGenerators.lang = config.getString("settings.lang");
 		}
 		
-    	//GENERATORY
+		/* Generator types loader */
 		KGenerators.generators.clear();
     	ConfigurationSection mainSection = config.getConfigurationSection("generators");
     	for(String generatorID: mainSection.getKeys(false)){
@@ -63,7 +63,7 @@ abstract class ConfigLoader {
     		if (config.contains("generators."+generatorID+".glow")) {
     			glow = config.getBoolean("generators."+generatorID+".glow");
     		}
-    		//tu tworze itemstack generatora
+
     		ItemStack generatorItem = new ItemStack(XUtils.parseItemStack(generatorBlock)); 
     		ArrayList<String> loreGot = new ArrayList<String>();
     		ArrayList<String> lore = new ArrayList<String>();
@@ -115,7 +115,6 @@ abstract class ConfigLoader {
     			generator.setPistonPushAllowed(config.getBoolean("generators."+generatorID+".allow-piston-push"));
     		}
     		
-    		//Items Duplication check
     		for (Entry<String, Generator> entry : KGenerators.generators.entrySet()) {
     			if (entry.getValue().getGeneratorItem().equals(generatorItem)) {
     				error = true;

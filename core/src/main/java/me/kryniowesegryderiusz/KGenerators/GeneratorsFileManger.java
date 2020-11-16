@@ -20,7 +20,6 @@ public abstract class GeneratorsFileManger {
 		try {
 			file.saveConfig();
 		} catch (IOException e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
 		

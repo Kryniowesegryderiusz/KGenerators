@@ -22,12 +22,10 @@ public class onBlockPlaceEvent implements Listener {
 			return;
 		}
 		
-		//Pierwszy check, czy blok w ogole jest w generatorach
 		if (!KGenerators.generatorsItemStacks.contains(KGenerators.getBlocksUtils().getItemStackByBlock(e.getBlockPlaced()))) {
 			return;
 		}
 		
-		//loop po dostepnych generatorach
 		for (Entry<String, Generator> set : KGenerators.generators.entrySet()) {
 		    String generatorID = set.getKey();
 		    Generator generator = set.getValue();

@@ -56,9 +56,9 @@ public class WorldGuardUtils_1_13 implements WorldGuardUtils {
 		}
 	}
 
+	/* Returns if pick up is allow/deny */
 	@Override
 	public boolean worldGuardCheck(Location location, Player player) {
-		//returns if pick up is allow/deny
 		
 		RegionContainer container = WorldGuard.getInstance().getPlatform().getRegionContainer();
 		

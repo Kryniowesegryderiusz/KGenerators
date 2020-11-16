@@ -14,11 +14,8 @@ import me.kryniowesegryderiusz.KGenerators.XSeries.XMaterial;
 
 public abstract class GenerateBlockFunction {
 	
-	//sprawdza tylko, czy moze zespawnic blok po czasie
+
 	public static void generateBlock (Location location, Generator generator, int immediately) {
-		
-		
-		
 		KGenerators.getInstance().getServer().getScheduler().scheduleSyncDelayedTask(KGenerators.getInstance(), new Runnable() {
 			  public void run() {
 				  

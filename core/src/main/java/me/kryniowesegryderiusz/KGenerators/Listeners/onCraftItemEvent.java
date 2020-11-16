@@ -29,7 +29,7 @@ public class onCraftItemEvent implements Listener {
 			Generator g = entry.getValue();
 			ItemStack item = g.getGeneratorItem();
 			
-			//sprawdzenie, czy nie craftuje sie z generatora
+			/* Check if not using generator for crafting */
 			ItemStack[] items = e.getInventory().getMatrix();
 			for (ItemStack i : items) {
 				if (i != null && i.equals(item)) {
@@ -40,6 +40,7 @@ public class onCraftItemEvent implements Listener {
 				}
 			}
 			
+			/* Check permission for crafting */
 			ItemStack itemRecipe = e.getRecipe().getResult();
 			if (item.equals(itemRecipe)) {
 				String permission = "kgenerators.craft."+gName;

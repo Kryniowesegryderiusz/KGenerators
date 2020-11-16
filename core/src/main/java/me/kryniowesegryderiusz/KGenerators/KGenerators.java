@@ -37,17 +37,17 @@ public class KGenerators extends JavaPlugin {
 	public static HashMap<String, Generator> generators = new HashMap<String, Generator>();
 	public static HashMap<Location, String> generatorsLocations = new HashMap<Location, String>();
 	
-	//do szybkiego checka materialsy generatorow do BlockPlace i craftingow
+	/* For quick check */
 	public static ArrayList<ItemStack> generatorsItemStacks = new ArrayList<ItemStack>();
 	
-	//Settings
+	/* Global settings */
 	public static ArrayList<ItemStack> generatingWhitelist = new ArrayList<ItemStack>();
 	public static String lang = "en";
 	
-	//Dependencies
+	/* Dependencies */
 	public static ArrayList<String> dependencies = new ArrayList<String>();
 	
-	//Multiversion
+	/* Multiversion reflections */
 	private RecipesLoader recipesLoader;
 	private static BlocksUtils blocksUtils;
 	private static WorldGuardUtils worldGuardUtils;
@@ -55,16 +55,14 @@ public class KGenerators extends JavaPlugin {
     @Override
     public void onEnable() {
 
-        int pluginId = 7871; // <-- Replace with the id of your plugin!
+        int pluginId = 7871;
 
 		@SuppressWarnings("unused")
 		Metrics metrics = new Metrics(this, pluginId);
     	
-    	this.getServer().getPluginCommand("kgenerators").setExecutor(new Commands());
-    	
     	ConfigManager.setup();
     	
-    	//Laduje dependencies
+    	/* Dependencies check */
     	if (Bukkit.getPluginManager().isPluginEnabled("SuperiorSkyblock2")) {
     		System.out.println("[KGenerators] Detected plugin SuperiorSkyblock2. Hooking into it.");
     		dependencies.add("SuperiorSkyblock2");
@@ -81,7 +79,7 @@ public class KGenerators extends JavaPlugin {
     		}
     	}
     	
-    	//CONFIG
+    	/* Config loader */
     	if (!new File(getDataFolder(), "config.yml").exists()){
     		System.out.println("[KGenerators] Generating config.yml");
     		this.saveResource("config.yml", false);
@@ -96,12 +94,11 @@ public class KGenerators extends JavaPlugin {
     	try {
 			config.loadConfig();
 		} catch (IOException | InvalidConfigurationException e2) {
-			// TODO Auto-generated catch block
 			e2.printStackTrace();
 		}
     	ConfigLoader.loadConfig();
     		
-    	//RECIPES
+    	/* Recipes loader */
     	if (!new File(getDataFolder(), "recipes.yml").exists()){
     		System.out.println("[KGenerators] Generating recipes.yml");
     		this.saveResource("recipes.yml", false);
@@ -109,19 +106,17 @@ public class KGenerators extends JavaPlugin {
     	try {
     		recipesFile = ConfigManager.getConfig("recipes.yml", null, false);
 		} catch (FileNotFoundException e1) {
-			// Auto-generated catch block
 			e1.printStackTrace();
 		}
     	try {
 			recipesFile.loadConfig();
 		} catch (IOException
 				| InvalidConfigurationException e) {
-			// Auto-generated catch block
 			e.printStackTrace();
 		}
     	recipesLoader.loadRecipes();
     	
-    	//GENERATORY
+    	/* Placed generators loader */
     	try {
 			generatorsFile = ConfigManager.getConfig("generators.yml", null, false);
 		} catch (FileNotFoundException e) {
@@ -132,17 +127,15 @@ public class KGenerators extends JavaPlugin {
 				this.getServer().getPluginManager().disablePlugin(this);
 				e1.printStackTrace();
 			}
-			//e.printStackTrace();
 		}
     	try {
 			generatorsFile.loadConfig();
 		} catch (IOException | InvalidConfigurationException e2) {
-			// TODO Auto-generated catch block
 			e2.printStackTrace();
 		}
     	ConfigLoader.loadGenerators();
     	
-    	//LANG
+    	/* Languages manager */
     	mkdir("lang");
     	
 
@@ -157,31 +150,29 @@ public class KGenerators extends JavaPlugin {
 			messagesFile = ConfigManager.getConfig("lang/"+lang+".yml", null, false);
 		} catch (FileNotFoundException e1) {
 			System.out.println("[KGenerators] Cant find lang file");
-			// Auto-generated catch block
 			e1.printStackTrace();
 		}
     	try {
 			messagesFile.loadConfig();
 		} catch (IOException | InvalidConfigurationException e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
     	
     	try {
 			LangUtils.loadMessages();
 		} catch (IOException e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
     	System.out.println("[KGenerators] Messages file loaded with lang: " + lang);
     	
-    	//Listenery
+    	this.getServer().getPluginCommand("kgenerators").setExecutor(new Commands());
+
     	this.getServer().getPluginManager().registerEvents(new onBlockBreakEvent(), this);
     	this.getServer().getPluginManager().registerEvents(new onBlockPlaceEvent(), this);
     	this.getServer().getPluginManager().registerEvents(new onCraftItemEvent(), this);
     	this.getServer().getPluginManager().registerEvents(new onBlockPistonEvent(), this);
     	
-    	//Koniec
+
     	System.out.println("[KGenerators] Plugin loaded properly!");  
     }
     
@@ -189,7 +180,6 @@ public class KGenerators extends JavaPlugin {
     public void onLoad() {
     	
     	instance = this;
-    	
     	versioningSetup();
     	
     }
@@ -233,7 +223,6 @@ public class KGenerators extends JavaPlugin {
 			  return;
 		  }
 		
-	      //Creating the directory
 	      boolean bool = file.mkdir();
 	      if(!bool){
 	         System.out.println("[KGenerators] Can not create directory for "+dir);
@@ -275,7 +264,6 @@ public class KGenerators extends JavaPlugin {
 	    	}
 			
 		} catch (InstantiationException | IllegalAccessException | ClassNotFoundException e3) {
-			// TODO Auto-generated catch block
 			e3.printStackTrace();
 		}
 	}

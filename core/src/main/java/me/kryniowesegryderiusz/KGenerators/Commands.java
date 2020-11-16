@@ -35,7 +35,6 @@ public class Commands implements CommandExecutor {
 							KGenerators.messagesFile = ConfigManager.getConfig("lang/"+KGenerators.lang+".yml", null, false);
 						} catch (FileNotFoundException e1) {
 							System.out.println("[KGenerators] !!! ERROR !!! Cant find lang/" + KGenerators.lang + ".yml file");
-							// Auto-generated catch block
 							//e1.printStackTrace();
 						}
 				    	try {
@@ -43,14 +42,12 @@ public class Commands implements CommandExecutor {
 							KGenerators.messagesFile.loadConfig();
 						} catch (IOException
 								| InvalidConfigurationException e) {
-							// Auto-generated catch block
 							e.printStackTrace();
 						}
 						ConfigLoader.loadConfig();
 						try {
 							LangUtils.loadMessages();
 						} catch (IOException e) {
-							// TODO Auto-generated catch block
 							e.printStackTrace();
 						}
 						LangUtils.sendMessage(sender, "commands.reload.done");

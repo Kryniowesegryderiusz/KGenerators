@@ -37,7 +37,6 @@ public class onBlockPistonEvent implements Listener {
 			Generator generator = KGenerators.generators.get(KGenerators.generatorsLocations.get(location));
 			Generator bGenerator = KGenerators.generators.get(KGenerators.generatorsLocations.get(bLocation));
 			
-			//generator w tym miejscu
 			if (generator != null) {
 				if (generator.getType().equals("single") && generator.isPistonPushAllowed()) {
 					if (generator.getPlaceholder() == null || !generator.getPlaceholder().equals(KGenerators.getBlocksUtils().getItemStackByBlock(block))) {
@@ -54,7 +53,6 @@ public class onBlockPistonEvent implements Listener {
 				}
 			}
 			
-			//blok generowany przez generator double
 			if (bGenerator != null) {
 				if (bGenerator.getType().equals("double") && bGenerator.isPistonPushAllowed())
 				{

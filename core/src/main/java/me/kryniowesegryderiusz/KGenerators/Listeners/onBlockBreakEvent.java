@@ -34,10 +34,8 @@ public class onBlockBreakEvent implements Listener {
 		
 		if (bGenerator != null && bGenerator.getType().equals("double"))
 		{			
-			//czy wykopano blok, ktory jest generowany lub placholder
 			if (bGenerator.getChances().containsKey(block) || block.equals(bGenerator.getPlaceholder())) {
 				
-				//jesli zniszczony zostal placeholder to cancel
 				if (block.equals(bGenerator.getPlaceholder())) {
 					e.setCancelled(true);
 					return;
@@ -67,22 +65,18 @@ public class onBlockBreakEvent implements Listener {
 		{
 			
 					
-				//czy wykopano blok, ktory jest generowany lub sam generator lub placeholder
 				if (generator.getChances().containsKey(block) || generator.getGeneratorBlock().equals(block) || block.equals(generator.getPlaceholder())) {
 					
 					if (checkIfPickingUp(e.getPlayer(), generator, location)) {
 						e.setCancelled(true);
 						return;
 					}
-					
-					
-					//czy placeholder
+
 					if (block.equals(generator.getPlaceholder())) {
 						e.setCancelled(true);
 						return;
 					}
 					
-					//blok generatora nie bedacy jednoczesnie generowanym blokiem
 					if (block.equals(generator.getGeneratorBlock()) && !generator.getChances().containsKey(generator.getGeneratorBlock())) {
 						
 						return;
@@ -93,7 +87,10 @@ public class onBlockBreakEvent implements Listener {
 				}
 		}
 	}
-	//jesli true to ma cancelowac event i konczyc funkcje
+	/* 
+	 * Check if pick ups generator
+	 * True cancells event
+	 */
 	boolean checkIfPickingUp(Player p, Generator generator, Location location) {
 		if (!p.isSneaking()){
 			if (generator.getType().equals("double")) {

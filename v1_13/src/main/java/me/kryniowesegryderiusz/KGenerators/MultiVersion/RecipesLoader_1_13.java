@@ -41,20 +41,14 @@ public class RecipesLoader_1_13 implements RecipesLoader {
     		ArrayList<String> shape = new ArrayList<String>();
     		shape = (ArrayList<String>) file.getList("recipes."+generatorID+".shape");
     		
-    		//System.out.println(shape.get(0));
-    		//System.out.println(shape.get(1));
-    		//System.out.println(shape.get(2));
     		recipe.shape(shape.get(0),shape.get(1),shape.get(2));
     		
     		ConfigurationSection ingredientsSection = file.getConfigurationSection("recipes."+generatorID+".ingredients");
         	for(String ingredientsString: ingredientsSection.getKeys(false)){
         		char ingredientsChar = ingredientsString.charAt(0);
         		ItemStack item = XUtils.parseItemStack(file.getString("recipes."+generatorID+".ingredients."+ingredientsString));
-        		//System.out.println(ingredientsChar + " has " + item);
         		recipe.setIngredient(ingredientsChar, item.getType());
         	}
-        	//System.out.println(recipe.getShape());
-        	//System.out.println(recipe.getIngredientMap());
         	Bukkit.addRecipe(recipe);
         	System.out.println("[KGenerators] Loaded recipe for " + generatorID);
     	}

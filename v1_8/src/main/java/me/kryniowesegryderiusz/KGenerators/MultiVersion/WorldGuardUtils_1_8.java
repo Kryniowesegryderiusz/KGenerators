@@ -27,6 +27,25 @@ public class WorldGuardUtils_1_8 implements WorldGuardUtils {
 		}
 		return true;
 	}
+	
+	@Override
+	public void worldGuardFlagAdd() {
+		FlagRegistry registry = worldGuard.getFlagRegistry();
+		
+	    try {
+	        registry.register(PICK_UP_FLAG);
+	    } catch (FlagConflictException e) {
+	    	System.out.println("[KGenerators] !!! ERROR !!! WorldGuard FlagConflictException!");
+	    	Flag<?> existing = registry.get("kgenerators-pick-up");
+	        if (existing instanceof StateFlag) {
+	        	System.out.println("[KGenerators] !!! WARNING !!! Overriding flag!");
+	        	PICK_UP_FLAG = (StateFlag) existing;
+	        } else {
+	            System.out.println("[KGenerators] !!! ERROR !!! WorldGuard flag overriding not possible! Types dont match!");
+	            PICK_UP_FLAG = null;
+	        }
+	    }
+	}
 
 	@Override
 	public boolean worldGuardCheck(Location location, Player player) {
@@ -40,26 +59,5 @@ public class WorldGuardUtils_1_8 implements WorldGuardUtils {
 			return true;
 		}
 		return false;
-	}
-
-	@Override
-	public void worldGuardFlagAdd() {
-		FlagRegistry registry = worldGuard.getFlagRegistry();
-		
-	    try {
-	        // register our flag with the registry
-	        registry.register(PICK_UP_FLAG);
-	    } catch (FlagConflictException e) {
-	    	System.out.println("[KGenerators] !!! ERROR !!! WorldGuard FlagConflictException!");
-	    	Flag<?> existing = registry.get("kgenerators-pick-up");
-	        if (existing instanceof StateFlag) {
-	        	System.out.println("[KGenerators] !!! WARNING !!! Overriding flag!");
-	        	PICK_UP_FLAG = (StateFlag) existing;
-	        } else {
-	            System.out.println("[KGenerators] !!! ERROR !!! WorldGuard flag overriding not possible! Types dont match!");
-	            PICK_UP_FLAG = null;
-	        }
-	    	
-	    }
 	}
 }
