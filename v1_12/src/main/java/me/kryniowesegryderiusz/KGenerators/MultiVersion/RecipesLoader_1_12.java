@@ -13,7 +13,7 @@ import me.kryniowesegryderiusz.KGenerators.KGenerators;
 import me.kryniowesegryderiusz.KGenerators.Utils.Config;
 import me.kryniowesegryderiusz.KGenerators.XSeries.XUtils;
 
-class RecipesLoader_1_12 implements RecipesLoader {
+public class RecipesLoader_1_12 implements RecipesLoader {
 
 	@Override
 	public void loadRecipes() {
