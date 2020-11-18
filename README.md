@@ -14,7 +14,7 @@
 * All messages translatable
 
 ### Need help?
-[![](https://i.imgur.com/547By3f.png)](https://discord.gg/RZmHa6ds)
+[![](https://i.imgur.com/547By3f.png)](https://discord.gg/BZRjhpP4Ab)
 
 **You can found there:**
 * KGenerators support of course
