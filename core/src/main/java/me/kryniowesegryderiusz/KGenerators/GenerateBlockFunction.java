@@ -18,8 +18,6 @@ public abstract class GenerateBlockFunction {
 	public static void generateBlock (Location location, Generator generator, int immediately) {
 		KGenerators.getInstance().getServer().getScheduler().scheduleSyncDelayedTask(KGenerators.getInstance(), new Runnable() {
 			  public void run() {
-				  
-				  
 				  ItemStack block = KGenerators.getBlocksUtils().getItemStackByBlock(location.getBlock());
 				  ItemStack air = XMaterial.AIR.parseItem();
 				  ItemStack pistonHead = XMaterial.PISTON_HEAD.parseItem();
@@ -29,7 +27,7 @@ public abstract class GenerateBlockFunction {
 					  if (!KGenerators.generatorsLocations.containsKey(location)) {
 							return;
 						}
-						if (!block.equals(generator.getGeneratorBlock()) && !block.equals(air) && !KGenerators.generatingWhitelist.contains(block) && !block.equals(generator.getPlaceholder()) && !generator.getChances().containsKey(block) && !block.getType().equals(pistonHead.getType())) {
+						if (!block.equals(generator.getGeneratorBlock()) && !block.equals(air) && !KGenerators.getBlocksUtils().isOnWhitelist(location.getBlock()) && !block.equals(generator.getPlaceholder()) && !generator.getChances().containsKey(block) && !block.getType().equals(pistonHead.getType())) {
 							GeneratorsManager.removeGenerator(generator, location, true);
 							return;
 						}
@@ -39,8 +37,8 @@ public abstract class GenerateBlockFunction {
 						if (!KGenerators.generatorsLocations.containsKey(underLocation)) {
 							  return;
 						}
-						if (!block.equals(air) && !KGenerators.generatingWhitelist.contains(block) && !block.equals(generator.getPlaceholder()) && !generator.getChances().containsKey(block) && !block.getType().equals(pistonHead.getType())) {
-							GeneratorsManager.removeGenerator(generator, location, true);
+						if (!block.equals(air) && !KGenerators.getBlocksUtils().isOnWhitelist(location.getBlock()) && !block.equals(generator.getPlaceholder()) && !generator.getChances().containsKey(block) && !block.getType().equals(pistonHead.getType())) {
+							GeneratorsManager.removeGenerator(generator, location.clone().add(0,-1,0), true);
 							return;
 						}
 						break;

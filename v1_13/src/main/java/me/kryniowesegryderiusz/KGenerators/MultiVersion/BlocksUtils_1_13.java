@@ -4,6 +4,7 @@ import org.bukkit.Location;
 import org.bukkit.block.Block;
 import org.bukkit.inventory.ItemStack;
 
+import me.kryniowesegryderiusz.KGenerators.KGenerators;
 import me.kryniowesegryderiusz.KGenerators.XSeries.XMaterial;
 
 public class BlocksUtils_1_13 implements BlocksUtils {
@@ -17,6 +18,15 @@ public class BlocksUtils_1_13 implements BlocksUtils {
 	public void setBlock(Location location, ItemStack item) {
 		location.getBlock().setType(item.getType());
 		
+	}
+
+	@Override
+	public boolean isOnWhitelist(Block block) {
+
+		if (KGenerators.generatingWhitelist.contains(getItemStackByBlock(block))) {
+			return true;
+		}
+		return false;
 	}
 
 }

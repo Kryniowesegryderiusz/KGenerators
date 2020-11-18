@@ -9,5 +9,7 @@ public interface BlocksUtils {
 	public ItemStack getItemStackByBlock(Block block);
 	
 	public void setBlock(Location location, ItemStack item);
+	
+	public boolean isOnWhitelist(Block block);
 
 }

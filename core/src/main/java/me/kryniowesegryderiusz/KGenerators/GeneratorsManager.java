@@ -21,10 +21,10 @@ public abstract class GeneratorsManager {
 		KGenerators.getBlocksUtils().setBlock(location, air);
 		
 		if (generator.getType().equals("double")) {
-			Location aboveBlockLocation = location.clone().add(0,1,0);
-			ItemStack m = KGenerators.getBlocksUtils().getItemStackByBlock(aboveBlockLocation.getBlock());
+			Location aLocation = location.clone().add(0,1,0);
+			ItemStack m = KGenerators.getBlocksUtils().getItemStackByBlock(aLocation.getBlock());
 			if (m.equals(generator.getPlaceholder()) || generator.getChances().containsKey(m)) {
-				KGenerators.getBlocksUtils().setBlock(aboveBlockLocation, air);
+				KGenerators.getBlocksUtils().setBlock(aLocation, air);
 			}
 		}
 	}
