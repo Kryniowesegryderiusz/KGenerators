@@ -8,6 +8,8 @@ import java.util.Map;
 
 import org.bukkit.ChatColor;
 import org.bukkit.command.CommandSender;
+
+import me.kryniowesegryderiusz.KGenerators.EnumsManager.Message;
 import me.kryniowesegryderiusz.KGenerators.KGenerators;
 
 public abstract class LangUtils {
@@ -39,8 +41,8 @@ public abstract class LangUtils {
 	}
 	
     @SuppressWarnings("rawtypes")
-	public static void sendMessage (CommandSender sender, String key){
-    	String message = lang.get(key);
+	public static void sendMessage (CommandSender sender, Message m){
+    	String message = lang.get(m.getKey());
     	if (message != null && message.length() != 0){
     		
 	        for (Map.Entry part : replecables.entrySet()) {
@@ -61,8 +63,8 @@ public abstract class LangUtils {
     }
     
 	@SuppressWarnings("rawtypes")
-	public static String getMessage (String key, boolean prefix){
-    	String message = lang.get(key);
+	public static String getMessage (Message m, boolean prefix){
+		String message = lang.get(m.getKey());
     	if (message != null && message.length() != 0){
     		
 	        for (Map.Entry part : replecables.entrySet()) {
@@ -103,41 +105,8 @@ public abstract class LangUtils {
     private static void addDefaults()
     {
     	lang.clear();
-    	
-    	lang.put("prefix", "&8[&6KGenerators&8] ");
-    	
-    	lang.put("generators.cant-break", "&cYou should sneak to pick up this generator!");
-    	lang.put("generators.cant-pick-up", "&cYou cant pick up generator here!");
-    	lang.put("generators.cant-craft", "&cYou cant craft anything from generator!");
-    	lang.put("generators.picked-up", "&e<generator> &apicked up");
-    	lang.put("generators.no-craft-permission", "&cYou dont have permission &8(&7<permission>&8)&c to craft <generator>&c!");
-    	
-    	lang.put("commands.any.wrong", "&cWrong command! Type /kgenerators for help");
-    	lang.put("commands.any.no-permission", "&cYou dont have permission &8(&7<permission>&8)&c to use KGenerators commands");
-    	
-    	lang.put("commands.list.listing", "&aGenerators possible: &e");
-    	lang.put("commands.list.separator", "&a, &e");
-    	lang.put("commands.list.no-permission", "&cYou dont have permission &8(&7<permission>&8)&c to list generators");
-    	lang.put("commands.list.help", "List all generators");
-    	
-    	lang.put("commands.give.player-not-online", "&cPlayer is not online");
-    	lang.put("commands.give.generator-doesnt-exist", "&cThat generator doesn't exist");
-    	lang.put("commands.give.generator-given", "&aGenerator <generator> was given to <player>");
-    	lang.put("commands.give.generator-recieved", "&aGenerator <generator> recieved!");
-    	lang.put("commands.give.usage", "&cUsage: &e/kgenerators give <player> <generator>");
-    	lang.put("commands.give.no-permission", "&cYou dont have permission &8(&7<permission>&8)&c to give generators");
-    	lang.put("commands.give.help", "Give generator to player");
-    	
-    	lang.put("commands.getall.recieved", "&aGenerators recieved");
-    	lang.put("commands.getall.no-permission", "&cYou dont have permission &8(&7<permission>&8)&c to get all generators");
-    	lang.put("commands.getall.help", "Get all generators");
-    	
-    	lang.put("commands.reload.done", "&aConfig and messages reloaded");
-    	lang.put("commands.reload.no-permission", "&cYou dont have permission &8(&7<permission>&8)&c to reload config");
-    	lang.put("commands.reload.help", "Reload config and messages");
-    	
-    	lang.put("commands.help.label", "&6&lKGenerators &aCommands help:");
-    	lang.put("commands.help.format", "&e/kgenerators <subcommand> &7<help>");
-
+    	for (Message m : Message.values()) {
+    		lang.put(m.getKey(), m.getDefaultMessage());
+    	}
     }
 }

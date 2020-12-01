@@ -7,13 +7,20 @@ messages:
     cant-craft: '&cYou cant craft anything from generator!'
     picked-up: '&e<generator> &apicked up'
     no-craft-permission: '&cYou dont have permission &8(&7<permission>&8)&c to craft <generator>&c!'
+    per-player-generator:
+      cant-place-more: '&cYou cant place more than &6<number> &cgenerators!'
+      cant-place-more-type: '&cYou cant place more than &6<number> <generator> &cgenerators!'
+      cant-pick-up: '&cYou cant pick up generator owned by &6<owner>&c!'
+      cant-use: '&cYou cant use generator owned by &6<owner>&c!'
   commands:
     any:
       wrong: '&cWrong command! Type /kgenerators for help'
       no-permission: '&cYou dont have permission &8(&7<permission>&8)&c to use KGenerators commands'
+      player-not-online: '&cPlayer is not online'
+      player-doesnt-exist: '&cPlayer doesnt exist'
     list:
-      listing: '&aGenerators possible: &e'
-      separator: '&a, &e'
+      header: '&aGenerators:'
+      list: '&8- <generator> &8(&7ID: <generatorID>)'
       no-permission: '&cYou dont have permission &8(&7<permission>&8)&c to list generators'
       help: List all generators
     give:
@@ -28,6 +35,16 @@ messages:
       recieved: '&aGenerators recieved'
       no-permission: '&cYou dont have permission &8(&7<permission>&8)&c to get all generators'
       help: Get all generators
+    check:
+      header: '&aPlayer &e<player> &ahas placed:'
+      list: '&8- &e<number> <generator>'
+      no-permission-own: '&cYou dont have permission &8(&7<permission>&8)&c to check others!'
+      help: Check generators and limits of player
+    limits:
+      header: '&aPlayer &e<player> &ahas limits:'
+      specific: '&8- <generator>&a: &e<limit>'
+      overall: '&8- &aOverall limit: &e<limit>'
+      None: None
     reload:
       done: '&aConfig and messages reloaded'
       no-permission: '&cYou dont have permission &8(&7<permission>&8)&c to reload config'

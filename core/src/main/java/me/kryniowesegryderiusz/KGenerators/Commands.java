@@ -4,6 +4,7 @@ import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.util.HashMap;
+import java.util.Map.Entry;
 
 import org.bukkit.Bukkit;
 import org.bukkit.command.Command;
@@ -13,6 +14,9 @@ import org.bukkit.configuration.InvalidConfigurationException;
 import org.bukkit.entity.Player;
 import org.bukkit.inventory.ItemStack;
 
+import me.kryniowesegryderiusz.KGenerators.Classes.Generator;
+import me.kryniowesegryderiusz.KGenerators.Classes.PlayerLimits;
+import me.kryniowesegryderiusz.KGenerators.EnumsManager.Message;
 import me.kryniowesegryderiusz.KGenerators.Utils.ConfigManager;
 import me.kryniowesegryderiusz.KGenerators.Utils.LangUtils;
 
@@ -49,12 +53,12 @@ public class Commands implements CommandExecutor {
 						} catch (IOException e) {
 							e.printStackTrace();
 						}
-						LangUtils.sendMessage(sender, "commands.reload.done");
+						LangUtils.sendMessage(sender, Message.CommandsReloadDone);
 					}
 					else
 					{
 						LangUtils.addReplecable("<permission>", "kgenerators.reload");
-						LangUtils.sendMessage(sender, "commands.reload.no-permission");
+						LangUtils.sendMessage(sender, Message.CommandsReloadNoPermission);
 					}
 					break;
 				case "getall":
@@ -65,12 +69,12 @@ public class Commands implements CommandExecutor {
 					        	Generator generator = generatorhmap.getValue();
 					        	player.getInventory().addItem(generator.getGeneratorItem());
 					        }
-					        LangUtils.sendMessage(sender, "commands.getall.recieved");
+					        LangUtils.sendMessage(sender, Message.CommandsGetallRecieved);
 						}
 						else
 						{
 							LangUtils.addReplecable("<permission>", "kgenerators.getall");
-							LangUtils.sendMessage(sender, "commands.getall.no-permission");
+							LangUtils.sendMessage(sender, Message.CommandsGetallNoPermission);
 						}
 					}
 					else
@@ -80,32 +84,63 @@ public class Commands implements CommandExecutor {
 					break;
 				case "list":
 						if (sender.hasPermission("kgenerators.list")){
-							String generatorrsPossible = LangUtils.getMessage("commands.list.listing", true);
-							String separator = LangUtils.getMessage("commands.list.separator", false);
-					        for (HashMap.Entry<String, Generator> generatorhmap : KGenerators.generators.entrySet()) {
-					        	generatorrsPossible = generatorrsPossible + generatorhmap.getKey() + separator;
+							LangUtils.sendMessage(sender, Message.CommandsListHeader);
+					        for (Entry<String, Generator> e : KGenerators.generators.entrySet()) {
+					        	LangUtils.addReplecable("<generator>", e.getValue().getGeneratorItem().getItemMeta().getDisplayName());
+					        	LangUtils.addReplecable("<generatorID>", e.getKey());
+					        	LangUtils.sendMessage(sender, Message.CommandsListList);
 					        }
-							sender.sendMessage(generatorrsPossible);
 						}
 						else
 						{
 							LangUtils.addReplecable("<permission>", "kgenerators.list");
-							LangUtils.sendMessage(sender, "commands.list.no-permission");
+							LangUtils.sendMessage(sender, Message.CommandsListNoPermission);
 						}
-							
 					break;
+				case "check":
+					if (sender.hasPermission("kgenerators.check")){
+						if (args.length == 1)
+						{
+							if (sender instanceof Player){
+								Player player = (Player) sender;
+								check(sender, player.getName());
+							}
+							else
+							{
+								System.out.println("[KGenerators] Use that command as player!");
+							}
+						}
+						else
+						{
+							if (sender.hasPermission("kgenerators.check.others"))
+							{
+								check(sender, args[1]);
+							}
+							else
+							{
+								LangUtils.addReplecable("<permission>", "kgenerators.check.others");
+								LangUtils.sendMessage(sender, Message.CommandsCheckNoPermissionOthers);
+							}
+						}
+					}
+					else
+					{
+						LangUtils.addReplecable("<permission>", "kgenerators.check");
+						LangUtils.sendMessage(sender, Message.CommandsCheckNoPermission);
+					}
+				break;
 				case "give":
 					if (sender.hasPermission("kgenerators.give")){
-						if (args.length == 3){
+						if (args.length >= 3){
 							Player player = Bukkit.getPlayer(args[1]);
 							if (player == null){
-								LangUtils.sendMessage(sender, "commands.give.player-not-online");
+								LangUtils.sendMessage(sender, Message.CommandsAnyPlayerNotOnline);
 							}
 							else
 							{
 								String generatorID = args[2];
 								if (!KGenerators.generators.containsKey(generatorID)){
-									LangUtils.sendMessage(sender, "commands.give.generator-doesnt-exist");
+									LangUtils.sendMessage(sender, Message.CommandsGiveGeneratorDoesntExist);
 									break;
 								}
 								
@@ -114,36 +149,80 @@ public class Commands implements CommandExecutor {
 								player.getInventory().addItem(item);
 								
 								LangUtils.addReplecable("<generator>", item.getItemMeta().getDisplayName());
-								LangUtils.addReplecable("<player>", args[1]);
-								LangUtils.sendMessage(sender, "commands.give.generator-given");
+								LangUtils.addReplecable("<player>", player.getDisplayName());
+								LangUtils.sendMessage(sender, Message.CommandsGiveGeneratorGiven);
 								
 								LangUtils.addReplecable("<generator>", item.getItemMeta().getDisplayName());
-								LangUtils.sendMessage(sender, "commands.give.generator-recieved");
+								LangUtils.sendMessage(sender, Message.CommandsGiveGeneratorRecieved);
 							}
 						}
 						else
 						{
-							LangUtils.sendMessage(sender, "commands.give.usage");
+							LangUtils.sendMessage(sender, Message.CommandsGiveUsage);
 						}
 					}
 					else
 					{
 						LangUtils.addReplecable("<permission>", "kgenerators.give");
-						LangUtils.sendMessage(sender, "commands.give.no-permission");
+						LangUtils.sendMessage(sender, Message.CommandsGiveNoPermission);
 					}
 					break;
 				default:
-					LangUtils.sendMessage(sender, "commands.any.wrong");
+					LangUtils.sendMessage(sender, Message.CommandsAnyWrong);
 					break;
 			}
 		}
 		else
 		{
 			LangUtils.addReplecable("<permission>", "kgenerators.commands");
-			LangUtils.sendMessage(sender, "commands.any.no-permission");
+			LangUtils.sendMessage(sender, Message.CommandsAnyNoPermission);
 		}
 
 		return false;
 	}
 	
+	void check(CommandSender sender, String nick)
+	{
+		Player player = Bukkit.getPlayer(nick);
+		if (player != null)
+		{
+			LangUtils.addReplecable("<player>", player.getDisplayName());
+			LangUtils.sendMessage(sender, Message.CommandsCheckHeader);
+			
+			for (Entry<String, Generator> e : KGenerators.generators.entrySet())
+			{
+				String nr = String.valueOf(PerPlayerGenerators.getPlayerGeneratorsCount(player, e.getKey()));
+				
+				LangUtils.addReplecable("<number>", nr);
+				LangUtils.addReplecable("<generator>", e.getValue().getGeneratorItem().getItemMeta().getDisplayName());
+				LangUtils.sendMessage(sender, Message.CommandsCheckList);
+			}
+			
+			if (KGenerators.overAllPerPlayerGeneratorsEnabled)
+			{
+				LangUtils.addReplecable("<player>", player.getDisplayName());
+				LangUtils.sendMessage(sender, Message.CommandsLimitsHeader);
+				PlayerLimits pLimits = new PlayerLimits(player);
+				for (Entry<String, Generator> e : KGenerators.generators.entrySet())
+				{
+					int limit = pLimits.getLimit(e.getKey());
+					String limitS;
+					if (limit == -1){limitS = LangUtils.getMessage(Message.CommandsLimitsNone, false);}	else {limitS = String.valueOf(limit);}
+					
+					LangUtils.addReplecable("<generator>", e.getValue().getGeneratorItem().getItemMeta().getDisplayName());
+					LangUtils.addReplecable("<limit>", limitS);
+					LangUtils.sendMessage(sender, Message.CommandsLimitsList);
+				}
+				int limit = pLimits.getGlobalLimit();	String limitS;
+				if (limit == -1){limitS = LangUtils.getMessage(Message.CommandsLimitsNone, false);}	else {limitS = String.valueOf(limit);}
+				LangUtils.addReplecable("<limit>", limitS);
+				LangUtils.sendMessage(sender, Message.CommandsLimitsOverall);
+				
+			}
+		}
+		else
+		{
+			LangUtils.sendMessage(sender, Message.CommandsAnyPlayerDoesntExist);
+		}
+	}
 }

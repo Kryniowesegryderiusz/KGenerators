@@ -9,9 +9,12 @@ import org.bukkit.event.block.BlockBreakEvent;
 import org.bukkit.inventory.ItemStack;
 
 import me.kryniowesegryderiusz.KGenerators.GenerateBlockFunction;
-import me.kryniowesegryderiusz.KGenerators.Generator;
 import me.kryniowesegryderiusz.KGenerators.GeneratorsManager;
 import me.kryniowesegryderiusz.KGenerators.KGenerators;
+import me.kryniowesegryderiusz.KGenerators.PerPlayerGenerators;
+import me.kryniowesegryderiusz.KGenerators.Classes.Generator;
+import me.kryniowesegryderiusz.KGenerators.Classes.GeneratorLocation;
+import me.kryniowesegryderiusz.KGenerators.EnumsManager.Message;
 import me.kryniowesegryderiusz.KGenerators.Utils.LangUtils;
 
 public class onBlockBreakEvent implements Listener {
@@ -25,18 +28,25 @@ public class onBlockBreakEvent implements Listener {
 		
 		final ItemStack block = KGenerators.getBlocksUtils().getItemStackByBlock(e.getBlock());
 		
+		final Player player = e.getPlayer();
+		
 		final Location location = e.getBlock().getLocation();
 		final Location bLocation = location.clone().add(0, -1, 0);
 		
-		final Generator generator = KGenerators.generators.get(KGenerators.generatorsLocations.get(location));
-		final Generator bGenerator = KGenerators.generators.get(KGenerators.generatorsLocations.get(bLocation));
+		final GeneratorLocation gLocation = KGenerators.generatorsLocations.get(location);
+		final GeneratorLocation bgLocation = KGenerators.generatorsLocations.get(bLocation);
+		
+		Generator generator = null;
+		Generator bGenerator = null;
+		if (gLocation != null){generator = gLocation.getGenerator();}
+		if (bgLocation != null){bGenerator = bgLocation.getGenerator();}
 		
 		
 		if (bGenerator != null && bGenerator.getType().equals("double"))
 		{			
 			if (bGenerator.getChances().containsKey(block) || block.equals(bGenerator.getPlaceholder())) {
 				
-				if (block.equals(bGenerator.getPlaceholder())) {
+				if (block.equals(bGenerator.getPlaceholder()) || !PerPlayerGenerators.canUse(player, bgLocation)) {
 					e.setCancelled(true);
 					return;
 				}
@@ -52,7 +62,7 @@ public class onBlockBreakEvent implements Listener {
 		{
 			if (generator.getGeneratorBlock().equals(block)) {
 
-				checkIfPickingUp(e.getPlayer(), generator, location);
+				checkIfPickingUp(player, location, gLocation);
 				
 				e.setCancelled(true);
 				return;
@@ -63,16 +73,9 @@ public class onBlockBreakEvent implements Listener {
 
 		if (generator != null && generator.getType().equals("single"))
 		{
-			
-					
 				if (generator.getChances().containsKey(block) || generator.getGeneratorBlock().equals(block) || block.equals(generator.getPlaceholder())) {
 					
-					if (checkIfPickingUp(e.getPlayer(), generator, location)) {
-						e.setCancelled(true);
-						return;
-					}
-
-					if (block.equals(generator.getPlaceholder())) {
+					if (checkIfPickingUp(player, location, gLocation) || block.equals(generator.getPlaceholder()) || !PerPlayerGenerators.canUse(player, gLocation)) {
 						e.setCancelled(true);
 						return;
 					}
@@ -91,10 +94,11 @@ public class onBlockBreakEvent implements Listener {
 	 * Check if pick ups generator
 	 * True cancells event
 	 */
-	boolean checkIfPickingUp(Player p, Generator generator, Location location) {
+	boolean checkIfPickingUp(Player p, Location location, GeneratorLocation gLocation) {
+		Generator generator = gLocation.getGenerator();
 		if (!p.isSneaking()){
 			if (generator.getType().equals("double")) {
-				LangUtils.sendMessage(p, "generators.cant-break");
+				LangUtils.sendMessage(p, Message.GeneratorsCantBreak);
 				return true;
 			}
 			else
@@ -106,14 +110,18 @@ public class onBlockBreakEvent implements Listener {
 		{
 			if (!p.hasPermission("kgenerators.pickupbypass") && KGenerators.dependencies.contains("WorldGuard") && !KGenerators.getWorldGuardUtils().worldGuardCheck(location, p))
 			{
-				LangUtils.sendMessage(p, "generators.cant-pick-up");
+				LangUtils.sendMessage(p, Message.GeneratorsCantPickUpHere);
+				return true;
+			}
+			else if (!PerPlayerGenerators.canPickUp(p, gLocation))
+			{
 				return true;
 			}
 			else
 			{
-				GeneratorsManager.removeGenerator(generator, location, true);
+				GeneratorsManager.removeGenerator(gLocation, location, true);
 				LangUtils.addReplecable("<generator>", generator.getGeneratorItem().getItemMeta().getDisplayName());
-				LangUtils.sendMessage(p, "generators.picked-up");
+				LangUtils.sendMessage(p, Message.GeneratorsPickedUp);
 				return false;
 			}
 		}

@@ -7,16 +7,22 @@ import java.io.IOException;
 
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.LinkedHashMap;
+
 import org.bukkit.Bukkit;
 import org.bukkit.Location;
 import org.bukkit.configuration.InvalidConfigurationException;
+import org.bukkit.entity.Player;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.plugin.java.JavaPlugin;
 
+import me.kryniowesegryderiusz.KGenerators.Classes.Generator;
+import me.kryniowesegryderiusz.KGenerators.Classes.GeneratorLocation;
 import me.kryniowesegryderiusz.KGenerators.Listeners.onBlockBreakEvent;
 import me.kryniowesegryderiusz.KGenerators.Listeners.onBlockPistonEvent;
 import me.kryniowesegryderiusz.KGenerators.Listeners.onBlockPlaceEvent;
 import me.kryniowesegryderiusz.KGenerators.Listeners.onCraftItemEvent;
+import me.kryniowesegryderiusz.KGenerators.Listeners.onJetsMinions;
 import me.kryniowesegryderiusz.KGenerators.MultiVersion.BlocksUtils;
 import me.kryniowesegryderiusz.KGenerators.MultiVersion.WorldGuardUtils;
 import me.kryniowesegryderiusz.KGenerators.MultiVersion.RecipesLoader;
@@ -34,8 +40,8 @@ public class KGenerators extends JavaPlugin {
 	static Config messagesFile;
 	static Config recipesFile;
 
-	public static HashMap<String, Generator> generators = new HashMap<String, Generator>();
-	public static HashMap<Location, String> generatorsLocations = new HashMap<Location, String>();
+	public static LinkedHashMap<String, Generator> generators = new LinkedHashMap<String, Generator>();
+	public static HashMap<Location, GeneratorLocation> generatorsLocations = new HashMap<Location, GeneratorLocation>();
 	
 	/* For quick check */
 	public static ArrayList<ItemStack> generatorsItemStacks = new ArrayList<ItemStack>();
@@ -43,6 +49,8 @@ public class KGenerators extends JavaPlugin {
 	/* Global settings */
 	public static ArrayList<ItemStack> generatingWhitelist = new ArrayList<ItemStack>();
 	public static String lang = "en";
+	public static Boolean overAllPerPlayerGeneratorsEnabled = false;
+	public static int overAllPerPlayerGeneratorsPlaceLimit = -1;
 	
 	/* Dependencies */
 	public static ArrayList<String> dependencies = new ArrayList<String>();
@@ -66,6 +74,12 @@ public class KGenerators extends JavaPlugin {
     	if (Bukkit.getPluginManager().isPluginEnabled("SuperiorSkyblock2")) {
     		System.out.println("[KGenerators] Detected plugin SuperiorSkyblock2. Hooking into it.");
     		dependencies.add("SuperiorSkyblock2");
+    	}
+    	
+    	/* Dependencies check */
+    	if (Bukkit.getPluginManager().isPluginEnabled("JetsMinions")) {
+    		System.out.println("[KGenerators] Detected plugin JetsMinions. Hooking into it.");
+    		dependencies.add("JetsMinions");
     	}
     	
     	if (worldGuardUtils != null && KGenerators.getWorldGuardUtils().isWorldGuardHooked()) {
@@ -171,6 +185,11 @@ public class KGenerators extends JavaPlugin {
     	this.getServer().getPluginManager().registerEvents(new onBlockPlaceEvent(), this);
     	this.getServer().getPluginManager().registerEvents(new onCraftItemEvent(), this);
     	this.getServer().getPluginManager().registerEvents(new onBlockPistonEvent(), this);
+    	
+    	if (dependencies.contains("JetsMinions"))
+    	{
+    		this.getServer().getPluginManager().registerEvents(new onJetsMinions(), this);
+    	}
     	
     	System.out.println("[KGenerators] Plugin loaded properly!");  
     }

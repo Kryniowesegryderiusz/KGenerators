@@ -7,7 +7,7 @@
   <parent>
     <groupId>me.kryniowesegryderiusz</groupId>
     <artifactId>kgenerators-parent</artifactId>
-    <version>3.8.2</version>
+    <version>3.9.0</version>
   </parent>
 
 	<repositories>
@@ -44,6 +44,16 @@
 			<artifactId>jsr305</artifactId>
 			<version>3.0.2</version>
 		</dependency>
+		
+        <!--  JetsMinions  -->
+        <dependency>
+		    <groupId>me.jet315</groupId>
+		    <artifactId>VehiclesAPI</artifactId>
+		    <version>6.6.8</version>
+		    <scope>system</scope>
+		    <systemPath>${project.basedir}/src/main/dependencies/JetsMinions.jar</systemPath>
+		</dependency>
+
 	</dependencies>
 
    <build>

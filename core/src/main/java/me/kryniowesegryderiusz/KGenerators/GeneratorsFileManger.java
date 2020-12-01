@@ -3,12 +3,13 @@ package me.kryniowesegryderiusz.KGenerators;
 import java.io.IOException;
 
 import org.bukkit.Location;
+import org.bukkit.entity.Player;
 
 import me.kryniowesegryderiusz.KGenerators.Utils.Config;
 
 public abstract class GeneratorsFileManger {
 	
-	public static void saveGeneratorToFile(Location location, String generatorID){
+	public static void saveGeneratorToFile(Location location, Player player, String generatorID){
 		Config file = KGenerators.getPluginGeneratorsFile();
 		
 		int x = location.getBlockX();
@@ -16,6 +17,7 @@ public abstract class GeneratorsFileManger {
 		int z = location.getBlockZ();
 		String world  = location.getWorld().getName();
 		file.set("placedGenerators."+world+","+x+","+y+","+z+".generatorID", generatorID);
+		file.set("placedGenerators."+world+","+x+","+y+","+z+".owner", player.getName());
 		
 		try {
 			file.saveConfig();
@@ -34,6 +36,7 @@ public abstract class GeneratorsFileManger {
 		String world  = location.getWorld().getName();
 		
 		file.set("placedGenerators."+world+","+x+","+y+","+z+".generatorID", null);
+		file.set("placedGenerators."+world+","+x+","+y+","+z+".owner", null);
 		file.set("placedGenerators."+world+","+x+","+y+","+z, null);
 		
 		try {

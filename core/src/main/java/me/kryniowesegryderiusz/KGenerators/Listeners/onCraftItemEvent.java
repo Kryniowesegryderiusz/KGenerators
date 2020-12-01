@@ -9,8 +9,9 @@ import org.bukkit.event.inventory.CraftItemEvent;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.material.MaterialData;
 
-import me.kryniowesegryderiusz.KGenerators.Generator;
 import me.kryniowesegryderiusz.KGenerators.KGenerators;
+import me.kryniowesegryderiusz.KGenerators.Classes.Generator;
+import me.kryniowesegryderiusz.KGenerators.EnumsManager.Message;
 import me.kryniowesegryderiusz.KGenerators.Utils.LangUtils;
 
 public class onCraftItemEvent implements Listener {
@@ -33,7 +34,7 @@ public class onCraftItemEvent implements Listener {
 			ItemStack[] items = e.getInventory().getMatrix();
 			for (ItemStack i : items) {
 				if (i != null && i.equals(item)) {
-					LangUtils.sendMessage(p, "generators.cant-craft");
+					LangUtils.sendMessage(p, Message.GeneratorsCantCraft);
 					p.closeInventory();
 					e.setCancelled(true);
 					return;
@@ -47,7 +48,7 @@ public class onCraftItemEvent implements Listener {
 				if (!p.hasPermission(permission)) {
 					LangUtils.addReplecable("<generator>", g.getGeneratorItem().getItemMeta().getDisplayName());
 					LangUtils.addReplecable("<permission>", permission);
-					LangUtils.sendMessage(p, "generators.no-craft-permission");
+					LangUtils.sendMessage(p, Message.GeneratorsNoCraftPermission);
 					p.closeInventory();
 					e.setCancelled(true);
 					return;

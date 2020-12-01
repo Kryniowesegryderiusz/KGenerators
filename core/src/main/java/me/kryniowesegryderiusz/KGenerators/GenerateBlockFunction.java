@@ -9,6 +9,7 @@ import org.bukkit.inventory.ItemStack;
 import com.bgsoftware.superiorskyblock.api.SuperiorSkyblockAPI;
 import com.bgsoftware.superiorskyblock.api.island.Island;
 
+import me.kryniowesegryderiusz.KGenerators.Classes.Generator;
 import me.kryniowesegryderiusz.KGenerators.Utils.RandomSelector;
 import me.kryniowesegryderiusz.KGenerators.XSeries.XMaterial;
 
@@ -28,7 +29,7 @@ public abstract class GenerateBlockFunction {
 							return;
 						}
 						if (!block.equals(generator.getGeneratorBlock()) && !block.equals(air) && !KGenerators.getBlocksUtils().isOnWhitelist(location.getBlock()) && !block.equals(generator.getPlaceholder()) && !generator.getChances().containsKey(block) && !block.getType().equals(pistonHead.getType())) {
-							GeneratorsManager.removeGenerator(generator, location, true);
+							GeneratorsManager.removeGenerator(KGenerators.generatorsLocations.get(location), location, true);
 							return;
 						}
 						break;
@@ -38,7 +39,7 @@ public abstract class GenerateBlockFunction {
 							  return;
 						}
 						if (!block.equals(air) && !KGenerators.getBlocksUtils().isOnWhitelist(location.getBlock()) && !block.equals(generator.getPlaceholder()) && !generator.getChances().containsKey(block) && !block.getType().equals(pistonHead.getType())) {
-							GeneratorsManager.removeGenerator(generator, location.clone().add(0,-1,0), true);
+							GeneratorsManager.removeGenerator(KGenerators.generatorsLocations.get(location), location.clone().add(0,-1,0), true);
 							return;
 						}
 						break;

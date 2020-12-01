@@ -7,17 +7,23 @@ messages:
     cant-pick-up: "&cNie mozesz tu podniesc generatora!"
     no-craft-permission: "&cNie masz uprawnien &8(&7<permission>&8)&c, zeby stworzyc <generator>&c!"
     picked-up: "&aZebrano &e<generator>"
+    per-player-generator:
+      cant-place-more: '&cNie możesz postawić więcej, niż &6<number> &cgeneratorów!'
+      cant-place-more-type: '&cNie możesz postawić więcej niż &6<number> <generator>!'
+      cant-pick-up: '&cNie możesz zebrać generatora &6<owner>&c!'
+      cant-use: '&cNie możesz użyć generatora &6<owner>&c!'
   commands:
     any:
       wrong: "&cZła komenda! Wpisz /kgenerators, by uzyskać pomoc"
       no-permission: "&cNie masz uprawnień &8(&7<permission>&8)&c, by używać komendy /kgenerators"
+      player-not-online: "&cGracz nie jest online"
+      player-doesnt-exist: '&cGracz nie istnieje'
     list:
       listing: '&aDostępne generatory: &e'
       separator: '&a, &e'
       no-permission: '&cNie masz uprawnień &8(&7<permission>&8)&c, by sprawdzić listę generatorów'
       help: Sprawdź listę generatorów
     give:
-      player-not-online: "&cGracz nie jest online"
       generator-doesnt-exist: "&cTaki generator nie istnieje"
       generator-given: "&aGenerator <generator> został przyznany graczowi <player>"
       generator-recieved: "&aOtrzymałeś generator <generator>!"
@@ -27,7 +33,17 @@ messages:
     getall:
       recieved: "&aOtrzymano generatory"
       no-permission: "&cNie masz uprawnień &8(&7<permission>&8)&c, by otrzymać generatory"
-      help: Weź dostępne generatory
+      help: 'Weź dostępne generatory'
+    check:
+      header: '&aGracz &e<player> &apostawił:'
+      list: '&8- &e<number> <generator>'
+      no-permission-own: "&cNie masz uprawnień &8(&7<permission>&8)&c, by sprawdzać innych!"
+      help: Sprawdza generatory i limity
+    limits:
+      header: '&aGracz &e<player> &aposiada limity:'
+      specific: '&8- <generator>&a: &e<limit>'
+      overall: '&8- &aLimit ogólny: &e<limit>'
+      None: Brak
     reload:
       done: "&aPrzeładowano plik konfiguracyjny i wiadomości"
       no-permission: "&cNie masz uprawnień &8(&7<permission>&8)&c, żeby przeładować pliki konfiguracyjne!"

@@ -11,11 +11,14 @@ import org.bukkit.Location;
 import org.bukkit.NamespacedKey;
 import org.bukkit.configuration.ConfigurationSection;
 import org.bukkit.enchantments.Enchantment;
+import org.bukkit.entity.Player;
 import org.bukkit.inventory.ItemFlag;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.ShapedRecipe;
 import org.bukkit.inventory.meta.ItemMeta;
 
+import me.kryniowesegryderiusz.KGenerators.Classes.Generator;
+import me.kryniowesegryderiusz.KGenerators.Classes.GeneratorLocation;
 import me.kryniowesegryderiusz.KGenerators.Utils.Config;
 import me.kryniowesegryderiusz.KGenerators.XSeries.XUtils;
 
@@ -41,6 +44,16 @@ abstract class ConfigLoader {
 		
 		if (config.contains("settings.lang")) {
 			KGenerators.lang = config.getString("settings.lang");
+		}
+		
+		if (config.contains("settings.per-player-generators.enabled"))
+		{
+			KGenerators.overAllPerPlayerGeneratorsEnabled = config.getBoolean("settings.per-player-generators.enabled");
+		}
+		
+		if (config.contains("settings.per-player-generators.overall-place-limit"))
+		{
+			KGenerators.overAllPerPlayerGeneratorsPlaceLimit = config.getInt("settings.per-player-generators.overall-place-limit");
 		}
 		
 		/* Generator types loader */
@@ -115,6 +128,21 @@ abstract class ConfigLoader {
     			generator.setPistonPushAllowed(config.getBoolean("generators."+generatorID+".allow-piston-push"));
     		}
     		
+    		if (config.contains("generators."+generatorID+".per-player-generators.place-limit"))
+    		{
+    			generator.setPlaceLimit(config.getInt("generators."+generatorID+".per-player-generators.place-limit"));
+    		}
+    		
+    		if (config.contains("generators."+generatorID+".per-player-generators.only-owner-pickup"))
+    		{
+    			generator.setOnlyOwnerPickUp(config.getBoolean("generators."+generatorID+".per-player-generators.only-owner-pickup"));
+    		}
+    		
+    		if (config.contains("generators."+generatorID+".per-player-generators.only-owner-use"))
+    		{
+    			generator.setOnlyOwnerUse(config.getBoolean("generators."+generatorID+".per-player-generators.only-owner-use"));
+    		}
+    		
     		for (Entry<String, Generator> entry : KGenerators.generators.entrySet()) {
     			if (entry.getValue().getGeneratorItem().equals(generatorItem)) {
     				error = true;
@@ -149,6 +177,17 @@ abstract class ConfigLoader {
     		
     		String generatorID = file.getString("placedGenerators."+generatorLocationString+".generatorID");
     		
+    		Player owner;
+    		
+    		if (file.contains("placedGenerators."+generatorLocationString+".owner"))
+    		{
+    			owner = Bukkit.getPlayer(file.getString("placedGenerators."+generatorLocationString+".owner"));
+    		}
+    		else
+    		{
+    			owner = null;
+    		}   		
+    		
     		//0world 1x 2y 3z
     		String coordinates[] = generatorLocationString.split(",");
     		
@@ -159,9 +198,8 @@ abstract class ConfigLoader {
     		Location generatorLocation = new Location(KGenerators.getInstance().getServer().getWorld(world), x, y, z);
     		
     		if (generatorID != null){
-    			//System.out.println(generatorLocation + " " + generator);
-    			KGenerators.generatorsLocations.put(generatorLocation, generatorID);
-    			//System.out.println(generatorLocation);
+    			KGenerators.generatorsLocations.put(generatorLocation, new GeneratorLocation(generatorID, owner));
+    			PerPlayerGenerators.addGeneratorToPlayer(owner, generatorID);
     			amount++;
     		} 	    
     	}

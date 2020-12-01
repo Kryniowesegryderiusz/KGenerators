@@ -11,8 +11,10 @@ import org.bukkit.event.block.BlockPistonRetractEvent;
 import org.bukkit.inventory.ItemStack;
 
 import me.kryniowesegryderiusz.KGenerators.GenerateBlockFunction;
-import me.kryniowesegryderiusz.KGenerators.Generator;
 import me.kryniowesegryderiusz.KGenerators.KGenerators;
+import me.kryniowesegryderiusz.KGenerators.PerPlayerGenerators;
+import me.kryniowesegryderiusz.KGenerators.Classes.Generator;
+import me.kryniowesegryderiusz.KGenerators.Classes.GeneratorLocation;
 import me.kryniowesegryderiusz.KGenerators.XSeries.XMaterial;
 
 public class onBlockPistonEvent implements Listener {
@@ -34,13 +36,21 @@ public class onBlockPistonEvent implements Listener {
 			Location location = block.getLocation();
 			Location bLocation = location.clone().add(0,-1,0);
 			
-			Generator generator = KGenerators.generators.get(KGenerators.generatorsLocations.get(location));
-			Generator bGenerator = KGenerators.generators.get(KGenerators.generatorsLocations.get(bLocation));
+			final GeneratorLocation gLocation = KGenerators.generatorsLocations.get(location);
+			final GeneratorLocation bgLocation = KGenerators.generatorsLocations.get(bLocation);
+			
+			Generator generator = null;
+			Generator bGenerator = null;
+			if (gLocation != null){generator = gLocation.getGenerator();}
+			if (bgLocation != null){bGenerator = bgLocation.getGenerator();}
 			
 			if (generator != null) {
 				if (generator.getType().equals("single") && generator.isPistonPushAllowed()) {
 					if (generator.getPlaceholder() == null || !generator.getPlaceholder().equals(KGenerators.getBlocksUtils().getItemStackByBlock(block))) {
-						GenerateBlockFunction.generateBlock(location, generator, 1);
+						if (PerPlayerGenerators.canPush(generator))
+						{
+							GenerateBlockFunction.generateBlock(location, generator, 1);
+						}
 					}
 					else
 					{
@@ -57,7 +67,10 @@ public class onBlockPistonEvent implements Listener {
 				if (bGenerator.getType().equals("double") && bGenerator.isPistonPushAllowed())
 				{
 					if (bGenerator.getPlaceholder() == null || !bGenerator.getPlaceholder().equals(KGenerators.getBlocksUtils().getItemStackByBlock(block))) {
-						GenerateBlockFunction.generateBlock(location, bGenerator, 1);
+						if (PerPlayerGenerators.canPush(generator))
+						{
+							GenerateBlockFunction.generateBlock(location, generator, 1);
+						}
 					}
 					else
 					{
