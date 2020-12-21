@@ -75,18 +75,25 @@ public abstract class EnumsManager {
 	
 	public static enum EnumWGFlags
 	{
-		PICK_IP ("kgenerators-pick-up"),
-		ONLY_GEN_BREAK ("kgenerators-only-gen-break");
+		PICK_IP ("kgenerators-pick-up", true),
+		ONLY_GEN_BREAK ("kgenerators-only-gen-break", false);
 		
-		String f;
+		String flagId;
+		Boolean defaultState;
 
-		EnumWGFlags(String f) {
-			this.f = f;
+		EnumWGFlags(String flagId, Boolean defaultState) {
+			this.flagId = flagId;
+			this.defaultState = defaultState;
 		}
 		
 		public String getFlagId()
 		{
-			return this.f;
+			return this.flagId;
+		}
+		
+		public Boolean getFlagDefault()
+		{
+			return this.defaultState;
 		}
 	}
 

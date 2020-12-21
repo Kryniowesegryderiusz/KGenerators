@@ -47,7 +47,7 @@ public class WorldGuardUtils_1_13 implements WorldGuardUtils {
 			{
 				System.out.println("[KGenerators] Registering worldguard " + eflag.getFlagId() + " flag");
 				try {
-					StateFlag flag = new StateFlag(eflag.getFlagId(), true);
+					StateFlag flag = new StateFlag(eflag.getFlagId(), eflag.getFlagDefault());
 					registry.register(flag);
 					if (eflag == EnumWGFlags.PICK_IP) PICK_UP_FLAG = flag;
 					if (eflag == EnumWGFlags.ONLY_GEN_BREAK) ONLY_GEN_BREAK_FLAG = flag;

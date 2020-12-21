@@ -18,8 +18,8 @@ public class WorldGuardUtils_1_8 implements WorldGuardUtils {
 	
 	WorldGuardPlugin worldGuard = (WorldGuardPlugin) KGenerators.getInstance().getServer().getPluginManager().getPlugin("WorldGuard");
 	
-	public static StateFlag PICK_UP_FLAG = new StateFlag(EnumWGFlags.PICK_IP.getFlagId(), true);
-	public static StateFlag ONLY_GEN_BREAK_FLAG = new StateFlag(EnumWGFlags.ONLY_GEN_BREAK.getFlagId(), true);
+	public static StateFlag PICK_UP_FLAG = new StateFlag(EnumWGFlags.PICK_IP.getFlagId(), EnumWGFlags.PICK_IP.getFlagDefault());
+	public static StateFlag ONLY_GEN_BREAK_FLAG = new StateFlag(EnumWGFlags.ONLY_GEN_BREAK.getFlagId(), EnumWGFlags.ONLY_GEN_BREAK.getFlagDefault());
 
 	@Override
 	public boolean isWorldGuardHooked() {
