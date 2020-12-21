@@ -11,17 +11,19 @@ import com.sk89q.worldguard.protection.flags.StateFlag;
 import com.sk89q.worldguard.protection.flags.registry.FlagConflictException;
 import com.sk89q.worldguard.protection.flags.registry.FlagRegistry;
 
+import me.kryniowesegryderiusz.KGenerators.EnumsManager.EnumWGFlags;
 import me.kryniowesegryderiusz.KGenerators.KGenerators;
 
 public class WorldGuardUtils_1_8 implements WorldGuardUtils {
 	
 	WorldGuardPlugin worldGuard = (WorldGuardPlugin) KGenerators.getInstance().getServer().getPluginManager().getPlugin("WorldGuard");
 	
-	public static StateFlag PICK_UP_FLAG = new StateFlag("kgenerators-pick-up", true);
+	public static StateFlag PICK_UP_FLAG = new StateFlag(EnumWGFlags.PICK_IP.getFlagId(), true);
+	public static StateFlag ONLY_GEN_BREAK_FLAG = new StateFlag(EnumWGFlags.ONLY_GEN_BREAK.getFlagId(), true);
 
 	@Override
 	public boolean isWorldGuardHooked() {
-		if (PICK_UP_FLAG == null)
+		if (PICK_UP_FLAG == null || ONLY_GEN_BREAK_FLAG == null)
 		{
 			return false;
 		}
@@ -29,32 +31,54 @@ public class WorldGuardUtils_1_8 implements WorldGuardUtils {
 	}
 	
 	@Override
-	public void worldGuardFlagAdd() {
-		FlagRegistry registry = worldGuard.getFlagRegistry();
-		
-	    try {
-	        registry.register(PICK_UP_FLAG);
-	    } catch (FlagConflictException e) {
-	    	System.out.println("[KGenerators] !!! ERROR !!! WorldGuard FlagConflictException!");
-	    	Flag<?> existing = registry.get("kgenerators-pick-up");
-	        if (existing instanceof StateFlag) {
-	        	System.out.println("[KGenerators] !!! WARNING !!! Overriding flag!");
-	        	PICK_UP_FLAG = (StateFlag) existing;
-	        } else {
-	            System.out.println("[KGenerators] !!! ERROR !!! WorldGuard flag overriding not possible! Types dont match!");
-	            PICK_UP_FLAG = null;
-	        }
-	    }
+	public void worldGuardFlagsAdd() {
+		try {
+			FlagRegistry registry = worldGuard.getFlagRegistry();
+			
+			for (EnumWGFlags eflag : EnumWGFlags.values())
+			{		
+				System.out.println("[KGenerators] Registering worldguard " + eflag.getFlagId() + " flag");
+			    try {
+			    	
+			    	if (eflag == EnumWGFlags.PICK_IP) registry.register(PICK_UP_FLAG);
+					if (eflag == EnumWGFlags.ONLY_GEN_BREAK) registry.register(ONLY_GEN_BREAK_FLAG);
+			        
+			    } catch (FlagConflictException e) {
+			    	System.out.println("[KGenerators] !!! ERROR !!! WorldGuard FlagConflictException!");
+			    	Flag<?> existing = registry.get(eflag.getFlagId());
+			        if (existing instanceof StateFlag) {
+			        	System.out.println("[KGenerators] !!! WARNING !!! Overriding flag!");
+				    	if (eflag == EnumWGFlags.PICK_IP) PICK_UP_FLAG = (StateFlag) existing;
+			    		if (eflag == EnumWGFlags.ONLY_GEN_BREAK) ONLY_GEN_BREAK_FLAG = (StateFlag) existing;
+			        	
+			        } else {
+			            System.out.println("[KGenerators] !!! ERROR !!! WorldGuard flag overriding not possible! Types dont match!");
+				    	if (eflag == EnumWGFlags.PICK_IP) PICK_UP_FLAG = null;
+			    		if (eflag == EnumWGFlags.ONLY_GEN_BREAK) ONLY_GEN_BREAK_FLAG = null;
+			        }
+			    }
+			}
+		} catch (NoClassDefFoundError e) {
+			System.out.println("[KGenerators] !!! ERROR !!! An error occured, while adding WorldGuard flags!");
+			System.out.println("[KGenerators] !!! ERROR !!! WorldGuard is installed, but didnt load properly!");
+			PICK_UP_FLAG = null;
+			ONLY_GEN_BREAK_FLAG = null;
+			//e.printStackTrace();
+		}
 	}
 
 	@Override
-	public boolean worldGuardCheck(Location location, Player player) {
+	public boolean worldGuardFlagCheck(Location location, Player player, EnumWGFlags flag) {
 		
 		LocalPlayer localPlayer = worldGuard.wrapPlayer(player);
 		RegionContainer container = worldGuard.getRegionContainer();
 		RegionQuery query = container.createQuery();
 		
-		if (query.testState(location, localPlayer, PICK_UP_FLAG)) 
+		StateFlag stateFlag = null;
+		if (flag == EnumWGFlags.PICK_IP) stateFlag = PICK_UP_FLAG;
+		if (flag == EnumWGFlags.ONLY_GEN_BREAK) stateFlag = ONLY_GEN_BREAK_FLAG;
+		
+		if (query.testState(location, localPlayer, stateFlag)) 
 		{
 			return true;
 		}

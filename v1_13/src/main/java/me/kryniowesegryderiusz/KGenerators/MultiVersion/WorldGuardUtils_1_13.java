@@ -15,13 +15,16 @@ import com.sk89q.worldguard.protection.flags.registry.FlagRegistry;
 import com.sk89q.worldguard.protection.managers.RegionManager;
 import com.sk89q.worldguard.protection.regions.RegionContainer;
 
+import me.kryniowesegryderiusz.KGenerators.EnumsManager.EnumWGFlags;
+
 public class WorldGuardUtils_1_13 implements WorldGuardUtils {
 	
 	public static StateFlag PICK_UP_FLAG;
+	public static StateFlag ONLY_GEN_BREAK_FLAG;
 	
 	@Override
 	public boolean isWorldGuardHooked() {
-		if (PICK_UP_FLAG == null) {
+		if (PICK_UP_FLAG == null || ONLY_GEN_BREAK_FLAG == null) {
 			return false;
 		}
 		else
@@ -31,34 +34,51 @@ public class WorldGuardUtils_1_13 implements WorldGuardUtils {
 	}
 	
 	@Override
-	public void worldGuardFlagAdd() {
-		FlagRegistry registry = WorldGuard.getInstance().getFlagRegistry();
-		
-		if (registry == null) {
-			return;
-		}
+	public void worldGuardFlagsAdd() {
 		
 		try {
-			StateFlag flag = new StateFlag("kgenerators-pick-up", true);
-			registry.register(flag);
-			PICK_UP_FLAG = flag;
-		}
-		catch (FlagConflictException e)
-		{
-			System.out.println("[KGenerators] !!! ERROR !!! WorldGuard FlagConflictException!");
-			Flag<?> existing = registry.get("kgenerators-pick-up");
-	        if (existing instanceof StateFlag) {
-	        	System.out.println("[KGenerators] !!! WARNING !!! Overriding flag!");
-	        	PICK_UP_FLAG = (StateFlag) existing;
-	        } else {
-	            System.out.println("[KGenerators] !!! ERROR !!! WorldGuard flag overriding not possible! Types dont match!");
-	        }
+			FlagRegistry registry = WorldGuard.getInstance().getFlagRegistry();
+			
+			if (registry == null) {
+				return;
+			}
+			
+			for (EnumWGFlags eflag : EnumWGFlags.values())
+			{
+				System.out.println("[KGenerators] Registering worldguard " + eflag.getFlagId() + " flag");
+				try {
+					StateFlag flag = new StateFlag(eflag.getFlagId(), true);
+					registry.register(flag);
+					if (eflag == EnumWGFlags.PICK_IP) PICK_UP_FLAG = flag;
+					if (eflag == EnumWGFlags.ONLY_GEN_BREAK) ONLY_GEN_BREAK_FLAG = flag;
+					
+				}
+				catch (FlagConflictException e)
+				{
+					System.out.println("[KGenerators] !!! ERROR !!! WorldGuard FlagConflictException!");
+					Flag<?> existing = registry.get(eflag.getFlagId());
+			        if (existing instanceof StateFlag) {
+			        	System.out.println("[KGenerators] !!! WARNING !!! Overriding flag!");
+			        	
+			        	if (eflag == EnumWGFlags.PICK_IP) PICK_UP_FLAG = (StateFlag) existing;
+						if (eflag == EnumWGFlags.ONLY_GEN_BREAK) ONLY_GEN_BREAK_FLAG = (StateFlag) existing;
+
+			        } else {
+			            System.out.println("[KGenerators] !!! ERROR !!! WorldGuard flag overriding not possible! Types dont match!");
+			        }
+				}
+				
+			}
+		} catch (NoClassDefFoundError e) {
+			System.out.println("[KGenerators] !!! ERROR !!! An error occured, while adding WorldGuard flags!");
+			System.out.println("[KGenerators] !!! ERROR !!! WorldGuard is installed, but didnt load properly!");
+			//e.printStackTrace();
 		}
 	}
 
 	/* Returns if pick up is allow/deny */
 	@Override
-	public boolean worldGuardCheck(Location location, Player player) {
+	public boolean worldGuardFlagCheck(Location location, Player player, EnumWGFlags flag) {
 		
 		RegionContainer container = WorldGuard.getInstance().getPlatform().getRegionContainer();
 		
@@ -67,10 +87,11 @@ public class WorldGuardUtils_1_13 implements WorldGuardUtils {
 		
 		LocalPlayer localPlayer = WorldGuardPlugin.inst().wrapPlayer(player);
 		
-		if (regionSet.testState(localPlayer, PICK_UP_FLAG)) 
-		{
-			return true;
-		}
+		StateFlag stateFlag = null;
+		if (flag == EnumWGFlags.PICK_IP) stateFlag = PICK_UP_FLAG;
+		if (flag == EnumWGFlags.ONLY_GEN_BREAK) stateFlag = ONLY_GEN_BREAK_FLAG;
+		
+		if (flag != null && regionSet.testState(localPlayer, stateFlag)) return true;
 		return false;
 	}
 }

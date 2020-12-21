@@ -8,6 +8,7 @@ import java.util.Map;
 
 import org.bukkit.ChatColor;
 import org.bukkit.command.CommandSender;
+import org.bukkit.entity.Player;
 
 import me.kryniowesegryderiusz.KGenerators.EnumsManager.Message;
 import me.kryniowesegryderiusz.KGenerators.KGenerators;
@@ -42,7 +43,8 @@ public abstract class LangUtils {
 	
     @SuppressWarnings("rawtypes")
 	public static void sendMessage (CommandSender sender, Message m){
-    	String message = lang.get(m.getKey());
+    	String key = m.getKey();
+    	String message = lang.get(key);
     	if (message != null && message.length() != 0){
     		
 	        for (Map.Entry part : replecables.entrySet()) {
@@ -55,7 +57,15 @@ public abstract class LangUtils {
 	        
         	String[] splittedMessage = message.split("\n");
     		for (String s : splittedMessage) {
-    			sender.sendMessage(s);
+    			
+    			if (key.split("\\.")[0].contains("generators") && KGenerators.generatorsActionbarMessages)
+    			{
+    				KGenerators.getActionBar().sendActionBar((Player) sender, s);
+    			}
+    			else
+    			{
+    				sender.sendMessage(s);
+    			}
     		}
     		
     		replecables.clear();

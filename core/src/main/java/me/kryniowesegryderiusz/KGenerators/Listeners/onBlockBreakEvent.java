@@ -14,13 +14,15 @@ import me.kryniowesegryderiusz.KGenerators.KGenerators;
 import me.kryniowesegryderiusz.KGenerators.PerPlayerGenerators;
 import me.kryniowesegryderiusz.KGenerators.Classes.Generator;
 import me.kryniowesegryderiusz.KGenerators.Classes.GeneratorLocation;
+import me.kryniowesegryderiusz.KGenerators.EnumsManager.EnumWGFlags;
 import me.kryniowesegryderiusz.KGenerators.EnumsManager.Message;
 import me.kryniowesegryderiusz.KGenerators.Utils.LangUtils;
 
 public class onBlockBreakEvent implements Listener {
 	
 	@EventHandler(priority = EventPriority.HIGHEST)
-	public void BlockBreakEvent(final BlockBreakEvent e){
+	public void BlockBreakEvent(final BlockBreakEvent e)
+	{
 		
 		if (e.isCancelled()) {
 			return;
@@ -43,7 +45,7 @@ public class onBlockBreakEvent implements Listener {
 		
 		
 		if (bGenerator != null && bGenerator.getType().equals("double"))
-		{			
+		{	
 			if (bGenerator.getChances().containsKey(block) || block.equals(bGenerator.getPlaceholder())) {
 				
 				if (block.equals(bGenerator.getPlaceholder()) || !PerPlayerGenerators.canUse(player, bgLocation)) {
@@ -73,22 +75,29 @@ public class onBlockBreakEvent implements Listener {
 
 		if (generator != null && generator.getType().equals("single"))
 		{
-				if (generator.getChances().containsKey(block) || generator.getGeneratorBlock().equals(block) || block.equals(generator.getPlaceholder())) {
-					
-					if (checkIfPickingUp(player, location, gLocation) || block.equals(generator.getPlaceholder()) || !PerPlayerGenerators.canUse(player, gLocation)) {
-						e.setCancelled(true);
-						return;
-					}
-					
-					if (block.equals(generator.getGeneratorBlock()) && !generator.getChances().containsKey(generator.getGeneratorBlock())) {
-						
-						return;
-					}
+			if (generator.getChances().containsKey(block) || generator.getGeneratorBlock().equals(block) || block.equals(generator.getPlaceholder())) {
 				
-					GenerateBlockFunction.generateBlock(location, generator, 1);
+				if (checkIfPickingUp(player, location, gLocation) || block.equals(generator.getPlaceholder()) || !PerPlayerGenerators.canUse(player, gLocation)) {
+					e.setCancelled(true);
 					return;
 				}
+				
+				if (block.equals(generator.getGeneratorBlock()) && !generator.getChances().containsKey(generator.getGeneratorBlock())) {
+					return;
+				}
+			
+				GenerateBlockFunction.generateBlock(location, generator, 1);
+				return;
+			}
 		}
+		
+		if (KGenerators.dependencies.contains("WorldGuard") && !player.hasPermission("kgenerators.bypass.worldguard") && KGenerators.getWorldGuardUtils().worldGuardFlagCheck(location, player, EnumWGFlags.ONLY_GEN_BREAK))
+		{
+			LangUtils.sendMessage(player, Message.GeneratorsOnlyGenBreakHere);
+			e.setCancelled(true);
+			return;
+		}
+		
 	}
 	/* 
 	 * Check if pick ups generator
@@ -108,7 +117,7 @@ public class onBlockBreakEvent implements Listener {
 		}
 		else
 		{
-			if (!p.hasPermission("kgenerators.pickupbypass") && KGenerators.dependencies.contains("WorldGuard") && !KGenerators.getWorldGuardUtils().worldGuardCheck(location, p))
+			if (KGenerators.dependencies.contains("WorldGuard") && !p.hasPermission("kgenerators.bypass.worldguard") && !KGenerators.getWorldGuardUtils().worldGuardFlagCheck(location, p, EnumWGFlags.PICK_IP))
 			{
 				LangUtils.sendMessage(p, Message.GeneratorsCantPickUpHere);
 				return true;
@@ -122,7 +131,7 @@ public class onBlockBreakEvent implements Listener {
 				GeneratorsManager.removeGenerator(gLocation, location, true);
 				LangUtils.addReplecable("<generator>", generator.getGeneratorItem().getItemMeta().getDisplayName());
 				LangUtils.sendMessage(p, Message.GeneratorsPickedUp);
-				return false;
+				return true;
 			}
 		}
 	}

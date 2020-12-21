@@ -5,6 +5,7 @@ messages:
     cant-break: "&cKucnij, żeby zebrać generator!"
     cant-craft: "&cNie mozesz wytworzyc niczego z generatora!"
     cant-pick-up: "&cNie mozesz tu podniesc generatora!"
+    only-gen-break: "&cNa tym terenie możesz kopać tylko wygenerowane bloki!"
     no-craft-permission: "&cNie masz uprawnien &8(&7<permission>&8)&c, zeby stworzyc <generator>&c!"
     picked-up: "&aZebrano &e<generator>"
     per-player-generator:

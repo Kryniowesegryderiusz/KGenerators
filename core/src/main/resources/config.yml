@@ -21,6 +21,9 @@ settings:
     #Can be overwritten by permission: kgenerators.overallplacelimit.<limit>
     #-1 by default
     overall-place-limit: -1
+  #*Optional* Should "generators" lang section be sent by actionbar instad of chat?
+  #Enabled by default
+  generators-actionbar-messages: true
 generators:
   #unique ID
   stone_generator:

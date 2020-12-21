@@ -8,11 +8,11 @@ import java.io.IOException;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.LinkedHashMap;
+import java.util.Map.Entry;
 
 import org.bukkit.Bukkit;
 import org.bukkit.Location;
 import org.bukkit.configuration.InvalidConfigurationException;
-import org.bukkit.entity.Player;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.plugin.java.JavaPlugin;
 
@@ -22,7 +22,9 @@ import me.kryniowesegryderiusz.KGenerators.Listeners.onBlockBreakEvent;
 import me.kryniowesegryderiusz.KGenerators.Listeners.onBlockPistonEvent;
 import me.kryniowesegryderiusz.KGenerators.Listeners.onBlockPlaceEvent;
 import me.kryniowesegryderiusz.KGenerators.Listeners.onCraftItemEvent;
+import me.kryniowesegryderiusz.KGenerators.Listeners.onExplosion;
 import me.kryniowesegryderiusz.KGenerators.Listeners.onJetsMinions;
+import me.kryniowesegryderiusz.KGenerators.MultiVersion.ActionBar;
 import me.kryniowesegryderiusz.KGenerators.MultiVersion.BlocksUtils;
 import me.kryniowesegryderiusz.KGenerators.MultiVersion.WorldGuardUtils;
 import me.kryniowesegryderiusz.KGenerators.MultiVersion.RecipesLoader;
@@ -51,6 +53,7 @@ public class KGenerators extends JavaPlugin {
 	public static String lang = "en";
 	public static Boolean overAllPerPlayerGeneratorsEnabled = false;
 	public static int overAllPerPlayerGeneratorsPlaceLimit = -1;
+	public static Boolean generatorsActionbarMessages = true;
 	
 	/* Dependencies */
 	public static ArrayList<String> dependencies = new ArrayList<String>();
@@ -59,6 +62,7 @@ public class KGenerators extends JavaPlugin {
 	private RecipesLoader recipesLoader;
 	private static BlocksUtils blocksUtils;
 	private static WorldGuardUtils worldGuardUtils;
+	private static ActionBar actionBar;
 	
     @Override
     public void onEnable() {
@@ -67,6 +71,31 @@ public class KGenerators extends JavaPlugin {
 
 		@SuppressWarnings("unused")
 		Metrics metrics = new Metrics(this, pluginId);
+		metrics.addCustomChart(new Metrics.SingleLineChart("number_of_loaded_generators", () -> KGenerators.generatorsLocations.size()));
+		metrics.addCustomChart(new Metrics.SingleLineChart("number_of_single_generators", () -> {
+			int nr = 0;
+			for (Entry<String, Generator> g : KGenerators.generators.entrySet())
+			{
+				if (g.getValue().getType().equals("single"))
+				{
+					nr++;
+				}
+			}
+			return nr;
+			}));
+		metrics.addCustomChart(new Metrics.SingleLineChart("number_of_double_generators", () -> {
+			int nr = 0;
+			for (Entry<String, Generator> g : KGenerators.generators.entrySet())
+			{
+				if (g.getValue().getType().equals("double"))
+				{
+					nr++;
+				}
+			}
+			return nr;
+			}));
+		
+		metrics.addCustomChart(new Metrics.SimplePie("per_player_generators_enabled", () -> overAllPerPlayerGeneratorsEnabled.toString()));
     	
     	ConfigManager.setup();
     	
@@ -76,20 +105,24 @@ public class KGenerators extends JavaPlugin {
     		dependencies.add("SuperiorSkyblock2");
     	}
     	
-    	/* Dependencies check */
+    	if (Bukkit.getPluginManager().isPluginEnabled("BentoBox")) {
+    		System.out.println("[KGenerators] Detected plugin BentoBox. Hooking into it.");
+    		dependencies.add("BentoBox");
+    	}
+    	
     	if (Bukkit.getPluginManager().isPluginEnabled("JetsMinions")) {
     		System.out.println("[KGenerators] Detected plugin JetsMinions. Hooking into it.");
     		dependencies.add("JetsMinions");
     	}
     	
     	if (worldGuardUtils != null && KGenerators.getWorldGuardUtils().isWorldGuardHooked()) {
-   			System.out.println("[KGenerators] Detected plugin WorldGuard. Hooking into it. Added kgenerators-pick-up flag!");
+   			System.out.println("[KGenerators] Detected plugin WorldGuard. Hooked into it.");
    			dependencies.add("WorldGuard");
     	}
     	else if (worldGuardUtils != null)
     	{
     		if (Bukkit.getPluginManager().isPluginEnabled("WorldGuard")) {
-    			System.out.println("[KGenerators] Detected plugin WorldGuard, but couldnt hook into it! Search console for errors!");
+    			System.out.println("[KGenerators] Detected plugin WorldGuard, but couldnt hook into it! Search console log above for errors!");
     		}
     	}
     	
@@ -147,7 +180,10 @@ public class KGenerators extends JavaPlugin {
 		} catch (IOException | InvalidConfigurationException e2) {
 			e2.printStackTrace();
 		}
-    	ConfigLoader.loadGenerators();
+    	
+        Bukkit.getScheduler().runTask(instance, () -> {
+        	ConfigLoader.loadGenerators();
+        });
     	
     	/* Languages manager */
     	mkdir("lang");
@@ -185,13 +221,14 @@ public class KGenerators extends JavaPlugin {
     	this.getServer().getPluginManager().registerEvents(new onBlockPlaceEvent(), this);
     	this.getServer().getPluginManager().registerEvents(new onCraftItemEvent(), this);
     	this.getServer().getPluginManager().registerEvents(new onBlockPistonEvent(), this);
+    	this.getServer().getPluginManager().registerEvents(new onExplosion(), this);
     	
     	if (dependencies.contains("JetsMinions"))
     	{
     		this.getServer().getPluginManager().registerEvents(new onJetsMinions(), this);
     	}
     	
-    	System.out.println("[KGenerators] Plugin loaded properly!");  
+    	System.out.println("[KGenerators] Placed generators are loaded in delayed init task! Informations about them are located further in this log!");
     }
     
     @Override
@@ -234,6 +271,10 @@ public class KGenerators extends JavaPlugin {
     	return worldGuardUtils;
     }
     
+    public static ActionBar getActionBar(){
+    	return actionBar;
+    }
+    
 	static void mkdir(String dir){
 		File file = new File(KGenerators.getInstance().getDataFolder()+"/"+dir);
 		
@@ -254,23 +295,34 @@ public class KGenerators extends JavaPlugin {
     	String recipesPackage;
     	String blocksPackage;
     	String wgPackage;
+    	String actionBarPackage;
     	
-    	if (version.contains("1.8") || version.contains("1.9") || version.contains("1.10") || version.contains("1.11")) {
+    	if (version.contains("1.8")) {
     		recipesPackage = packageName + ".RecipesLoader_1_8";
     		blocksPackage = packageName + ".BlocksUtils_1_8";
     		wgPackage = packageName + ".WorldGuardUtils_1_8";
+    		actionBarPackage = packageName + ".ActionBar_1_8";
+    	} 
+    	else if (version.contains("1.9") || version.contains("1.10") || version.contains("1.11"))
+    	{
+    		recipesPackage = packageName + ".RecipesLoader_1_8";
+    		blocksPackage = packageName + ".BlocksUtils_1_8";
+    		wgPackage = packageName + ".WorldGuardUtils_1_8";
+    		actionBarPackage = packageName + ".ActionBar_1_9";
     	}
     	else if (version.contains("1.12"))
     	{
     		recipesPackage = packageName + ".RecipesLoader_1_12";
     		blocksPackage = packageName + ".BlocksUtils_1_8";
     		wgPackage = packageName + ".WorldGuardUtils_1_8";
+    		actionBarPackage = packageName + ".ActionBar_1_9";
     	}
     	else
     	{
     		recipesPackage = packageName + ".RecipesLoader_1_13";
     		blocksPackage = packageName + ".BlocksUtils_1_13";
     		wgPackage = packageName + ".WorldGuardUtils_1_13";
+    		actionBarPackage = packageName + ".ActionBar_1_9";
     	}
     	
     	try {
@@ -278,8 +330,9 @@ public class KGenerators extends JavaPlugin {
 			blocksUtils = (BlocksUtils) Class.forName(blocksPackage).newInstance();
 			if (this.getServer().getPluginManager().getPlugin("WorldGuard") != null) {
 				worldGuardUtils = (WorldGuardUtils) Class.forName(wgPackage).newInstance();
-	    		worldGuardUtils.worldGuardFlagAdd();
+	    		worldGuardUtils.worldGuardFlagsAdd();
 	    	}
+			actionBar = (ActionBar) Class.forName(actionBarPackage).newInstance();
 			
 		} catch (InstantiationException | IllegalAccessException | ClassNotFoundException e3) {
 			e3.printStackTrace();

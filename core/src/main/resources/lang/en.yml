@@ -4,6 +4,7 @@ messages:
   generators:
     cant-break: '&cYou should sneak to pick up this generator!'
     cant-pick-up: '&cYou cant pick up generator here!'
+    only-gen-break: '&cYou can only dig generated blocks here!'
     cant-craft: '&cYou cant craft anything from generator!'
     picked-up: '&e<generator> &apicked up'
     no-craft-permission: '&cYou dont have permission &8(&7<permission>&8)&c to craft <generator>&c!'

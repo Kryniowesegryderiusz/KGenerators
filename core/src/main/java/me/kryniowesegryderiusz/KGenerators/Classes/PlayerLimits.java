@@ -1,5 +1,6 @@
 package me.kryniowesegryderiusz.KGenerators.Classes;
 
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map.Entry;
 
@@ -18,15 +19,23 @@ public class PlayerLimits {
 		
 		/* Filling variables */
 		this.globalLimit = KGenerators.overAllPerPlayerGeneratorsPlaceLimit;
+		
 		for (Entry<String, Generator> e : KGenerators.generators.entrySet())
 		{
 			this.generatorsLimits.put(e.getKey(), e.getValue().getPlaceLimit());
 		}
 		
-		/* Adjusting limits basing on numeric permissions */
+		ArrayList<String> bypassedGenerators = new ArrayList<String>();
+		Boolean globalLimitBypass = false;
+		
+		/* Checking limits */
+		player.recalculatePermissions();
+		
 		for (PermissionAttachmentInfo pai : player.getEffectivePermissions())
 		{
+			
 			String perm = pai.getPermission();
+			//System.out.println(player.getName() + " " + perm + " " + pai.getValue());
 			
 			if (perm.contains("kgenerators.overallplacelimit"))
 			{
@@ -57,22 +66,28 @@ public class PlayerLimits {
 						}
 					} catch (NumberFormatException e1) {}
 				}
+				
+				if (perm.contains("kgenerators.placelimit."+generatorId+".bypass"))
+				{
+					bypassedGenerators.add(generatorId);
+				}
+			}
+			
+			if (perm.contains("kgenerators.overallplacelimit.bypass"))
+			{
+				globalLimitBypass = true;
 			}
 		}
 		
 		/* Adjusting limits basing on bypass permissions */
-		if (player.hasPermission("kgenerators.overallplacelimit.bypass"))
+		if (globalLimitBypass)
 		{
 			this.globalLimit = -1;
 		}
 		
-		for (Entry<String, Generator> e : KGenerators.generators.entrySet())
+		for (String generatorId : bypassedGenerators)
 		{
-			String generatorId = e.getKey();
-			if (player.hasPermission("kgenerators.placelimit."+generatorId+".bypass"))
-			{
-				this.generatorsLimits.put(generatorId, -1);
-			}
+			this.generatorsLimits.put(generatorId, -1);
 		}
 	}
 	

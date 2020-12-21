@@ -6,6 +6,7 @@ public abstract class EnumsManager {
     	
     	GeneratorsCantBreak("generators.cant-break", "&cYou should sneak to pick up this generator!"),
     	GeneratorsCantPickUpHere("generators.cant-pick-up", "&cYou cant pick up generator here!"),
+    	GeneratorsOnlyGenBreakHere("generators.only-gen-break", "&cYou can only dig generated blocks here!"),
     	GeneratorsCantCraft("generators.cant-craft", "&cYou cant craft anything from generator!"),
     	GeneratorsPickedUp("generators.picked-up", "&e<generator> &apicked up"),
     	GeneratorsNoCraftPermission("generators.no-craft-permission", "&cYou dont have permission &8(&7<permission>&8)&c to craft <generator>&c!"),
@@ -69,6 +70,23 @@ public abstract class EnumsManager {
 		}
 		public String getDefaultMessage() {
 			return this.message;
+		}
+	}
+	
+	public static enum EnumWGFlags
+	{
+		PICK_IP ("kgenerators-pick-up"),
+		ONLY_GEN_BREAK ("kgenerators-only-gen-break");
+		
+		String f;
+
+		EnumWGFlags(String f) {
+			this.f = f;
+		}
+		
+		public String getFlagId()
+		{
+			return this.f;
 		}
 	}
 

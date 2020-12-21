@@ -7,7 +7,7 @@
   <parent>
     <groupId>me.kryniowesegryderiusz</groupId>
     <artifactId>kgenerators-parent</artifactId>
-    <version>3.9.0</version>
+    <version>3.10.0</version>
   </parent>
      <build>
        <directory>../target</directory>
@@ -44,6 +44,11 @@
        <dependency>
            <groupId>me.kryniowesegryderiusz</groupId>
            <artifactId>kgenerators-v1_8</artifactId>
+           <version>${project.parent.version}</version>
+       </dependency>
+       <dependency>
+           <groupId>me.kryniowesegryderiusz</groupId>
+           <artifactId>kgenerators-v1_9</artifactId>
            <version>${project.parent.version}</version>
        </dependency>
        <dependency>

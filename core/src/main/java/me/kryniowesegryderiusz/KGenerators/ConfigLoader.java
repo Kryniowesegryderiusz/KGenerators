@@ -9,6 +9,7 @@ import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
 import org.bukkit.Location;
 import org.bukkit.NamespacedKey;
+import org.bukkit.World;
 import org.bukkit.configuration.ConfigurationSection;
 import org.bukkit.enchantments.Enchantment;
 import org.bukkit.entity.Player;
@@ -54,6 +55,11 @@ abstract class ConfigLoader {
 		if (config.contains("settings.per-player-generators.overall-place-limit"))
 		{
 			KGenerators.overAllPerPlayerGeneratorsPlaceLimit = config.getInt("settings.per-player-generators.overall-place-limit");
+		}
+		
+		if (config.contains("settings.generators-actionbar-messages"))
+		{
+			KGenerators.generatorsActionbarMessages = config.getBoolean("settings.generators-actionbar-messages");
 		}
 		
 		/* Generator types loader */
@@ -164,13 +170,15 @@ abstract class ConfigLoader {
     	}
 	}
 	
-	static void loadGenerators(){
+	static void loadGenerators() {
 		Config file = KGenerators.getPluginGeneratorsFile();
 		int amount = 0;
-		
+				
 		if (!file.contains("placedGenerators")){
 			return;
 		}
+		
+		ArrayList<String> errWorlds = new ArrayList<String>();
 		
     	ConfigurationSection mainSection = file.getConfigurationSection("placedGenerators");
     	for(String generatorLocationString: mainSection.getKeys(false)){
@@ -195,7 +203,18 @@ abstract class ConfigLoader {
     		int x = Integer.parseInt(coordinates[1]);
     		int y = Integer.parseInt(coordinates[2]);
     		int z = Integer.parseInt(coordinates[3]);
-    		Location generatorLocation = new Location(KGenerators.getInstance().getServer().getWorld(world), x, y, z);
+    		
+    		World bukkitWorld = KGenerators.getInstance().getServer().getWorld(world);
+    		
+    		if (bukkitWorld == null)
+    		{
+    			if (!errWorlds.contains(world))
+    			{
+    				errWorlds.add(world);
+    			}
+    		}
+    		
+    		Location generatorLocation = new Location(bukkitWorld, x, y, z);
     		
     		if (generatorID != null){
     			KGenerators.generatorsLocations.put(generatorLocation, new GeneratorLocation(generatorID, owner));
@@ -203,6 +222,14 @@ abstract class ConfigLoader {
     			amount++;
     		} 	    
     	}
+    	
+    	if (!errWorlds.isEmpty())
+    	{
+    		System.out.println("[KGenerators] !!! ERROR !!! An error occured, while loading some placed generators!");
+    		System.out.println("[KGenerators] !!! ERROR !!! Cant load worlds: " + errWorlds);
+    		System.out.println("[KGenerators] !!! ERROR !!! Possible worlds: " + Bukkit.getWorlds());
+    	}
+    	
     	System.out.println("[KGenerators] Loaded " + amount + " placed generators");
 	}
 } 

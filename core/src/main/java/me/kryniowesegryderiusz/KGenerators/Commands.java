@@ -10,6 +10,7 @@ import org.bukkit.Bukkit;
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandExecutor;
 import org.bukkit.command.CommandSender;
+import org.bukkit.command.ConsoleCommandSender;
 import org.bukkit.configuration.InvalidConfigurationException;
 import org.bukkit.entity.Player;
 import org.bukkit.inventory.ItemStack;
@@ -24,7 +25,7 @@ public class Commands implements CommandExecutor {
 
 	@Override
 	public boolean onCommand(final CommandSender sender, Command cmd, String label, String[] args) {
-		if (sender.hasPermission("kgenerators.commands")){
+		if (sender.hasPermission("kgenerators.commands") || sender instanceof ConsoleCommandSender){
 
 			if (args.length == 0){
 				LangUtils.sendHelpMessage(sender);
@@ -33,7 +34,7 @@ public class Commands implements CommandExecutor {
 		
 			switch(args[0]){
 				case "reload":
-					if (sender.hasPermission("kgenerators.reload")){
+					if (sender.hasPermission("kgenerators.reload") || sender instanceof ConsoleCommandSender){
 						
 						try {
 							KGenerators.messagesFile = ConfigManager.getConfig("lang/"+KGenerators.lang+".yml", null, false);
@@ -83,7 +84,7 @@ public class Commands implements CommandExecutor {
 					}
 					break;
 				case "list":
-						if (sender.hasPermission("kgenerators.list")){
+						if (sender.hasPermission("kgenerators.list") || sender instanceof ConsoleCommandSender){
 							LangUtils.sendMessage(sender, Message.CommandsListHeader);
 					        for (Entry<String, Generator> e : KGenerators.generators.entrySet()) {
 					        	LangUtils.addReplecable("<generator>", e.getValue().getGeneratorItem().getItemMeta().getDisplayName());
@@ -98,7 +99,7 @@ public class Commands implements CommandExecutor {
 						}
 					break;
 				case "check":
-					if (sender.hasPermission("kgenerators.check")){
+					if (sender.hasPermission("kgenerators.check") || sender instanceof ConsoleCommandSender){
 						if (args.length == 1)
 						{
 							if (sender instanceof Player){
@@ -128,9 +129,9 @@ public class Commands implements CommandExecutor {
 						LangUtils.addReplecable("<permission>", "kgenerators.check");
 						LangUtils.sendMessage(sender, Message.CommandsCheckNoPermission);
 					}
-				break;
+					break;
 				case "give":
-					if (sender.hasPermission("kgenerators.give")){
+					if (sender.hasPermission("kgenerators.give") || sender instanceof ConsoleCommandSender){
 						if (args.length >= 3){
 							Player player = Bukkit.getPlayer(args[1]);
 							if (player == null){
