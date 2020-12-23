@@ -9,27 +9,27 @@ import org.bukkit.event.EventPriority;
 import org.bukkit.event.Listener;
 import org.bukkit.event.block.BlockPlaceEvent;
 
-import me.kryniowesegryderiusz.KGenerators.GenerateBlockFunction;
-import me.kryniowesegryderiusz.KGenerators.GeneratorsFileManger;
-import me.kryniowesegryderiusz.KGenerators.KGenerators;
-import me.kryniowesegryderiusz.KGenerators.PerPlayerGenerators;
+import me.kryniowesegryderiusz.KGenerators.Files;
+import me.kryniowesegryderiusz.KGenerators.Main;
 import me.kryniowesegryderiusz.KGenerators.Classes.Generator;
 import me.kryniowesegryderiusz.KGenerators.Classes.GeneratorLocation;
+import me.kryniowesegryderiusz.KGenerators.GeneratorsManagement.GenerateBlock;
+import me.kryniowesegryderiusz.KGenerators.GeneratorsManagement.PerPlayerGenerators;
 
 public class onBlockPlaceEvent implements Listener {
 	
-	@EventHandler(priority = EventPriority.HIGHEST)
+	@EventHandler(priority = EventPriority.HIGH)
 	public void BlockPlaceEvent(final BlockPlaceEvent e){
 		
 		if (e.isCancelled()) {
 			return;
 		}
 		
-		if (!KGenerators.generatorsItemStacks.contains(KGenerators.getBlocksUtils().getItemStackByBlock(e.getBlockPlaced()))) {
+		if (!Main.generatorsItemStacks.contains(Main.getBlocksUtils().getItemStackByBlock(e.getBlockPlaced()))) {
 			return;
 		}
 		
-		for (Entry<String, Generator> set : KGenerators.generators.entrySet()) {
+		for (Entry<String, Generator> set : Main.generators.entrySet()) {
 		    String generatorID = set.getKey();
 		    Generator generator = set.getValue();
 		    Player player = e.getPlayer();
@@ -44,16 +44,15 @@ public class onBlockPlaceEvent implements Listener {
 		    	
 		    	Location location = e.getBlockPlaced().getLocation();
 		    	
-		    	KGenerators.generatorsLocations.put(location, new GeneratorLocation(generatorID, player));
-		    	GeneratorsFileManger.saveGeneratorToFile(location, player, generatorID);
+		    	Main.generatorsLocations.put(location, new GeneratorLocation(generatorID, player));
+		    	Files.saveGeneratorToFile(location, player, generatorID);
 		    	PerPlayerGenerators.addGeneratorToPlayer(player, generatorID);
-		    	
 		    	
 		    	Location locationAdjusted; //for double
 		    	if (generator.getType().equals("double")) {locationAdjusted = location.clone().add(0,1,0);}
 		    	else {locationAdjusted = location;}
 		    	
-		    	GenerateBlockFunction.generateBlock(locationAdjusted, generator, generator.getAfterPlaceWaitModifier());
+		    	GenerateBlock.generateBlock(locationAdjusted, generator, generator.getAfterPlaceWaitModifier());
 		    	
 		    	break;
 		    }

@@ -8,11 +8,11 @@ import java.nio.file.Files;
 import org.bukkit.configuration.InvalidConfigurationException;
 import org.bukkit.configuration.file.YamlConfiguration;
 
-import me.kryniowesegryderiusz.KGenerators.KGenerators;
+import me.kryniowesegryderiusz.KGenerators.Main;
 
 public final class ConfigManager {
 	   
-    private static KGenerators PLUGIN = KGenerators.getInstance();
+    private static Main PLUGIN = Main.getInstance();
    
     private static File mainFolder;
    

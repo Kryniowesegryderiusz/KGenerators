@@ -7,7 +7,7 @@ import java.util.Map.Entry;
 import org.bukkit.entity.Player;
 import org.bukkit.permissions.PermissionAttachmentInfo;
 
-import me.kryniowesegryderiusz.KGenerators.KGenerators;
+import me.kryniowesegryderiusz.KGenerators.Main;
 
 public class PlayerLimits {
 	
@@ -18,9 +18,9 @@ public class PlayerLimits {
 	{	
 		
 		/* Filling variables */
-		this.globalLimit = KGenerators.overAllPerPlayerGeneratorsPlaceLimit;
+		this.globalLimit = Main.overAllPerPlayerGeneratorsPlaceLimit;
 		
-		for (Entry<String, Generator> e : KGenerators.generators.entrySet())
+		for (Entry<String, Generator> e : Main.generators.entrySet())
 		{
 			this.generatorsLimits.put(e.getKey(), e.getValue().getPlaceLimit());
 		}
@@ -50,7 +50,7 @@ public class PlayerLimits {
 				} catch (NumberFormatException e1) {}
 			}
 			
-			for (Entry<String, Generator> e : KGenerators.generators.entrySet())
+			for (Entry<String, Generator> e : Main.generators.entrySet())
 			{
 				String generatorId = e.getKey();
 				

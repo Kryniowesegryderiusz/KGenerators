@@ -1,55 +1,66 @@
 messages:
-  #if you dont want any message just set ""
-  prefix: '&8[&6KGenerators&8] '
+  #If you dont want any message just set ""
+  prefix: "&8[&6KGenerators&8] "
   generators:
-    cant-break: '&cYou should sneak to pick up this generator!'
-    cant-pick-up: '&cYou cant pick up generator here!'
-    only-gen-break: '&cYou can only dig generated blocks here!'
-    cant-craft: '&cYou cant craft anything from generator!'
-    picked-up: '&e<generator> &apicked up'
-    no-craft-permission: '&cYou dont have permission &8(&7<permission>&8)&c to craft <generator>&c!'
+    digging:
+      only-gen: "&cYou can only dig generated blocks here!"
+      no-permission: "&cYou dont have permission &8(&7<permission>&8)&c to mine <generator>&c!"
+    crafting:
+      cant-craft: "&cYou cant craft anything from generator!"
+      no-permission: "&cYou dont have permission &8(&7<permission>&8)&c to craft <generator>&c!"
+    pick-up:
+      successful: "&e<generator> &apicked up"
+      unsuccessful: "&cYou should <sneak><mode><item> to pick up this generator!"
+      cant-here: "&cYou cant pick up generator here!"
+      mode:
+        sneak: "sneak and "
+        break: "break"
+        any-click: "click"
+        left-click: "left click"
+        right-click: "right click"
+        item: " with <item>"
     per-player-generator:
-      cant-place-more: '&cYou cant place more than &6<number> &cgenerators!'
-      cant-place-more-type: '&cYou cant place more than &6<number> <generator> &cgenerators!'
-      cant-pick-up: '&cYou cant pick up generator owned by &6<owner>&c!'
-      cant-use: '&cYou cant use generator owned by &6<owner>&c!'
+      cant-place-more: "&cYou cant place more than &6<number> &cgenerators!"
+      cant-place-more-type: "&cYou cant place more than &6<number> <generator> &cgenerators!"
+      cant-pick-up: "&cYou cant pick up generator owned by &6<owner>&c!"
+      cant-use: "&cYou cant use generator owned by &6<owner>&c!"
   commands:
     any:
-      wrong: '&cWrong command! Type /kgenerators for help'
-      no-permission: '&cYou dont have permission &8(&7<permission>&8)&c to use KGenerators commands'
-      player-not-online: '&cPlayer is not online'
-      player-doesnt-exist: '&cPlayer doesnt exist'
+      wrong: "&cWrong command! Type /kgenerators for help"
+      no-permission: "&cYou dont have permission &8(&7<permission>&8)&c to use KGenerators commands"
+      player-not-online: "&cPlayer is not online"
+      player-doesnt-exist: "&cPlayer doesnt exist"
     list:
-      header: '&aGenerators:'
-      list: '&8- <generator> &8(&7ID: <generatorID>)'
-      no-permission: '&cYou dont have permission &8(&7<permission>&8)&c to list generators'
+      header: "&aGenerators:"
+      list: "&8- <generator> &8(&7ID: <generatorID>)"
+      no-permission: "&cYou dont have permission &8(&7<permission>&8)&c to list generators"
       help: List all generators
     give:
-      player-not-online: '&cPlayer is not online'
-      generator-doesnt-exist: '&cThat generator doesn''t exist'
-      generator-given: '&aGenerator <generator> was given to <player>'
-      generator-recieved: '&aGenerator <generator> recieved!'
-      usage: '&cUsage: &e/kgenerators give <player> <generator>'
-      no-permission: '&cYou dont have permission &8(&7<permission>&8)&c to give generators'
+      player-not-online: "&cPlayer is not online"
+      generator-doesnt-exist: "&cThat generator doesn't exist"
+      generator-given: "&aGenerator <generator> was given to <player>"
+      generator-recieved: "&aGenerator <generator> recieved!"
+      usage: "&cUsage: &e/kgenerators give <player> <generator>"
+      no-permission: "&cYou dont have permission &8(&7<permission>&8)&c to give generators"
       help: Give generator to player
     getall:
-      recieved: '&aGenerators recieved'
-      no-permission: '&cYou dont have permission &8(&7<permission>&8)&c to get all generators'
+      recieved: "&aGenerators recieved"
+      no-permission: "&cYou dont have permission &8(&7<permission>&8)&c to get all generators"
       help: Get all generators
     check:
-      header: '&aPlayer &e<player> &ahas placed:'
-      list: '&8- &e<number> <generator>'
-      no-permission-own: '&cYou dont have permission &8(&7<permission>&8)&c to check others!'
+      header: "&aPlayer &e<player> &ahas placed:"
+      list: "&8- &e<number> <generator>"
+      no-permission-own: "&cYou dont have permission &8(&7<permission>&8)&c to check others!"
       help: Check generators and limits of player
     limits:
-      header: '&aPlayer &e<player> &ahas limits:'
-      specific: '&8- <generator>&a: &e<limit>'
-      overall: '&8- &aOverall limit: &e<limit>'
+      header: "&aPlayer &e<player> &ahas limits:"
+      specific: "&8- <generator>&a: &e<limit>"
+      overall: "&8- &aOverall limit: &e<limit>"
       None: None
     reload:
-      done: '&aConfig and messages reloaded'
-      no-permission: '&cYou dont have permission &8(&7<permission>&8)&c to reload config'
+      done: "&aConfig and messages reloaded"
+      no-permission: "&cYou dont have permission &8(&7<permission>&8)&c to reload config"
       help: Reload config and messages
     help:
-      label: '&6&lKGenerators &aCommands help:'
-      format: '&e/kgenerators <subcommand> &7<help>'
+      label: "&6&lKGenerators &aCommands help:"
+      format: "&e/kgenerators <subcommand> &7<help>"

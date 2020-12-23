@@ -7,8 +7,8 @@ import org.bukkit.inventory.ItemStack;
 
 public class Generator {
 	
-	int id;
-	  
+	private String id;
+	
 	private ItemStack generatorBlock;
 	  
 	private ItemStack generatorItem;
@@ -29,7 +29,8 @@ public class Generator {
 	
 	HashMap<ItemStack, Double> chances = new HashMap<ItemStack, Double>();
 	  
-	public Generator(ItemStack generatorBlock, ItemStack generatorItem, int delay, String type, HashMap<ItemStack, Double> chances) {
+	public Generator(String id, ItemStack generatorBlock, ItemStack generatorItem, int delay, String type, HashMap<ItemStack, Double> chances) {
+		this.id = id;
 	    this.generatorBlock = generatorBlock;
 	    this.generatorItem = generatorItem;
 	    this.delay = delay;
@@ -109,5 +110,10 @@ public class Generator {
 	public void setOnlyOwnerUse(Boolean onlyOwnerUse)
 	{
 		this.onlyOwnerUse = onlyOwnerUse;
+	}
+	
+	public String getId()
+	{
+		return this.id;
 	}
 }

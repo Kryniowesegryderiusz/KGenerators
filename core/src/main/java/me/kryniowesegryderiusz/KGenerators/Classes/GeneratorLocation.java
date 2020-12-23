@@ -2,7 +2,7 @@ package me.kryniowesegryderiusz.KGenerators.Classes;
 
 import org.bukkit.entity.Player;
 
-import me.kryniowesegryderiusz.KGenerators.KGenerators;
+import me.kryniowesegryderiusz.KGenerators.Main;
 
 public class GeneratorLocation {
 	String generatorId;
@@ -16,7 +16,7 @@ public class GeneratorLocation {
 	
 	public Generator getGenerator()
 	{
-		return KGenerators.generators.get(generatorId);
+		return Main.generators.get(generatorId);
 	}
 	
 	public String getGeneratorId()

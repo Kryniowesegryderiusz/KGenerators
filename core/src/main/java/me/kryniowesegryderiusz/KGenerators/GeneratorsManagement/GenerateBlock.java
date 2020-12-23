@@ -1,0 +1,97 @@
+package me.kryniowesegryderiusz.KGenerators.GeneratorsManagement;
+
+import java.util.HashMap;
+import java.util.Random;
+
+import org.bukkit.Location;
+import org.bukkit.inventory.ItemStack;
+
+import com.bgsoftware.superiorskyblock.api.SuperiorSkyblockAPI;
+import com.bgsoftware.superiorskyblock.api.island.Island;
+
+import me.kryniowesegryderiusz.KGenerators.Main;
+import me.kryniowesegryderiusz.KGenerators.Classes.Generator;
+import me.kryniowesegryderiusz.KGenerators.Utils.RandomSelector;
+import me.kryniowesegryderiusz.KGenerators.XSeries.XMaterial;
+
+public abstract class GenerateBlock {
+	
+
+	public static void generateBlock (Location location, Generator generator, int immediately) {
+		Main.getInstance().getServer().getScheduler().scheduleSyncDelayedTask(Main.getInstance(), new Runnable() {
+			  public void run() {
+				  ItemStack block = Main.getBlocksUtils().getItemStackByBlock(location.getBlock());
+				  ItemStack air = XMaterial.AIR.parseItem();
+				  ItemStack pistonHead = XMaterial.PISTON_HEAD.parseItem();
+				  
+				  switch (generator.getType()) {
+				  case "single":
+					  if (!Main.generatorsLocations.containsKey(location)) {
+							return;
+						}
+						if (!block.equals(generator.getGeneratorBlock()) && !block.equals(air) && !Main.getBlocksUtils().isOnWhitelist(location.getBlock()) && !block.equals(generator.getPlaceholder()) && !generator.getChances().containsKey(block) && !block.getType().equals(pistonHead.getType())) {
+							Remove.removeGenerator(Main.generatorsLocations.get(location), location, true);
+							return;
+						}
+						break;
+					case "double":
+						Location underLocation = new Location(location.getWorld(),location.getX(),location.getY()-1,location.getZ());
+						if (!Main.generatorsLocations.containsKey(underLocation)) {
+							  return;
+						}
+						if (!block.equals(air) && !Main.getBlocksUtils().isOnWhitelist(location.getBlock()) && !block.equals(generator.getPlaceholder()) && !generator.getChances().containsKey(block) && !block.getType().equals(pistonHead.getType())) {
+							Remove.removeGenerator(Main.generatorsLocations.get(location), location.clone().add(0,-1,0), true);
+							return;
+						}
+						break;
+				  }
+				  
+				  ItemStack drawedBlock = drawBlock(generator.getChances());
+				  
+				  if (!generator.getChances().containsKey(block)) {
+					  if (block.getType().equals(pistonHead.getType())) {
+						  generateBlock(location, generator, 1);
+					  }
+					  else
+					  {
+						  Main.getBlocksUtils().setBlock(location, drawedBlock);
+					  }
+				  }
+				  
+				  if (Main.dependencies.contains("SuperiorSkyblock2")) {
+					  Island island = SuperiorSkyblockAPI.getGrid().getIslandAt(location);
+					  if (island != null) {
+						  island.handleBlockPlace(location.getBlock());
+					  }
+				  }
+			}
+		}, immediately * generator.getDelay() * 1L);
+		
+		if (immediately != 0 ) {
+			generatePlaceholder(generator, location);
+		}
+	}
+	
+	public static void generatePlaceholder (Generator generator, Location location) {
+		if (generator.getPlaceholder() != null && generator.getDelay() > 1) {
+			Main.getInstance().getServer().getScheduler().scheduleSyncDelayedTask(Main.getInstance(), new Runnable() {
+				  public void run() {
+					  ItemStack air = XMaterial.AIR.parseItem();
+					  ItemStack m = Main.getBlocksUtils().getItemStackByBlock(location.getBlock());
+					  
+					  if (m.equals(air) || generator.getChances().containsKey(m) || generator.getGeneratorBlock().equals(m)) {
+						  Main.getBlocksUtils().setBlock(location, generator.getPlaceholder());
+					  }
+				  }
+			}, 1L);
+		}
+	}
+	
+	static ItemStack drawBlock (HashMap<ItemStack, Double> blocks ) {
+		
+		Random random = new Random();
+		
+		RandomSelector<ItemStack> selector = RandomSelector.weighted(blocks.keySet(), s -> blocks.get(s));
+		return selector.next(random);
+	}
+}

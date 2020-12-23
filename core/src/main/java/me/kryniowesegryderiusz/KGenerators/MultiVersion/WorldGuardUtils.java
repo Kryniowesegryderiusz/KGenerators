@@ -3,7 +3,7 @@ package me.kryniowesegryderiusz.KGenerators.MultiVersion;
 import org.bukkit.Location;
 import org.bukkit.entity.Player;
 
-import me.kryniowesegryderiusz.KGenerators.EnumsManager.EnumWGFlags;
+import me.kryniowesegryderiusz.KGenerators.Enums.EnumWGFlags;
 
 public interface WorldGuardUtils {
 	

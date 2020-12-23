@@ -10,8 +10,8 @@ import org.bukkit.ChatColor;
 import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Player;
 
-import me.kryniowesegryderiusz.KGenerators.EnumsManager.Message;
-import me.kryniowesegryderiusz.KGenerators.KGenerators;
+import me.kryniowesegryderiusz.KGenerators.Enums.EnumMessage;
+import me.kryniowesegryderiusz.KGenerators.Main;
 
 public abstract class LangUtils {
 	
@@ -22,7 +22,7 @@ public abstract class LangUtils {
 	@SuppressWarnings("unchecked")
 	public static void loadMessages() throws IOException {
 		
-		Config config = KGenerators.getPluginMessages();
+		Config config = Main.getPluginMessages();
 
 		addDefaults();
 		
@@ -34,7 +34,7 @@ public abstract class LangUtils {
 			if (!config.contains(fpath)) {
 				config.set(fpath, entry.getValue());
 				config.saveConfig();
-				System.out.println("[KGenerators] Added missing " + mpath + " message to " + KGenerators.lang + " lang file.");
+				System.out.println("[KGenerators] Added missing " + mpath + " message to " + Main.lang + " lang file.");
 			}
 			
 			lang.put(mpath, ChatColor.translateAlternateColorCodes('&', config.getString(fpath)));
@@ -42,11 +42,10 @@ public abstract class LangUtils {
 	}
 	
     @SuppressWarnings("rawtypes")
-	public static void sendMessage (CommandSender sender, Message m){
+	public static void sendMessage (CommandSender sender, EnumMessage m, boolean forceChat){
     	String key = m.getKey();
     	String message = lang.get(key);
     	if (message != null && message.length() != 0){
-    		
 	        for (Map.Entry part : replecables.entrySet()) {
 	        	String partKey = (String) part.getKey();
 	        	String partValue = (String) part.getValue();
@@ -58,9 +57,9 @@ public abstract class LangUtils {
         	String[] splittedMessage = message.split("\n");
     		for (String s : splittedMessage) {
     			
-    			if (key.split("\\.")[0].contains("generators") && KGenerators.generatorsActionbarMessages)
+    			if (key.split("\\.")[0].contains("generators") && Main.generatorsActionbarMessages && !forceChat)
     			{
-    				KGenerators.getActionBar().sendActionBar((Player) sender, s);
+    				Main.getActionBar().sendActionBar((Player) sender, s);
     			}
     			else
     			{
@@ -72,8 +71,12 @@ public abstract class LangUtils {
 		}
     }
     
+    public static void sendMessage (CommandSender sender, EnumMessage m){
+    	sendMessage (sender, m, false);
+    }
+    
 	@SuppressWarnings("rawtypes")
-	public static String getMessage (Message m, boolean prefix){
+	public static String getMessage (EnumMessage m, boolean prefix, boolean cleanReplecables){
 		String message = lang.get(m.getKey());
     	if (message != null && message.length() != 0){
     		
@@ -82,7 +85,8 @@ public abstract class LangUtils {
 	        	String partValue = (String) part.getValue();
 	        	message = message.replace(partKey, partValue);
 	        }
-    		replecables.clear();
+    		
+	        if (cleanReplecables) replecables.clear();
     		
     		if (prefix) {
     			message = lang.get("prefix") + message;
@@ -92,6 +96,10 @@ public abstract class LangUtils {
     	}
 		return null;
     }
+	
+	public static String getMessage (EnumMessage m){
+		return getMessage(m, false, true);
+	}
     
     public static void sendHelpMessage (CommandSender sender) {
     	
@@ -115,7 +123,7 @@ public abstract class LangUtils {
     private static void addDefaults()
     {
     	lang.clear();
-    	for (Message m : Message.values()) {
+    	for (EnumMessage m : EnumMessage.values()) {
     		lang.put(m.getKey(), m.getDefaultMessage());
     	}
     }

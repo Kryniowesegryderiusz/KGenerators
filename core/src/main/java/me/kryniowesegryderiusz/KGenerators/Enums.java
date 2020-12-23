@@ -1,15 +1,24 @@
 package me.kryniowesegryderiusz.KGenerators;
 
-public abstract class EnumsManager {
-	public enum Message {
+public abstract class Enums {
+	public enum EnumMessage {
 		Prefix("prefix", "&8[&6KGenerators&8] "),
-    	
-    	GeneratorsCantBreak("generators.cant-break", "&cYou should sneak to pick up this generator!"),
-    	GeneratorsCantPickUpHere("generators.cant-pick-up", "&cYou cant pick up generator here!"),
-    	GeneratorsOnlyGenBreakHere("generators.only-gen-break", "&cYou can only dig generated blocks here!"),
-    	GeneratorsCantCraft("generators.cant-craft", "&cYou cant craft anything from generator!"),
-    	GeneratorsPickedUp("generators.picked-up", "&e<generator> &apicked up"),
-    	GeneratorsNoCraftPermission("generators.no-craft-permission", "&cYou dont have permission &8(&7<permission>&8)&c to craft <generator>&c!"),
+		
+		GeneratorsDiggingOnlyGen("generators.digging.only-gen", "&cYou can only dig generated blocks here!"),
+		GeneratorsDiggingNoPermission("generators.digging.no-permission", "&cYou dont have permission &8(&7<permission>&8)&c to mine <generator>&c!"),
+		
+    	GeneratorsCraftingCantUse("generators.crafting.cant-use", "&cYou cant craft anything from generator!"),
+    	GeneratorsCraftingNoPermission("generators.crafting.no-permission", "&cYou dont have permission &8(&7<permission>&8)&c to craft <generator>&c!"),
+
+    	GeneratorsPickUpSuccesful("generators.pick-up.successful", "&e<generator> &apicked up"),
+    	GeneratorsPickUpUnsuccessful("generators.pick-up.unsuccessful", "&cYou should <sneak><mode><item> to pick up this generator!"),
+    	GeneratorsPickUpCantHere("generators.pick-up.cant-here", "&cYou cant pick up generator here!"),
+    	GeneratorsPickUpModeSneak("generators.pick-up.mode.sneak", "sneak and "),
+    	GeneratorsPickUpModeBreak("generators.pick-up.mode.break", "break block"),
+    	GeneratorsPickUpModeAnyClick("generators.pick-up.mode.any-click", "click"),
+    	GeneratorsPickUpModeLeftClick("generators.pick-up.mode.left-click", "left click"),
+    	GeneratorsPickUpModeRightClick("generators.pick-up.mode.right-click", "right click"),
+    	GeneratorsPickUpModeItem("generators.pick-up.mode.item", " with <itemname>"),
     	
     	GeneratorsPPGCantPlaceMore("generators.per-player-generator.cant-place-more", "&cYou cant place more than &6<number> &cgenerators!"),
     	GeneratorsPPGCantPlaceMoreType("generators.per-player-generator.cant-place-more-type", "&cYou cant place more than &6<number> <generator> &cgenerators!"),
@@ -48,6 +57,8 @@ public abstract class EnumsManager {
     	CommandsLimitsOverall("commands.limits.overall", "&8- &aOverall limit: &e<limit>"),
     	CommandsLimitsNone("commands.limits.None", "None"),
     	
+    	CommandsHowtopickupNoPermission("commands.howtopickup.no-permission", "&cYou dont have permission &8(&7<permission>&8)&c to check how to pick up generator!"),
+    	CommandsHowtopickupHelp("commands.howtopickup.help", "Check how to pick up generator"),
     	
     	CommandsReloadDone("commands.reload.done", "&aConfig and messages reloaded"),
     	CommandsReloadNoPermission("commands.reload.no-permission", "&cYou dont have permission &8(&7<permission>&8)&c to reload config"),
@@ -60,7 +71,7 @@ public abstract class EnumsManager {
     	private String key;
 		private String message;
 		
-		Message(String key, String message) {
+		EnumMessage(String key, String message) {
 			this.key = key;
 			this.message = message;
 		}
@@ -75,7 +86,7 @@ public abstract class EnumsManager {
 	
 	public static enum EnumWGFlags
 	{
-		PICK_IP ("kgenerators-pick-up", true),
+		PICK_UP ("kgenerators-pick-up", true),
 		ONLY_GEN_BREAK ("kgenerators-only-gen-break", false);
 		
 		String flagId;
@@ -96,5 +107,23 @@ public abstract class EnumsManager {
 			return this.defaultState;
 		}
 	}
-
+	
+	public static enum EnumPickUpMode
+	{
+		BREAK,
+		ANY_CLICK,
+		LEFT_CLICK,
+		RIGHT_CLICK;
+	}
+	
+	public static EnumPickUpMode getModeByString(String s)
+	{
+		for (EnumPickUpMode mode : EnumPickUpMode.values())
+		{
+			if (mode.toString().toLowerCase().equals(s.toLowerCase())) return mode;
+		}
+		System.out.println("[KGenerators] !!! ERROR !!! Mode: " + s + " doesnt exist! Using BREAK!");
+		return EnumPickUpMode.BREAK;
+	}
+	
 }

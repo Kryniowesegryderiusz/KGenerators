@@ -17,7 +17,9 @@ import org.bukkit.inventory.ItemStack;
 
 import me.kryniowesegryderiusz.KGenerators.Classes.Generator;
 import me.kryniowesegryderiusz.KGenerators.Classes.PlayerLimits;
-import me.kryniowesegryderiusz.KGenerators.EnumsManager.Message;
+import me.kryniowesegryderiusz.KGenerators.Enums.EnumMessage;
+import me.kryniowesegryderiusz.KGenerators.GeneratorsManagement.PerPlayerGenerators;
+import me.kryniowesegryderiusz.KGenerators.GeneratorsManagement.PickUp;
 import me.kryniowesegryderiusz.KGenerators.Utils.ConfigManager;
 import me.kryniowesegryderiusz.KGenerators.Utils.LangUtils;
 
@@ -37,45 +39,45 @@ public class Commands implements CommandExecutor {
 					if (sender.hasPermission("kgenerators.reload") || sender instanceof ConsoleCommandSender){
 						
 						try {
-							KGenerators.messagesFile = ConfigManager.getConfig("lang/"+KGenerators.lang+".yml", null, false);
+							Main.messagesFile = ConfigManager.getConfig("lang/"+Main.lang+".yml", null, false);
 						} catch (FileNotFoundException e1) {
-							System.out.println("[KGenerators] !!! ERROR !!! Cant find lang/" + KGenerators.lang + ".yml file");
+							System.out.println("[KGenerators] !!! ERROR !!! Cant find lang/" + Main.lang + ".yml file");
 						}
 				    	try {
-							KGenerators.config.loadConfig();
-							KGenerators.messagesFile.loadConfig();
+							Main.config.loadConfig();
+							Main.messagesFile.loadConfig();
 						} catch (IOException
 								| InvalidConfigurationException e) {
 							e.printStackTrace();
 						}
-						ConfigLoader.loadConfig();
+						Files.loadConfig();
 						try {
 							LangUtils.loadMessages();
 						} catch (IOException e) {
 							e.printStackTrace();
 						}
-						LangUtils.sendMessage(sender, Message.CommandsReloadDone);
+						LangUtils.sendMessage(sender, EnumMessage.CommandsReloadDone);
 					}
 					else
 					{
 						LangUtils.addReplecable("<permission>", "kgenerators.reload");
-						LangUtils.sendMessage(sender, Message.CommandsReloadNoPermission);
+						LangUtils.sendMessage(sender, EnumMessage.CommandsReloadNoPermission);
 					}
 					break;
 				case "getall":
 					if (sender instanceof Player){
 						if (sender.hasPermission("kgenerators.getall")){
 							Player player = (Player) sender;
-					        for (HashMap.Entry<String, Generator> generatorhmap : KGenerators.generators.entrySet()) {
+					        for (HashMap.Entry<String, Generator> generatorhmap : Main.generators.entrySet()) {
 					        	Generator generator = generatorhmap.getValue();
 					        	player.getInventory().addItem(generator.getGeneratorItem());
 					        }
-					        LangUtils.sendMessage(sender, Message.CommandsGetallRecieved);
+					        LangUtils.sendMessage(sender, EnumMessage.CommandsGetallRecieved);
 						}
 						else
 						{
 							LangUtils.addReplecable("<permission>", "kgenerators.getall");
-							LangUtils.sendMessage(sender, Message.CommandsGetallNoPermission);
+							LangUtils.sendMessage(sender, EnumMessage.CommandsGetallNoPermission);
 						}
 					}
 					else
@@ -85,17 +87,17 @@ public class Commands implements CommandExecutor {
 					break;
 				case "list":
 						if (sender.hasPermission("kgenerators.list") || sender instanceof ConsoleCommandSender){
-							LangUtils.sendMessage(sender, Message.CommandsListHeader);
-					        for (Entry<String, Generator> e : KGenerators.generators.entrySet()) {
+							LangUtils.sendMessage(sender, EnumMessage.CommandsListHeader);
+					        for (Entry<String, Generator> e : Main.generators.entrySet()) {
 					        	LangUtils.addReplecable("<generator>", e.getValue().getGeneratorItem().getItemMeta().getDisplayName());
 					        	LangUtils.addReplecable("<generatorID>", e.getKey());
-					        	LangUtils.sendMessage(sender, Message.CommandsListList);
+					        	LangUtils.sendMessage(sender, EnumMessage.CommandsListList);
 					        }
 						}
 						else
 						{
 							LangUtils.addReplecable("<permission>", "kgenerators.list");
-							LangUtils.sendMessage(sender, Message.CommandsListNoPermission);
+							LangUtils.sendMessage(sender, EnumMessage.CommandsListNoPermission);
 						}
 					break;
 				case "check":
@@ -120,63 +122,73 @@ public class Commands implements CommandExecutor {
 							else
 							{
 								LangUtils.addReplecable("<permission>", "kgenerators.check.others");
-								LangUtils.sendMessage(sender, Message.CommandsCheckNoPermissionOthers);
+								LangUtils.sendMessage(sender, EnumMessage.CommandsCheckNoPermissionOthers);
 							}
 						}
 					}
 					else
 					{
 						LangUtils.addReplecable("<permission>", "kgenerators.check");
-						LangUtils.sendMessage(sender, Message.CommandsCheckNoPermission);
+						LangUtils.sendMessage(sender, EnumMessage.CommandsCheckNoPermission);
 					}
 					break;
+				case "howtopickup":
+					if (sender.hasPermission("kgenerators.howtopickup") || sender instanceof ConsoleCommandSender){
+						PickUp.errorMessage(sender, true);
+					}
+					else
+					{
+						LangUtils.addReplecable("<permission>", "kgenerators.howtopickup");
+						LangUtils.sendMessage(sender, EnumMessage.CommandsHowtopickupNoPermission);
+					}
+				break;
 				case "give":
 					if (sender.hasPermission("kgenerators.give") || sender instanceof ConsoleCommandSender){
 						if (args.length >= 3){
 							Player player = Bukkit.getPlayer(args[1]);
 							if (player == null){
-								LangUtils.sendMessage(sender, Message.CommandsAnyPlayerNotOnline);
+								LangUtils.sendMessage(sender, EnumMessage.CommandsAnyPlayerNotOnline);
 							}
 							else
 							{
 								String generatorID = args[2];
-								if (!KGenerators.generators.containsKey(generatorID)){
-									LangUtils.sendMessage(sender, Message.CommandsGiveGeneratorDoesntExist);
+								if (!Main.generators.containsKey(generatorID)){
+									LangUtils.sendMessage(sender, EnumMessage.CommandsGiveGeneratorDoesntExist);
 									break;
 								}
 								
-								ItemStack item = KGenerators.generators.get(generatorID).getGeneratorItem();
+								ItemStack item = Main.generators.get(generatorID).getGeneratorItem();
 								
 								player.getInventory().addItem(item);
 								
 								LangUtils.addReplecable("<generator>", item.getItemMeta().getDisplayName());
 								LangUtils.addReplecable("<player>", player.getDisplayName());
-								LangUtils.sendMessage(sender, Message.CommandsGiveGeneratorGiven);
+								LangUtils.sendMessage(sender, EnumMessage.CommandsGiveGeneratorGiven);
 								
 								LangUtils.addReplecable("<generator>", item.getItemMeta().getDisplayName());
-								LangUtils.sendMessage(sender, Message.CommandsGiveGeneratorRecieved);
+								LangUtils.sendMessage(sender, EnumMessage.CommandsGiveGeneratorRecieved);
 							}
 						}
 						else
 						{
-							LangUtils.sendMessage(sender, Message.CommandsGiveUsage);
+							LangUtils.sendMessage(sender, EnumMessage.CommandsGiveUsage);
 						}
 					}
 					else
 					{
 						LangUtils.addReplecable("<permission>", "kgenerators.give");
-						LangUtils.sendMessage(sender, Message.CommandsGiveNoPermission);
+						LangUtils.sendMessage(sender, EnumMessage.CommandsGiveNoPermission);
 					}
 					break;
 				default:
-					LangUtils.sendMessage(sender, Message.CommandsAnyWrong);
+					LangUtils.sendMessage(sender, EnumMessage.CommandsAnyWrong);
 					break;
 			}
 		}
 		else
 		{
 			LangUtils.addReplecable("<permission>", "kgenerators.commands");
-			LangUtils.sendMessage(sender, Message.CommandsAnyNoPermission);
+			LangUtils.sendMessage(sender, EnumMessage.CommandsAnyNoPermission);
 		}
 
 		return false;
@@ -188,42 +200,42 @@ public class Commands implements CommandExecutor {
 		if (player != null)
 		{
 			LangUtils.addReplecable("<player>", player.getDisplayName());
-			LangUtils.sendMessage(sender, Message.CommandsCheckHeader);
+			LangUtils.sendMessage(sender, EnumMessage.CommandsCheckHeader);
 			
-			for (Entry<String, Generator> e : KGenerators.generators.entrySet())
+			for (Entry<String, Generator> e : Main.generators.entrySet())
 			{
 				String nr = String.valueOf(PerPlayerGenerators.getPlayerGeneratorsCount(player, e.getKey()));
 				
 				LangUtils.addReplecable("<number>", nr);
 				LangUtils.addReplecable("<generator>", e.getValue().getGeneratorItem().getItemMeta().getDisplayName());
-				LangUtils.sendMessage(sender, Message.CommandsCheckList);
+				LangUtils.sendMessage(sender, EnumMessage.CommandsCheckList);
 			}
 			
-			if (KGenerators.overAllPerPlayerGeneratorsEnabled)
+			if (Main.overAllPerPlayerGeneratorsEnabled)
 			{
 				LangUtils.addReplecable("<player>", player.getDisplayName());
-				LangUtils.sendMessage(sender, Message.CommandsLimitsHeader);
+				LangUtils.sendMessage(sender, EnumMessage.CommandsLimitsHeader);
 				PlayerLimits pLimits = new PlayerLimits(player);
-				for (Entry<String, Generator> e : KGenerators.generators.entrySet())
+				for (Entry<String, Generator> e : Main.generators.entrySet())
 				{
 					int limit = pLimits.getLimit(e.getKey());
 					String limitS;
-					if (limit == -1){limitS = LangUtils.getMessage(Message.CommandsLimitsNone, false);}	else {limitS = String.valueOf(limit);}
+					if (limit == -1){limitS = LangUtils.getMessage(EnumMessage.CommandsLimitsNone, false, true);}	else {limitS = String.valueOf(limit);}
 					
 					LangUtils.addReplecable("<generator>", e.getValue().getGeneratorItem().getItemMeta().getDisplayName());
 					LangUtils.addReplecable("<limit>", limitS);
-					LangUtils.sendMessage(sender, Message.CommandsLimitsList);
+					LangUtils.sendMessage(sender, EnumMessage.CommandsLimitsList);
 				}
 				int limit = pLimits.getGlobalLimit();	String limitS;
-				if (limit == -1){limitS = LangUtils.getMessage(Message.CommandsLimitsNone, false);}	else {limitS = String.valueOf(limit);}
+				if (limit == -1){limitS = LangUtils.getMessage(EnumMessage.CommandsLimitsNone, false, true);}	else {limitS = String.valueOf(limit);}
 				LangUtils.addReplecable("<limit>", limitS);
-				LangUtils.sendMessage(sender, Message.CommandsLimitsOverall);
+				LangUtils.sendMessage(sender, EnumMessage.CommandsLimitsOverall);
 				
 			}
 		}
 		else
 		{
-			LangUtils.sendMessage(sender, Message.CommandsAnyPlayerDoesntExist);
+			LangUtils.sendMessage(sender, EnumMessage.CommandsAnyPlayerDoesntExist);
 		}
 	}
 }

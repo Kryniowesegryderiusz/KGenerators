@@ -15,7 +15,7 @@ import com.sk89q.worldguard.protection.flags.registry.FlagRegistry;
 import com.sk89q.worldguard.protection.managers.RegionManager;
 import com.sk89q.worldguard.protection.regions.RegionContainer;
 
-import me.kryniowesegryderiusz.KGenerators.EnumsManager.EnumWGFlags;
+import me.kryniowesegryderiusz.KGenerators.Enums.EnumWGFlags;
 
 public class WorldGuardUtils_1_13 implements WorldGuardUtils {
 	
@@ -49,7 +49,7 @@ public class WorldGuardUtils_1_13 implements WorldGuardUtils {
 				try {
 					StateFlag flag = new StateFlag(eflag.getFlagId(), eflag.getFlagDefault());
 					registry.register(flag);
-					if (eflag == EnumWGFlags.PICK_IP) PICK_UP_FLAG = flag;
+					if (eflag == EnumWGFlags.PICK_UP) PICK_UP_FLAG = flag;
 					if (eflag == EnumWGFlags.ONLY_GEN_BREAK) ONLY_GEN_BREAK_FLAG = flag;
 					
 				}
@@ -60,7 +60,7 @@ public class WorldGuardUtils_1_13 implements WorldGuardUtils {
 			        if (existing instanceof StateFlag) {
 			        	System.out.println("[KGenerators] !!! WARNING !!! Overriding flag!");
 			        	
-			        	if (eflag == EnumWGFlags.PICK_IP) PICK_UP_FLAG = (StateFlag) existing;
+			        	if (eflag == EnumWGFlags.PICK_UP) PICK_UP_FLAG = (StateFlag) existing;
 						if (eflag == EnumWGFlags.ONLY_GEN_BREAK) ONLY_GEN_BREAK_FLAG = (StateFlag) existing;
 
 			        } else {
@@ -88,7 +88,7 @@ public class WorldGuardUtils_1_13 implements WorldGuardUtils {
 		LocalPlayer localPlayer = WorldGuardPlugin.inst().wrapPlayer(player);
 		
 		StateFlag stateFlag = null;
-		if (flag == EnumWGFlags.PICK_IP) stateFlag = PICK_UP_FLAG;
+		if (flag == EnumWGFlags.PICK_UP) stateFlag = PICK_UP_FLAG;
 		if (flag == EnumWGFlags.ONLY_GEN_BREAK) stateFlag = ONLY_GEN_BREAK_FLAG;
 		
 		if (flag != null && regionSet.testState(localPlayer, stateFlag)) return true;

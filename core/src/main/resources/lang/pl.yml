@@ -2,12 +2,23 @@ messages:
   #Jeśli chcesz wyłączyć wiadomość ustaw ""
   prefix: '&8[&6KGenerators&8] '
   generators:
-    cant-break: "&cKucnij, żeby zebrać generator!"
-    cant-craft: "&cNie mozesz wytworzyc niczego z generatora!"
-    cant-pick-up: "&cNie mozesz tu podniesc generatora!"
-    only-gen-break: "&cNa tym terenie możesz kopać tylko wygenerowane bloki!"
-    no-craft-permission: "&cNie masz uprawnien &8(&7<permission>&8)&c, zeby stworzyc <generator>&c!"
-    picked-up: "&aZebrano &e<generator>"
+    digging:
+      only-gen: "&cNa tym terenie możesz kopać tylko wygenerowane bloki!"
+      no-permission: "&cNie masz uprawnienia &8(&7<permission>&8)&c, żeby kopać <generator>&c!"
+    crafting:
+      cant-craft: "&cNie mozesz wytworzyc niczego z generatora!"
+      no-permission: "&cNie masz uprawnien &8(&7<permission>&8)&c, zeby stworzyc <generator>&c!"
+    pick-up:
+      successful: "&aZebrano &e<generator>"
+      unsuccessful: "&cMusisz <sneak><mode><item>, żeby podnieść generator!"
+      cant-here: "&cNie mozesz tu podniesc generatora!"
+      mode:
+        sneak: "kucnąć i "
+        break: "wykopać"
+        any-click: "kliknąć"
+        left-click: "kliknąć lewym"
+        right-click: "kliknąć prawym"
+        item: " trzymając <item>"
     per-player-generator:
       cant-place-more: '&cNie możesz postawić więcej, niż &6<number> &cgeneratorów!'
       cant-place-more-type: '&cNie możesz postawić więcej niż &6<number> <generator>!'

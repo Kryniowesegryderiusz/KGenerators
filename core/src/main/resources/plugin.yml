@@ -1,4 +1,4 @@
-main: me.kryniowesegryderiusz.KGenerators.KGenerators
+main: me.kryniowesegryderiusz.KGenerators.Main
 name: KGenerators
 version: ${project.version}
 author: Kryniowesegryderiusz (Krynio_ on spigot)

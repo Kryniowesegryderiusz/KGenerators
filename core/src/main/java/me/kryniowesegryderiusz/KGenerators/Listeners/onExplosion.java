@@ -8,7 +8,7 @@ import org.bukkit.event.Listener;
 import org.bukkit.event.block.BlockExplodeEvent;
 import org.bukkit.event.entity.EntityExplodeEvent;
 
-import me.kryniowesegryderiusz.KGenerators.KGenerators;
+import me.kryniowesegryderiusz.KGenerators.Main;
 
 public class onExplosion implements Listener {
 	
@@ -30,7 +30,7 @@ public class onExplosion implements Listener {
 	{
 		for (Block block : blocks)
 		{
-			if (KGenerators.generatorsLocations.containsKey(block.getLocation()) || KGenerators.generatorsLocations.containsKey(block.getLocation().clone().add(0,-1,0)))
+			if (Main.generatorsLocations.containsKey(block.getLocation()) || Main.generatorsLocations.containsKey(block.getLocation().clone().add(0,-1,0)))
 			{
 				return true;
 			}
