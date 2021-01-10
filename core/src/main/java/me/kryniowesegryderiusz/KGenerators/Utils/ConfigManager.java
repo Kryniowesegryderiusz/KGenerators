@@ -8,6 +8,8 @@ import java.nio.file.Files;
 import org.bukkit.configuration.InvalidConfigurationException;
 import org.bukkit.configuration.file.YamlConfiguration;
 
+import me.kryniowesegryderiusz.KGenerators.Enums.EnumLog;
+import me.kryniowesegryderiusz.KGenerators.Logger;
 import me.kryniowesegryderiusz.KGenerators.Main;
 
 public final class ConfigManager {
@@ -33,7 +35,7 @@ public final class ConfigManager {
                     Files.copy(PLUGIN.getResource(fileName), file.toPath());
                 }
                 catch(IOException ex) {
-                    ex.printStackTrace();
+                	Logger.error(ex);
                 }
                 file = new File(folder, fileName);
                 if(!file.exists()){

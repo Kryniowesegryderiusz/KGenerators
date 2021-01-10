@@ -23,9 +23,7 @@ public class PickUp {
 	 */
 	
 	public static boolean isPickingUpCheck(EnumPickUpMode mode, Player p, Location location, GeneratorLocation gLocation) {
-		
-		Bukkit.broadcastMessage(mode.toString());
-		
+			
 		EnumPickUpMode setMode = Main.pickUpMode;
 		if (setMode != mode)
 		{
@@ -36,12 +34,6 @@ public class PickUp {
 		}
 		
 		Generator generator = gLocation.getGenerator();
-		
-		if (Main.enableWorldGuardChecks && Main.dependencies.contains("WorldGuard") && !p.hasPermission("kgenerators.bypass.worldguard") && !Main.getWorldGuardUtils().worldGuardFlagCheck(location, p, EnumWGFlags.PICK_UP))
-		{
-			LangUtils.sendMessage(p, EnumMessage.GeneratorsPickUpCantHere);
-			return true;
-		}
 		
 		if (Main.pickUpSneak && !p.isSneaking())
 		{
@@ -62,11 +54,17 @@ public class PickUp {
 		
 		if (Main.pickUpItem != null)
 		{
-			if (!p.getInventory().contains(Main.pickUpItem))
+			if (p.getInventory().getItemInMainHand().getType() != Main.pickUpItem.getType())
 			{
 				errorMessage(p);
 				return true;
 			}
+		}
+		
+		if (Main.enableWorldGuardChecks && Main.dependencies.contains("WorldGuard") && !p.hasPermission("kgenerators.bypass.worldguard") && !Main.getWorldGuardUtils().worldGuardFlagCheck(location, p, EnumWGFlags.PICK_UP))
+		{
+			LangUtils.sendMessage(p, EnumMessage.GeneratorsPickUpCantHere);
+			return true;
 		}
 		
 		Remove.removeGenerator(gLocation, location, true);

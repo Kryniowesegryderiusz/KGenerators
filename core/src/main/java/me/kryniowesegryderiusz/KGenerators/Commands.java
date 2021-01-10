@@ -17,6 +17,7 @@ import org.bukkit.inventory.ItemStack;
 
 import me.kryniowesegryderiusz.KGenerators.Classes.Generator;
 import me.kryniowesegryderiusz.KGenerators.Classes.PlayerLimits;
+import me.kryniowesegryderiusz.KGenerators.Enums.EnumLog;
 import me.kryniowesegryderiusz.KGenerators.Enums.EnumMessage;
 import me.kryniowesegryderiusz.KGenerators.GeneratorsManagement.PerPlayerGenerators;
 import me.kryniowesegryderiusz.KGenerators.GeneratorsManagement.PickUp;
@@ -39,22 +40,22 @@ public class Commands implements CommandExecutor {
 					if (sender.hasPermission("kgenerators.reload") || sender instanceof ConsoleCommandSender){
 						
 						try {
-							Main.messagesFile = ConfigManager.getConfig("lang/"+Main.lang+".yml", null, false);
+							Main.setMessagesFile(ConfigManager.getConfig("lang/"+Main.lang+".yml", null, false));
 						} catch (FileNotFoundException e1) {
-							System.out.println("[KGenerators] !!! ERROR !!! Cant find lang/" + Main.lang + ".yml file");
+							Logger.error("[KGenerators] !!! ERROR !!! Cant find lang/" + Main.lang + ".yml file");
 						}
 				    	try {
-							Main.config.loadConfig();
-							Main.messagesFile.loadConfig();
+							Main.getConfigFile().loadConfig();
+							Main.getMessagesFile().loadConfig();
 						} catch (IOException
 								| InvalidConfigurationException e) {
-							e.printStackTrace();
+							Logger.error(e);
 						}
 						Files.loadConfig();
 						try {
 							LangUtils.loadMessages();
 						} catch (IOException e) {
-							e.printStackTrace();
+							Logger.error(e);
 						}
 						LangUtils.sendMessage(sender, EnumMessage.CommandsReloadDone);
 					}
@@ -178,6 +179,16 @@ public class Commands implements CommandExecutor {
 					{
 						LangUtils.addReplecable("<permission>", "kgenerators.give");
 						LangUtils.sendMessage(sender, EnumMessage.CommandsGiveNoPermission);
+					}
+					break;
+				case "debug":
+					if (sender.hasPermission("kgenerators.debug") || sender instanceof ConsoleCommandSender){
+						Logger.debugPasteToHaste(sender);
+					}
+					else
+					{
+						LangUtils.addReplecable("<permission>", "kgenerators.debug");
+						LangUtils.sendMessage(sender, EnumMessage.CommandsDebugNoPermission);
 					}
 					break;
 				default:

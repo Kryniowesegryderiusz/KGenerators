@@ -19,7 +19,7 @@ public class onJetsMinions implements Listener {
 		Location bLocation = location.clone().add(0,-1,0);
 		
 		if (Main.generatorsLocations.containsKey(location)){
-			Generator generator = Main.generators.get(Main.generatorsLocations.get(location));
+			Generator generator = Main.generatorsLocations.get(location).getGenerator();
 			if (generator.getType().equals("single")) {
 				if (generator.getChances().containsKey(block))
 				{
@@ -37,7 +37,7 @@ public class onJetsMinions implements Listener {
 		}
 		
 		if (Main.generatorsLocations.containsKey(bLocation)){
-			Generator generator = Main.generators.get(Main.generatorsLocations.get(bLocation));
+			Generator generator = Main.generatorsLocations.get(bLocation).getGenerator();
 			if (generator.getType().equals("double")) {
 				if (generator.getChances().containsKey(block))
 				{

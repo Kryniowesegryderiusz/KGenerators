@@ -16,6 +16,7 @@ import com.sk89q.worldguard.protection.managers.RegionManager;
 import com.sk89q.worldguard.protection.regions.RegionContainer;
 
 import me.kryniowesegryderiusz.KGenerators.Enums.EnumWGFlags;
+import me.kryniowesegryderiusz.KGenerators.Logger;
 
 public class WorldGuardUtils_1_13 implements WorldGuardUtils {
 	
@@ -45,7 +46,7 @@ public class WorldGuardUtils_1_13 implements WorldGuardUtils {
 			
 			for (EnumWGFlags eflag : EnumWGFlags.values())
 			{
-				System.out.println("[KGenerators] Registering worldguard " + eflag.getFlagId() + " flag");
+				Logger.info("[KGenerators] Registering worldguard " + eflag.getFlagId() + " flag");
 				try {
 					StateFlag flag = new StateFlag(eflag.getFlagId(), eflag.getFlagDefault());
 					registry.register(flag);
@@ -55,23 +56,23 @@ public class WorldGuardUtils_1_13 implements WorldGuardUtils {
 				}
 				catch (FlagConflictException e)
 				{
-					System.out.println("[KGenerators] !!! ERROR !!! WorldGuard FlagConflictException!");
+					Logger.error("[KGenerators] !!! ERROR !!! WorldGuard FlagConflictException!");
 					Flag<?> existing = registry.get(eflag.getFlagId());
 			        if (existing instanceof StateFlag) {
-			        	System.out.println("[KGenerators] !!! WARNING !!! Overriding flag!");
+			        	Logger.info("[KGenerators] !!! WARNING !!! Overriding flag!");
 			        	
 			        	if (eflag == EnumWGFlags.PICK_UP) PICK_UP_FLAG = (StateFlag) existing;
 						if (eflag == EnumWGFlags.ONLY_GEN_BREAK) ONLY_GEN_BREAK_FLAG = (StateFlag) existing;
 
 			        } else {
-			            System.out.println("[KGenerators] !!! ERROR !!! WorldGuard flag overriding not possible! Types dont match!");
+			            Logger.error("[KGenerators] !!! ERROR !!! WorldGuard flag overriding not possible! Types dont match!");
 			        }
 				}
 				
 			}
 		} catch (NoClassDefFoundError e) {
-			System.out.println("[KGenerators] !!! ERROR !!! An error occured, while adding WorldGuard flags!");
-			System.out.println("[KGenerators] !!! ERROR !!! WorldGuard is installed, but didnt load properly!");
+			Logger.error("[KGenerators] !!! ERROR !!! An error occured, while adding WorldGuard flags!");
+			Logger.error("[KGenerators] !!! ERROR !!! WorldGuard is installed, but didnt load properly!");
 			//e.printStackTrace();
 		}
 	}

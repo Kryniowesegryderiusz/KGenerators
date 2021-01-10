@@ -9,6 +9,7 @@ import org.bukkit.configuration.ConfigurationSection;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.ShapedRecipe;
 
+import me.kryniowesegryderiusz.KGenerators.Logger;
 import me.kryniowesegryderiusz.KGenerators.Main;
 import me.kryniowesegryderiusz.KGenerators.Utils.Config;
 import me.kryniowesegryderiusz.KGenerators.XSeries.XUtils;
@@ -30,7 +31,7 @@ public class RecipesLoader_1_13 implements RecipesLoader {
     		NamespacedKey key = new NamespacedKey(Main.getInstance(), "KGenerators_"+generatorID);
     		
     		if (!Main.generators.containsKey(generatorID)){
-    			System.out.println("[KGenerators] !!! ERROR !!! There isnt any "+generatorID+" generator in config.yml! Recipe NOT LOADED!");
+    			Logger.error("[KGenerators] !!! ERROR !!! There isnt any "+generatorID+" generator in config.yml! Recipe NOT LOADED!");
     			return;
     		}
     		
@@ -50,7 +51,7 @@ public class RecipesLoader_1_13 implements RecipesLoader {
         		recipe.setIngredient(ingredientsChar, item.getType());
         	}
         	Bukkit.addRecipe(recipe);
-        	System.out.println("[KGenerators] Loaded recipe for " + generatorID);
+        	Logger.info("[KGenerators] Loaded recipe for " + generatorID);
     	}
 		
 	}

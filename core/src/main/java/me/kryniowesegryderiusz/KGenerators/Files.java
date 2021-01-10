@@ -19,6 +19,7 @@ import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.ShapedRecipe;
 import org.bukkit.inventory.meta.ItemMeta;
 
+import me.kryniowesegryderiusz.KGenerators.Enums.EnumLog;
 import me.kryniowesegryderiusz.KGenerators.Enums.EnumPickUpMode;
 import me.kryniowesegryderiusz.KGenerators.Classes.Generator;
 import me.kryniowesegryderiusz.KGenerators.Classes.GeneratorLocation;
@@ -30,7 +31,7 @@ public abstract class Files {
 	
 	@SuppressWarnings("unchecked")
 	static void loadConfig() {
-		Config config = Main.getPluginConfig();
+		Config config = Main.getConfigFile();
 		
 		/* Settings */
 		if (config.contains("settings.can-generate-instead")) {
@@ -41,7 +42,7 @@ public abstract class Files {
 			for (String s : tempListString) {
 				ItemStack m = XUtils.parseItemStack(s);
 				tempListItemStack.add(m);
-				System.out.println("[KGenerators] Added " + s + " to generating whitelist.");
+				Logger.info("[KGenerators] Added " + s + " to generating whitelist.");
 			}
 			Main.generatingWhitelist = tempListItemStack;
 		}
@@ -98,6 +99,11 @@ public abstract class Files {
 			Main.pickUpSneak = config.getBoolean("settings.pick-up.sneak");
 		}
 		
+		if (config.contains("settings.explosion-handler"))
+		{
+			Main.explosionHandler = (short) config.getInt("settings.explosion-handler");
+		}
+		
 		/* Generator types loader */
 		Main.generators.clear();
     	ConfigurationSection mainSection = config.getConfigurationSection("generators");
@@ -110,7 +116,7 @@ public abstract class Files {
     		String type = config.getString("generators."+generatorID+".type").toLowerCase();
     		
     		if (!type.equals("single") && !type.equals("double")) {
-    			System.out.println("[KGenerators] !!! CONFIGURATION ERROR !!! Type of " + generatorID + " is set to " + type + ". It should be single or double!");
+    			Logger.error("[KGenerators] !!! ERROR !!! Type of " + generatorID + " is set to " + type + ". It should be single or double!");
     			error = true;
     		}
     		
@@ -188,26 +194,26 @@ public abstract class Files {
     		for (Entry<String, Generator> entry : Main.generators.entrySet()) {
     			if (entry.getValue().getGeneratorItem().equals(generatorItem)) {
     				error = true;
-    				System.out.println("[KGenerators] !!! ERROR !!! " + generatorID + " has same generator item as " + entry.getKey());
+    				Logger.error("[KGenerators] !!! ERROR !!! " + generatorID + " has same generator item as " + entry.getKey());
     			}
     		}
     		
     		if (error) 
     		{
-    			System.out.println("[KGenerators] !!! ERROR !!! Couldnt load " + generatorID);
+    			Logger.error("[KGenerators] !!! ERROR !!! Couldnt load " + generatorID);
     		}
     		else
     		{
     			Main.generators.put(generatorID, generator);
         		Main.generatorsItemStacks.add(generator.getGeneratorBlock());
         		
-        		System.out.println("[KGenerators] Loaded " + type + " "+ generatorID + " generating variety of " + chancesAmount + " blocks every " + delay + " ticks"); 
+        		Logger.info("[KGenerators] Loaded " + type + " "+ generatorID + " generating variety of " + chancesAmount + " blocks every " + delay + " ticks");
     		}
     	}
 	}
 	
 	static void loadGenerators() {
-		Config file = Main.getPluginGeneratorsFile();
+		Config file = Main.getGeneratorsFile();
 		int amount = 0;
 				
 		if (!file.contains("placedGenerators")){
@@ -261,17 +267,17 @@ public abstract class Files {
     	
     	if (!errWorlds.isEmpty())
     	{
-    		System.out.println("[KGenerators] !!! ERROR !!! An error occured, while loading some placed generators!");
-    		System.out.println("[KGenerators] !!! ERROR !!! Cant load worlds: " + errWorlds);
-    		System.out.println("[KGenerators] !!! ERROR !!! Possible worlds: " + Bukkit.getWorlds());
+    		Logger.error("[KGenerators] !!! ERROR !!! An error occured, while loading some placed generators!");
+    		Logger.error("[KGenerators] !!! ERROR !!! Cant load worlds: " + errWorlds.toString());
+    		Logger.error("[KGenerators] !!! ERROR !!! Possible worlds: " + Bukkit.getWorlds().toString());
     	}
     	
-    	System.out.println("[KGenerators] Loaded " + amount + " placed generators");
+    	Logger.info("[KGenerators] Loaded " + amount + " placed generators");
 	}
 	
 	public static void saveGeneratorToFile(Location location, Player player, String generatorID)
 	{
-		Config file = Main.getPluginGeneratorsFile();
+		Config file = Main.getGeneratorsFile();
 		
 		int x = location.getBlockX();
 		int y = location.getBlockY();
@@ -283,14 +289,14 @@ public abstract class Files {
 		try {
 			file.saveConfig();
 		} catch (IOException e) {
-			e.printStackTrace();
+			Logger.error(e);
 		}
 		
 	}
 	
 	public static void removeGeneratorFromFile(Location location)
 	{
-		Config file = Main.getPluginGeneratorsFile();
+		Config file = Main.getGeneratorsFile();
 		
 		int x = location.getBlockX();
 		int y = location.getBlockY();
@@ -304,7 +310,7 @@ public abstract class Files {
 		try {
 			file.saveConfig();
 		} catch (IOException e) {
-			e.printStackTrace();
+			Logger.error(e);
 		}
 	}
 } 

@@ -64,6 +64,10 @@ public abstract class Enums {
     	CommandsReloadNoPermission("commands.reload.no-permission", "&cYou dont have permission &8(&7<permission>&8)&c to reload config"),
     	CommandsReloadHelp("commands.reload.help", "Reload config and messages"),
     	
+    	CommandsDebugDone("commands.debug.done", "&aYour debug URL is: &e<url>"),
+    	CommandsDebugError("commands.debug.error", "&cAn error occured, while making debug output!"),
+    	CommandsDebugNoPermission("commands.debug.no-permission", "&cYou dont have permission &8(&7<permission>&8)&c to paste debug"),
+    	
     	CommandsHelpLabel("commands.help.label", "&6&lKGenerators &aCommands help:"),
     	CommandsHelpFormat("commands.help.format", "&e/kgenerators <subcommand> &7<help>"),
 		;
@@ -122,8 +126,27 @@ public abstract class Enums {
 		{
 			if (mode.toString().toLowerCase().equals(s.toLowerCase())) return mode;
 		}
-		System.out.println("[KGenerators] !!! ERROR !!! Mode: " + s + " doesnt exist! Using BREAK!");
+		Logger.error("[KGenerators] !!! ERROR !!! Mode: " + s + " doesnt exist! Using BREAK!");
 		return EnumPickUpMode.BREAK;
+	}
+	
+	public static enum EnumLog
+	{
+		INFO(""),
+		ERROR("!!! ERROR !!! "),
+		DEBUG("[Debug] "),
+	;
+		String header;
+		
+		EnumLog(String header) {
+			this.header = header;
+		}
+		
+		public String getHeader()
+		{
+			return this.header;
+		}
+	
 	}
 	
 }

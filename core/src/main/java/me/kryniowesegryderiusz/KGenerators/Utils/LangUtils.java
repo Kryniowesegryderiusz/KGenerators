@@ -11,6 +11,7 @@ import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Player;
 
 import me.kryniowesegryderiusz.KGenerators.Enums.EnumMessage;
+import me.kryniowesegryderiusz.KGenerators.Logger;
 import me.kryniowesegryderiusz.KGenerators.Main;
 
 public abstract class LangUtils {
@@ -22,7 +23,7 @@ public abstract class LangUtils {
 	@SuppressWarnings("unchecked")
 	public static void loadMessages() throws IOException {
 		
-		Config config = Main.getPluginMessages();
+		Config config = Main.getMessagesFile();
 
 		addDefaults();
 		
@@ -34,7 +35,7 @@ public abstract class LangUtils {
 			if (!config.contains(fpath)) {
 				config.set(fpath, entry.getValue());
 				config.saveConfig();
-				System.out.println("[KGenerators] Added missing " + mpath + " message to " + Main.lang + " lang file.");
+				Logger.info("[KGenerators] Added missing " + mpath + " message to " + Main.lang + " lang file.");
 			}
 			
 			lang.put(mpath, ChatColor.translateAlternateColorCodes('&', config.getString(fpath)));

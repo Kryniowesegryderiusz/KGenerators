@@ -12,6 +12,7 @@ import com.sk89q.worldguard.protection.flags.registry.FlagConflictException;
 import com.sk89q.worldguard.protection.flags.registry.FlagRegistry;
 
 import me.kryniowesegryderiusz.KGenerators.Enums.EnumWGFlags;
+import me.kryniowesegryderiusz.KGenerators.Logger;
 import me.kryniowesegryderiusz.KGenerators.Main;
 
 public class WorldGuardUtils_1_8 implements WorldGuardUtils {
@@ -37,30 +38,30 @@ public class WorldGuardUtils_1_8 implements WorldGuardUtils {
 			
 			for (EnumWGFlags eflag : EnumWGFlags.values())
 			{		
-				System.out.println("[KGenerators] Registering worldguard " + eflag.getFlagId() + " flag");
+				Logger.info("[KGenerators] Registering worldguard " + eflag.getFlagId() + " flag");
 			    try {
 			    	
 			    	if (eflag == EnumWGFlags.PICK_UP) registry.register(PICK_UP_FLAG);
 					if (eflag == EnumWGFlags.ONLY_GEN_BREAK) registry.register(ONLY_GEN_BREAK_FLAG);
 			        
 			    } catch (FlagConflictException e) {
-			    	System.out.println("[KGenerators] !!! ERROR !!! WorldGuard FlagConflictException!");
+			    	Logger.error("[KGenerators] !!! ERROR !!! WorldGuard FlagConflictException!");
 			    	Flag<?> existing = registry.get(eflag.getFlagId());
 			        if (existing instanceof StateFlag) {
-			        	System.out.println("[KGenerators] !!! WARNING !!! Overriding flag!");
+			        	Logger.info("[KGenerators] !!! WARNING !!! Overriding flag!");
 				    	if (eflag == EnumWGFlags.PICK_UP) PICK_UP_FLAG = (StateFlag) existing;
 			    		if (eflag == EnumWGFlags.ONLY_GEN_BREAK) ONLY_GEN_BREAK_FLAG = (StateFlag) existing;
 			        	
 			        } else {
-			            System.out.println("[KGenerators] !!! ERROR !!! WorldGuard flag overriding not possible! Types dont match!");
+			            Logger.error("[KGenerators] !!! ERROR !!! WorldGuard flag overriding not possible! Types dont match!");
 				    	if (eflag == EnumWGFlags.PICK_UP) PICK_UP_FLAG = null;
 			    		if (eflag == EnumWGFlags.ONLY_GEN_BREAK) ONLY_GEN_BREAK_FLAG = null;
 			        }
 			    }
 			}
 		} catch (NoClassDefFoundError e) {
-			System.out.println("[KGenerators] !!! ERROR !!! An error occured, while adding WorldGuard flags!");
-			System.out.println("[KGenerators] !!! ERROR !!! WorldGuard is installed, but didnt load properly!");
+			Logger.error("[KGenerators] !!! ERROR !!! An error occured, while adding WorldGuard flags!");
+			Logger.error("[KGenerators] !!! ERROR !!! WorldGuard is installed, but didnt load properly!");
 			PICK_UP_FLAG = null;
 			ONLY_GEN_BREAK_FLAG = null;
 			//e.printStackTrace();

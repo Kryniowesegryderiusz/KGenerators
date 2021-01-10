@@ -6,7 +6,7 @@ messages:
       only-gen: "&cYou can only dig generated blocks here!"
       no-permission: "&cYou dont have permission &8(&7<permission>&8)&c to mine <generator>&c!"
     crafting:
-      cant-craft: "&cYou cant craft anything from generator!"
+      cant-use: '&cYou cant craft anything from generator!'
       no-permission: "&cYou dont have permission &8(&7<permission>&8)&c to craft <generator>&c!"
     pick-up:
       successful: "&e<generator> &apicked up"
@@ -57,6 +57,13 @@ messages:
       specific: "&8- <generator>&a: &e<limit>"
       overall: "&8- &aOverall limit: &e<limit>"
       None: None
+    howtopickup:
+      no-permission: '&cYou dont have permission &8(&7<permission>&8)&c to check how to pick up generator!'
+      help: Check how to pick up generator
+    debug:
+      done: '&aYour debug URL is: &e<url>'
+      error: '&cAn error occured, while making debug output!'
+      no-permission: '&cYou dont have permission &8(&7<permission>&8)&c to paste debug'
     reload:
       done: "&aConfig and messages reloaded"
       no-permission: "&cYou dont have permission &8(&7<permission>&8)&c to reload config"

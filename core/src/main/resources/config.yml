@@ -28,6 +28,11 @@ settings:
   restrict-mining-by-permission: false
   #Should world guard checks be enabled? If you are not using them leave as false to improve efficiency.
   enable-world-guard-flags: false
+  #How explosions should be handled, if there is generator inside explode area?
+  #0 - cancel explosion
+  #1 - drop generator
+  #2 - remove generator
+  explosion-handler: 0
   #Generators pick up settings:
   pick-up:
     #Check action, which will be used for picking up generators
@@ -101,4 +106,9 @@ generators:
       IRON_ORE: 25
       GOLD_ORE: 15
       DIAMOND_ORE: 9
-      EMERALD_ORE: 1 
+      EMERALD_ORE: 1
+
+  #Do you want to add new generator? Its simple! Just copy existing one from above and paste it! Remember to change at least its id, name and lore!
+  #Then do /kgenerators reload and check if it exist in /kgenerators list
+  #If it doesnt - check the console/logs for errors!
+  #Need other help? Join KGenerators discord: https://discord.gg/BZRjhpP4Ab

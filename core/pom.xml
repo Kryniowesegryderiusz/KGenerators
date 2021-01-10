@@ -51,7 +51,7 @@
 		    <artifactId>JetsMinions</artifactId>
 		    <version>6.6.8</version>
 		    <scope>system</scope>
-		    <systemPath>${project.basedir}/src/main/dependencies/JetsMinions.jar</systemPath>
+		    <systemPath>${project.basedir}/dependencies/JetsMinions.jar</systemPath>
 		</dependency>
 		
 	    <dependency>

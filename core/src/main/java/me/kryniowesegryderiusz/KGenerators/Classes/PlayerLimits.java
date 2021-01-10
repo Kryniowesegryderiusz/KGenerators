@@ -35,7 +35,7 @@ public class PlayerLimits {
 		{
 			
 			String perm = pai.getPermission();
-			//System.out.println(player.getName() + " " + perm + " " + pai.getValue());
+			//Logger.log(player.getName() + " " + perm + " " + pai.getValue());
 			
 			if (perm.contains("kgenerators.overallplacelimit"))
 			{

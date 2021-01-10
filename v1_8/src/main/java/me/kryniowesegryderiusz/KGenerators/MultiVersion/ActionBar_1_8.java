@@ -5,6 +5,9 @@ import java.lang.reflect.Constructor;
 import org.bukkit.Bukkit;
 import org.bukkit.entity.Player;
 
+import me.kryniowesegryderiusz.KGenerators.Enums;
+import me.kryniowesegryderiusz.KGenerators.Logger;
+
 public class ActionBar_1_8 implements ActionBar {
 	  public void sendActionBar(Player player, String msg) {
 	    try {
@@ -15,7 +18,7 @@ public class ActionBar_1_8 implements ActionBar {
 	      Object playerConnection = entityPlayer.getClass().getField("playerConnection").get(entityPlayer);
 	      playerConnection.getClass().getMethod("sendPacket", new Class[] { getNMSClass("Packet") }).invoke(playerConnection, new Object[] { packet });
 	    } catch (Exception e) {
-	      e.printStackTrace();
+	    Logger.error(e);
 	    } 
 	  }
 	  
@@ -23,8 +26,8 @@ public class ActionBar_1_8 implements ActionBar {
 	    try {
 	      return Class.forName("net.minecraft.server." + getVersion() + "." + name);
 	    } catch (ClassNotFoundException e) {
-	      e.printStackTrace();
-	      return null;
+	    	Logger.error(e);
+	    	return null;
 	    } 
 	  }
 	  

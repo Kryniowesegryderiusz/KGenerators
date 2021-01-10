@@ -16,6 +16,7 @@ import org.bukkit.configuration.InvalidConfigurationException;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.plugin.java.JavaPlugin;
 
+import me.kryniowesegryderiusz.KGenerators.Enums.EnumLog;
 import me.kryniowesegryderiusz.KGenerators.Enums.EnumPickUpMode;
 import me.kryniowesegryderiusz.KGenerators.Classes.Generator;
 import me.kryniowesegryderiusz.KGenerators.Classes.GeneratorLocation;
@@ -39,10 +40,10 @@ public class Main extends JavaPlugin {
 
 
 	private static Main instance;
-	static Config config;	
-	static Config generatorsFile;
-	static Config messagesFile;
-	static Config recipesFile;
+	private static Config configFile;	
+	private static Config generatorsFile;
+	private static Config messagesFile;
+	private static Config recipesFile;
 
 	public static LinkedHashMap<String, Generator> generators = new LinkedHashMap<String, Generator>();
 	public static HashMap<Location, GeneratorLocation> generatorsLocations = new HashMap<Location, GeneratorLocation>();
@@ -61,6 +62,7 @@ public class Main extends JavaPlugin {
 	public static EnumPickUpMode pickUpMode = EnumPickUpMode.BREAK;
 	public static Boolean pickUpSneak = true;
 	public static ItemStack pickUpItem = null;
+	public static short explosionHandler = 0;
 	
 	/* Dependencies */
 	public static ArrayList<String> dependencies = new ArrayList<String>();
@@ -106,86 +108,89 @@ public class Main extends JavaPlugin {
     	
     	ConfigManager.setup();
     	
+    	/* Logger setup */
+    	Logger.setup();
+    	
     	/* Dependencies check */
     	if (Bukkit.getPluginManager().isPluginEnabled("SuperiorSkyblock2")) {
-    		System.out.println("[KGenerators] Detected plugin SuperiorSkyblock2. Hooking into it.");
+    		Logger.info("[KGenerators] Detected plugin SuperiorSkyblock2. Hooking into it.");
     		dependencies.add("SuperiorSkyblock2");
     	}
     	
     	if (Bukkit.getPluginManager().isPluginEnabled("BentoBox")) {
-    		System.out.println("[KGenerators] Detected plugin BentoBox. Hooking into it.");
+    		Logger.info("[KGenerators] Detected plugin BentoBox. Hooking into it.");
     		dependencies.add("BentoBox");
     	}
     	
     	if (Bukkit.getPluginManager().isPluginEnabled("JetsMinions")) {
-    		System.out.println("[KGenerators] Detected plugin JetsMinions. Hooking into it.");
+    		Logger.info("[KGenerators] Detected plugin JetsMinions. Hooking into it.");
     		dependencies.add("JetsMinions");
     	}
     	
     	if (worldGuardUtils != null && Main.getWorldGuardUtils().isWorldGuardHooked()) {
-   			System.out.println("[KGenerators] Detected plugin WorldGuard. Hooked into it.");
+   			Logger.info("[KGenerators] Detected plugin WorldGuard. Hooked into it.");
    			dependencies.add("WorldGuard");
     	}
     	else if (worldGuardUtils != null)
     	{
     		if (Bukkit.getPluginManager().isPluginEnabled("WorldGuard")) {
-    			System.out.println("[KGenerators] Detected plugin WorldGuard, but couldnt hook into it! Search console log above for errors!");
+    			Logger.info("[KGenerators] Detected plugin WorldGuard, but couldnt hook into it! Search console log above for errors!");
     		}
     	}
     	
     	/* Config loader */
     	if (!new File(getDataFolder(), "config.yml").exists()){
-    		System.out.println("[KGenerators] Generating config.yml");
+    		Logger.info("[KGenerators] Generating config.yml");
     		this.saveResource("config.yml", false);
     	}
     	try {
-			config = ConfigManager.getConfig("config.yml", null, false);
+			setConfigFile(ConfigManager.getConfig("config.yml", null, false));
 		} catch (FileNotFoundException e) {
-			System.out.println("[KGenerators] Cant load config");
+			Logger.info("[KGenerators] Cant load config");
 			this.getServer().getPluginManager().disablePlugin(this);
-			e.printStackTrace();
+			Logger.error(e);
 		}
     	try {
-			config.loadConfig();
+			getConfigFile().loadConfig();
 		} catch (IOException | InvalidConfigurationException e2) {
-			e2.printStackTrace();
+			Logger.error(e2);
 		}
     	Files.loadConfig();
     		
     	/* Recipes loader */
     	if (!new File(getDataFolder(), "recipes.yml").exists()){
-    		System.out.println("[KGenerators] Generating recipes.yml");
+    		Logger.info("[KGenerators] Generating recipes.yml");
     		this.saveResource("recipes.yml", false);
     	}
     	try {
-    		recipesFile = ConfigManager.getConfig("recipes.yml", null, false);
+    		setRecipesFile(ConfigManager.getConfig("recipes.yml", null, false));
 		} catch (FileNotFoundException e1) {
-			e1.printStackTrace();
+			Logger.error(e1);
 		}
     	try {
-			recipesFile.loadConfig();
+			getRecipesFile().loadConfig();
 		} catch (IOException
 				| InvalidConfigurationException e) {
-			e.printStackTrace();
+			Logger.error(e);
 		}
     	recipesLoader.loadRecipes();
     	
     	/* Placed generators loader */
     	try {
-			generatorsFile = ConfigManager.getConfig("generators.yml", null, false);
+			setGeneratorsFile(ConfigManager.getConfig("generators.yml", null, false));
 		} catch (FileNotFoundException e) {
 			try {
 				ConfigManager.createNewFile("generators.yml", null);
-				generatorsFile = ConfigManager.getConfig("generators.yml", null, false);
+				setGeneratorsFile(ConfigManager.getConfig("generators.yml", null, false));
 			} catch (IOException e1) {
 				this.getServer().getPluginManager().disablePlugin(this);
-				e1.printStackTrace();
+				Logger.error(e1);
 			}
 		}
     	try {
-			generatorsFile.loadConfig();
+			getGeneratorsFile().loadConfig();
 		} catch (IOException | InvalidConfigurationException e2) {
-			e2.printStackTrace();
+			Logger.error(e2);
 		}
     	
         Bukkit.getScheduler().runTask(instance, () -> {
@@ -204,23 +209,23 @@ public class Main extends JavaPlugin {
     	}
     	
     	try {
-			messagesFile = ConfigManager.getConfig("lang/"+lang+".yml", null, false);
+			setMessagesFile(ConfigManager.getConfig("lang/"+lang+".yml", null, false));
 		} catch (FileNotFoundException e1) {
-			System.out.println("[KGenerators] Cant find lang file");
-			e1.printStackTrace();
+			Logger.error("[KGenerators] Cant find lang file " + lang);
+			//Logger.error(e1);
 		}
     	try {
-			messagesFile.loadConfig();
+			getMessagesFile().loadConfig();
 		} catch (IOException | InvalidConfigurationException e) {
-			e.printStackTrace();
+			Logger.error(e);
 		}
     	
     	try {
 			LangUtils.loadMessages();
 		} catch (IOException e) {
-			e.printStackTrace();
+			Logger.error(e);
 		}
-    	System.out.println("[KGenerators] Messages file loaded with lang: " + lang);
+    	Logger.info("[KGenerators] Messages file loaded with lang: " + lang);
     	
     	this.getServer().getPluginCommand("kgenerators").setExecutor(new Commands());
 
@@ -236,7 +241,7 @@ public class Main extends JavaPlugin {
     		this.getServer().getPluginManager().registerEvents(new onJetsMinions(), this);
     	}
     	
-    	System.out.println("[KGenerators] Placed generators are loaded in delayed init task! Informations about them are located further in this log!");
+    	Logger.info("[KGenerators] Placed generators are loaded in delayed init task! Informations about them are located further in this log!");
     }
     
     @Override
@@ -245,42 +250,6 @@ public class Main extends JavaPlugin {
     	instance = this;
     	versioningSetup();
     	
-    }
-
-    @Override
-    public void onDisable() {
-    }
-    
-    static Config getPluginConfig(){
-    	return config;
-    }
-    
-    static Config getPluginGeneratorsFile(){
-    	return generatorsFile;
-    }
-    
-    public static Config getPluginMessages(){
-    	return messagesFile;
-    }
-    
-    public static Config getRecipesFile(){
-    	return recipesFile;
-    }
-    
-    public static Main getInstance(){
-    	return instance;
-    }
-    
-    public static BlocksUtils getBlocksUtils(){
-    	return blocksUtils;
-    }
-    
-    public static WorldGuardUtils getWorldGuardUtils(){
-    	return worldGuardUtils;
-    }
-    
-    public static ActionBar getActionBar(){
-    	return actionBar;
     }
     
 	static void mkdir(String dir){
@@ -292,7 +261,7 @@ public class Main extends JavaPlugin {
 		
 	      boolean bool = file.mkdir();
 	      if(!bool){
-	         System.out.println("[KGenerators] Can not create directory for "+dir);
+	         Logger.info("[KGenerators] Can not create directory for "+dir);
 	      }
 	}
 	
@@ -343,7 +312,59 @@ public class Main extends JavaPlugin {
 			actionBar = (ActionBar) Class.forName(actionBarPackage).newInstance();
 			
 		} catch (InstantiationException | IllegalAccessException | ClassNotFoundException e3) {
-			e3.printStackTrace();
+			Logger.error(e3);
 		}
+	}
+	
+    @Override
+    public void onDisable() {
+    }
+    
+    public static Main getInstance(){
+    	return instance;
+    }
+    
+    public static BlocksUtils getBlocksUtils(){
+    	return blocksUtils;
+    }
+    
+    public static WorldGuardUtils getWorldGuardUtils(){
+    	return worldGuardUtils;
+    }
+    
+    public static ActionBar getActionBar(){
+    	return actionBar;
+    }
+
+	public static Config getMessagesFile() {
+		return messagesFile;
+	}
+
+	public static void setMessagesFile(Config messagesFile) {
+		Main.messagesFile = messagesFile;
+	}
+
+	public static Config getConfigFile() {
+		return configFile;
+	}
+
+	public static void setConfigFile(Config configFile) {
+		Main.configFile = configFile;
+	}
+
+	public static Config getGeneratorsFile() {
+		return generatorsFile;
+	}
+
+	public static void setGeneratorsFile(Config generatorsFile) {
+		Main.generatorsFile = generatorsFile;
+	}
+
+	public static Config getRecipesFile() {
+		return recipesFile;
+	}
+
+	public static void setRecipesFile(Config recipesFile) {
+		Main.recipesFile = recipesFile;
 	}
 }
