@@ -35,12 +35,12 @@ public abstract class GenerateBlock {
 						}
 						break;
 					case "double":
-						Location underLocation = new Location(location.getWorld(),location.getX(),location.getY()-1,location.getZ());
+						Location underLocation = location.clone().add(0,-1,0);
 						if (!Main.generatorsLocations.containsKey(underLocation)) {
 							  return;
 						}
 						if (!block.equals(air) && !Main.getBlocksUtils().isOnWhitelist(location.getBlock()) && !block.equals(generator.getPlaceholder()) && !generator.getChances().containsKey(block) && !block.getType().equals(pistonHead.getType())) {
-							Remove.removeGenerator(Main.generatorsLocations.get(location), location.clone().add(0,-1,0), true);
+							Remove.removeGenerator(Main.generatorsLocations.get(underLocation), underLocation, true);
 							return;
 						}
 						break;

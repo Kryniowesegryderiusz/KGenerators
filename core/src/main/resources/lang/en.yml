@@ -10,7 +10,7 @@ messages:
       no-permission: "&cYou dont have permission &8(&7<permission>&8)&c to craft <generator>&c!"
     pick-up:
       successful: "&e<generator> &apicked up"
-      unsuccessful: "&cYou should <sneak><mode><item> to pick up this generator!"
+      unsuccessful: "&cYou should <sneak><mode><item> to pick up generator!"
       cant-here: "&cYou cant pick up generator here!"
       mode:
         sneak: "sneak and "
@@ -19,6 +19,8 @@ messages:
         left-click: "left click"
         right-click: "right click"
         item: " with <item>"
+    placing:
+      cant-place-block: "&cYou cant place any block in generator's place"
     per-player-generator:
       cant-place-more: "&cYou cant place more than &6<number> &cgenerators!"
       cant-place-more-type: "&cYou cant place more than &6<number> <generator> &cgenerators!"

@@ -24,10 +24,8 @@ public class onPlayerInteractEvent implements Listener {
 		Location location = e.getClickedBlock().getLocation();
 		if (!Main.generatorsLocations.containsKey(location)) return;
 		
-		if (Main.pickUpMode == EnumPickUpMode.ANY_CLICK) PickUp.isPickingUpCheck(EnumPickUpMode.ANY_CLICK, e.getPlayer(), location, Main.generatorsLocations.get(location));
-		else if (e.getAction() == Action.LEFT_CLICK_BLOCK) PickUp.isPickingUpCheck(EnumPickUpMode.LEFT_CLICK, e.getPlayer(), location, Main.generatorsLocations.get(location));
-		else if (e.getAction() == Action.RIGHT_CLICK_BLOCK) PickUp.isPickingUpCheck(EnumPickUpMode.RIGHT_CLICK, e.getPlayer(), location, Main.generatorsLocations.get(location));
-		
-		if (e.getAction() == Action.RIGHT_CLICK_BLOCK) e.setCancelled(true);
+		if (Main.pickUpMode == EnumPickUpMode.ANY_CLICK) e.setCancelled(PickUp.isPickingUpCheck(EnumPickUpMode.ANY_CLICK, e.getPlayer(), location, Main.generatorsLocations.get(location), e.getAction()));
+		else if (e.getAction() == Action.LEFT_CLICK_BLOCK) e.setCancelled(PickUp.isPickingUpCheck(EnumPickUpMode.LEFT_CLICK, e.getPlayer(), location, Main.generatorsLocations.get(location)));
+		else if (e.getAction() == Action.RIGHT_CLICK_BLOCK) e.setCancelled(PickUp.isPickingUpCheck(EnumPickUpMode.RIGHT_CLICK, e.getPlayer(), location, Main.generatorsLocations.get(location)));
 	}
 }

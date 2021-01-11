@@ -2,8 +2,10 @@ package me.kryniowesegryderiusz.KGenerators.GeneratorsManagement;
 
 import org.bukkit.Bukkit;
 import org.bukkit.Location;
+import org.bukkit.Material;
 import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Player;
+import org.bukkit.event.block.Action;
 import org.bukkit.inventory.ItemStack;
 
 import me.kryniowesegryderiusz.KGenerators.Main;
@@ -22,13 +24,21 @@ public class PickUp {
 	 * Checks if event should be cancelled
 	 */
 	
-	public static boolean isPickingUpCheck(EnumPickUpMode mode, Player p, Location location, GeneratorLocation gLocation) {
+	public static boolean isPickingUpCheck(EnumPickUpMode mode, Player p, Location location, GeneratorLocation gLocation, Action interactAction) {
 			
 		EnumPickUpMode setMode = Main.pickUpMode;
+		
+		boolean rightClick = false;
+		if (mode == EnumPickUpMode.RIGHT_CLICK || (mode == EnumPickUpMode.ANY_CLICK && interactAction == Action.RIGHT_CLICK_BLOCK))
+		{
+			rightClick = true;
+		}
+		
 		if (setMode != mode)
 		{
+			if (rightClick) return false;
 			if (mode == EnumPickUpMode.BREAK && setMode != EnumPickUpMode.RIGHT_CLICK) return true;
-			if (setMode == EnumPickUpMode.BREAK && mode == EnumPickUpMode.LEFT_CLICK) return true;
+			if (setMode == EnumPickUpMode.BREAK && mode == EnumPickUpMode.LEFT_CLICK) return false;
 			errorMessage (p);
 			return true;
 		}
@@ -37,7 +47,7 @@ public class PickUp {
 		
 		if (Main.pickUpSneak && !p.isSneaking())
 		{
-			if (generator.getType().equals("double")) {
+			if (generator.getType().equals("double") && !rightClick) {
 				errorMessage(p);
 				return true;
 			}
@@ -73,6 +83,11 @@ public class PickUp {
 		return true;
 
 	}
+	
+	public static boolean isPickingUpCheck(EnumPickUpMode mode, Player p, Location location, GeneratorLocation gLocation) {
+		return isPickingUpCheck(mode, p, location, gLocation, null);
+	}
+	
 	
 	public static void errorMessage(CommandSender p, boolean forceChat)
 	{

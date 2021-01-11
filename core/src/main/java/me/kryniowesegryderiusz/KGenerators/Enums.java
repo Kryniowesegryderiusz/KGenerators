@@ -20,6 +20,8 @@ public abstract class Enums {
     	GeneratorsPickUpModeRightClick("generators.pick-up.mode.right-click", "right click"),
     	GeneratorsPickUpModeItem("generators.pick-up.mode.item", " with <itemname>"),
     	
+    	GeneratorsPlaceCantPlaceBlock("generators.place.cant-place-block", "&cYou cant place any block in generator's place"),
+    	
     	GeneratorsPPGCantPlaceMore("generators.per-player-generator.cant-place-more", "&cYou cant place more than &6<number> &cgenerators!"),
     	GeneratorsPPGCantPlaceMoreType("generators.per-player-generator.cant-place-more-type", "&cYou cant place more than &6<number> <generator> &cgenerators!"),
     	GeneratorsPPGCantPickUp("generators.per-player-generator.cant-pick-up", "&cYou cant pick up generator owned by &6<owner>&c!"),

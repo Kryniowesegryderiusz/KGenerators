@@ -1,6 +1,7 @@
 package me.kryniowesegryderiusz.KGenerators.Classes;
 
 import java.util.HashMap;
+import java.util.Map.Entry;
 
 import org.bukkit.Material;
 import org.bukkit.inventory.ItemStack;
@@ -36,6 +37,15 @@ public class Generator {
 	    this.delay = delay;
 	    this.type = type;
 	    this.chances = chances;
+	}
+	
+	public boolean doesChancesContain(ItemStack item)
+	{
+		for (Entry<ItemStack, Double> e : chances.entrySet())
+		{
+			if (e.getKey().equals(item)) return true;
+		}
+		return false;
 	}
 	
 	public void setPlaceholder(ItemStack placeholder) {
