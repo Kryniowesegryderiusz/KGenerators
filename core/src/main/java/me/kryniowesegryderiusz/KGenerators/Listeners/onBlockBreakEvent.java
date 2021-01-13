@@ -59,7 +59,7 @@ public class onBlockBreakEvent implements Listener {
 				}
 				else
 				{
-					GenerateBlock.generateBlock(location, bGenerator, 1);
+					GenerateBlock.schedule(location, bGenerator);
 					return;
 				}
 			}
@@ -93,7 +93,7 @@ public class onBlockBreakEvent implements Listener {
 					return;
 				}
 				
-				GenerateBlock.generateBlock(location, generator, 1);
+				GenerateBlock.schedule(location, generator);
 				return;
 			}
 		}

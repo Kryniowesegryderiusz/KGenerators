@@ -20,7 +20,10 @@ messages:
         right-click: "right click"
         item: " with <item>"
     placing:
+      cant-here: "&cYou cant place generator here!"
       cant-place-block: "&cYou cant place any block in generator's place"
+      cant-place-double-below-block: "&cYou cant place double generator below any block!"
+      cant-place-double-below-generator: "&cYou cant place double generator below other generator!"
     per-player-generator:
       cant-place-more: "&cYou cant place more than &6<number> &cgenerators!"
       cant-place-more-type: "&cYou cant place more than &6<number> <generator> &cgenerators!"

@@ -49,7 +49,7 @@ public class onBlockPistonEvent implements Listener {
 					if (generator.getPlaceholder() == null || !generator.getPlaceholder().equals(Main.getBlocksUtils().getItemStackByBlock(block))) {
 						if (PerPlayerGenerators.canPush(generator))
 						{
-							GenerateBlock.generateBlock(location, generator, 1);
+							GenerateBlock.schedule(location, generator);
 						}
 					}
 					else
@@ -67,9 +67,9 @@ public class onBlockPistonEvent implements Listener {
 				if (bGenerator.getType().equals("double") && bGenerator.isPistonPushAllowed())
 				{
 					if (bGenerator.getPlaceholder() == null || !bGenerator.getPlaceholder().equals(Main.getBlocksUtils().getItemStackByBlock(block))) {
-						if (PerPlayerGenerators.canPush(generator))
+						if (PerPlayerGenerators.canPush(bGenerator))
 						{
-							GenerateBlock.generateBlock(location, generator, 1);
+							GenerateBlock.schedule(location, bGenerator);
 						}
 					}
 					else

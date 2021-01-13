@@ -23,7 +23,7 @@ public class onJetsMinions implements Listener {
 			if (generator.getType().equals("single")) {
 				if (generator.getChances().containsKey(block))
 				{
-					GenerateBlock.generateBlock(location, generator, 1);
+					GenerateBlock.schedule(location, generator);
 				}
 				else
 				{
@@ -41,7 +41,7 @@ public class onJetsMinions implements Listener {
 			if (generator.getType().equals("double")) {
 				if (generator.getChances().containsKey(block))
 				{
-					GenerateBlock.generateBlock(location, generator, 1);
+					GenerateBlock.schedule(location, generator);
 				}
 				else
 				{

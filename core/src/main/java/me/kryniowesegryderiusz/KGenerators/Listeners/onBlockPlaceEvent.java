@@ -4,6 +4,7 @@ import java.util.Map;
 import java.util.Map.Entry;
 
 import org.bukkit.Location;
+import org.bukkit.Material;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.EventPriority;
@@ -29,9 +30,10 @@ public class onBlockPlaceEvent implements Listener {
 			return;
 		}
 		
-		if ((Main.generatorsLocations.containsKey(e.getBlock().getLocation()) 
+		if ((Main.generatorsLocations.containsKey(e.getBlock().getLocation())
 				&& placeBlockCancelEventCheck(e.getPlayer(), e.getItemInHand(), e.getBlock().getLocation()))
 			|| (Main.generatorsLocations.containsKey(e.getBlock().getLocation().clone().add(0,-1,0)) 
+				&& Main.generatorsLocations.get(e.getBlock().getLocation().clone().add(0,-1,0)).getGenerator().getType().equals("double")
 				&& placeBlockCancelEventCheck(e.getPlayer(), e.getItemInHand(), e.getBlock().getLocation().clone().add(0,-1,0)))
 			)
 		{
@@ -47,13 +49,28 @@ public class onBlockPlaceEvent implements Listener {
 			    
 			    if (generator.getGeneratorItem().getItemMeta().equals(e.getItemInHand().getItemMeta())) {
 			    	
+			    	Location location = e.getBlockPlaced().getLocation();
+			    	Location aLocation = location.clone().add(0,1,0);
+			    	
 			    	if (!PerPlayerGenerators.canPlace(player, generatorID))
 				    {
 			    		e.setCancelled(true);
 				    	return;
 				    }
 			    	
-			    	Location location = e.getBlockPlaced().getLocation();
+			    	if (generator.getType().equals("double") && aLocation.getBlock().getType() != Material.AIR)
+			    	{
+			    		LangUtils.sendMessage(player, EnumMessage.GeneratorsPlaceDoubleBelowBlock);
+			    		e.setCancelled(true);
+						return;
+			    	}
+			    	
+			    	if (generator.getType().equals("double") && Main.generatorsLocations.containsKey(aLocation))
+			    	{
+			    		LangUtils.sendMessage(player, EnumMessage.GeneratorsPlaceDoubleBelowGenerator);
+			    		e.setCancelled(true);
+						return;
+			    	}
 			    	
 			    	Main.generatorsLocations.put(location, new GeneratorLocation(generatorID, player));
 			    	Files.saveGeneratorToFile(location, player, generatorID);
@@ -63,8 +80,14 @@ public class onBlockPlaceEvent implements Listener {
 			    	if (generator.getType().equals("double")) {locationAdjusted = location.clone().add(0,1,0);}
 			    	else {locationAdjusted = location;}
 			    	
-			    	GenerateBlock.generateBlock(locationAdjusted, generator, generator.getAfterPlaceWaitModifier());
-			    	
+			    	if (generator.getAfterPlaceWaitModifier() == 0)
+			    	{
+			    		GenerateBlock.now(locationAdjusted, generator);
+			    	}
+			    	else
+			    	{
+			    		GenerateBlock.schedule(locationAdjusted, generator);
+			    	}
 			    	break;
 			    }
 			}

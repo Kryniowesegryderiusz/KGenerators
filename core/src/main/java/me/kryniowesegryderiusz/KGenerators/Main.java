@@ -20,6 +20,7 @@ import me.kryniowesegryderiusz.KGenerators.Enums.EnumLog;
 import me.kryniowesegryderiusz.KGenerators.Enums.EnumPickUpMode;
 import me.kryniowesegryderiusz.KGenerators.Classes.Generator;
 import me.kryniowesegryderiusz.KGenerators.Classes.GeneratorLocation;
+import me.kryniowesegryderiusz.KGenerators.GeneratorsManagement.GenerateBlock;
 import me.kryniowesegryderiusz.KGenerators.Listeners.onBlockBreakEvent;
 import me.kryniowesegryderiusz.KGenerators.Listeners.onBlockPistonEvent;
 import me.kryniowesegryderiusz.KGenerators.Listeners.onBlockPlaceEvent;
@@ -47,6 +48,7 @@ public class Main extends JavaPlugin {
 
 	public static LinkedHashMap<String, Generator> generators = new LinkedHashMap<String, Generator>();
 	public static HashMap<Location, GeneratorLocation> generatorsLocations = new HashMap<Location, GeneratorLocation>();
+	public static ArrayList<Location> scheduledLocations = new ArrayList<Location>();
 	
 	/* For quick check */
 	public static ArrayList<ItemStack> generatorsItemStacks = new ArrayList<ItemStack>();
@@ -252,6 +254,15 @@ public class Main extends JavaPlugin {
     	
     }
     
+    @Override
+    public void onDisable() {
+    	this.getServer().getScheduler().cancelTasks(this);
+    	for (Location location : scheduledLocations)
+    	{
+    		GenerateBlock.now(location, Main.generatorsLocations.get(location).getGenerator());
+    	}
+    }
+    
 	static void mkdir(String dir){
 		File file = new File(Main.getInstance().getDataFolder()+"/"+dir);
 		
@@ -315,10 +326,6 @@ public class Main extends JavaPlugin {
 			Logger.error(e3);
 		}
 	}
-	
-    @Override
-    public void onDisable() {
-    }
     
     public static Main getInstance(){
     	return instance;
