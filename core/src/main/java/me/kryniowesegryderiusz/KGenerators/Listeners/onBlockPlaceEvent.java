@@ -1,10 +1,8 @@
 package me.kryniowesegryderiusz.KGenerators.Listeners;
 
-import java.util.Map;
 import java.util.Map.Entry;
 
 import org.bukkit.Location;
-import org.bukkit.Material;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.EventPriority;
@@ -58,7 +56,7 @@ public class onBlockPlaceEvent implements Listener {
 				    	return;
 				    }
 			    	
-			    	if (generator.getType().equals("double") && aLocation.getBlock().getType() != Material.AIR)
+			    	if (generator.getType().equals("double") && !Main.getBlocksUtils().isAir(aLocation.getBlock()))
 			    	{
 			    		LangUtils.sendMessage(player, EnumMessage.GeneratorsPlaceDoubleBelowBlock);
 			    		e.setCancelled(true);

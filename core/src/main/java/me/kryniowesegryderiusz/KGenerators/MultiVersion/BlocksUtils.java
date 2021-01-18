@@ -11,5 +11,7 @@ public interface BlocksUtils {
 	public void setBlock(Location location, ItemStack item);
 	
 	public boolean isOnWhitelist(Block block);
+	
+	public boolean isAir(Block block);
 
 }

@@ -16,7 +16,6 @@ settings:
   #per-player-generators are explained more on: https://github.com/Kryniowesegryderiusz/KGenerators/wiki/Per-Player-Generators
   per-player-generators:
     #Enables limit, usage and pickup checks
-    #If you are not using these set this to false - it will improve performance. You will be still able to use /kgenerators check
     enabled: false
     #Set default overall place limit (count of all player's generators)
     #Set to -1 to disable that limit

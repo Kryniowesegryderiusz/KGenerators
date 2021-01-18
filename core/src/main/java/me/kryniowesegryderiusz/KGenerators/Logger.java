@@ -21,6 +21,7 @@ import java.util.List;
 import javax.net.ssl.HttpsURLConnection;
 
 import org.bukkit.command.CommandSender;
+import org.bukkit.scheduler.BukkitRunnable;
 
 import me.kryniowesegryderiusz.KGenerators.Enums.EnumLog;
 import me.kryniowesegryderiusz.KGenerators.Enums.EnumMessage;
@@ -120,26 +121,34 @@ public class Logger {
         }
 	}
 	
-	public static void debugPasteToHaste(CommandSender sender)
+	public static void debugPaste(CommandSender sender)
 	{
-		String fileString = "";
-		fileString += "Server version: " + Main.getInstance().getServer().getVersion() + "\n";
-		fileString += "Plugin version: " + Main.getInstance().getDescription().getVersion() + "\n";
-		fileString += "Enabled dependencies: " + Main.dependencies.toString() + "\n\n";
-		try {
-			fileString += getLinesFromFile(logFile) + "\n";
-			fileString += getLinesFromFile(configFile) + "\n";
-			fileString += getLinesFromFile(recipesFile);
-			
-			String url = postHaste(sender, fileString, false);
-			
-			LangUtils.addReplecable("<url>", url);
-			LangUtils.sendMessage(sender, EnumMessage.CommandsDebugDone);
-			
-		} catch (IOException e) {
-			LangUtils.sendMessage(sender, EnumMessage.CommandsDebugError);
-			Logger.error(e);
-		}
+		Main.getInstance().getServer().getScheduler().runTaskAsynchronously(Main.getInstance(), new Runnable()
+				{
+					@Override
+					public void run() {
+						String fileString = "";
+						fileString += "Server version: " + Main.getInstance().getServer().getVersion() + "\n";
+						fileString += "Plugin version: " + Main.getInstance().getDescription().getVersion() + "\n";
+						fileString += "Enabled dependencies: " + Main.dependencies.toString() + "\n\n";
+						try {
+							fileString += getLinesFromFile(logFile) + "\n";
+							fileString += getLinesFromFile(configFile) + "\n";
+							fileString += getLinesFromFile(recipesFile);
+							
+							String url = postHaste(sender, fileString, false);
+							if (url != null)
+							{
+								LangUtils.addReplecable("<url>", url);
+								LangUtils.sendMessage(sender, EnumMessage.CommandsDebugDone);
+							}
+							
+						} catch (IOException e) {
+							LangUtils.sendMessage(sender, EnumMessage.CommandsDebugError);
+							Logger.error(e);
+						}
+					}
+				});
 	}
 	
 	private static String getLinesFromFile(String file) throws IOException
@@ -180,7 +189,7 @@ public class Logger {
 			Logger.error(e);
 		}
 		
-		if (response.contains("\"key\"")) {
+		if (response != null && response.contains("\"key\"")) {
 			response = response.substring(response.indexOf(":") + 2, response.length() - 2);
 		
 			String postURL = raw ? "https://hastebin.com/raw/" : "https://hastebin.com/";

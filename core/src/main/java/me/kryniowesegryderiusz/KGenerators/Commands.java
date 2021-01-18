@@ -183,7 +183,7 @@ public class Commands implements CommandExecutor {
 					break;
 				case "debug":
 					if (sender.hasPermission("kgenerators.debug") || sender instanceof ConsoleCommandSender){
-						Logger.debugPasteToHaste(sender);
+						Logger.debugPaste(sender);
 					}
 					else
 					{

@@ -1,6 +1,7 @@
 package me.kryniowesegryderiusz.KGenerators.MultiVersion;
 
 import org.bukkit.Location;
+import org.bukkit.Material;
 import org.bukkit.block.Block;
 import org.bukkit.inventory.ItemStack;
 
@@ -26,6 +27,12 @@ public class BlocksUtils_1_13 implements BlocksUtils {
 		if (Main.generatingWhitelist.contains(getItemStackByBlock(block))) {
 			return true;
 		}
+		return false;
+	}
+
+	@Override
+	public boolean isAir(Block block) {
+		if (block.getType() == Material.AIR || block.getType() == Material.CAVE_AIR) return true;
 		return false;
 	}
 

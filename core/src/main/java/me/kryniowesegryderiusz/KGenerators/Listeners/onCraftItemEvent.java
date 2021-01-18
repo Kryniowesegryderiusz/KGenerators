@@ -35,8 +35,8 @@ public class onCraftItemEvent implements Listener {
 			for (ItemStack i : items) {
 				if (i != null && i.equals(item)) {
 					LangUtils.sendMessage(p, EnumMessage.GeneratorsCraftingCantUse);
-					p.closeInventory();
 					e.setCancelled(true);
+					closeInv(p);
 					return;
 				}
 			}
@@ -49,11 +49,21 @@ public class onCraftItemEvent implements Listener {
 					LangUtils.addReplecable("<generator>", g.getGeneratorItem().getItemMeta().getDisplayName());
 					LangUtils.addReplecable("<permission>", permission);
 					LangUtils.sendMessage(p, EnumMessage.GeneratorsCraftingNoPermission);
-					p.closeInventory();
 					e.setCancelled(true);
+					closeInv(p);
 					return;
 				}
 			}
 		}
+	}
+	
+	void closeInv(Player p)
+	{
+		Main.getInstance().getServer().getScheduler().scheduleSyncDelayedTask(Main.getInstance(), new Runnable() {
+			@Override
+            public void run() {
+				p.closeInventory();
+            }
+		});
 	}
 }

@@ -53,6 +53,12 @@ public class BlocksUtils_1_8 implements BlocksUtils {
 		}
 		return false;
 	}
+
+	@Override
+	public boolean isAir(Block block) {
+		if (block.getType() == Material.AIR) return true;
+		return false;
+	}
 	
 	
 }

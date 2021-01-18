@@ -35,7 +35,6 @@ public abstract class GenerateBlock {
 
 	private static void generateBlock (Location location, Generator generator) {
 		  ItemStack block = Main.getBlocksUtils().getItemStackByBlock(location.getBlock());
-		  ItemStack air = XMaterial.AIR.parseItem();
 		  ItemStack pistonHead = XMaterial.PISTON_HEAD.parseItem();
 		  
 		  switch (generator.getType()) {
@@ -43,7 +42,7 @@ public abstract class GenerateBlock {
 			  if (!Main.generatorsLocations.containsKey(location)) {
 					return;
 				}
-				if (!block.equals(generator.getGeneratorBlock()) && !block.equals(air) && !Main.getBlocksUtils().isOnWhitelist(location.getBlock()) && !block.equals(generator.getPlaceholder()) && !generator.getChances().containsKey(block) && !block.getType().equals(pistonHead.getType())) {
+				if (!block.equals(generator.getGeneratorBlock()) && !Main.getBlocksUtils().isAir(location.getBlock()) && !Main.getBlocksUtils().isOnWhitelist(location.getBlock()) && !block.equals(generator.getPlaceholder()) && !generator.getChances().containsKey(block) && !block.getType().equals(pistonHead.getType())) {
 					Remove.removeGenerator(Main.generatorsLocations.get(location), location, true);
 					return;
 				}
@@ -53,7 +52,7 @@ public abstract class GenerateBlock {
 				if (!Main.generatorsLocations.containsKey(underLocation)) {
 					  return;
 				}
-				if (!block.equals(air) && !Main.getBlocksUtils().isOnWhitelist(location.getBlock()) && !block.equals(generator.getPlaceholder()) && !generator.getChances().containsKey(block) && !block.getType().equals(pistonHead.getType())) {
+				if (!Main.getBlocksUtils().isAir(location.getBlock()) && !Main.getBlocksUtils().isOnWhitelist(location.getBlock()) && !block.equals(generator.getPlaceholder()) && !generator.getChances().containsKey(block) && !block.getType().equals(pistonHead.getType())) {
 					Remove.removeGenerator(Main.generatorsLocations.get(underLocation), underLocation, true);
 					return;
 				}
@@ -84,10 +83,9 @@ public abstract class GenerateBlock {
 		if (generator.getPlaceholder() != null && generator.getDelay() > 1) {
 			Main.getInstance().getServer().getScheduler().scheduleSyncDelayedTask(Main.getInstance(), new Runnable() {
 				  public void run() {
-					  ItemStack air = XMaterial.AIR.parseItem();
 					  ItemStack m = Main.getBlocksUtils().getItemStackByBlock(location.getBlock());
 					  
-					  if (m.equals(air) || generator.getChances().containsKey(m) || generator.getGeneratorBlock().equals(m)) {
+					  if (!Main.getBlocksUtils().isAir(location.getBlock()) || generator.getChances().containsKey(m) || generator.getGeneratorBlock().equals(m)) {
 						  Main.getBlocksUtils().setBlock(location, generator.getPlaceholder());
 					  }
 				  }

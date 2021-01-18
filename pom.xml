@@ -2,7 +2,7 @@
 	<modelVersion>4.0.0</modelVersion>
 	<groupId>me.kryniowesegryderiusz</groupId>
 	<artifactId>kgenerators-parent</artifactId>
-	<version>3.11.3</version>
+	<version>3.11.5</version>
 	<packaging>pom</packaging>
 	<name>KGenerators</name>
 	<description>Your own custom single/double generators</description>

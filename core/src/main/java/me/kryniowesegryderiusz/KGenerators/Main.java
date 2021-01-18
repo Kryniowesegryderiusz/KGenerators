@@ -16,7 +16,6 @@ import org.bukkit.configuration.InvalidConfigurationException;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.plugin.java.JavaPlugin;
 
-import me.kryniowesegryderiusz.KGenerators.Enums.EnumLog;
 import me.kryniowesegryderiusz.KGenerators.Enums.EnumPickUpMode;
 import me.kryniowesegryderiusz.KGenerators.Classes.Generator;
 import me.kryniowesegryderiusz.KGenerators.Classes.GeneratorLocation;
