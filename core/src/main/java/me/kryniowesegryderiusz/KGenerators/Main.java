@@ -114,40 +114,40 @@ public class Main extends JavaPlugin {
     	
     	/* Dependencies check */
     	if (Bukkit.getPluginManager().isPluginEnabled("SuperiorSkyblock2")) {
-    		Logger.info("[KGenerators] Detected plugin SuperiorSkyblock2. Hooking into it.");
+    		Logger.info("Detected plugin SuperiorSkyblock2. Hooking into it.");
     		dependencies.add("SuperiorSkyblock2");
     	}
     	
     	if (Bukkit.getPluginManager().isPluginEnabled("BentoBox")) {
-    		Logger.info("[KGenerators] Detected plugin BentoBox. Hooking into it.");
+    		Logger.info("Detected plugin BentoBox. Hooking into it.");
     		dependencies.add("BentoBox");
     	}
     	
     	if (Bukkit.getPluginManager().isPluginEnabled("JetsMinions")) {
-    		Logger.info("[KGenerators] Detected plugin JetsMinions. Hooking into it.");
+    		Logger.info("Detected plugin JetsMinions. Hooking into it.");
     		dependencies.add("JetsMinions");
     	}
     	
     	if (worldGuardUtils != null && Main.getWorldGuardUtils().isWorldGuardHooked()) {
-   			Logger.info("[KGenerators] Detected plugin WorldGuard. Hooked into it.");
+   			Logger.info("Detected plugin WorldGuard. Hooked into it.");
    			dependencies.add("WorldGuard");
     	}
     	else if (worldGuardUtils != null)
     	{
     		if (Bukkit.getPluginManager().isPluginEnabled("WorldGuard")) {
-    			Logger.info("[KGenerators] Detected plugin WorldGuard, but couldnt hook into it! Search console log above for errors!");
+    			Logger.info("Detected plugin WorldGuard, but couldnt hook into it! Search console log above for errors!");
     		}
     	}
     	
     	/* Config loader */
     	if (!new File(getDataFolder(), "config.yml").exists()){
-    		Logger.info("[KGenerators] Generating config.yml");
+    		Logger.info("Generating config.yml");
     		this.saveResource("config.yml", false);
     	}
     	try {
 			setConfigFile(ConfigManager.getConfig("config.yml", null, false));
 		} catch (FileNotFoundException e) {
-			Logger.info("[KGenerators] Cant load config");
+			Logger.info("Cant load config");
 			this.getServer().getPluginManager().disablePlugin(this);
 			Logger.error(e);
 		}
@@ -160,7 +160,7 @@ public class Main extends JavaPlugin {
     		
     	/* Recipes loader */
     	if (!new File(getDataFolder(), "recipes.yml").exists()){
-    		Logger.info("[KGenerators] Generating recipes.yml");
+    		Logger.info("Generating recipes.yml");
     		this.saveResource("recipes.yml", false);
     	}
     	try {
@@ -212,7 +212,7 @@ public class Main extends JavaPlugin {
     	try {
 			setMessagesFile(ConfigManager.getConfig("lang/"+lang+".yml", null, false));
 		} catch (FileNotFoundException e1) {
-			Logger.error("[KGenerators] Cant find lang file " + lang);
+			Logger.error("Cant find lang file " + lang);
 			//Logger.error(e1);
 		}
     	try {
@@ -226,7 +226,7 @@ public class Main extends JavaPlugin {
 		} catch (IOException e) {
 			Logger.error(e);
 		}
-    	Logger.info("[KGenerators] Messages file loaded with lang: " + lang);
+    	Logger.info("Messages file loaded with lang: " + lang);
     	
     	this.getServer().getPluginCommand("kgenerators").setExecutor(new Commands());
 
@@ -242,7 +242,7 @@ public class Main extends JavaPlugin {
     		this.getServer().getPluginManager().registerEvents(new onJetsMinions(), this);
     	}
     	
-    	Logger.info("[KGenerators] Placed generators are loaded in delayed init task! Informations about them are located further in this log!");
+    	Logger.info("Placed generators are loaded in delayed init task! Informations about them are located further in this log!");
     }
     
     @Override
@@ -271,7 +271,7 @@ public class Main extends JavaPlugin {
 		
 	      boolean bool = file.mkdir();
 	      if(!bool){
-	         Logger.info("[KGenerators] Can not create directory for "+dir);
+	         Logger.info("Can not create directory for "+dir);
 	      }
 	}
 	

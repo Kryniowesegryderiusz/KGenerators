@@ -42,7 +42,7 @@ public abstract class Files {
 			for (String s : tempListString) {
 				ItemStack m = XUtils.parseItemStack(s);
 				tempListItemStack.add(m);
-				Logger.info("[KGenerators] Added " + s + " to generating whitelist.");
+				Logger.info("Added " + s + " to generating whitelist.");
 			}
 			Main.generatingWhitelist = tempListItemStack;
 		}
@@ -116,7 +116,7 @@ public abstract class Files {
     		String type = config.getString("generators."+generatorID+".type").toLowerCase();
     		
     		if (!type.equals("single") && !type.equals("double")) {
-    			Logger.error("[KGenerators] !!! ERROR !!! Type of " + generatorID + " is set to " + type + ". It should be single or double!");
+    			Logger.error("!!! ERROR !!! Type of " + generatorID + " is set to " + type + ". It should be single or double!");
     			error = true;
     		}
     		
@@ -194,20 +194,20 @@ public abstract class Files {
     		for (Entry<String, Generator> entry : Main.generators.entrySet()) {
     			if (entry.getValue().getGeneratorItem().equals(generatorItem)) {
     				error = true;
-    				Logger.error("[KGenerators] !!! ERROR !!! " + generatorID + " has same generator item as " + entry.getKey());
+    				Logger.error(generatorID + " has same generator item as " + entry.getKey());
     			}
     		}
     		
     		if (error) 
     		{
-    			Logger.error("[KGenerators] !!! ERROR !!! Couldnt load " + generatorID);
+    			Logger.error("Couldnt load " + generatorID);
     		}
     		else
     		{
     			Main.generators.put(generatorID, generator);
         		Main.generatorsItemStacks.add(generator.getGeneratorBlock());
         		
-        		Logger.info("[KGenerators] Loaded " + type + " "+ generatorID + " generating variety of " + chancesAmount + " blocks every " + delay + " ticks");
+        		Logger.info("Loaded " + type + " "+ generatorID + " generating variety of " + chancesAmount + " blocks every " + delay + " ticks");
     		}
     	}
 	}
@@ -267,12 +267,12 @@ public abstract class Files {
     	
     	if (!errWorlds.isEmpty())
     	{
-    		Logger.error("[KGenerators] !!! ERROR !!! An error occured, while loading some placed generators!");
-    		Logger.error("[KGenerators] !!! ERROR !!! Cant load worlds: " + errWorlds.toString());
-    		Logger.error("[KGenerators] !!! ERROR !!! Possible worlds: " + Bukkit.getWorlds().toString());
+    		Logger.error("An error occured, while loading some placed generators!");
+    		Logger.error("Cant load worlds: " + errWorlds.toString());
+    		Logger.error("Possible worlds: " + Bukkit.getWorlds().toString());
     	}
     	
-    	Logger.info("[KGenerators] Loaded " + amount + " placed generators");
+    	Logger.info("Loaded " + amount + " placed generators");
 	}
 	
 	public static void saveGeneratorToFile(Location location, Player player, String generatorID)

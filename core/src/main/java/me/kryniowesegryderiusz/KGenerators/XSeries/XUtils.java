@@ -5,6 +5,8 @@ import java.util.Optional;
 
 import org.bukkit.inventory.ItemStack;
 
+import me.kryniowesegryderiusz.KGenerators.Logger;
+
 public abstract class XUtils {
 	
     public static ItemStack parseItemStack(String s) {
@@ -14,7 +16,7 @@ public abstract class XUtils {
 			XMaterial xm = oxm.get();
 			return xm.parseItem();
 		} catch (NoSuchElementException e) {
-			System.out.println("[KGenerators] !!! ERROR !!! " + s + " is not a proper material! Using STONE!");
+			Logger.error(s + " is not a proper material! Using STONE!");
 			//e.printStackTrace();
 		}
 		return XMaterial.STONE.parseItem();

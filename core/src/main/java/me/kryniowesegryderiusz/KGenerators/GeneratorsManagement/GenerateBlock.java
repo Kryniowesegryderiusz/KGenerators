@@ -85,7 +85,7 @@ public abstract class GenerateBlock {
 				  public void run() {
 					  ItemStack m = Main.getBlocksUtils().getItemStackByBlock(location.getBlock());
 					  
-					  if (!Main.getBlocksUtils().isAir(location.getBlock()) || generator.getChances().containsKey(m) || generator.getGeneratorBlock().equals(m)) {
+					  if (Main.getBlocksUtils().isAir(location.getBlock()) || generator.getChances().containsKey(m) || generator.getGeneratorBlock().equals(m)) {
 						  Main.getBlocksUtils().setBlock(location, generator.getPlaceholder());
 					  }
 				  }

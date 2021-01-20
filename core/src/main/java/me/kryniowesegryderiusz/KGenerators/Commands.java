@@ -42,7 +42,7 @@ public class Commands implements CommandExecutor {
 						try {
 							Main.setMessagesFile(ConfigManager.getConfig("lang/"+Main.lang+".yml", null, false));
 						} catch (FileNotFoundException e1) {
-							Logger.error("[KGenerators] !!! ERROR !!! Cant find lang/" + Main.lang + ".yml file");
+							Logger.error("!!! ERROR !!! Cant find lang/" + Main.lang + ".yml file");
 						}
 				    	try {
 							Main.getConfigFile().loadConfig();
@@ -83,7 +83,7 @@ public class Commands implements CommandExecutor {
 					}
 					else
 					{
-						System.out.println("[KGenerators] Use that command as player!");
+						System.out.println("Use that command as player!");
 					}
 					break;
 				case "list":
@@ -111,7 +111,7 @@ public class Commands implements CommandExecutor {
 							}
 							else
 							{
-								System.out.println("[KGenerators] Use that command as player!");
+								System.out.println("Use that command as player!");
 							}
 						}
 						else
