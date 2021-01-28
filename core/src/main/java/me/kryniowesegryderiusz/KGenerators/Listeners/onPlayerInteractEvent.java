@@ -14,10 +14,18 @@ import me.kryniowesegryderiusz.KGenerators.GeneratorsManagement.PickUp;
 
 public class onPlayerInteractEvent implements Listener {
 	
+	boolean handCheck = true;
+	
+	public onPlayerInteractEvent()
+	{
+		String version = Main.getInstance().getServer().getVersion();
+		if (version.contains("1.8")) handCheck = false;
+	}
+	
 	@EventHandler(priority = EventPriority.HIGH)
 	public void playerInteract(PlayerInteractEvent  e)
 	{
-		if(e.getHand() != EquipmentSlot.HAND) return;
+		if(handCheck && e.getHand() != EquipmentSlot.HAND) return;
 		
 		if (e.isCancelled()) return;
 		

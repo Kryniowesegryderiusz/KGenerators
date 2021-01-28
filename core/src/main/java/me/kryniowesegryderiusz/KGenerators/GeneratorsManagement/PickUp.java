@@ -37,6 +37,7 @@ public class PickUp {
 		if (setMode != mode)
 		{
 			if (rightClick) return false;
+			if (gLocation.getGenerator().getType().equals("single")) return false;
 			if (mode == EnumPickUpMode.BREAK && setMode != EnumPickUpMode.RIGHT_CLICK) return true;
 			if (setMode == EnumPickUpMode.BREAK && mode == EnumPickUpMode.LEFT_CLICK) return false;
 			errorMessage (p);

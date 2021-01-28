@@ -10,6 +10,7 @@ import java.io.IOException;
 import java.io.InputStreamReader;
 import java.io.PrintStream;
 import java.io.PrintWriter;
+import java.net.HttpURLConnection;
 import java.net.URL;
 import java.nio.charset.Charset;
 import java.nio.charset.StandardCharsets;
@@ -21,6 +22,7 @@ import java.util.List;
 import javax.net.ssl.HttpsURLConnection;
 
 import org.bukkit.command.CommandSender;
+import org.bukkit.plugin.Plugin;
 import org.bukkit.scheduler.BukkitRunnable;
 
 import me.kryniowesegryderiusz.KGenerators.Enums.EnumLog;
@@ -130,7 +132,15 @@ public class Logger {
 						String fileString = "";
 						fileString += "Server version: " + Main.getInstance().getServer().getVersion() + "\n";
 						fileString += "Plugin version: " + Main.getInstance().getDescription().getVersion() + "\n";
-						fileString += "Enabled dependencies: " + Main.dependencies.toString() + "\n\n";
+						fileString += "Enabled dependencies: " + Main.dependencies.toString() + "\n";
+						
+						fileString += "Enabled plugins: ";
+						for (Plugin p : Main.getInstance().getServer().getPluginManager().getPlugins())
+						{
+							fileString += p.getName() + ", ";
+						}
+						fileString += "\n\n";
+						
 						try {
 							fileString += getLinesFromFile(logFile) + "\n";
 							fileString += getLinesFromFile(configFile) + "\n";
@@ -163,13 +173,14 @@ public class Logger {
 		
 	}
 	
-	private static String postHaste(CommandSender sender, String text, boolean raw) throws IOException {
+	private static String postHaste(CommandSender sender, String text, boolean raw) throws IOException 
+	{
 		byte[] postData = text.getBytes(StandardCharsets.UTF_8);
 		int postDataLength = postData.length;
 
-		String requestURL = "https://hastebin.com/documents";
+		String requestURL = "http://paste.skyup.pl/documents";
 		URL url = new URL(requestURL);
-		HttpsURLConnection conn = (HttpsURLConnection) url.openConnection();
+		HttpURLConnection conn = (HttpURLConnection) url.openConnection();
 		conn.setDoOutput(true);
 		conn.setInstanceFollowRedirects(false);
 		conn.setRequestMethod("POST");
@@ -192,7 +203,7 @@ public class Logger {
 		if (response != null && response.contains("\"key\"")) {
 			response = response.substring(response.indexOf(":") + 2, response.length() - 2);
 		
-			String postURL = raw ? "https://hastebin.com/raw/" : "https://hastebin.com/";
+			String postURL = raw ? "http://paste.skyup.pl/raw/" : "http://paste.skyup.pl/";
 			response = postURL + response;
 		}
 		

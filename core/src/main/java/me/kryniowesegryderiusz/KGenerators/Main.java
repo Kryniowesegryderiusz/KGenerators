@@ -113,31 +113,34 @@ public class Main extends JavaPlugin {
     	Logger.setup();
     	
     	/* Dependencies check */
-    	if (Bukkit.getPluginManager().isPluginEnabled("SuperiorSkyblock2")) {
-    		Logger.info("Detected plugin SuperiorSkyblock2. Hooking into it.");
-    		dependencies.add("SuperiorSkyblock2");
-    	}
-    	
-    	if (Bukkit.getPluginManager().isPluginEnabled("BentoBox")) {
-    		Logger.info("Detected plugin BentoBox. Hooking into it.");
-    		dependencies.add("BentoBox");
-    	}
-    	
-    	if (Bukkit.getPluginManager().isPluginEnabled("JetsMinions")) {
-    		Logger.info("Detected plugin JetsMinions. Hooking into it.");
-    		dependencies.add("JetsMinions");
-    	}
-    	
-    	if (worldGuardUtils != null && Main.getWorldGuardUtils().isWorldGuardHooked()) {
-   			Logger.info("Detected plugin WorldGuard. Hooked into it.");
-   			dependencies.add("WorldGuard");
-    	}
-    	else if (worldGuardUtils != null)
-    	{
-    		if (Bukkit.getPluginManager().isPluginEnabled("WorldGuard")) {
-    			Logger.info("Detected plugin WorldGuard, but couldnt hook into it! Search console log above for errors!");
-    		}
-    	}
+    	Bukkit.getScheduler().runTask(instance, () -> {
+	    	if (Bukkit.getPluginManager().isPluginEnabled("SuperiorSkyblock2")) {
+	    		Logger.info("Detected plugin SuperiorSkyblock2. Hooking into it.");
+	    		dependencies.add("SuperiorSkyblock2");
+	    	}
+	    	
+	    	if (Bukkit.getPluginManager().isPluginEnabled("BentoBox")) {
+	    		Logger.info("Detected plugin BentoBox. Hooking into it.");
+	    		dependencies.add("BentoBox");
+	    	}
+	    	
+	    	if (Bukkit.getPluginManager().isPluginEnabled("JetsMinions")) {
+	    		Logger.info("Detected plugin JetsMinions. Hooking into it.");
+	    		dependencies.add("JetsMinions");
+        		this.getServer().getPluginManager().registerEvents(new onJetsMinions(), this);
+	    	}
+	    	
+	    	if (worldGuardUtils != null && Main.getWorldGuardUtils().isWorldGuardHooked()) {
+	   			Logger.info("Detected plugin WorldGuard. Hooked into it.");
+	   			dependencies.add("WorldGuard");
+	    	}
+	    	else if (worldGuardUtils != null)
+	    	{
+	    		if (Bukkit.getPluginManager().isPluginEnabled("WorldGuard")) {
+	    			Logger.info("Detected plugin WorldGuard, but couldnt hook into it! Search console log above for errors!");
+	    		}
+	    	}
+    	});
     	
     	/* Config loader */
     	if (!new File(getDataFolder(), "config.yml").exists()){
@@ -236,11 +239,6 @@ public class Main extends JavaPlugin {
     	this.getServer().getPluginManager().registerEvents(new onBlockPistonEvent(), this);
     	this.getServer().getPluginManager().registerEvents(new onExplosion(), this);
     	this.getServer().getPluginManager().registerEvents(new onPlayerInteractEvent(), this);
-    	
-    	if (dependencies.contains("JetsMinions"))
-    	{
-    		this.getServer().getPluginManager().registerEvents(new onJetsMinions(), this);
-    	}
     	
     	Logger.info("Placed generators are loaded in delayed init task! Informations about them are located further in this log!");
     }
