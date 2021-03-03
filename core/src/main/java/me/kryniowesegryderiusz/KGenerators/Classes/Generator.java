@@ -1,42 +1,71 @@
-package me.kryniowesegryderiusz.KGenerators.Classes;
+package me.kryniowesegryderiusz.kgenerators.classes;
 
 import java.util.HashMap;
+import java.util.LinkedHashMap;
 import java.util.Map.Entry;
 
 import org.bukkit.Material;
 import org.bukkit.inventory.ItemStack;
 
+import lombok.Getter;
+import lombok.Setter;
+import me.kryniowesegryderiusz.kgenerators.Enums.GeneratorType;
+import me.kryniowesegryderiusz.kgenerators.managers.Upgrades;
+
 public class Generator {
 	
+	@Getter
 	private String id;
-	
+	@Getter
 	private ItemStack generatorBlock;
-	  
-	private ItemStack generatorItem;
-	  
-	private int delay;
-	  
-	private String type;
 	
+	private ItemStack generatorItem;
+	@Getter  
+	private int delay;
+	@Getter
+	private GeneratorType type;
+	@Getter
+	private boolean secondMultiple = false;
+	
+    @Getter
+    LinkedHashMap<ItemStack, Double> chances = new LinkedHashMap<ItemStack, Double>();
+	
+	@Getter @Setter
 	private ItemStack placeholder;
 	
+	@Getter @Setter
 	private int afterPlaceWaitModifier = 0;
 	
+	@Getter @Setter
 	private boolean allowPistonPush = false;
 	
-	private Integer placeLimit = -1;
-    private Boolean onlyOwnerPickUp = false;
-    private Boolean onlyOwnerUse = false;
+	@Getter @Setter
+	private boolean hologram = false;
 	
-	HashMap<ItemStack, Double> chances = new HashMap<ItemStack, Double>();
+	@Getter @Setter
+	private Integer placeLimit = -1;
+	@Getter @Setter
+    private Boolean onlyOwnerPickUp = false;
+    @Getter @Setter
+    private Boolean onlyOwnerUse = false;
+    
+    private double fullChance = 0.0;
 	  
-	public Generator(String id, ItemStack generatorBlock, ItemStack generatorItem, int delay, String type, HashMap<ItemStack, Double> chances) {
+	public Generator(String id, ItemStack generatorBlock, ItemStack generatorItem, int delay, GeneratorType type, LinkedHashMap<ItemStack, Double> chances) {
 		this.id = id;
 	    this.generatorBlock = generatorBlock;
 	    this.generatorItem = generatorItem;
 	    this.delay = delay;
 	    this.type = type;
 	    this.chances = chances;
+	    
+	    double sm = (double) delay/20;
+	    if (sm == Math.floor(sm)) secondMultiple = true;
+	    
+	    for (Entry<ItemStack, Double> e : chances.entrySet())
+	    {
+	    	this.fullChance = this.fullChance + e.getValue();
+	    }
 	}
 	
 	public boolean doesChancesContain(ItemStack item)
@@ -48,82 +77,26 @@ public class Generator {
 		return false;
 	}
 	
-	public void setPlaceholder(ItemStack placeholder) {
-		this.placeholder = placeholder;
-	}
-	  
-	public ItemStack getGeneratorBlock() {
-		return this.generatorBlock;
-	}
-	  
-	public ItemStack getGeneratorItem() {
-		return this.generatorItem;
-	}
-	  
-	public int getDelay() {
-		return this.delay;
-	}
-	  
-	public String getType() {
-		return this.type;
-	}
-	
-	public ItemStack getPlaceholder() {
-		return this.placeholder;
-	}
-	  
-	public HashMap<ItemStack, Double> getChances(){
-		  return this.chances;
-	}
-	
-	public int getAfterPlaceWaitModifier() {
-		return this.afterPlaceWaitModifier;
-	}
-	
-	public void setAfterPlaceWaitModifier (int afterPlaceWaitModifier) {
-		this.afterPlaceWaitModifier = afterPlaceWaitModifier;
-	}
-	
-	public boolean isPistonPushAllowed() {
-		return this.allowPistonPush;
-	}
-	
-	public void setPistonPushAllowed (boolean allowPistonPush) {
-		this.allowPistonPush = allowPistonPush;
-	}
-	
-	public Integer getPlaceLimit()
+	public double getChancePercent(ItemStack item)
 	{
-		return this.placeLimit;
+		double chance = chances.get(item);
+		double fullchance = this.fullChance;
+		double percent = (chance/fullchance) * 100;
+		return percent;
 	}
 	
-	public void setPlaceLimit(int placeLimit)
-	{
-		this.placeLimit = placeLimit;
+	public boolean isGeneratingImmediately() {
+		if (this.afterPlaceWaitModifier == 0) return true;
+		return false;
 	}
 	
-	public Boolean isOnlyOwnerPickUp()
+	public ItemStack getGeneratorItem()
 	{
-		return this.onlyOwnerPickUp;
+		return this.generatorItem.clone();
 	}
 	
-	public void setOnlyOwnerPickUp(Boolean onlyOwnerPickUp)
+	public Upgrade getUpgrade()
 	{
-		this.onlyOwnerPickUp = onlyOwnerPickUp;
-	}
-	
-	public Boolean isOnlyOwnerUse()
-	{
-		return this.onlyOwnerUse;
-	}
-	
-	public void setOnlyOwnerUse(Boolean onlyOwnerUse)
-	{
-		this.onlyOwnerUse = onlyOwnerUse;
-	}
-	
-	public String getId()
-	{
-		return this.id;
+		return Upgrades.getUpgrade(id);
 	}
 }

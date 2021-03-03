@@ -1,25 +1,40 @@
+#KGenerators made by Kryniowesegryderiusz (Krynio_ on spigot)
+#https://www.spigotmc.org/resources/79246/
+#Need help? Join KGenerators discord: https://discord.gg/BZRjhpP4Ab
 
 # If you dont want to use custom recipes just comment whole file
 
 # WARNING! To add/update/remove recipe you HAVE TO RESTART SERVER!
-recipes:
-  # Recipe for stone_generator:generator:
-  stone_generator:
-    # Shape of generator in crafting table. Used letters are items defined in ingredients section. You can use space, if you dont want to set item in slot.
-    shape:
-    - " A "
-    - "ABA"
-    - " A "
-    #Possible ingredients. No matter, which server version do you have use names from here: https://hub.spigotmc.org/javadocs/spigot/org/bukkit/Material.html
-    ingredients:
-      A: REDSTONE
-      B: STONE
-  ores_generator:
-    shape:
-    - "CAC"
-    - "ABA"
-    - "CAC"
-    ingredients:
-      A: REDSTONE
-      B: COAL
-      C: COAL_BLOCK
+
+
+#EXAMPLE RECIPE IS ONLY AN EXAMPLE AND ITS NOT LOADED!
+# Recipe for example_generator:
+example_generator:
+  # Shape of generator in crafting table. Used letters are items defined in ingredients section. You can use space, if you dont want to set item in slot.
+  shape:
+  - " A "
+  - "ABA"
+  - " A "
+  #Possible ingredients. No matter, which server version do you have use names from here: https://hub.spigotmc.org/javadocs/spigot/org/bukkit/Material.html
+  ingredients:
+    A: REDSTONE
+    B: STONE
+      
+stone_generator_level_1:
+  shape:
+  - " A "
+  - "ABA"
+  - " A "
+  ingredients:
+    A: REDSTONE
+    B: STONE
+    
+ores_generator:
+  shape:
+  - "CAC"
+  - "ABA"
+  - "CAC"
+  ingredients:
+    A: REDSTONE
+    B: COAL
+    C: COAL_BLOCK

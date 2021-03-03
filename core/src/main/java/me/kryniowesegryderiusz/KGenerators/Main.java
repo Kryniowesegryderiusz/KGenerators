@@ -1,77 +1,72 @@
-package me.kryniowesegryderiusz.KGenerators;
+package me.kryniowesegryderiusz.kgenerators;
 
-
-import java.io.File;
-import java.io.FileNotFoundException;
-import java.io.IOException;
 
 import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.LinkedHashMap;
 import java.util.Map.Entry;
 
 import org.bukkit.Bukkit;
-import org.bukkit.Location;
-import org.bukkit.configuration.InvalidConfigurationException;
-import org.bukkit.inventory.ItemStack;
 import org.bukkit.plugin.java.JavaPlugin;
 
-import me.kryniowesegryderiusz.KGenerators.Enums.EnumPickUpMode;
-import me.kryniowesegryderiusz.KGenerators.Classes.Generator;
-import me.kryniowesegryderiusz.KGenerators.Classes.GeneratorLocation;
-import me.kryniowesegryderiusz.KGenerators.GeneratorsManagement.GenerateBlock;
-import me.kryniowesegryderiusz.KGenerators.Listeners.onBlockBreakEvent;
-import me.kryniowesegryderiusz.KGenerators.Listeners.onBlockPistonEvent;
-import me.kryniowesegryderiusz.KGenerators.Listeners.onBlockPlaceEvent;
-import me.kryniowesegryderiusz.KGenerators.Listeners.onCraftItemEvent;
-import me.kryniowesegryderiusz.KGenerators.Listeners.onExplosion;
-import me.kryniowesegryderiusz.KGenerators.Listeners.onJetsMinions;
-import me.kryniowesegryderiusz.KGenerators.Listeners.onPlayerInteractEvent;
-import me.kryniowesegryderiusz.KGenerators.MultiVersion.ActionBar;
-import me.kryniowesegryderiusz.KGenerators.MultiVersion.BlocksUtils;
-import me.kryniowesegryderiusz.KGenerators.MultiVersion.WorldGuardUtils;
-import me.kryniowesegryderiusz.KGenerators.MultiVersion.RecipesLoader;
-import me.kryniowesegryderiusz.KGenerators.Utils.Config;
-import me.kryniowesegryderiusz.KGenerators.Utils.ConfigManager;
-import me.kryniowesegryderiusz.KGenerators.Utils.LangUtils;
-import me.kryniowesegryderiusz.KGenerators.Utils.Metrics;
+import lombok.Getter;
+import lombok.Setter;
+import me.kryniowesegryderiusz.kgenerators.Enums.EnumDependency;
+import me.kryniowesegryderiusz.kgenerators.Enums.GeneratorType;
+import me.kryniowesegryderiusz.kgenerators.classes.Generator;
+import me.kryniowesegryderiusz.kgenerators.files.GeneratorsFile;
+import me.kryniowesegryderiusz.kgenerators.files.LangFiles;
+import me.kryniowesegryderiusz.kgenerators.files.PlacedGeneratorsFile;
+import me.kryniowesegryderiusz.kgenerators.files.RecipesFile;
+import me.kryniowesegryderiusz.kgenerators.files.ScheduledGeneratorsFile;
+import me.kryniowesegryderiusz.kgenerators.files.UpgradesFile;
+import me.kryniowesegryderiusz.kgenerators.gui.ChancesListMenu;
+import me.kryniowesegryderiusz.kgenerators.gui.ChancesSpecyficMenu;
+import me.kryniowesegryderiusz.kgenerators.gui.GeneratorMenu;
+import me.kryniowesegryderiusz.kgenerators.gui.Menus;
+import me.kryniowesegryderiusz.kgenerators.handlers.Vault;
+import me.kryniowesegryderiusz.kgenerators.files.ConfigFile;
+import me.kryniowesegryderiusz.kgenerators.files.FilesConverter;
+import me.kryniowesegryderiusz.kgenerators.listeners.onBlockBreakEvent;
+import me.kryniowesegryderiusz.kgenerators.listeners.onBlockPistonEvent;
+import me.kryniowesegryderiusz.kgenerators.listeners.onBlockPlaceEvent;
+import me.kryniowesegryderiusz.kgenerators.listeners.onCraftItemEvent;
+import me.kryniowesegryderiusz.kgenerators.listeners.onExplosion;
+import me.kryniowesegryderiusz.kgenerators.listeners.onFurnaceSmeltEvent;
+import me.kryniowesegryderiusz.kgenerators.listeners.onInventoryClickEvent;
+import me.kryniowesegryderiusz.kgenerators.listeners.onJetsMinions;
+import me.kryniowesegryderiusz.kgenerators.listeners.onPlayerInteractEvent;
+import me.kryniowesegryderiusz.kgenerators.managers.Generators;
+import me.kryniowesegryderiusz.kgenerators.managers.Holograms;
+import me.kryniowesegryderiusz.kgenerators.managers.Schedules;
+import me.kryniowesegryderiusz.kgenerators.managers.Settings;
+import me.kryniowesegryderiusz.kgenerators.multiversion.ActionBar;
+import me.kryniowesegryderiusz.kgenerators.multiversion.BlocksUtils;
+import me.kryniowesegryderiusz.kgenerators.multiversion.MultiVersion;
+import me.kryniowesegryderiusz.kgenerators.multiversion.RecipesLoader;
+import me.kryniowesegryderiusz.kgenerators.multiversion.WorldGuardUtils;
+import me.kryniowesegryderiusz.kgenerators.utils.Metrics;
 
 public class Main extends JavaPlugin {
 
-
+	@Getter
 	private static Main instance;
-	private static Config configFile;	
-	private static Config generatorsFile;
-	private static Config messagesFile;
-	private static Config recipesFile;
-
-	public static LinkedHashMap<String, Generator> generators = new LinkedHashMap<String, Generator>();
-	public static HashMap<Location, GeneratorLocation> generatorsLocations = new HashMap<Location, GeneratorLocation>();
-	public static ArrayList<Location> scheduledLocations = new ArrayList<Location>();
 	
-	/* For quick check */
-	public static ArrayList<ItemStack> generatorsItemStacks = new ArrayList<ItemStack>();
+	/* Settings */
 	
-	/* Global settings */
-	public static ArrayList<ItemStack> generatingWhitelist = new ArrayList<ItemStack>();
-	public static String lang = "en";
-	public static Boolean overAllPerPlayerGeneratorsEnabled = false;
-	public static int overAllPerPlayerGeneratorsPlaceLimit = -1;
-	public static Boolean generatorsActionbarMessages = true;
-	public static Boolean restrictMiningByPermission = false;
-	public static Boolean enableWorldGuardChecks = false;
-	public static EnumPickUpMode pickUpMode = EnumPickUpMode.BREAK;
-	public static Boolean pickUpSneak = true;
-	public static ItemStack pickUpItem = null;
-	public static short explosionHandler = 0;
+	@Getter @Setter
+	private static Settings settings = new Settings();
 	
 	/* Dependencies */
-	public static ArrayList<String> dependencies = new ArrayList<String>();
+	@Getter
+	public static ArrayList<EnumDependency> dependencies = new ArrayList<EnumDependency>();
 	
 	/* Multiversion reflections */
+	static @Getter @Setter
 	private RecipesLoader recipesLoader;
+	@Getter @Setter
 	private static BlocksUtils blocksUtils;
+	@Getter @Setter
 	private static WorldGuardUtils worldGuardUtils;
+	@Getter @Setter
 	private static ActionBar actionBar;
 	
     @Override
@@ -81,155 +76,36 @@ public class Main extends JavaPlugin {
 
 		@SuppressWarnings("unused")
 		Metrics metrics = new Metrics(this, pluginId);
-		metrics.addCustomChart(new Metrics.SingleLineChart("number_of_loaded_generators", () -> Main.generatorsLocations.size()));
-		metrics.addCustomChart(new Metrics.SingleLineChart("number_of_single_generators", () -> {
-			int nr = 0;
-			for (Entry<String, Generator> g : Main.generators.entrySet())
-			{
-				if (g.getValue().getType().equals("single"))
-				{
-					nr++;
-				}
-			}
-			return nr;
-			}));
-		metrics.addCustomChart(new Metrics.SingleLineChart("number_of_double_generators", () -> {
-			int nr = 0;
-			for (Entry<String, Generator> g : Main.generators.entrySet())
-			{
-				if (g.getValue().getType().equals("double"))
-				{
-					nr++;
-				}
-			}
-			return nr;
-			}));
+		metrics.addCustomChart(new Metrics.SingleLineChart("number_of_loaded_generators", () -> Generators.amount()));
+		metrics.addCustomChart(new Metrics.SingleLineChart("number_of_single_generators", () -> Generators.amount(GeneratorType.SINGLE)));
+		metrics.addCustomChart(new Metrics.SingleLineChart("number_of_double_generators", () -> Generators.amount(GeneratorType.DOUBLE)));
 		
-		metrics.addCustomChart(new Metrics.SimplePie("per_player_generators_enabled", () -> overAllPerPlayerGeneratorsEnabled.toString()));
-    	
-    	ConfigManager.setup();
+		metrics.addCustomChart(new Metrics.SimplePie("per_player_generators_enabled", () -> String.valueOf(Main.getSettings().isPerPlayerGenerators()) ));
     	
     	/* Logger setup */
     	Logger.setup();
     	
     	/* Dependencies check */
-    	Bukkit.getScheduler().runTask(instance, () -> {
-	    	if (Bukkit.getPluginManager().isPluginEnabled("SuperiorSkyblock2")) {
-	    		Logger.info("Detected plugin SuperiorSkyblock2. Hooking into it.");
-	    		dependencies.add("SuperiorSkyblock2");
-	    	}
-	    	
-	    	if (Bukkit.getPluginManager().isPluginEnabled("BentoBox")) {
-	    		Logger.info("Detected plugin BentoBox. Hooking into it.");
-	    		dependencies.add("BentoBox");
-	    	}
-	    	
-	    	if (Bukkit.getPluginManager().isPluginEnabled("JetsMinions")) {
-	    		Logger.info("Detected plugin JetsMinions. Hooking into it.");
-	    		dependencies.add("JetsMinions");
-        		this.getServer().getPluginManager().registerEvents(new onJetsMinions(), this);
-	    	}
-	    	
-	    	if (worldGuardUtils != null && Main.getWorldGuardUtils().isWorldGuardHooked()) {
-	   			Logger.info("Detected plugin WorldGuard. Hooked into it.");
-	   			dependencies.add("WorldGuard");
-	    	}
-	    	else if (worldGuardUtils != null)
-	    	{
-	    		if (Bukkit.getPluginManager().isPluginEnabled("WorldGuard")) {
-	    			Logger.info("Detected plugin WorldGuard, but couldnt hook into it! Search console log above for errors!");
-	    		}
-	    	}
-    	});
+    	dependenciesCheck();
     	
-    	/* Config loader */
-    	if (!new File(getDataFolder(), "config.yml").exists()){
-    		Logger.info("Generating config.yml");
-    		this.saveResource("config.yml", false);
-    	}
-    	try {
-			setConfigFile(ConfigManager.getConfig("config.yml", null, false));
-		} catch (FileNotFoundException e) {
-			Logger.info("Cant load config");
-			this.getServer().getPluginManager().disablePlugin(this);
-			Logger.error(e);
-		}
-    	try {
-			getConfigFile().loadConfig();
-		} catch (IOException | InvalidConfigurationException e2) {
-			Logger.error(e2);
-		}
-    	Files.loadConfig();
-    		
-    	/* Recipes loader */
-    	if (!new File(getDataFolder(), "recipes.yml").exists()){
-    		Logger.info("Generating recipes.yml");
-    		this.saveResource("recipes.yml", false);
-    	}
-    	try {
-    		setRecipesFile(ConfigManager.getConfig("recipes.yml", null, false));
-		} catch (FileNotFoundException e1) {
-			Logger.error(e1);
-		}
-    	try {
-			getRecipesFile().loadConfig();
-		} catch (IOException
-				| InvalidConfigurationException e) {
-			Logger.error(e);
-		}
-    	recipesLoader.loadRecipes();
+    	FilesConverter.convert();
     	
-    	/* Placed generators loader */
-    	try {
-			setGeneratorsFile(ConfigManager.getConfig("generators.yml", null, false));
-		} catch (FileNotFoundException e) {
-			try {
-				ConfigManager.createNewFile("generators.yml", null);
-				setGeneratorsFile(ConfigManager.getConfig("generators.yml", null, false));
-			} catch (IOException e1) {
-				this.getServer().getPluginManager().disablePlugin(this);
-				Logger.error(e1);
-			}
-		}
-    	try {
-			getGeneratorsFile().loadConfig();
-		} catch (IOException | InvalidConfigurationException e2) {
-			Logger.error(e2);
-		}
+    	ConfigFile.globalSettingsLoader();
+    	FilesConverter.updateConfig(settings);
     	
-        Bukkit.getScheduler().runTask(instance, () -> {
-        	Files.loadGenerators();
-        });
+    	GeneratorsFile.loadGenerators();
+    	RecipesFile.loadRecipes();
+    	PlacedGeneratorsFile.loadPlacedGenerators();
+    	UpgradesFile.load();
     	
-    	/* Languages manager */
-    	mkdir("lang");
+    	LangFiles.loadLang();
     	
-
-    	if (!new File(getDataFolder(), "lang/en.yml").exists()){
-    		this.saveResource("lang/en.yml", false);
-    	}
-    	if (!new File(getDataFolder(), "lang/pl.yml").exists()){
-    		this.saveResource("lang/pl.yml", false);
-    	}
+    	Holograms.setup();
     	
-    	try {
-			setMessagesFile(ConfigManager.getConfig("lang/"+lang+".yml", null, false));
-		} catch (FileNotFoundException e1) {
-			Logger.error("Cant find lang file " + lang);
-			//Logger.error(e1);
-		}
-    	try {
-			getMessagesFile().loadConfig();
-		} catch (IOException | InvalidConfigurationException e) {
-			Logger.error(e);
-		}
+    	Schedules.setup();
+    	ScheduledGeneratorsFile.load();
     	
-    	try {
-			LangUtils.loadMessages();
-		} catch (IOException e) {
-			Logger.error(e);
-		}
-    	Logger.info("Messages file loaded with lang: " + lang);
+    	Menus.setup();
     	
     	this.getServer().getPluginCommand("kgenerators").setExecutor(new Commands());
 
@@ -239,136 +115,85 @@ public class Main extends JavaPlugin {
     	this.getServer().getPluginManager().registerEvents(new onBlockPistonEvent(), this);
     	this.getServer().getPluginManager().registerEvents(new onExplosion(), this);
     	this.getServer().getPluginManager().registerEvents(new onPlayerInteractEvent(), this);
+    	this.getServer().getPluginManager().registerEvents(new onInventoryClickEvent(), this);
+    	this.getServer().getPluginManager().registerEvents(new onFurnaceSmeltEvent(), this);
     	
-    	Logger.info("Placed generators are loaded in delayed init task! Informations about them are located further in this log!");
+    	this.getServer().getPluginManager().registerEvents(new GeneratorMenu(), this);
+    	this.getServer().getPluginManager().registerEvents(new ChancesListMenu(), this);
+    	this.getServer().getPluginManager().registerEvents(new ChancesSpecyficMenu(), this);
+    	
+    	if (dependencies.contains(EnumDependency.JetsMinions))
+    	{
+    		this.getServer().getPluginManager().registerEvents(new onJetsMinions(), this);
+    	}
     }
-    
-    @Override
+
+	@Override
     public void onLoad() {
     	
     	instance = this;
-    	versioningSetup();
+    	MultiVersion.setup();
     	
     }
     
     @Override
     public void onDisable() {
-    	this.getServer().getScheduler().cancelTasks(this);
-    	for (Location location : scheduledLocations)
-    	{
-    		GenerateBlock.now(location, Main.generatorsLocations.get(location).getGenerator());
-    	}
+    	ScheduledGeneratorsFile.save();
+    	Menus.closeAll();
     }
     
-	static void mkdir(String dir){
-		File file = new File(Main.getInstance().getDataFolder()+"/"+dir);
-		
-		  if (file.exists()) {
-			  return;
-		  }
-		
-	      boolean bool = file.mkdir();
-	      if(!bool){
-	         Logger.info("Can not create directory for "+dir);
-	      }
-	}
-	
-	void versioningSetup()
-	{
-    	String version = this.getServer().getVersion();
-    	String packageName = Main.class.getPackage().getName() + ".MultiVersion";
-    	String recipesPackage;
-    	String blocksPackage;
-    	String wgPackage;
-    	String actionBarPackage;
-    	
-    	if (version.contains("1.8")) {
-    		recipesPackage = packageName + ".RecipesLoader_1_8";
-    		blocksPackage = packageName + ".BlocksUtils_1_8";
-    		wgPackage = packageName + ".WorldGuardUtils_1_8";
-    		actionBarPackage = packageName + ".ActionBar_1_8";
-    	} 
-    	else if (version.contains("1.9") || version.contains("1.10") || version.contains("1.11"))
-    	{
-    		recipesPackage = packageName + ".RecipesLoader_1_8";
-    		blocksPackage = packageName + ".BlocksUtils_1_8";
-    		wgPackage = packageName + ".WorldGuardUtils_1_8";
-    		actionBarPackage = packageName + ".ActionBar_1_9";
-    	}
-    	else if (version.contains("1.12"))
-    	{
-    		recipesPackage = packageName + ".RecipesLoader_1_12";
-    		blocksPackage = packageName + ".BlocksUtils_1_8";
-    		wgPackage = packageName + ".WorldGuardUtils_1_8";
-    		actionBarPackage = packageName + ".ActionBar_1_9";
-    	}
-    	else
-    	{
-    		recipesPackage = packageName + ".RecipesLoader_1_13";
-    		blocksPackage = packageName + ".BlocksUtils_1_13";
-    		wgPackage = packageName + ".WorldGuardUtils_1_13";
-    		actionBarPackage = packageName + ".ActionBar_1_9";
-    	}
-    	
-    	try {
-			recipesLoader = (RecipesLoader) Class.forName(recipesPackage).newInstance();
-			blocksUtils = (BlocksUtils) Class.forName(blocksPackage).newInstance();
-			if (this.getServer().getPluginManager().getPlugin("WorldGuard") != null) {
-				worldGuardUtils = (WorldGuardUtils) Class.forName(wgPackage).newInstance();
-	    		worldGuardUtils.worldGuardFlagsAdd();
+    
+    private void dependenciesCheck() {
+    	Bukkit.getScheduler().runTask(Main.getInstance(), () -> {
+	    	if (Bukkit.getPluginManager().isPluginEnabled("SuperiorSkyblock2")) {
+	    		Logger.info("Dependencies: Detected plugin SuperiorSkyblock2. Hooking into it.");
+	    		dependencies.add(EnumDependency.SuperiorSkyblock2);
 	    	}
-			actionBar = (ActionBar) Class.forName(actionBarPackage).newInstance();
-			
-		} catch (InstantiationException | IllegalAccessException | ClassNotFoundException e3) {
-			Logger.error(e3);
-		}
-	}
-    
-    public static Main getInstance(){
-    	return instance;
-    }
-    
-    public static BlocksUtils getBlocksUtils(){
-    	return blocksUtils;
-    }
-    
-    public static WorldGuardUtils getWorldGuardUtils(){
-    	return worldGuardUtils;
-    }
-    
-    public static ActionBar getActionBar(){
-    	return actionBar;
-    }
-
-	public static Config getMessagesFile() {
-		return messagesFile;
-	}
-
-	public static void setMessagesFile(Config messagesFile) {
-		Main.messagesFile = messagesFile;
-	}
-
-	public static Config getConfigFile() {
-		return configFile;
-	}
-
-	public static void setConfigFile(Config configFile) {
-		Main.configFile = configFile;
-	}
-
-	public static Config getGeneratorsFile() {
-		return generatorsFile;
-	}
-
-	public static void setGeneratorsFile(Config generatorsFile) {
-		Main.generatorsFile = generatorsFile;
-	}
-
-	public static Config getRecipesFile() {
-		return recipesFile;
-	}
-
-	public static void setRecipesFile(Config recipesFile) {
-		Main.recipesFile = recipesFile;
+	    	
+	    	if (Bukkit.getPluginManager().isPluginEnabled("BentoBox")) {
+	    		Logger.info("Dependencies: Detected plugin BentoBox. Hooking into it.");
+	    		dependencies.add(EnumDependency.BentoBox);
+	    	}
+	    	
+	    	if (Bukkit.getPluginManager().isPluginEnabled("JetsMinions")) {
+	    		Logger.info("Dependencies: Detected plugin JetsMinions. Hooking into it.");
+	    		dependencies.add(EnumDependency.JetsMinions);
+	    	}
+	    	
+	    	if (worldGuardUtils != null && Main.getWorldGuardUtils().isWorldGuardHooked()) {
+	   			Logger.info("Dependencies: Detected plugin WorldGuard. Hooked into it.");
+	   			dependencies.add(EnumDependency.WorldGuard);
+	    	}
+	    	else if (worldGuardUtils != null)
+	    	{
+	    		if (Bukkit.getPluginManager().isPluginEnabled("WorldGuard")) {
+	    			Logger.error("Dependencies: Detected plugin WorldGuard, but couldnt hook into it! Search console log above for errors!");
+	    		}
+	    	}
+	    	
+	    	if (Bukkit.getPluginManager().isPluginEnabled("HolographicDisplays"))
+	    	{
+	    		Logger.info("Dependencies: Detected plugin HolographicDisplays. Hooked into it.");
+	   			dependencies.add(EnumDependency.HolographicDisplays);
+	    	}
+	    	else
+	    	{
+	    		for (Entry<String, Generator> e : Generators.getEntrySet())
+	    		{
+	    			if (e.getValue().isHologram())
+	    				Logger.warn("Generators file: Generator " + e.getKey() + " has enabled holograms, but HolographicDisplays was not found! Holograms wouldnt work!");
+	    		}
+	    	}
+	    	
+	    	if (Vault.setupEconomy())
+	    	{
+	    		Logger.info("Dependencies: Detected Vault economy. Hooked into it.");
+	    		dependencies.add(EnumDependency.VaultEconomy);
+	    	}
+	    	else
+	    	{
+	    		Logger.info("Dependencies: Vault economy was not found! Generators upgrade feature will not work!");
+	    	}
+    	});
 	}
 }

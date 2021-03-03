@@ -1,4 +1,4 @@
-package me.kryniowesegryderiusz.KGenerators.Listeners;
+package me.kryniowesegryderiusz.kgenerators.listeners;
 
 import java.util.Map.Entry;
 
@@ -9,10 +9,11 @@ import org.bukkit.event.inventory.CraftItemEvent;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.material.MaterialData;
 
-import me.kryniowesegryderiusz.KGenerators.Main;
-import me.kryniowesegryderiusz.KGenerators.Classes.Generator;
-import me.kryniowesegryderiusz.KGenerators.Enums.EnumMessage;
-import me.kryniowesegryderiusz.KGenerators.Utils.LangUtils;
+import me.kryniowesegryderiusz.kgenerators.Lang;
+import me.kryniowesegryderiusz.kgenerators.Main;
+import me.kryniowesegryderiusz.kgenerators.Enums.EnumMessage;
+import me.kryniowesegryderiusz.kgenerators.classes.Generator;
+import me.kryniowesegryderiusz.kgenerators.managers.Generators;
 
 public class onCraftItemEvent implements Listener {
 	
@@ -24,7 +25,7 @@ public class onCraftItemEvent implements Listener {
 		
 		Player p = (Player) e.getWhoClicked();
 		
-		for(Entry<String, Generator> entry : Main.generators.entrySet()) {
+		for(Entry<String, Generator> entry : Generators.getEntrySet()) {
 			
 			String gName = entry.getKey();
 			Generator g = entry.getValue();
@@ -33,8 +34,8 @@ public class onCraftItemEvent implements Listener {
 			/* Check if not using generator for crafting */
 			ItemStack[] items = e.getInventory().getMatrix();
 			for (ItemStack i : items) {
-				if (i != null && i.equals(item)) {
-					LangUtils.sendMessage(p, EnumMessage.GeneratorsCraftingCantUse);
+				if (i != null && i.equals(item) && Generators.exactGeneratorItemExists(gName, item) == null) {
+					Lang.sendMessage(p, EnumMessage.GeneratorsCraftingCantUse);
 					e.setCancelled(true);
 					closeInv(p);
 					return;
@@ -46,9 +47,9 @@ public class onCraftItemEvent implements Listener {
 			if (item.equals(itemRecipe)) {
 				String permission = "kgenerators.craft."+gName;
 				if (!p.hasPermission(permission)) {
-					LangUtils.addReplecable("<generator>", g.getGeneratorItem().getItemMeta().getDisplayName());
-					LangUtils.addReplecable("<permission>", permission);
-					LangUtils.sendMessage(p, EnumMessage.GeneratorsCraftingNoPermission);
+					Lang.addReplecable("<generator>", g.getGeneratorItem().getItemMeta().getDisplayName());
+					Lang.addReplecable("<permission>", permission);
+					Lang.sendMessage(p, EnumMessage.GeneratorsCraftingNoPermission);
 					e.setCancelled(true);
 					closeInv(p);
 					return;

@@ -1,65 +1,111 @@
+#Aktualne tłumaczenie znajdziesz zawsze na:
+#https://github.com/Kryniowesegryderiusz/KGenerators/blob/main/core/src/main/resources/lang/pl.yml
+
 messages:
-  #Jeśli chcesz wyłączyć wiadomość ustaw ""
   prefix: '&8[&6KGenerators&8] '
   generators:
     digging:
-      only-gen: "&cNa tym terenie możesz kopać tylko wygenerowane bloki!"
-      no-permission: "&cNie masz uprawnienia &8(&7<permission>&8)&c, żeby kopać <generator>&c!"
+      only-gen: '&cW tym miejscu możesz kopać tylko wygenerowane bloki!'
+      no-permission: '&cNie masz uprawnienia &8(&7<permission>&8)&c, żeby kopać <generator>&c!'
     crafting:
-      cant-craft: "&cNie mozesz wytworzyc niczego z generatora!"
-      no-permission: "&cNie masz uprawnien &8(&7<permission>&8)&c, zeby stworzyc <generator>&c!"
+      cant-use: '&cNie możesz nic wytworzyć z generatora!'
+      no-permission: '&cNie masz uprawnienia &8(&7<permission>&8)&c, żeby wytworzyć <generator>&c!'
+    timeleft:
+      output: '&aRegeneracja nastąpi za &e<time>'
     pick-up:
-      successful: "&aZebrano &e<generator>"
-      unsuccessful: "&cMusisz <sneak><mode><item>, żeby podnieść generator!"
-      cant-here: "&cNie mozesz tu podniesc generatora!"
-      mode:
-        sneak: "kucnąć i "
-        break: "wykopać"
-        any-click: "kliknąć"
-        left-click: "kliknąć lewym"
-        right-click: "kliknąć prawym"
-        item: " trzymając <item>"
+      successful: '&aPodniesiono &e<generator>'
+      cant-here: '&cNie możesz tutaj podnieść generatora!'
+    place:
+      cant-here: '&cNie możesz tutaj postawić generatora!'
+      cant-place-block: '&cNie możesz nic postawić w miejscu generatora'
+      cant-place-double-below-block: '&cNie możesz postawić podwójnego generatora pod innym blokiem!'
+      cant-place-double-below-generator: '&cNie możesz postawić podwójnego generatora pod innym generatorem!'
     per-player-generator:
-      cant-place-more: '&cNie możesz postawić więcej, niż &6<number> &cgeneratorów!'
-      cant-place-more-type: '&cNie możesz postawić więcej niż &6<number> <generator>!'
-      cant-pick-up: '&cNie możesz zebrać generatora &6<owner>&c!'
-      cant-use: '&cNie możesz użyć generatora &6<owner>&c!'
+      cant-place-more: '&cNie możesz postawić więcej niż &6<number> &cgeneratorów!'
+      cant-place-more-type: '&cNie możesz postawić więcej niż &6<number> &cgeneratorów <generator> &c!'
+      cant-pick-up: '&cNie możesz podnieść generatora gracza &6<owner>&c!'
+      cant-use: '&cNie możesz kopać generatora gracza &6<owner>&c!'
+    protection:
+      cant-change-generator-item: '&cNie możesz edytować generatora!'
+  economy:
+    no-economy-avaible: '&cEkonomia nie jest dostępna na serwerze!'
+    not-enough-money: '&cNie masz wystarczająco dużo pieniędzy! Potrzebujesz &6<cost>$&c!'
+    done: '&aUlepszono &e<number> &ageneratorów za &e<cost>$&a!'
   commands:
     any:
-      wrong: "&cZła komenda! Wpisz /kgenerators, by uzyskać pomoc"
-      no-permission: "&cNie masz uprawnień &8(&7<permission>&8)&c, by używać komendy /kgenerators"
-      player-not-online: "&cGracz nie jest online"
+      wrong: '&cNie ma takiej komendy! Wpisz /kgenerators, by wyświetlić pomoc'
+      no-permission: '&cNie masz uprawnienia &8(&7<permission>&8)&c, żeby używać komend generatorów'
+      player-not-online: '&cGracz nie jest online'
       player-doesnt-exist: '&cGracz nie istnieje'
     list:
-      listing: '&aDostępne generatory: &e'
-      separator: '&a, &e'
-      no-permission: '&cNie masz uprawnień &8(&7<permission>&8)&c, by sprawdzić listę generatorów'
-      help: Sprawdź listę generatorów
+      header: '&aGeneratory:'
+      list: '&8- <generator> &8(&7ID: <generatorID>&8)'
+      no-permission: '&cNie masz uprawnienia &8(&7<permission>&8)&c, żeby wyświetlić listę generatorów'
+      help: Wyświetla listę generatorów
     give:
-      generator-doesnt-exist: "&cTaki generator nie istnieje"
-      generator-given: "&aGenerator <generator> został przyznany graczowi <player>"
-      generator-recieved: "&aOtrzymałeś generator <generator>!"
-      usage: "&cUżycie: &e/kgenerators give <gracz> <generator>"
-      no-permission:  "&cNie masz uprawnień &8(&7<permission>&8)&c, by dawać generatory!"
-      help: Daj generator graczowi
+      generator-doesnt-exist: '&cTen generator nie istnieje'
+      generator-given: '&aGenerator <generator>&a został przyznany &e<player>'
+      generator-recieved: '&aOtrzymano generator <generator>!'
+      usage: '&cUżycie &e/kgenerators give <player> <generator>'
+      no-permission: '&cNie masz uprawnienia &8(&7<permission>&8)&c, żeby dawać generatory'
+      help: Przyznaje generator graczowi
     getall:
-      recieved: "&aOtrzymano generatory"
-      no-permission: "&cNie masz uprawnień &8(&7<permission>&8)&c, by otrzymać generatory"
-      help: 'Weź dostępne generatory'
+      recieved: '&aOtrzymano generatory'
+      no-permission: '&cNie masz uprawnienia &8(&7<permission>&8)&c, żeby wziąć generatory'
+      help: Bierze wszystkie generatory
     check:
       header: '&aGracz &e<player> &apostawił:'
       list: '&8- &e<number> <generator>'
-      no-permission-own: "&cNie masz uprawnień &8(&7<permission>&8)&c, by sprawdzać innych!"
-      help: Sprawdza generatory i limity
+      no-permission-own: '&cNie masz uprawnienia &8(&7<permission>&8)&c, żeby sprawdzać graczy!'
+      help: Sprawdza generatory i limity gracza
     limits:
       header: '&aGracz &e<player> &aposiada limity:'
       specific: '&8- <generator>&a: &e<limit>'
       overall: '&8- &aLimit ogólny: &e<limit>'
       None: Brak
+    actions:
+      no-permission: '&cNie masz uprawnienia &8(&7<permission>&8)&c, żeby sprawdzić akcje!'
+      help: Sprawdza dostępne akcje
+      header: '&aDostępne akcje:'
+      list: '&6<action> &8- &e<sneak><mode><item>'
+      sneak: 'kucnij i '
+      break: zniszcz blok
+      left-click: kliknij lewym
+      right-click: kliknij prawym
+      item: ' trzymając <itemname>'
+      pick-up: Podniesienie generatora
+      gui: Otwarcie menu
+      time-left: Pozostały czas
+    timeleft:
+      no-generator: '&cNie patrzysz na generator oczekujący na regeneracje!'
+      no-permission: '&cNie masz uprawnienia &8(&7<permission>&8)&c, żeby sprawdzić pozostały czas generatora'
+      help: Sprawdza pozostały czas generatora
+      format:
+        seconds: s
+        minutes: min
+        hours: godz
+        days: dni
+        none: Brak
+    chances:
+      no-permission: '&cNie masz uprawnienia &8(&7<permission>&8)&c, żeby sprawdzić szanse generacji!'
+      help: Sprawdza szanse regeneracji
+    upgrade:
+      no-next-level: '&cTen generator osiągnął już maksymalny poziom!'
+      no-permission: '&cNie masz uprawnienia &8(&7<permission>&8)&c, żeby ulepszyć generator'
+      no-a-generator: '&cNie masz generatora w ręce!'
+      help: Ulepsza generator
     reload:
-      done: "&aPrzeładowano plik konfiguracyjny i wiadomości"
-      no-permission: "&cNie masz uprawnień &8(&7<permission>&8)&c, żeby przeładować pliki konfiguracyjne!"
-      help: Przeładuj konfiguracje i wiadomości
+      done: '&aPrzeładowano plugin! Sprawdź konsolę lub plik log.txt w folderze pluginu, żeby sprawdzić ewentualne błedy!'
+      no-permission: '&cNie masz uprawnienia &8(&7<permission>&8)&c, żeby przeładować plugin'
+      help: Przeładowuje plugin
+    debug:
+      done: '&aTwój url pomocy to: &e<url>'
+      error: '&cWystąpił błąd podczas generowania url pomocy!'
+      no-permission: '&cNie masz uprawnienia &8(&7<permission>&8)&c, żeby pobierać url pomocy'
     help:
       label: '&6&lKGenerators &aPomoc:'
       format: '&e/kgenerators <subcommand> &7<help>'
+holograms:
+  remaining-time:
+  - '&6Czas:'
+  - '&e<time>'

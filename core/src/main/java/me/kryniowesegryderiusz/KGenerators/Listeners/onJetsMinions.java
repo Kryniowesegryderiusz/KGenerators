@@ -1,4 +1,4 @@
-package me.kryniowesegryderiusz.KGenerators.Listeners;
+package me.kryniowesegryderiusz.kgenerators.listeners;
 
 import org.bukkit.Location;
 import org.bukkit.event.EventHandler;
@@ -6,9 +6,13 @@ import org.bukkit.event.Listener;
 import org.bukkit.inventory.ItemStack;
 
 import me.jet315.minions.events.MinerBlockBreakEvent;
-import me.kryniowesegryderiusz.KGenerators.Main;
-import me.kryniowesegryderiusz.KGenerators.Classes.Generator;
-import me.kryniowesegryderiusz.KGenerators.GeneratorsManagement.GenerateBlock;
+import me.kryniowesegryderiusz.kgenerators.Main;
+import me.kryniowesegryderiusz.kgenerators.Enums.GeneratorType;
+import me.kryniowesegryderiusz.kgenerators.classes.Generator;
+import me.kryniowesegryderiusz.kgenerators.classes.GeneratorLocation;
+import me.kryniowesegryderiusz.kgenerators.handlers.GenerateBlock;
+import me.kryniowesegryderiusz.kgenerators.managers.Locations;
+import me.kryniowesegryderiusz.kgenerators.managers.Schedules;
 
 public class onJetsMinions implements Listener {
 	
@@ -18,12 +22,13 @@ public class onJetsMinions implements Listener {
 		ItemStack block = Main.getBlocksUtils().getItemStackByBlock(e.getBlock());
 		Location bLocation = location.clone().add(0,-1,0);
 		
-		if (Main.generatorsLocations.containsKey(location)){
-			Generator generator = Main.generatorsLocations.get(location).getGenerator();
-			if (generator.getType().equals("single")) {
+		if (Locations.exists(location)){
+			GeneratorLocation gLocation = Locations.get(location);
+			Generator generator = gLocation.getGenerator();
+			if (generator.getType() == GeneratorType.SINGLE) {
 				if (generator.getChances().containsKey(block))
 				{
-					GenerateBlock.schedule(location, generator);
+					Schedules.schedule(gLocation);
 				}
 				else
 				{
@@ -36,12 +41,13 @@ public class onJetsMinions implements Listener {
 			}
 		}
 		
-		if (Main.generatorsLocations.containsKey(bLocation)){
-			Generator generator = Main.generatorsLocations.get(bLocation).getGenerator();
-			if (generator.getType().equals("double")) {
+		if (Locations.exists(bLocation)){
+			GeneratorLocation bgLocation = Locations.get(bLocation);
+			Generator generator = bgLocation.getGenerator();
+			if (generator.getType() == GeneratorType.DOUBLE) {
 				if (generator.getChances().containsKey(block))
 				{
-					GenerateBlock.schedule(location, generator);
+					Schedules.schedule(bgLocation);
 				}
 				else
 				{

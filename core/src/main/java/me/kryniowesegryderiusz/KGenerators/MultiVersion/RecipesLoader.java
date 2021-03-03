@@ -1,8 +1,10 @@
-package me.kryniowesegryderiusz.KGenerators.MultiVersion;
+package me.kryniowesegryderiusz.kgenerators.multiversion;
+
+import me.kryniowesegryderiusz.kgenerators.utils.Config;
 
 public interface RecipesLoader {
 	
-	public void loadRecipes();
+	public void loadRecipes(Config config);
 	
 
 }

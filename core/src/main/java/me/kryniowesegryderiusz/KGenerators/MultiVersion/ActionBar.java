@@ -1,4 +1,4 @@
-package me.kryniowesegryderiusz.KGenerators.MultiVersion;
+package me.kryniowesegryderiusz.kgenerators.multiversion;
 
 import org.bukkit.entity.Player;
 

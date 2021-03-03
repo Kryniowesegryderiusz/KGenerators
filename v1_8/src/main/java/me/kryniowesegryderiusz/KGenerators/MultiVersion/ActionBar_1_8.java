@@ -1,12 +1,13 @@
-package me.kryniowesegryderiusz.KGenerators.MultiVersion;
+package me.kryniowesegryderiusz.kgenerators.multiversion;
 
 import java.lang.reflect.Constructor;
 
 import org.bukkit.Bukkit;
 import org.bukkit.entity.Player;
 
-import me.kryniowesegryderiusz.KGenerators.Enums;
-import me.kryniowesegryderiusz.KGenerators.Logger;
+import me.kryniowesegryderiusz.kgenerators.Enums;
+import me.kryniowesegryderiusz.kgenerators.Logger;
+import me.kryniowesegryderiusz.kgenerators.multiversion.ActionBar;
 
 public class ActionBar_1_8 implements ActionBar {
 	  public void sendActionBar(Player player, String msg) {

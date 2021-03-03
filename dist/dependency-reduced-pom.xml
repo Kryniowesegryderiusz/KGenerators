@@ -3,7 +3,7 @@
   <parent>
     <artifactId>kgenerators-parent</artifactId>
     <groupId>me.kryniowesegryderiusz</groupId>
-    <version>3.11.8</version>
+    <version>4.0.0</version>
   </parent>
   <modelVersion>4.0.0</modelVersion>
   <groupId>me.kryniowesegryderiusz</groupId>

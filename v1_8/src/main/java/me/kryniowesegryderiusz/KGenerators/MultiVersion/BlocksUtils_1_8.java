@@ -1,4 +1,4 @@
-package me.kryniowesegryderiusz.KGenerators.MultiVersion;
+package me.kryniowesegryderiusz.kgenerators.multiversion;
 
 import org.bukkit.Location;
 import org.bukkit.Material;
@@ -7,15 +7,14 @@ import org.bukkit.block.BlockState;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.material.MaterialData;
 
-import me.kryniowesegryderiusz.KGenerators.Main;
-import me.kryniowesegryderiusz.KGenerators.XSeries.XMaterial;
+import me.kryniowesegryderiusz.kgenerators.Main;
+import me.kryniowesegryderiusz.kgenerators.multiversion.BlocksUtils;
+import me.kryniowesegryderiusz.kgenerators.xseries.XMaterial;
 
 public class BlocksUtils_1_8 implements BlocksUtils {
 
 	@Override
 	public ItemStack getItemStackByBlock(Block block) {
-		
-		Material material = XMaterial.matchXMaterial(block.getType()).parseMaterial();
 		MaterialData data = block.getState().getData();
 		ItemStack item = data.toItemStack();
 		item.setAmount(1);
@@ -38,16 +37,16 @@ public class BlocksUtils_1_8 implements BlocksUtils {
 	@Override
 	public boolean isOnWhitelist(Block block) {
 		if (block.getType().equals(Material.WATER) || block.getType().equals(Material.STATIONARY_WATER)) {
-			if (Main.generatingWhitelist.contains(XMaterial.WATER.parseItem())) {
+			if (Main.getSettings().getGeneratingWhitelist().contains(XMaterial.WATER.parseItem())) {
 				return true;
 			}
 		} else if (block.getType().equals(Material.LAVA) || block.getType().equals(Material.STATIONARY_LAVA)) {
-			if (Main.generatingWhitelist.contains(XMaterial.LAVA.parseItem())) {
+			if (Main.getSettings().getGeneratingWhitelist().contains(XMaterial.LAVA.parseItem())) {
 				return true;
 			}
 		} else
 		{
-			if (Main.generatingWhitelist.contains(getItemStackByBlock(block))) {
+			if (Main.getSettings().getGeneratingWhitelist().contains(getItemStackByBlock(block))) {
 				return true;
 			}
 		}

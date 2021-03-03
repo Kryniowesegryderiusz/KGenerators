@@ -1,4 +1,4 @@
-package me.kryniowesegryderiusz.KGenerators.Listeners;
+package me.kryniowesegryderiusz.kgenerators.listeners;
 
 import java.util.List;
 
@@ -9,9 +9,10 @@ import org.bukkit.event.Listener;
 import org.bukkit.event.block.BlockExplodeEvent;
 import org.bukkit.event.entity.EntityExplodeEvent;
 
-import me.kryniowesegryderiusz.KGenerators.Main;
-import me.kryniowesegryderiusz.KGenerators.Classes.GeneratorLocation;
-import me.kryniowesegryderiusz.KGenerators.GeneratorsManagement.Remove;
+import me.kryniowesegryderiusz.kgenerators.Main;
+import me.kryniowesegryderiusz.kgenerators.classes.GeneratorLocation;
+import me.kryniowesegryderiusz.kgenerators.handlers.Remove;
+import me.kryniowesegryderiusz.kgenerators.managers.Locations;
 
 public class onExplosion implements Listener {
 	
@@ -33,11 +34,11 @@ public class onExplosion implements Listener {
 	{
 		for (Block block : blocks)
 		{	
-			short handler = Main.explosionHandler;
+			short handler = Main.getSettings().getExplosionHandler();
 			Location location = block.getLocation();
 			Location bLocation = location.clone().add(0,-1,0);
-			boolean containsLocation = Main.generatorsLocations.containsKey(location);
-			boolean containsBLocation =  Main.generatorsLocations.containsKey(bLocation);
+			boolean containsLocation = Locations.exists(location);
+			boolean containsBLocation =  Locations.exists(bLocation);
 			
 			if(handler == 1 || handler == 2)
 			{
@@ -49,10 +50,8 @@ public class onExplosion implements Listener {
 				{
 					boolean drop = false;
 					if (handler==1) drop = true;
-					
-					GeneratorLocation gLocation = Main.generatorsLocations.get(dropLocation);
-					
-					Remove.removeGenerator(gLocation, dropLocation, drop);				
+										
+					Remove.removeGenerator(dropLocation, drop);				
 				}
 			}
 			else if (containsLocation || containsBLocation) return true;

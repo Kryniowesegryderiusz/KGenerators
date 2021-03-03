@@ -1,0 +1,17 @@
+#KGenerators made by Kryniowesegryderiusz (Krynio_ on spigot)
+#https://www.spigotmc.org/resources/79246/
+#Need help? Join KGenerators discord: https://discord.gg/BZRjhpP4Ab
+
+#Using upgrades feature requires Vault and some economy system installed!
+
+#EXAMPLE UPGRADE IS ONLY AN EXAMPLE AND ITS NOT LOADED!
+#Generator id of generator beeing upgraded
+example_generator_id_level_1:
+  #Next level generator id:
+  next-level: example_generator_id_level_2
+  #Upgrade cost in currency
+  cost: 500
+  
+stone_generator_level_1:
+  next-level: stone_generator_level_2
+  cost: 500

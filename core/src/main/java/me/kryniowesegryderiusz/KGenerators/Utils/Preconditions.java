@@ -1,4 +1,4 @@
-package me.kryniowesegryderiusz.KGenerators.Utils;
+package me.kryniowesegryderiusz.kgenerators.utils;
 
 /*
  * Copyright 2015 Olivier Grégoire.

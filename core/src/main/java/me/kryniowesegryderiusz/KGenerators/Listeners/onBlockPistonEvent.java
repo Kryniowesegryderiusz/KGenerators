@@ -1,4 +1,4 @@
-package me.kryniowesegryderiusz.KGenerators.Listeners;
+package me.kryniowesegryderiusz.kgenerators.listeners;
 
 import java.util.List;
 
@@ -10,12 +10,15 @@ import org.bukkit.event.block.BlockPistonExtendEvent;
 import org.bukkit.event.block.BlockPistonRetractEvent;
 import org.bukkit.inventory.ItemStack;
 
-import me.kryniowesegryderiusz.KGenerators.Main;
-import me.kryniowesegryderiusz.KGenerators.Classes.Generator;
-import me.kryniowesegryderiusz.KGenerators.Classes.GeneratorLocation;
-import me.kryniowesegryderiusz.KGenerators.GeneratorsManagement.GenerateBlock;
-import me.kryniowesegryderiusz.KGenerators.GeneratorsManagement.PerPlayerGenerators;
-import me.kryniowesegryderiusz.KGenerators.XSeries.XMaterial;
+import me.kryniowesegryderiusz.kgenerators.Main;
+import me.kryniowesegryderiusz.kgenerators.Enums.GeneratorType;
+import me.kryniowesegryderiusz.kgenerators.classes.Generator;
+import me.kryniowesegryderiusz.kgenerators.classes.GeneratorLocation;
+import me.kryniowesegryderiusz.kgenerators.handlers.GenerateBlock;
+import me.kryniowesegryderiusz.kgenerators.handlers.PerPlayerGenerators;
+import me.kryniowesegryderiusz.kgenerators.managers.Locations;
+import me.kryniowesegryderiusz.kgenerators.managers.Schedules;
+import me.kryniowesegryderiusz.kgenerators.xseries.XMaterial;
 
 public class onBlockPistonEvent implements Listener {
 
@@ -36,8 +39,8 @@ public class onBlockPistonEvent implements Listener {
 			Location location = block.getLocation();
 			Location bLocation = location.clone().add(0,-1,0);
 			
-			final GeneratorLocation gLocation = Main.generatorsLocations.get(location);
-			final GeneratorLocation bgLocation = Main.generatorsLocations.get(bLocation);
+			final GeneratorLocation gLocation = Locations.get(location);
+			final GeneratorLocation bgLocation = Locations.get(bLocation);
 			
 			Generator generator = null;
 			Generator bGenerator = null;
@@ -45,11 +48,11 @@ public class onBlockPistonEvent implements Listener {
 			if (bgLocation != null){bGenerator = bgLocation.getGenerator();}
 			
 			if (generator != null) {
-				if (generator.getType().equals("single") && generator.isPistonPushAllowed()) {
+				if (generator.getType() == GeneratorType.SINGLE && generator.isAllowPistonPush()) {
 					if (generator.getPlaceholder() == null || !generator.getPlaceholder().equals(Main.getBlocksUtils().getItemStackByBlock(block))) {
 						if (PerPlayerGenerators.canPush(generator))
 						{
-							GenerateBlock.schedule(location, generator);
+							Schedules.schedule(gLocation);
 						}
 					}
 					else
@@ -64,12 +67,12 @@ public class onBlockPistonEvent implements Listener {
 			}
 			
 			if (bGenerator != null) {
-				if (bGenerator.getType().equals("double") && bGenerator.isPistonPushAllowed())
+				if (bGenerator.getType() == GeneratorType.DOUBLE && bGenerator.isAllowPistonPush())
 				{
 					if (bGenerator.getPlaceholder() == null || !bGenerator.getPlaceholder().equals(Main.getBlocksUtils().getItemStackByBlock(block))) {
 						if (PerPlayerGenerators.canPush(bGenerator))
 						{
-							GenerateBlock.schedule(location, bGenerator);
+							Schedules.schedule(bgLocation);
 						}
 					}
 					else

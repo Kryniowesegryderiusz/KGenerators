@@ -7,7 +7,7 @@
   <parent>
     <groupId>me.kryniowesegryderiusz</groupId>
     <artifactId>kgenerators-parent</artifactId>
-    <version>3.11.8</version>
+    <version>4.0.0</version>
   </parent>
 
 	<repositories>
@@ -22,6 +22,13 @@
 	           <id>jitpack.io</id>
 	           <url>https://jitpack.io</url>
 	       </repository>
+	       
+	        <!-- HolographicDisplays -->
+	       <repository>
+		    <id>codemc-repo</id>
+		    <url>https://repo.codemc.io/repository/maven-public/</url>
+			</repository>
+	       
 	</repositories>
 	
 	<dependencies>
@@ -60,6 +67,31 @@
 	        <version>1.7</version>
 	        <scope>provided</scope>
 	    </dependency>
+		
+		<!--  Project Lombok -->
+		<dependency>
+			<groupId>org.projectlombok</groupId>
+			<artifactId>lombok</artifactId>
+			<version>1.18.16</version>
+			<scope>provided</scope>
+		</dependency>
+		
+		<!--  Holographic Displays -->
+		<dependency>
+		    <groupId>com.gmail.filoghost.holographicdisplays</groupId>
+		    <artifactId>holographicdisplays-api</artifactId>
+		    <version>2.4.0</version>
+		    <scope>provided</scope>
+		</dependency>
+		
+		<!-- Vault -->
+	    <dependency>
+	        <groupId>com.github.MilkBowl</groupId>
+	        <artifactId>VaultAPI</artifactId>
+	        <version>1.7</version>
+	        <scope>provided</scope>
+	    </dependency>
+
 		
 
 	</dependencies>

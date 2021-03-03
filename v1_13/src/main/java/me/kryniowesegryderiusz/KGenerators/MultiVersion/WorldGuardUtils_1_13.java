@@ -1,4 +1,4 @@
-package me.kryniowesegryderiusz.KGenerators.MultiVersion;
+package me.kryniowesegryderiusz.kgenerators.multiversion;
 
 import org.bukkit.Location;
 import org.bukkit.entity.Player;
@@ -15,8 +15,10 @@ import com.sk89q.worldguard.protection.flags.registry.FlagRegistry;
 import com.sk89q.worldguard.protection.managers.RegionManager;
 import com.sk89q.worldguard.protection.regions.RegionContainer;
 
-import me.kryniowesegryderiusz.KGenerators.Enums.EnumWGFlags;
-import me.kryniowesegryderiusz.KGenerators.Logger;
+import me.kryniowesegryderiusz.kgenerators.Logger;
+import me.kryniowesegryderiusz.kgenerators.Enums.EnumWGFlags;
+import me.kryniowesegryderiusz.kgenerators.classes.GeneratorLocation;
+import me.kryniowesegryderiusz.kgenerators.multiversion.WorldGuardUtils;
 
 public class WorldGuardUtils_1_13 implements WorldGuardUtils {
 	
@@ -46,7 +48,7 @@ public class WorldGuardUtils_1_13 implements WorldGuardUtils {
 			
 			for (EnumWGFlags eflag : EnumWGFlags.values())
 			{
-				Logger.info("[KGenerators] Registering worldguard " + eflag.getFlagId() + " flag");
+				Logger.info("WorldGuard: Registering " + eflag.getFlagId() + " flag");
 				try {
 					StateFlag flag = new StateFlag(eflag.getFlagId(), eflag.getFlagDefault());
 					registry.register(flag);
@@ -56,30 +58,32 @@ public class WorldGuardUtils_1_13 implements WorldGuardUtils {
 				}
 				catch (FlagConflictException e)
 				{
-					Logger.error("[KGenerators] !!! ERROR !!! WorldGuard FlagConflictException!");
+					Logger.error("WorldGuard: FlagConflictException!");
 					Flag<?> existing = registry.get(eflag.getFlagId());
 			        if (existing instanceof StateFlag) {
-			        	Logger.info("[KGenerators] !!! WARNING !!! Overriding flag!");
+			        	Logger.warn("WorldGuard: Overriding flag!");
 			        	
 			        	if (eflag == EnumWGFlags.PICK_UP) PICK_UP_FLAG = (StateFlag) existing;
 						if (eflag == EnumWGFlags.ONLY_GEN_BREAK) ONLY_GEN_BREAK_FLAG = (StateFlag) existing;
 
 			        } else {
-			            Logger.error("[KGenerators] !!! ERROR !!! WorldGuard flag overriding not possible! Types dont match!");
+			            Logger.error("WorldGuard: Flag overriding not possible! Types dont match!");
 			        }
 				}
 				
 			}
 		} catch (NoClassDefFoundError e) {
-			Logger.error("[KGenerators] !!! ERROR !!! An error occured, while adding WorldGuard flags!");
-			Logger.error("[KGenerators] !!! ERROR !!! WorldGuard is installed, but didnt load properly!");
+			Logger.error("WorldGuard: An error occured, while adding WorldGuard flags!");
+			Logger.error("WorldGuard: WorldGuard is installed, but didnt load properly!");
 			//e.printStackTrace();
 		}
 	}
 
 	/* Returns if pick up is allow/deny */
 	@Override
-	public boolean worldGuardFlagCheck(Location location, Player player, EnumWGFlags flag) {
+	public boolean worldGuardFlagCheck(GeneratorLocation gLocation, Player player, EnumWGFlags flag) {
+		
+		Location location = gLocation.getLocation();
 		
 		RegionContainer container = WorldGuard.getInstance().getPlatform().getRegionContainer();
 		

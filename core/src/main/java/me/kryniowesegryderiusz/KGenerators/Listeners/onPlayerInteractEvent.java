@@ -1,4 +1,4 @@
-package me.kryniowesegryderiusz.KGenerators.Listeners;
+package me.kryniowesegryderiusz.kgenerators.listeners;
 
 import org.bukkit.Location;
 import org.bukkit.event.EventHandler;
@@ -8,32 +8,32 @@ import org.bukkit.event.block.Action;
 import org.bukkit.event.player.PlayerInteractEvent;
 import org.bukkit.inventory.EquipmentSlot;
 
-import me.kryniowesegryderiusz.KGenerators.Enums.EnumPickUpMode;
-import me.kryniowesegryderiusz.KGenerators.Main;
-import me.kryniowesegryderiusz.KGenerators.GeneratorsManagement.PickUp;
+import me.kryniowesegryderiusz.kgenerators.Enums.EnumInteraction;
+import me.kryniowesegryderiusz.kgenerators.classes.GeneratorLocation;
+import me.kryniowesegryderiusz.kgenerators.handlers.ActionHandler;
+import me.kryniowesegryderiusz.kgenerators.managers.Locations;
+import me.kryniowesegryderiusz.kgenerators.multiversion.MultiVersion;
 
 public class onPlayerInteractEvent implements Listener {
 	
-	boolean handCheck = true;
-	
-	public onPlayerInteractEvent()
-	{
-		String version = Main.getInstance().getServer().getVersion();
-		if (version.contains("1.8")) handCheck = false;
-	}
-	
 	@EventHandler(priority = EventPriority.HIGH)
-	public void playerInteract(PlayerInteractEvent  e)
+	public void playerInteract(PlayerInteractEvent e)
 	{
-		if(handCheck && e.getHand() != EquipmentSlot.HAND) return;
+		if(!MultiVersion.isHigher(9) && e.getHand() != EquipmentSlot.HAND) return;
 		
 		if (e.isCancelled()) return;
 		
 		Location location = e.getClickedBlock().getLocation();
-		if (!Main.generatorsLocations.containsKey(location)) return;
+		Location upperLocation = location.clone().add(0,1,0);
+				
+		GeneratorLocation gLocation = null;
 		
-		if (Main.pickUpMode == EnumPickUpMode.ANY_CLICK) e.setCancelled(PickUp.isPickingUpCheck(EnumPickUpMode.ANY_CLICK, e.getPlayer(), location, Main.generatorsLocations.get(location), e.getAction()));
-		else if (e.getAction() == Action.LEFT_CLICK_BLOCK) e.setCancelled(PickUp.isPickingUpCheck(EnumPickUpMode.LEFT_CLICK, e.getPlayer(), location, Main.generatorsLocations.get(location)));
-		else if (e.getAction() == Action.RIGHT_CLICK_BLOCK) e.setCancelled(PickUp.isPickingUpCheck(EnumPickUpMode.RIGHT_CLICK, e.getPlayer(), location, Main.generatorsLocations.get(location)));
+		if (Locations.exists(upperLocation)) gLocation = Locations.get(upperLocation);
+		if (Locations.exists(location)) gLocation = Locations.get(location);
+		
+		if (gLocation == null) return;
+		
+		if (e.getAction() == Action.LEFT_CLICK_BLOCK) e.setCancelled(ActionHandler.handler(EnumInteraction.LEFT_CLICK, gLocation, e.getPlayer()));
+		else if (e.getAction() == Action.RIGHT_CLICK_BLOCK) e.setCancelled(ActionHandler.handler(EnumInteraction.RIGHT_CLICK, gLocation, e.getPlayer()));
 	}
 }

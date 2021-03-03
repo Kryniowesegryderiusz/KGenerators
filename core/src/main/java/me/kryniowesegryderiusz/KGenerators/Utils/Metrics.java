@@ -1,4 +1,4 @@
-package me.kryniowesegryderiusz.KGenerators.Utils;
+package me.kryniowesegryderiusz.kgenerators.utils;
 
 import com.google.gson.JsonArray;
 import com.google.gson.JsonObject;

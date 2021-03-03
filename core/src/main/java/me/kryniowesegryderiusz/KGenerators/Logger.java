@@ -1,4 +1,4 @@
-package me.kryniowesegryderiusz.KGenerators;
+package me.kryniowesegryderiusz.kgenerators;
 
 import java.io.BufferedReader;
 import java.io.ByteArrayOutputStream;
@@ -19,15 +19,9 @@ import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.List;
 
-import javax.net.ssl.HttpsURLConnection;
-
 import org.bukkit.command.CommandSender;
-import org.bukkit.plugin.Plugin;
-import org.bukkit.scheduler.BukkitRunnable;
-
-import me.kryniowesegryderiusz.KGenerators.Enums.EnumLog;
-import me.kryniowesegryderiusz.KGenerators.Enums.EnumMessage;
-import me.kryniowesegryderiusz.KGenerators.Utils.LangUtils;
+import me.kryniowesegryderiusz.kgenerators.Enums.EnumLog;
+import me.kryniowesegryderiusz.kgenerators.Enums.EnumMessage;
 
 public class Logger {
 	
@@ -56,6 +50,11 @@ public class Logger {
 	public static void error(Object object)
 	{
 		log(object, EnumLog.ERROR);	
+	}
+	
+	public static void warn(Object object)
+	{
+		log(object, EnumLog.WARNINGS);	
 	}
 	
 	public static void info(Object object)
@@ -132,15 +131,7 @@ public class Logger {
 						String fileString = "";
 						fileString += "Server version: " + Main.getInstance().getServer().getVersion() + "\n";
 						fileString += "Plugin version: " + Main.getInstance().getDescription().getVersion() + "\n";
-						fileString += "Enabled dependencies: " + Main.dependencies.toString() + "\n";
-						
-						fileString += "Enabled plugins: ";
-						for (Plugin p : Main.getInstance().getServer().getPluginManager().getPlugins())
-						{
-							fileString += p.getName() + ", ";
-						}
-						fileString += "\n\n";
-						
+						fileString += "Enabled dependencies: " + Main.dependencies.toString() + "\n\n";
 						try {
 							fileString += getLinesFromFile(logFile) + "\n";
 							fileString += getLinesFromFile(configFile) + "\n";
@@ -149,12 +140,12 @@ public class Logger {
 							String url = postHaste(sender, fileString, false);
 							if (url != null)
 							{
-								LangUtils.addReplecable("<url>", url);
-								LangUtils.sendMessage(sender, EnumMessage.CommandsDebugDone);
+								Lang.addReplecable("<url>", url);
+								Lang.sendMessage(sender, EnumMessage.CommandsDebugDone);
 							}
 							
 						} catch (IOException e) {
-							LangUtils.sendMessage(sender, EnumMessage.CommandsDebugError);
+							Lang.sendMessage(sender, EnumMessage.CommandsDebugError);
 							Logger.error(e);
 						}
 					}
@@ -196,7 +187,7 @@ public class Logger {
 			BufferedReader reader = new BufferedReader(new InputStreamReader(conn.getInputStream()));
 			response = reader.readLine();
 		} catch (IOException e) {
-			LangUtils.sendMessage(sender, EnumMessage.CommandsDebugError);
+			Lang.sendMessage(sender, EnumMessage.CommandsDebugError);
 			Logger.error(e);
 		}
 		

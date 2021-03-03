@@ -1,4 +1,4 @@
-package me.kryniowesegryderiusz.KGenerators.GeneratorsManagement;
+package me.kryniowesegryderiusz.kgenerators.handlers;
 
 import java.util.HashMap;
 import java.util.Map.Entry;
@@ -6,12 +6,13 @@ import java.util.Map.Entry;
 import org.bukkit.entity.Player;
 import org.bukkit.permissions.PermissionAttachmentInfo;
 
-import me.kryniowesegryderiusz.KGenerators.Main;
-import me.kryniowesegryderiusz.KGenerators.Classes.Generator;
-import me.kryniowesegryderiusz.KGenerators.Classes.GeneratorLocation;
-import me.kryniowesegryderiusz.KGenerators.Classes.PlayerLimits;
-import me.kryniowesegryderiusz.KGenerators.Enums.EnumMessage;
-import me.kryniowesegryderiusz.KGenerators.Utils.LangUtils;
+import me.kryniowesegryderiusz.kgenerators.Lang;
+import me.kryniowesegryderiusz.kgenerators.Main;
+import me.kryniowesegryderiusz.kgenerators.Enums.EnumMessage;
+import me.kryniowesegryderiusz.kgenerators.classes.Generator;
+import me.kryniowesegryderiusz.kgenerators.classes.GeneratorLocation;
+import me.kryniowesegryderiusz.kgenerators.classes.PlayerLimits;
+import me.kryniowesegryderiusz.kgenerators.managers.Generators;
 
 public abstract class PerPlayerGenerators {
 	
@@ -124,9 +125,9 @@ public abstract class PerPlayerGenerators {
 	public static Boolean canPlace(Player player, String generatorId)
 	
 	{		
-		if (Main.overAllPerPlayerGeneratorsEnabled)
+		if (Main.getSettings().isPerPlayerGenerators())
 		{		
-			Generator generator = Main.generators.get(generatorId);
+			Generator generator = Generators.get(generatorId);
 			
 			PlayerLimits pLimits = new PlayerLimits(player);
 			int globalLimit = pLimits.getGlobalLimit();
@@ -138,8 +139,8 @@ public abstract class PerPlayerGenerators {
 				int allPlayerGenerators = getPlayerOverallGeneratorsCount(player);
 				if (allPlayerGenerators >= globalLimit)
 				{
-					LangUtils.addReplecable("<number>", String.valueOf(globalLimit));
-					LangUtils.sendMessage(player, EnumMessage.GeneratorsPPGCantPlaceMore);
+					Lang.addReplecable("<number>", String.valueOf(globalLimit));
+					Lang.sendMessage(player, EnumMessage.GeneratorsPPGCantPlaceMore);
 					return false;
 				}
 			}
@@ -150,9 +151,9 @@ public abstract class PerPlayerGenerators {
 				int playerGenerators = getPlayerGeneratorsCount(player, generatorId);
 				if (playerGenerators >= generatorLimit)
 				{
-					LangUtils.addReplecable("<number>", String.valueOf(generatorLimit));
-					LangUtils.addReplecable("<generator>", Main.generators.get(generatorId).getGeneratorItem().getItemMeta().getDisplayName());
-					LangUtils.sendMessage(player, EnumMessage.GeneratorsPPGCantPlaceMoreType);
+					Lang.addReplecable("<number>", String.valueOf(generatorLimit));
+					Lang.addReplecable("<generator>", Generators.get(generatorId).getGeneratorItem().getItemMeta().getDisplayName());
+					Lang.sendMessage(player, EnumMessage.GeneratorsPPGCantPlaceMoreType);
 					return false;
 				}
 			}
@@ -161,7 +162,7 @@ public abstract class PerPlayerGenerators {
 	}
 	
 	public static Boolean canPickUp(Player player, GeneratorLocation gLocation){
-		if (Main.overAllPerPlayerGeneratorsEnabled)
+		if (Main.getSettings().isPerPlayerGenerators())
 		{
 			if (player.hasPermission("kgenerators.bypass.onlyownerchecks"))
 			{
@@ -176,7 +177,7 @@ public abstract class PerPlayerGenerators {
 			/* end */
 			
 			Generator generator = gLocation.getGenerator();
-			if (generator.isOnlyOwnerPickUp())
+			if (generator.getOnlyOwnerPickUp())
 			{
 				if (gLocation.getOwner() == null)
 				{
@@ -185,8 +186,8 @@ public abstract class PerPlayerGenerators {
 				
 				if (!player.equals(gLocation.getOwner()))
 				{
-					LangUtils.addReplecable("<owner>", gLocation.getOwner().getDisplayName());
-					LangUtils.sendMessage(player, EnumMessage.GeneratorsPPGCantPickUp);
+					Lang.addReplecable("<owner>", gLocation.getOwner().getDisplayName());
+					Lang.sendMessage(player, EnumMessage.GeneratorsPPGCantPickUp);
 					return false;
 				}
 			}
@@ -195,7 +196,7 @@ public abstract class PerPlayerGenerators {
 	}
 
 	public static Boolean canUse(Player player, GeneratorLocation gLocation){
-		if (Main.overAllPerPlayerGeneratorsEnabled)
+		if (Main.getSettings().isPerPlayerGenerators())
 		{
 			if (player.hasPermission("kgenerators.bypass.onlyownerchecks"))
 			{
@@ -210,12 +211,12 @@ public abstract class PerPlayerGenerators {
 			/* end */
 			
 			Generator generator = gLocation.getGenerator();
-			if (generator.isOnlyOwnerUse())
+			if (generator.getOnlyOwnerUse())
 			{
 				if (!player.equals(gLocation.getOwner()))
 				{
-					LangUtils.addReplecable("<owner>", gLocation.getOwner().getDisplayName());
-					LangUtils.sendMessage(player, EnumMessage.GeneratorsPPGCantUse);
+					Lang.addReplecable("<owner>", gLocation.getOwner().getDisplayName());
+					Lang.sendMessage(player, EnumMessage.GeneratorsPPGCantUse);
 					return false;
 				}
 			}
@@ -225,10 +226,15 @@ public abstract class PerPlayerGenerators {
 	
 	public static Boolean canPush(Generator generator)
 	{
-		if (generator.isOnlyOwnerUse())
+		if (generator.getOnlyOwnerUse())
 		{
 			return false;
 		}
 		return true;
+	}
+
+	public static void clear() {
+		playersGenerators.clear();
+		
 	}
 }

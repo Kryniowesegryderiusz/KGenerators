@@ -1,4 +1,4 @@
-package me.kryniowesegryderiusz.KGenerators.Utils;
+package me.kryniowesegryderiusz.kgenerators.utils;
 
 import java.io.File;
 import java.io.FileNotFoundException;
