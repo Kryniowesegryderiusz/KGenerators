@@ -1,0 +1,132 @@
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 https://maven.apache.org/xsd/maven-4.0.0.xsd">
+  <modelVersion>4.0.0</modelVersion>
+  <groupId>me.kryniowesegryderiusz</groupId>
+  <artifactId>kgenerators-core</artifactId>
+  <version>${project.parent.version}</version>
+  <packaging>jar</packaging>
+  <parent>
+    <groupId>me.kryniowesegryderiusz</groupId>
+    <artifactId>kgenerators-parent</artifactId>
+    <version>4.0.0</version>
+  </parent>
+
+	<repositories>
+	    <!-- This adds the Spigot Maven repository to the build -->
+	    <repository>
+	        <id>spigot-repo</id>
+	        <url>https://hub.spigotmc.org/nexus/content/repositories/snapshots/</url>
+	    </repository>
+	    
+	  	  <!-- SuperiorSkyblockAPI -->
+	  	  <repository>
+	           <id>jitpack.io</id>
+	           <url>https://jitpack.io</url>
+	       </repository>
+	       
+	        <!-- HolographicDisplays -->
+	       <repository>
+		    <id>codemc-repo</id>
+		    <url>https://repo.codemc.io/repository/maven-public/</url>
+			</repository>
+	       
+	</repositories>
+	
+	<dependencies>
+		<!--This adds the Spigot API artifact to the build -->
+		<dependency>
+			<groupId>org.spigotmc</groupId>
+			<artifactId>spigot-api</artifactId>
+			<version>1.16.4-R0.1-SNAPSHOT</version>
+			<scope>provided</scope>
+		</dependency>
+		
+		<!-- SuperiorSkyblockAPI -->
+		<dependency>
+			<groupId>com.github.OmerBenGera</groupId>
+			<artifactId>SuperiorSkyblockAPI</artifactId>
+			<version>b18</version> <!-- b18 now  -->
+		</dependency>
+		<dependency>
+			<groupId>com.google.code.findbugs</groupId>
+			<artifactId>jsr305</artifactId>
+			<version>3.0.2</version>
+		</dependency>
+		
+        <!--  JetsMinions  -->
+        <dependency>
+		    <groupId>me.jet315</groupId>
+		    <artifactId>JetsMinions</artifactId>
+		    <version>6.6.8</version>
+		    <scope>system</scope>
+		    <systemPath>${project.basedir}/dependencies/JetsMinions.jar</systemPath>
+		</dependency>
+		
+	    <dependency>
+	        <groupId>com.github.MilkBowl</groupId>
+	        <artifactId>VaultAPI</artifactId>
+	        <version>1.7</version>
+	        <scope>provided</scope>
+	    </dependency>
+		
+		<!--  Project Lombok -->
+		<dependency>
+			<groupId>org.projectlombok</groupId>
+			<artifactId>lombok</artifactId>
+			<version>1.18.16</version>
+			<scope>provided</scope>
+		</dependency>
+		
+		<!--  Holographic Displays -->
+		<dependency>
+		    <groupId>com.gmail.filoghost.holographicdisplays</groupId>
+		    <artifactId>holographicdisplays-api</artifactId>
+		    <version>2.4.0</version>
+		    <scope>provided</scope>
+		</dependency>
+		
+		<!-- Vault -->
+	    <dependency>
+	        <groupId>com.github.MilkBowl</groupId>
+	        <artifactId>VaultAPI</artifactId>
+	        <version>1.7</version>
+	        <scope>provided</scope>
+	    </dependency>
+
+		
+
+	</dependencies>
+
+   <build>
+  		<resources>
+            <resource>
+                <directory>src/main/resources</directory>
+                <!-- Keeping filtering at true here reduces plugin.yml redundancy! -->
+                <filtering>true</filtering>
+                <includes>
+                    <include>plugin.yml</include>
+                </includes>
+            </resource>
+            <resource>
+                <directory>src/main/resources</directory>
+                <!-- Keep filtering at false for other resources to prevent bad magic -->
+                <filtering>true</filtering>
+                <excludes>
+                    <exclude>**/*.java</exclude>
+                    <exclude>plugin.yml</exclude>
+                </excludes>
+            </resource>
+       </resources>
+   		
+       <plugins>
+           <plugin>
+               <artifactId>maven-compiler-plugin</artifactId>
+               <version>3.7.0</version>
+               <configuration>
+                   <source>1.8</source>
+                   <target>1.8</target>
+               </configuration>
+           </plugin>
+       </plugins>
+   </build>  
+  
+</project>
