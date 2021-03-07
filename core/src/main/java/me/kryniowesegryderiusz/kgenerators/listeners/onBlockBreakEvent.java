@@ -98,7 +98,7 @@ public class onBlockBreakEvent implements Listener {
 			}
 		}
 		
-		if (Main.dependencies.contains(EnumDependency.WorldGuard) && !player.hasPermission("kgenerators.bypass.worldguard") && Main.getWorldGuardUtils().worldGuardFlagCheck(gLocation, player, EnumWGFlags.ONLY_GEN_BREAK))
+		if (Main.dependencies.contains(EnumDependency.WorldGuard) && !player.hasPermission("kgenerators.bypass.worldguard") && Main.getWorldGuardUtils().worldGuardFlagCheck(location, player, EnumWGFlags.ONLY_GEN_BREAK))
 		{
 			Lang.sendMessage(player, EnumMessage.GeneratorsDiggingOnlyGen);
 			e.setCancelled(true);

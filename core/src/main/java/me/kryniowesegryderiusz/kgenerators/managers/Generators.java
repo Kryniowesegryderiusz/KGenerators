@@ -8,7 +8,6 @@ import javax.annotation.Nullable;
 
 import org.bukkit.inventory.ItemStack;
 
-import me.kryniowesegryderiusz.kgenerators.Logger;
 import me.kryniowesegryderiusz.kgenerators.Enums.GeneratorType;
 import me.kryniowesegryderiusz.kgenerators.classes.Generator;
 

@@ -66,15 +66,27 @@ public class Menus implements Listener {
 		});
 	}
 
-	public static void openChancesListMenu(Player p) {
-		Inventory menu = ChancesListMenu.get(p);
-		guis.put(p, new MenuPlayer(p, EnumMenuInventory.ChancesList, menu, null));
+	public static void openMainMenu(Player p) {
+		Inventory menu = MainMenu.get(p);
+		guis.put(p, new MenuPlayer(p, EnumMenuInventory.Main, menu, null));
 		p.openInventory(menu);
 	}
 	
-	public static void openChancesSpecificMenu(Player p, Generator generator) {
-		Inventory menu = ChancesSpecyficMenu.get(p, generator);
-		guis.put(p, new MenuPlayer(p, EnumMenuInventory.ChancesSpecific, menu, null));
+	public static void openChancesMenu(Player p, Generator generator) {
+		Inventory menu = ChancesMenu.get(p, generator);
+		guis.put(p, new MenuPlayer(p, EnumMenuInventory.Chances, menu, null));
+		p.openInventory(menu);
+	}
+	
+	public static void openRecipeMenu(Player p, Generator generator) {
+		Inventory menu = RecipeMenu.get(p, generator);
+		guis.put(p, new MenuPlayer(p, EnumMenuInventory.Recipe, menu, null));
+		p.openInventory(menu);
+	}
+	
+	public static void openUpgradeMenu(Player p, Generator generator) {
+		Inventory menu = UpgradeMenu.get(p, generator);
+		guis.put(p, new MenuPlayer(p, EnumMenuInventory.Upgrade, menu, null));
 		p.openInventory(menu);
 	}
 	

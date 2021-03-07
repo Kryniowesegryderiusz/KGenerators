@@ -31,6 +31,10 @@ public class LangFiles {
     		Main.getInstance().saveResource("lang/en_gui.yml", false);
     	if (!new File(Main.getInstance().getDataFolder(), "lang/pl_gui.yml").exists())
     		Main.getInstance().saveResource("lang/pl_gui.yml", false);
+    	if (!new File(Main.getInstance().getDataFolder(), "lang/vi.yml").exists())
+    		Main.getInstance().saveResource("lang/vi.yml", false);
+    	if (!new File(Main.getInstance().getDataFolder(), "lang/vi_gui.yml").exists())
+    		Main.getInstance().saveResource("lang/vi_gui.yml", false);
     	
     	/*
     	 * Loading configs

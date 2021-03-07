@@ -3,6 +3,7 @@ package me.kryniowesegryderiusz.kgenerators.classes;
 import java.util.ArrayList;
 import java.util.Arrays;
 import org.bukkit.ChatColor;
+import org.bukkit.Material;
 import org.bukkit.enchantments.Enchantment;
 import org.bukkit.inventory.ItemFlag;
 import org.bukkit.inventory.ItemStack;
@@ -10,6 +11,7 @@ import org.bukkit.inventory.meta.ItemMeta;
 
 import lombok.Getter;
 import lombok.Setter;
+import me.kryniowesegryderiusz.kgenerators.Main;
 import me.kryniowesegryderiusz.kgenerators.Enums.EnumMenuItem;
 import me.kryniowesegryderiusz.kgenerators.utils.Config;
 import me.kryniowesegryderiusz.kgenerators.xseries.XUtils;
@@ -73,14 +75,16 @@ public class MenuItem implements Cloneable {
 	
 	public void addLore(String loreLine)
 	{
-		this.lore.add(ChatColor.translateAlternateColorCodes('&', loreLine));
+		if (loreLine != null)
+			this.lore.add(ChatColor.translateAlternateColorCodes('&', loreLine));
 	}
 	
 	public void addLore(String... lore)
 	{
 		for (String s : Arrays.asList(lore))
 		{
-			this.lore.add(ChatColor.translateAlternateColorCodes('&', s));
+			if (s != null)
+				this.lore.add(ChatColor.translateAlternateColorCodes('&', s));
 		}
 	}
 	
@@ -88,13 +92,15 @@ public class MenuItem implements Cloneable {
 	{
 		for (String s : lore)
 		{
-			this.lore.add(ChatColor.translateAlternateColorCodes('&', s));
+			if (s != null)
+				this.lore.add(ChatColor.translateAlternateColorCodes('&', s));
 		}
 	}
 	
 	public void setName(String name)
 	{
-		this.name = ChatColor.translateAlternateColorCodes('&', name);
+		if (name != null)
+			this.name = ChatColor.translateAlternateColorCodes('&', name);
 	}
 	
 	public void replace(String key, String value)
@@ -114,7 +120,19 @@ public class MenuItem implements Cloneable {
 		else
 			item = XUtils.parseItemStack(this.itemType, "MenuItem", false);
 		
-		ItemMeta meta = (ItemMeta) item.getItemMeta();
+		if (item.getType().equals(Material.AIR))
+			return item;
+		
+		ItemMeta meta = null;
+		if (item.getItemMeta() != null)
+		{
+			meta = (ItemMeta) item.getItemMeta();
+		}
+		else
+		{
+			meta = Main.getInstance().getServer().getItemFactory().getItemMeta(item.getType());
+		}
+			
 		
 		meta.setDisplayName(this.name);
 		
@@ -133,6 +151,7 @@ public class MenuItem implements Cloneable {
 		
 	}
 
+	@SuppressWarnings("unchecked")
 	public void load(EnumMenuItem menu, Config config) {
 		String path = menu.getKey();
 		if (config.contains(path))
@@ -140,7 +159,7 @@ public class MenuItem implements Cloneable {
 			this.itemType = config.getString(path+".item");
 			if (config.contains(path+".name")) setName(config.getString(path+".name"));
 			this.lore.clear();
-			if (config.contains(path+".lore")) addLore((ArrayList) config.getList(path+".lore"));
+			if (config.contains(path+".lore")) addLore((ArrayList<String>) config.getList(path+".lore"));
 			if (config.contains(path+".glow")) this.glow = config.getBoolean(path+".glow");
 			if (config.contains(path+".slots")) this.slots = config.getString(path+".slots");
 			if (config.contains(path+".enabled")) this.enabled = config.getBoolean(path+".enabled");

@@ -15,14 +15,13 @@ import me.kryniowesegryderiusz.kgenerators.Logger;
 import me.kryniowesegryderiusz.kgenerators.Main;
 import me.kryniowesegryderiusz.kgenerators.Enums.EnumWGFlags;
 import me.kryniowesegryderiusz.kgenerators.classes.GeneratorLocation;
-import me.kryniowesegryderiusz.kgenerators.multiversion.WorldGuardUtils;
 
 public class WorldGuardUtils_1_8 implements WorldGuardUtils {
 	
 	WorldGuardPlugin worldGuard = (WorldGuardPlugin) Main.getInstance().getServer().getPluginManager().getPlugin("WorldGuard");
 	
-	public static StateFlag PICK_UP_FLAG = new StateFlag(EnumWGFlags.PICK_UP.getFlagId(), EnumWGFlags.PICK_UP.getFlagDefault());
-	public static StateFlag ONLY_GEN_BREAK_FLAG = new StateFlag(EnumWGFlags.ONLY_GEN_BREAK.getFlagId(), EnumWGFlags.ONLY_GEN_BREAK.getFlagDefault());
+	public static StateFlag PICK_UP_FLAG = new StateFlag(EnumWGFlags.PICK_UP.getFlagId(), EnumWGFlags.PICK_UP.getDefaultState());
+	public static StateFlag ONLY_GEN_BREAK_FLAG = new StateFlag(EnumWGFlags.ONLY_GEN_BREAK.getFlagId(), EnumWGFlags.ONLY_GEN_BREAK.getDefaultState());
 
 	@Override
 	public boolean isWorldGuardHooked() {
@@ -71,9 +70,7 @@ public class WorldGuardUtils_1_8 implements WorldGuardUtils {
 	}
 
 	@Override
-	public boolean worldGuardFlagCheck(GeneratorLocation gLocation, Player player, EnumWGFlags flag) {
-		
-		Location location = gLocation.getLocation();
+	public boolean worldGuardFlagCheck(Location location, Player player, EnumWGFlags flag) {
 		
 		LocalPlayer localPlayer = worldGuard.wrapPlayer(player);
 		RegionContainer container = worldGuard.getRegionContainer();

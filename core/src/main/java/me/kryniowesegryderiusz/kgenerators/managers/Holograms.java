@@ -1,8 +1,5 @@
 package me.kryniowesegryderiusz.kgenerators.managers;
 
-import java.util.ArrayList;
-import java.util.HashMap;
-
 import org.bukkit.Bukkit;
 import org.bukkit.Location;
 
@@ -81,19 +78,6 @@ public class Holograms {
 			if(gLocation != null && hologram.getLocation().equals(gLocation.getHologramLocation()))
 				hologram.delete();
 		}
-	}
-	
-	public static HashMap<String, ArrayList<String>> getDefaultHologramsLang()
-	{
-		HashMap<String, ArrayList<String>> defHoloLang = new HashMap<String, ArrayList<String>>();
-		ArrayList<String> defHolo = new ArrayList<String>();
-		
-		defHolo.clear();
-		defHolo.add("&6Time left:");
-		defHolo.add("&e<time>");
-		defHoloLang.put(EnumHologram.RemainingTime.getKey(), defHolo);
-		
-		return defHoloLang;
 	}
 	
 	public static void setup()

@@ -23,6 +23,7 @@ import me.kryniowesegryderiusz.kgenerators.xseries.XUtils;
 
 public class FilesConverter {
 	
+	@SuppressWarnings("unchecked")
 	public static void convert()
 	{
 		File configFile = new File(Main.getInstance().getDataFolder(), "config.yml");

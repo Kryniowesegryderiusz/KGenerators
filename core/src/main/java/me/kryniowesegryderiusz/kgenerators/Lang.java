@@ -10,26 +10,29 @@ import java.util.Map.Entry;
 import org.bukkit.ChatColor;
 import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Player;
+import org.bukkit.inventory.ItemStack;
 
-import lombok.Setter;
 import me.kryniowesegryderiusz.kgenerators.Enums.EnumMenuItem;
+import me.kryniowesegryderiusz.kgenerators.Enums.EnumMenuItemAdditional;
 import me.kryniowesegryderiusz.kgenerators.Enums.EnumHologram;
 import me.kryniowesegryderiusz.kgenerators.Enums.EnumMenuInventory;
 import me.kryniowesegryderiusz.kgenerators.Enums.EnumMessage;
 import me.kryniowesegryderiusz.kgenerators.classes.MenuInventory;
 import me.kryniowesegryderiusz.kgenerators.classes.MenuItem;
-import me.kryniowesegryderiusz.kgenerators.managers.Holograms;
 import me.kryniowesegryderiusz.kgenerators.utils.Config;
 
 public abstract class Lang {
 	
 	private static LinkedHashMap<String, String> lang = new LinkedHashMap<String, String>();
+	
 	private static HashMap<String, ArrayList<String>> holograms = new HashMap<String, ArrayList<String>>();
+	
 	private static HashMap<EnumMenuItem, MenuItem> menuItems = new HashMap<EnumMenuItem, MenuItem>();
 	private static HashMap<EnumMenuInventory, MenuInventory> menuInventories = new HashMap<EnumMenuInventory, MenuInventory>();
+	private static HashMap<String, ArrayList<String>> menuItemsAdditionalLines = new HashMap<String, ArrayList<String>>();
+	
 	private static LinkedHashMap<String, String> replecables = new LinkedHashMap<String, String>();
 
-	@SuppressWarnings("unchecked")
 	public static void loadMessages(Config config, Config guiConfig) throws IOException {
 
 		addDefaults();
@@ -91,6 +94,24 @@ public abstract class Lang {
 			Logger.error("Lang: Cant save gui lang file!");
 			Logger.error(e);
 		}
+		
+		for (Entry<String, ArrayList<String>> e : menuItemsAdditionalLines.entrySet())
+    	{
+			
+			String path = "additional-lines." + e.getKey();
+			
+			if (!guiConfig.contains(path)) {
+				guiConfig.set(path, e.getValue());
+				guiConfig.saveConfig();
+			}
+			ArrayList<String> gotLines = (ArrayList<String>) guiConfig.getStringList(path);
+			ArrayList<String> lines = new ArrayList<String>();
+			for (String s : gotLines)
+			{
+				lines.add(ChatColor.translateAlternateColorCodes('&', s));
+			}
+			menuItemsAdditionalLines.put(e.getKey(), lines);
+    	}
 		
 	}
 	
@@ -159,6 +180,11 @@ public abstract class Lang {
 		return holograms.get(h.getKey());
 	}
 	
+	public static ArrayList<String> getMenuItemAdditionalLines(EnumMenuItemAdditional a)
+	{
+		return menuItemsAdditionalLines.get(a.getKey());
+	}
+	
 	public static MenuItem getMenuItem(EnumMenuItem m)
 	{
 		return menuItems.get(m).clone();
@@ -196,9 +222,9 @@ public abstract class Lang {
     	}
     	
     	holograms.clear();
-    	for (Entry<String, ArrayList<String>> e : Holograms.getDefaultHologramsLang().entrySet())
+    	for (EnumHologram e : EnumHologram.values())
     	{
-    		holograms.put(e.getKey(), e.getValue());
+    		holograms.put(e.getKey(), e.getStringContent().getLines());
     	}
     	
     	menuItems.clear();
@@ -210,5 +236,31 @@ public abstract class Lang {
     	for (EnumMenuInventory g : EnumMenuInventory.values()) {
     		menuInventories.put(g, g.getMenuInventory());
     	}
+    	
+    	menuItemsAdditionalLines.clear();
+    	for (EnumMenuItemAdditional e : EnumMenuItemAdditional.values())
+    	{
+    		menuItemsAdditionalLines.put(e.getKey(), e.getStringContent().getLines());
+    	}
+    }
+    
+    /*
+     * Other
+     */
+    
+    public static String getItemTypeName(ItemStack item)
+    {
+    	String name = "";
+    	
+    	if (item.hasItemMeta() && item.getItemMeta().hasLocalizedName())
+    		name = item.getItemMeta().getLocalizedName();
+    	else
+    	{
+    		String type = item.getType().toString();
+    		type = type.toLowerCase().replaceAll("_", " ");
+    		type = type.substring(0, 1).toUpperCase() + type.substring(1);
+    		name = type;
+    	}
+    	return name;
     }
 }

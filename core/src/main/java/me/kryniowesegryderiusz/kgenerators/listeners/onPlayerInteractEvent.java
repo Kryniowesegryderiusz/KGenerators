@@ -16,10 +16,11 @@ import me.kryniowesegryderiusz.kgenerators.multiversion.MultiVersion;
 
 public class onPlayerInteractEvent implements Listener {
 	
+	@SuppressWarnings("deprecation")
 	@EventHandler(priority = EventPriority.HIGH)
 	public void playerInteract(PlayerInteractEvent e)
 	{
-		if(!MultiVersion.isHigher(9) && e.getHand() != EquipmentSlot.HAND) return;
+		if(MultiVersion.isHigher(9) && e.getHand() != EquipmentSlot.HAND) return;
 		
 		if (e.isCancelled()) return;
 		

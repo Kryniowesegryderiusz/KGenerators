@@ -18,10 +18,12 @@ import me.kryniowesegryderiusz.kgenerators.files.PlacedGeneratorsFile;
 import me.kryniowesegryderiusz.kgenerators.files.RecipesFile;
 import me.kryniowesegryderiusz.kgenerators.files.ScheduledGeneratorsFile;
 import me.kryniowesegryderiusz.kgenerators.files.UpgradesFile;
-import me.kryniowesegryderiusz.kgenerators.gui.ChancesListMenu;
-import me.kryniowesegryderiusz.kgenerators.gui.ChancesSpecyficMenu;
+import me.kryniowesegryderiusz.kgenerators.gui.MainMenu;
+import me.kryniowesegryderiusz.kgenerators.gui.ChancesMenu;
 import me.kryniowesegryderiusz.kgenerators.gui.GeneratorMenu;
 import me.kryniowesegryderiusz.kgenerators.gui.Menus;
+import me.kryniowesegryderiusz.kgenerators.gui.RecipeMenu;
+import me.kryniowesegryderiusz.kgenerators.gui.UpgradeMenu;
 import me.kryniowesegryderiusz.kgenerators.handlers.Vault;
 import me.kryniowesegryderiusz.kgenerators.files.ConfigFile;
 import me.kryniowesegryderiusz.kgenerators.files.FilesConverter;
@@ -119,8 +121,10 @@ public class Main extends JavaPlugin {
     	this.getServer().getPluginManager().registerEvents(new onFurnaceSmeltEvent(), this);
     	
     	this.getServer().getPluginManager().registerEvents(new GeneratorMenu(), this);
-    	this.getServer().getPluginManager().registerEvents(new ChancesListMenu(), this);
-    	this.getServer().getPluginManager().registerEvents(new ChancesSpecyficMenu(), this);
+    	this.getServer().getPluginManager().registerEvents(new MainMenu(), this);
+    	this.getServer().getPluginManager().registerEvents(new ChancesMenu(), this);
+    	this.getServer().getPluginManager().registerEvents(new RecipeMenu(), this);
+    	this.getServer().getPluginManager().registerEvents(new UpgradeMenu(), this);
     	
     	if (dependencies.contains(EnumDependency.JetsMinions))
     	{

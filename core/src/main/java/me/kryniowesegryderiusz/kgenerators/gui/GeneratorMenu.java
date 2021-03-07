@@ -43,6 +43,10 @@ public class GeneratorMenu implements Listener {
 			PickUp.pickup(p, Menus.getMenuPlayer(p).getGLocation());
 			Menus.closeInv(p);
 		}
+		if (EnumMenuItem.GeneratorMenuQuit.getMenuItem().getSlots().contains(slot))
+		{
+			Menus.closeInv((Player) e.getWhoClicked());
+		}
 		e.setCancelled(true);
 	}
 }

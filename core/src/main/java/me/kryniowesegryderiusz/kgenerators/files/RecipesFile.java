@@ -1,6 +1,5 @@
 package me.kryniowesegryderiusz.kgenerators.files;
 
-import java.io.File;
 import java.io.IOException;
 
 import org.bukkit.configuration.InvalidConfigurationException;

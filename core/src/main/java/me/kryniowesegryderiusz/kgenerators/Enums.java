@@ -2,9 +2,15 @@ package me.kryniowesegryderiusz.kgenerators;
 
 import lombok.Getter;
 import me.kryniowesegryderiusz.kgenerators.classes.MenuItem;
+import me.kryniowesegryderiusz.kgenerators.classes.StringContent;
 import me.kryniowesegryderiusz.kgenerators.classes.MenuInventory;
 
 public abstract class Enums {
+	
+	/*
+	 * Standard messages
+	 */
+	
 	public enum EnumMessage {
 		Prefix("prefix", "&8[&6KGenerators&8] "),
 		
@@ -39,13 +45,19 @@ public abstract class Enums {
     	CommandsAnyNoPermission("commands.any.no-permission", "&cYou dont have permission &8(&7<permission>&8)&c to use KGenerators commands"),
     	CommandsAnyPlayerNotOnline("commands.any.player-not-online", "&cPlayer is not online"),
     	CommandsAnyPlayerDoesntExist("commands.any.player-doesnt-exist", "&cPlayer doesnt exist"),
+    	CommandsAnyGeneratorDoesntExist("commands.any.generator-doesnt-exist", "&cThat generator doesn't exist"),
+    	CommandsAnyMenuDoesntExist("commands.any.menu-doesnt-exist", "&cThat menu doesn't exist"),
     	
     	CommandsListHeader("commands.list.header", "&aGenerators:"),
     	CommandsListList("commands.list.list", "&8- <generator> &8(&7ID: <generatorID>&8)"),
     	CommandsListNoPermission("commands.list.no-permission", "&cYou dont have permission &8(&7<permission>&8)&c to list generators"),
     	CommandsListHelp("commands.list.help", "List all generators"),
     	
-    	CommandsGiveGeneratorDoesntExist("commands.give.generator-doesnt-exist", "&cThat generator doesn't exist"),
+    	CommandsMenuOpenedOthers("commands.menu.opened-others", "&aOpened &e<generator> <menu> menu &afor &e<player>&"),
+    	CommandsMenuNoPermission("commands.menu.no-permission", "&cYou dont have permission &8(&7<permission>&8)&c to open menu!"),
+    	CommandsMenuNoPermissionOthers("commands.menu.no-permission-others", "&cYou dont have permission &8(&7<permission>&8)&c to open menu for other players!"),
+    	CommandsMenuHelp("commands.menu.help", "Opens menu"),
+    	
     	CommandsGiveGeneratorGiven("commands.give.generator-given", "&aGenerator <generator> &awas given to &e<player>"),
     	CommandsGiveGeneratorRecieved("commands.give.generator-recieved", "&aGenerator <generator> &arecieved!"),
     	CommandsGiveUsage("commands.give.usage", "&cUsage: &e/kgenerators give <player> <generator>"),
@@ -89,15 +101,10 @@ public abstract class Enums {
     	CommandsTimeLeftFormatDay("commands.timeleft.format.days", "d"),
     	CommandsTimeLeftFormatNone("commands.timeleft.format.none", "None"),
     	
-    	CommandsChancesNoPermission("commands.chances.no-permission", "&cYou dont have permission &8(&7<permission>&8)&c to check generators chances!"),
-    	CommandsChancesHelp("commands.chances.help", "Checks regeneration chances"),
-    	
     	CommandsUpgradeNoNextLevel("commands.upgrade.no-next-level", "&cThis is maximum level of that generator!"),
     	CommandsUpgradeNoPermission("commands.upgrade.no-permission", "&cYou dont have permission &8(&7<permission>&8)&c to upgrade generator!"),
     	CommandsUpgradeNotAGenerator("commands.upgrade.no-a-generator", "&cYou dont have generator in hand!"),
     	CommanUpgradeHelp("commands.upgrade.help", "Upgrade generator"),
-    	
-
     	
     	CommandsReloadDone("commands.reload.done", "&aPlugin reloaded! Check console or log.txt in plugin''s directory for possible errors!"),
     	CommandsReloadNoPermission("commands.reload.no-permission", "&cYou dont have permission &8(&7<permission>&8)&c to reload plugin"),
@@ -127,41 +134,127 @@ public abstract class Enums {
 		}
 	}
 	
+	/*
+	 * Holograms
+	 */
+	
 	public static enum EnumHologram
 	{
-		RemainingTime("remaining-time");
+		RemainingTime("remaining-time", new StringContent("&6Time left:", "&e<time>"));
 
+		@Getter
 		String key;
-		EnumHologram(String key) {
+		@Getter
+		StringContent stringContent;
+		EnumHologram(String key, StringContent stringContent) {
 			this.key = key;
-		}
-		
-		public String getKey() {
-			return this.key;
+			this.stringContent = stringContent;
 		}
 	}
+
+	/*
+	 * Menus
+	 */
+	
+	public static enum EnumMenuInventory
+	{
+		Generator("generator", new MenuInventory("&9Generator info", 45)),
+		Main("main", new MenuInventory("&9Generators", 45)),
+		Chances("chances", new MenuInventory("&9Blocks chances", 45)),
+		Recipe("recipe", new MenuInventory("&9Recipe", 45)),
+		Upgrade("upgrade", new MenuInventory("&9Upgrade", 45)),
+		;
+
+		@Getter
+		String key;
+		@Getter
+		MenuInventory menuInventory;
+		EnumMenuInventory(String key, MenuInventory menuInventory) {
+			this.key = key;
+			this.menuInventory = menuInventory;
+		}
+	}
+	
+	public static enum EnumMenuItem
+	{
+		GeneratorMenuFiller(EnumMenuInventory.Generator, "filler", new MenuItem("GRAY_STAINED_GLASS_PANE", "&r", false, "0,1,2,3,4,5,6,7,8,9,17,18,26,27,35,36,37,38,39,40,41,42,43,44")),
+		GeneratorMenuTimeLeft(EnumMenuInventory.Generator,"time-left", new MenuItem("CLOCK", "&aTime left for regeneration", false, "21" , "&a<time>")),
+		GeneratorMenuOwner(EnumMenuInventory.Generator,"owner", new MenuItem("BOOK", "&aGenerator owner", false, "22", "&e<owner>")),
+		GeneratorMenuPickUp(EnumMenuInventory.Generator,"pick-up", new MenuItem("BARRIER", "&aPick up", false, "34", "&aClick here to pick up generator")),
+		GeneratorMenuQuit(EnumMenuInventory.Generator,"quit", new  MenuItem("ARROW", "&cQuit", false, "40", "&6Quit menu")),
+		
+		MainMenuFiller(EnumMenuInventory.Main, "filler", new MenuItem("GRAY_STAINED_GLASS_PANE", "&r", false, "0,1,2,3,4,5,6,7,8,36,37,38,39,40,41,42,43,44")),
+		MainMenuGenerator(EnumMenuInventory.Main,"generator", new MenuItem("<generator>", "&a<generator_name>", false, "9,10,11,12,13,14,15,16,17,18,19,20,21,22,23,24,25,26,27,28,29,30,31,32,33,34,35" , "&6Left click:", "&eCheck generator chances")),
+		MainMenuQuit(EnumMenuInventory.Main,"quit", new  MenuItem("ARROW", "&cQuit", false, "40", "&6Quit menu")),
+		
+		ChancesMenuFiller(EnumMenuInventory.Chances, "filler", new MenuItem("GRAY_STAINED_GLASS_PANE", "&r", false, "0,1,2,3,4,5,6,7,8,36,37,38,39,40,41,42,43,44")),
+		ChancesMenuChance(EnumMenuInventory.Chances,"block", new MenuItem("<block>", "&a<block_name>", false, "9,10,11,12,13,14,15,16,17,18,19,20,21,22,23,24,25,26" , "&6Chance: &e<chance>%")),
+		ChancesMenuBack(EnumMenuInventory.Chances,"back", new  MenuItem("ARROW", "&cBack", false, "40", "&6Get back to", "&cprevious page")),
+		
+		RecipeMenuFiller(EnumMenuInventory.Recipe, "filler", new MenuItem("GRAY_STAINED_GLASS_PANE", "&r", false, "0,1,2,3,4,5,6,7,8,36,37,38,39,40,41,42,43,44")),
+		RecipeMenuIngredients(EnumMenuInventory.Recipe,"ingredients", new MenuItem("<block>", "&a<block_name>", false, "10,11,12,19,20,21,28,29,30")),
+		RecipeMenuResult(EnumMenuInventory.Recipe,"result", new MenuItem("<generator>", "&a<generator_name>", false, "25")),
+		RecipeMenuMarker(EnumMenuInventory.Recipe,"marker", new MenuItem("CRAFTING_TABLE", "&aCrafting", false, "14,23,32")),
+		RecipeMenuBack(EnumMenuInventory.Recipe,"back", new  MenuItem("ARROW", "&cBack", false, "40", "&6Get back to", "&cprevious page")),
+		
+		UpgradeMenuFiller(EnumMenuInventory.Upgrade, "filler", new MenuItem("GRAY_STAINED_GLASS_PANE", "&r", false, "0,1,2,3,4,5,6,7,8,36,37,38,39,40,41,42,43,44")),
+		UpgradeMenuIngredient(EnumMenuInventory.Upgrade,"ingredient", new MenuItem("<generator>", "&a<generator_name>", false, "20")),
+		UpgradeMenuResult(EnumMenuInventory.Upgrade,"result", new MenuItem("<generator>", "&a<generator_name>", false, "24")),
+		UpgradeMenuMarker(EnumMenuInventory.Upgrade,"marker", new MenuItem("EXPERIENCE_BOTTLE", "&aUpgrade", false, "13,22,31", "&6To upgrade get", "&6generator and type", "&e/kgenerators upgrade", "&6Cost: &e<cost>$")),
+		UpgradeMenuBack(EnumMenuInventory.Upgrade,"back", new  MenuItem("ARROW", "&cBack", false, "40", "&6Get back to", "&cprevious page")),
+		;
+		@Getter
+		EnumMenuInventory menuInventory;
+		String subKey;
+		@Getter
+		MenuItem menuItem;
+		
+		EnumMenuItem(EnumMenuInventory menuInventory, String subKey, MenuItem menuItem) {
+			this.menuInventory = menuInventory;
+			this.subKey = subKey;
+			this.menuItem = menuItem;
+		}
+		
+		public String getKey()
+		{
+			return this.menuInventory.getKey() + "." + this.subKey;
+		}
+	}
+	
+	public static enum EnumMenuItemAdditional
+	{
+		Recipe("recipe", new StringContent("", "&6Right click:", "&echeck the recipe")),
+		Upgrade("upgrade", new StringContent("", "&6Right click:", "&echeck how to", "&eget from upgrade")),
+		;
+
+		@Getter
+		String key;
+		@Getter
+		StringContent stringContent;
+		EnumMenuItemAdditional(String key, StringContent stringContent) {
+			this.key = key;
+			this.stringContent = stringContent;
+		}
+	}
+	
+	
+	/*
+	 * Others
+	 */
 	
 	public static enum EnumWGFlags
 	{
 		PICK_UP ("kgenerators-pick-up", true),
 		ONLY_GEN_BREAK ("kgenerators-only-gen-break", false);
 		
+		@Getter
 		String flagId;
+		@Getter
 		Boolean defaultState;
 
 		EnumWGFlags(String flagId, Boolean defaultState) {
 			this.flagId = flagId;
 			this.defaultState = defaultState;
-		}
-		
-		public String getFlagId()
-		{
-			return this.flagId;
-		}
-		
-		public Boolean getFlagDefault()
-		{
-			return this.defaultState;
 		}
 	}
 	
@@ -235,58 +328,4 @@ public abstract class Enums {
 		BentoBox,
 		VaultEconomy,
 	}
-	
-	public static enum EnumMenuInventory
-	{
-		Generator("generator", new MenuInventory("&9Generator info", 45)),
-		ChancesList("chances.list", new MenuInventory("&9Blocks chances", 45)),
-		ChancesSpecific("chances.specific", new MenuInventory("&9Blocks chances", 45)),
-		;
-
-		@Getter
-		String key;
-		@Getter
-		MenuInventory menuInventory;
-		EnumMenuInventory(String key, MenuInventory menuInventory) {
-			this.key = key;
-			this.menuInventory = menuInventory;
-		}
-	}
-	
-	public static enum EnumMenuItem
-	{
-		GeneratorMenuFiller(EnumMenuInventory.Generator, "filler", new MenuItem("GRAY_STAINED_GLASS_PANE", "&r", false, "0,1,2,3,4,5,6,7,8,9,17,18,26,27,35,36,37,38,39,40,41,42,43,44")),
-		GeneratorMenuTimeLeft(EnumMenuInventory.Generator,"time-left", new MenuItem("CLOCK", "&aTime left for regeneration", false, "21" , "&a<time>")),
-		GeneratorMenuOwner(EnumMenuInventory.Generator,"owner", new MenuItem("BOOK", "&aGenerator owner", false, "22", "&e<owner>")),
-		GeneratorMenuPickUp(EnumMenuInventory.Generator,"pick-up", new MenuItem("BARRIER", "&aPick up", false, "34", "&aClick here to pick up generator")),
-		
-		ChancesListMenuFiller(EnumMenuInventory.ChancesList, "filler", new MenuItem("GRAY_STAINED_GLASS_PANE", "&r", false, "0,1,2,3,4,5,6,7,8,36,37,38,39,40,41,42,43,44")),
-		ChancesListMenuGenerator(EnumMenuInventory.ChancesList,"generator", new MenuItem("<generator>", "&a<generator_name>", false, "9,10,11,12,13,14,15,16,17,18,19,20,21,22,23,24,25,26" , "&6Click to check", "&6this generator chances")),
-		
-		ChancesSpecificMenuFiller(EnumMenuInventory.ChancesSpecific, "filler", new MenuItem("GRAY_STAINED_GLASS_PANE", "&r", false, "0,1,2,3,4,5,6,7,8,36,37,38,39,40,41,42,43,44")),
-		ChancesSpecificMenuChance(EnumMenuInventory.ChancesSpecific,"block", new MenuItem("<block>", "&a<block_name>", false, "9,10,11,12,13,14,15,16,17,18,19,20,21,22,23,24,25,26" , "&6Chance: &e<chance>%")),
-		ChancesSpecificMenuBack(EnumMenuInventory.ChancesSpecific,"back", new  MenuItem("ARROW", "&cBack", false, "31", "&6Get back to", "&cprevious page"));
-		;
-		@Getter
-		EnumMenuInventory menuInventory;
-		String subKey;
-		MenuItem menuItem;
-		
-		EnumMenuItem(EnumMenuInventory menuInventory, String subKey, MenuItem menuItem) {
-			this.menuInventory = menuInventory;
-			this.subKey = subKey;
-			this.menuItem = menuItem;
-		}
-		
-		public String getKey()
-		{
-			return this.menuInventory.getKey() + "." + this.subKey;
-		}
-		
-		public MenuItem getMenuItem()
-		{
-			return menuItem;
-		}
-
-	}	
 }

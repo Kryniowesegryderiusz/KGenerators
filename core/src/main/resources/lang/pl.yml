@@ -1,3 +1,4 @@
+#Przetumaczone przez autora pluginu
 #Aktualne tłumaczenie znajdziesz zawsze na:
 #https://github.com/Kryniowesegryderiusz/KGenerators/blob/main/core/src/main/resources/lang/pl.yml
 
@@ -35,15 +36,16 @@ messages:
     any:
       wrong: '&cNie ma takiej komendy! Wpisz /kgenerators, by wyświetlić pomoc'
       no-permission: '&cNie masz uprawnienia &8(&7<permission>&8)&c, żeby używać komend generatorów'
-      player-not-online: '&cGracz nie jest online'
-      player-doesnt-exist: '&cGracz nie istnieje'
+      player-not-online: '&cGracz nie jest online!'
+      player-doesnt-exist: '&cGracz nie istnieje!'
+      generator-doesnt-exist: '&cTen generator nie istnieje!'
+      menu-doesnt-exist: '&cTo menu nie istnieje!'
     list:
       header: '&aGeneratory:'
       list: '&8- <generator> &8(&7ID: <generatorID>&8)'
       no-permission: '&cNie masz uprawnienia &8(&7<permission>&8)&c, żeby wyświetlić listę generatorów'
       help: Wyświetla listę generatorów
     give:
-      generator-doesnt-exist: '&cTen generator nie istnieje'
       generator-given: '&aGenerator <generator>&a został przyznany &e<player>'
       generator-recieved: '&aOtrzymano generator <generator>!'
       usage: '&cUżycie &e/kgenerators give <player> <generator>'
@@ -86,9 +88,9 @@ messages:
         hours: godz
         days: dni
         none: Brak
-    chances:
-      no-permission: '&cNie masz uprawnienia &8(&7<permission>&8)&c, żeby sprawdzić szanse generacji!'
-      help: Sprawdza szanse regeneracji
+    menu:
+      no-permission: '&cNie masz uprawnienia &8(&7<permission>&8)&c, żeby otworzyć menu!'
+      help: Otwiera menu generatorów
     upgrade:
       no-next-level: '&cTen generator osiągnął już maksymalny poziom!'
       no-permission: '&cNie masz uprawnienia &8(&7<permission>&8)&c, żeby ulepszyć generator'

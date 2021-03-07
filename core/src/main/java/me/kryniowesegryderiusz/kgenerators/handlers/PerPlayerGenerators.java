@@ -4,8 +4,6 @@ import java.util.HashMap;
 import java.util.Map.Entry;
 
 import org.bukkit.entity.Player;
-import org.bukkit.permissions.PermissionAttachmentInfo;
-
 import me.kryniowesegryderiusz.kgenerators.Lang;
 import me.kryniowesegryderiusz.kgenerators.Main;
 import me.kryniowesegryderiusz.kgenerators.Enums.EnumMessage;
@@ -126,9 +124,7 @@ public abstract class PerPlayerGenerators {
 	
 	{		
 		if (Main.getSettings().isPerPlayerGenerators())
-		{		
-			Generator generator = Generators.get(generatorId);
-			
+		{				
 			PlayerLimits pLimits = new PlayerLimits(player);
 			int globalLimit = pLimits.getGlobalLimit();
 			int generatorLimit = pLimits.getLimit(generatorId);

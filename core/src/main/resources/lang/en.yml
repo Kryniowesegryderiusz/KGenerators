@@ -32,15 +32,16 @@ messages:
     any:
       wrong: '&cWrong command! Type /kgenerators for help'
       no-permission: '&cYou don''t have permission &8(&7<permission>&8)&c to use KGenerators commands'
-      player-not-online: '&cPlayer is not online'
-      player-doesnt-exist: '&cPlayer doesnt exist'
+      player-not-online: '&cPlayer is not online!'
+      player-doesnt-exist: '&cPlayer doesnt exist!'
+      generator-doesnt-exist: '&cThat generator doesn''t exist!'
+      menu-doesnt-exist: '&cThat menu doesn''t exist!'
     list:
       header: '&aGenerators:'
       list: '&8- <generator> &8(&7ID: <generatorID>&8)'
       no-permission: '&cYou don''t have permission &8(&7<permission>&8)&c to list generators'
       help: List all generators
     give:
-      generator-doesnt-exist: '&cThat generator doesn''t exist'
       generator-given: '&aGenerator <generator> &awas given to &e<player>'
       generator-recieved: '&aGenerator <generator> &arecieved!'
       usage: '&cUsage: &e/kgenerators give <player> <generator>'
@@ -83,9 +84,9 @@ messages:
         hours: h
         days: d
         none: None
-    chances:
-      no-permission: '&cYou don''t have permission &8(&7<permission>&8)&c to check generators chances!'
-      help: Checks generation chances
+    menu:
+      no-permission: '&cYou dont have permission &8(&7<permission>&8)&c to open menu!'
+      help: Opens menu
     upgrade:
       no-next-level: '&cThis is maximum level of that generator!'
       no-permission: '&cYou don''t have permission &8(&7<permission>&8)&c to upgrade generator!'

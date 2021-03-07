@@ -1,6 +1,7 @@
 package me.kryniowesegryderiusz.kgenerators;
 
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map.Entry;
 
 import org.bukkit.Bukkit;
@@ -11,6 +12,7 @@ import org.bukkit.command.CommandSender;
 import org.bukkit.command.ConsoleCommandSender;
 import org.bukkit.entity.Player;
 import org.bukkit.inventory.ItemStack;
+import org.bukkit.inventory.Recipe;
 
 import me.kryniowesegryderiusz.kgenerators.Enums.EnumAction;
 import me.kryniowesegryderiusz.kgenerators.Enums.EnumDependency;
@@ -34,6 +36,7 @@ import me.kryniowesegryderiusz.kgenerators.managers.Upgrades;
 
 public class Commands implements CommandExecutor {
 
+	@SuppressWarnings("deprecation")
 	@Override
 	public boolean onCommand(final CommandSender sender, Command cmd, String label, String[] args) {
 		if (sender.hasPermission("kgenerators.commands") || sender instanceof ConsoleCommandSender){
@@ -182,7 +185,7 @@ public class Commands implements CommandExecutor {
 							{
 								String generatorID = args[2];
 								if (!Generators.exists(generatorID)){
-									Lang.sendMessage(sender, EnumMessage.CommandsGiveGeneratorDoesntExist);
+									Lang.sendMessage(sender, EnumMessage.CommandsAnyGeneratorDoesntExist);
 									break;
 								}
 								
@@ -195,7 +198,7 @@ public class Commands implements CommandExecutor {
 								Lang.sendMessage(sender, EnumMessage.CommandsGiveGeneratorGiven);
 								
 								Lang.addReplecable("<generator>", item.getItemMeta().getDisplayName());
-								Lang.sendMessage(sender, EnumMessage.CommandsGiveGeneratorRecieved);
+								Lang.sendMessage(player, EnumMessage.CommandsGiveGeneratorRecieved);
 							}
 						}
 						else
@@ -301,20 +304,76 @@ public class Commands implements CommandExecutor {
 						System.out.println("[KGenerators] Use that command as player!");
 					}
 					break;
+				case "menu":
 				case "chances":
-					if (sender instanceof Player){
-						if (sender.hasPermission("kgenerators.chances") || sender instanceof ConsoleCommandSender){
-							Menus.openChancesListMenu((Player) sender);
+					if (sender.hasPermission("kgenerators.menu") || sender instanceof ConsoleCommandSender){
+						if (args.length == 1)
+						{
+							if (sender instanceof Player)
+								Menus.openMainMenu((Player) sender);
+							else
+								System.out.println("[KGenerators] Use that command as player!");
+						}
+						else if (sender.hasPermission("kgenerators.menu.others"))
+						{
+							
+							Player player = Bukkit.getPlayer(args[1]);
+							
+							if (player != null)
+							{
+								if (args.length == 2)
+								{
+									Menus.openMainMenu(player);
+								}
+								else if (!args[2].toLowerCase().equals("chances") && !args[2].toLowerCase().equals("recipe") && !args[2].toLowerCase().equals("upgrade"))
+								{
+									Lang.sendMessage(sender, EnumMessage.CommandsAnyMenuDoesntExist);
+								}
+								else if (args.length < 4 || Generators.get(args[3]) == null)
+								{
+									Lang.sendMessage(sender, EnumMessage.CommandsAnyGeneratorDoesntExist);
+								}
+								else
+								{
+									Generator generator = Generators.get(args[3]);
+									
+									if (args[2].toLowerCase().contains("chances"))
+									{
+										Menus.openChancesMenu(player, generator);
+									}
+									else if (args[2].toLowerCase().contains("recipe"))
+									{
+										List<Recipe> recipe = Main.getInstance().getServer().getRecipesFor(generator.getGeneratorItem());
+										if (!recipe.isEmpty() && recipe.get(0).getResult().equals(generator.getGeneratorItem()))
+											Menus.openRecipeMenu(player, generator);
+										else
+											Lang.sendMessage(sender, EnumMessage.CommandsAnyMenuDoesntExist);
+									} 
+									else if (args[2].toLowerCase().contains("upgrade"))
+									{
+										if (Upgrades.couldBeObtained(args[2]))
+											Menus.openUpgradeMenu(player, generator);
+										else
+											Lang.sendMessage(sender, EnumMessage.CommandsAnyMenuDoesntExist);
+									}
+								}
+									
+							}
+							else
+							{
+								Lang.sendMessage(sender, EnumMessage.CommandsAnyPlayerNotOnline);
+							}
 						}
 						else
 						{
-							Lang.addReplecable("<permission>", "kgenerators.chances");
-							Lang.sendMessage(sender, EnumMessage.CommandsChancesNoPermission);
+							Lang.addReplecable("<permission>", "kgenerators.menu.others");
+							Lang.sendMessage(sender, EnumMessage.CommandsMenuNoPermissionOthers);
 						}
 					}
 					else
 					{
-						System.out.println("[KGenerators] Use that command as player!");
+						Lang.addReplecable("<permission>", "kgenerators.menu");
+						Lang.sendMessage(sender, EnumMessage.CommandsMenuNoPermission);
 					}
 					break;
 				default:

@@ -7,7 +7,6 @@ import java.util.ArrayList;
 import org.bukkit.configuration.InvalidConfigurationException;
 import org.bukkit.inventory.ItemStack;
 
-import me.kryniowesegryderiusz.kgenerators.Enums;
 import me.kryniowesegryderiusz.kgenerators.Enums.EnumAction;
 import me.kryniowesegryderiusz.kgenerators.Logger;
 import me.kryniowesegryderiusz.kgenerators.Main;
@@ -19,6 +18,7 @@ import me.kryniowesegryderiusz.kgenerators.xseries.XUtils;
 
 public class ConfigFile {
 	
+	@SuppressWarnings("unchecked")
 	public static void globalSettingsLoader()
 	{
 		Config config;

@@ -18,7 +18,7 @@ public class RecipesLoader_1_8 implements RecipesLoader {
 	@Override
 	public void loadRecipes(Config file) {		
 		
-    	ConfigurationSection recipesSection = file.getConfigurationSection("recipes");
+    	ConfigurationSection recipesSection = file.getConfigurationSection("");
     	
     	int amount = 0;
     	

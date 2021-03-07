@@ -7,6 +7,7 @@ public class MultiVersion {
 	
 	private static short minor;
 	
+	@SuppressWarnings("deprecation")
 	public static void setup()
 	{
 		String serverVersion = Main.getInstance().getServer().getVersion();

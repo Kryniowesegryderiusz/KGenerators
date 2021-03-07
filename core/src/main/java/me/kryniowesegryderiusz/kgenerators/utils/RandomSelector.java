@@ -56,7 +56,8 @@ public final class RandomSelector<T> {
    * @return
    * @throws IllegalArgumentException if <tt>elements</tt> is empty.
    */
-  public static <T> RandomSelector<T> uniform(final Collection<T> elements)
+  @SuppressWarnings("unchecked")
+public static <T> RandomSelector<T> uniform(final Collection<T> elements)
       throws IllegalArgumentException {
     requireNonNull(elements, "collection must not be null");
     checkArgument(!elements.isEmpty(), "collection must not be empty");
@@ -82,7 +83,8 @@ public final class RandomSelector<T> {
    * @throws IllegalArgumentException if <tt>elements</tt> is empty or if <tt>weighter</tt> returns
    * a negative value or <tt>0</tt>.
    */
-  public static <T> RandomSelector<T> weighted(
+  @SuppressWarnings("unchecked")
+public static <T> RandomSelector<T> weighted(
       final Collection<T> elements,
       final ToDoubleFunction<? super T> weighter)
       throws IllegalArgumentException {

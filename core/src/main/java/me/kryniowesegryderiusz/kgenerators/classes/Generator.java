@@ -1,10 +1,8 @@
 package me.kryniowesegryderiusz.kgenerators.classes;
 
-import java.util.HashMap;
 import java.util.LinkedHashMap;
 import java.util.Map.Entry;
 
-import org.bukkit.Material;
 import org.bukkit.inventory.ItemStack;
 
 import lombok.Getter;

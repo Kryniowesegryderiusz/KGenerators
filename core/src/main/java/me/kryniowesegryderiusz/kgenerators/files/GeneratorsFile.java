@@ -1,9 +1,7 @@
 package me.kryniowesegryderiusz.kgenerators.files;
 
-import java.io.File;
 import java.io.IOException;
 import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.LinkedHashMap;
 
 import org.bukkit.ChatColor;
@@ -25,6 +23,7 @@ import me.kryniowesegryderiusz.kgenerators.xseries.XUtils;
 
 public class GeneratorsFile {
 	
+	@SuppressWarnings("unchecked")
 	public static void loadGenerators()
 	{
 		Config config;
@@ -118,7 +117,6 @@ public class GeneratorsFile {
 	    			}
 	    		}
 	    		
-	    		Boolean allowPistonPush = false;
 	    		if (config.contains(generatorID+".allow-piston-push")) {
 	    			generator.setAllowPistonPush(config.getBoolean(generatorID+".allow-piston-push"));
 	    		}

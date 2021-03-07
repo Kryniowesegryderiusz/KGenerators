@@ -10,6 +10,7 @@ import org.bukkit.inventory.ItemStack;
 import com.bgsoftware.superiorskyblock.api.SuperiorSkyblockAPI;
 import com.bgsoftware.superiorskyblock.api.island.Island;
 
+import me.kryniowesegryderiusz.kgenerators.Enums.EnumDependency;
 import me.kryniowesegryderiusz.kgenerators.Enums.GeneratorType;
 import me.kryniowesegryderiusz.kgenerators.Main;
 import me.kryniowesegryderiusz.kgenerators.api.events.PostBlockGenerationEvent;
@@ -48,8 +49,8 @@ public abstract class GenerateBlock {
 				&& !diggableBlockItemStack.equals(generator.getGeneratorBlock()) 
 				&& !Main.getBlocksUtils().isAir(diggableBlock) 
 				&& !Main.getBlocksUtils().isOnWhitelist(diggableBlock) 
-				&& !diggableBlock.equals(generator.getPlaceholder()) 
-				&& !generator.getChances().containsKey(diggableBlock) 
+				&& !diggableBlockItemStack.equals(generator.getPlaceholder()) 
+				&& !generator.getChances().containsKey(diggableBlockItemStack) 
 				&& !diggableBlock.getType().equals(pistonHead.getType())) {
 			Remove.removeGenerator(location, true);
 			return;
@@ -57,7 +58,7 @@ public abstract class GenerateBlock {
 		  
 		  ItemStack drawedBlock = drawBlock(generator.getChances());
 		  
-		  if (!generator.getChances().containsKey(diggableBlock)) {
+		  if (!generator.getChances().containsKey(diggableBlockItemStack)) {
 			  if (diggableBlock.getType().equals(pistonHead.getType())) {
 				  Schedules.schedule(gLocation);
 			  }
@@ -67,7 +68,7 @@ public abstract class GenerateBlock {
 			  }
 		  }
 		  
-		  if (Main.dependencies.contains("SuperiorSkyblock2")) {
+		  if (Main.dependencies.contains(EnumDependency.SuperiorSkyblock2)) {
 			  Island island = SuperiorSkyblockAPI.getGrid().getIslandAt(diggableBlockLocation);
 			  if (island != null) {
 				  island.handleBlockPlace(diggableBlock);

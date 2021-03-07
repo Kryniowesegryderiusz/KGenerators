@@ -2,7 +2,7 @@
 #https://www.spigotmc.org/resources/79246/
 #Need help? Join KGenerators discord: https://discord.gg/BZRjhpP4Ab
 
-#Choose lang file. Default possibilities are en, pl
+#Choose lang file. Default possibilities are en, pl, vi
 lang: en
 
 #By default generator will generate block only on air. Here you can add blocks, which will be replaced by generated block.

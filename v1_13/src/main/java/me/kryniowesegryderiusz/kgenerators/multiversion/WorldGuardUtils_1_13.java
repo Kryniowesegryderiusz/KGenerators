@@ -50,7 +50,7 @@ public class WorldGuardUtils_1_13 implements WorldGuardUtils {
 			{
 				Logger.info("WorldGuard: Registering " + eflag.getFlagId() + " flag");
 				try {
-					StateFlag flag = new StateFlag(eflag.getFlagId(), eflag.getFlagDefault());
+					StateFlag flag = new StateFlag(eflag.getFlagId(), eflag.getDefaultState());
 					registry.register(flag);
 					if (eflag == EnumWGFlags.PICK_UP) PICK_UP_FLAG = flag;
 					if (eflag == EnumWGFlags.ONLY_GEN_BREAK) ONLY_GEN_BREAK_FLAG = flag;
@@ -81,9 +81,7 @@ public class WorldGuardUtils_1_13 implements WorldGuardUtils {
 
 	/* Returns if pick up is allow/deny */
 	@Override
-	public boolean worldGuardFlagCheck(GeneratorLocation gLocation, Player player, EnumWGFlags flag) {
-		
-		Location location = gLocation.getLocation();
+	public boolean worldGuardFlagCheck(Location location, Player player, EnumWGFlags flag) {
 		
 		RegionContainer container = WorldGuard.getInstance().getPlatform().getRegionContainer();
 		

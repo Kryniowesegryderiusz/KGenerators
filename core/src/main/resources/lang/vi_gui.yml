@@ -1,0 +1,79 @@
+main:
+  name: '&9Tỉ lệ khối'
+  slots: 45
+  filler:
+    enabled: true
+    item: GRAY_STAINED_GLASS_PANE
+    name: '&r'
+    lore: []
+    slots: 0,1,2,3,4,5,6,7,8,36,37,38,39,40,41,42,43,44
+    glow: false
+  generator:
+    enabled: true
+    item: <generator>
+    name: '&a<generator_name>'
+    lore:
+    - '&6Nhấn để kiểm tra tỉ lệ'
+    - '&6tái tạo quặng'
+    slots: 9,10,11,12,13,14,15,16,17,18,19,20,21,22,23,24,25,26
+    glow: false
+chances:
+  name: '&9Tỉ lệ khối'
+  slots: 45
+  back:
+    enabled: true
+    item: ARROW
+    name: '&cQuay lại'
+    lore:
+    - '&6Trở lại trang trước'
+    slots: '31'
+    glow: false
+  block:
+    enabled: true
+    item: <block>
+    name: '&a<block_name>'
+    lore:
+    - '&6Tỉ Lệ: &e<chance>%'
+    slots: 9,10,11,12,13,14,15,16,17,18,19,20,21,22,23,24,25,26
+    glow: false
+  filler:
+    enabled: true
+    item: GRAY_STAINED_GLASS_PANE
+    name: '&r'
+    lore: []
+    slots: 0,1,2,3,4,5,6,7,8,36,37,38,39,40,41,42,43,44
+    glow: false
+generator:
+  name: '&9Thông Tin'
+  slots: 45
+  filler:
+    enabled: true
+    item: GRAY_STAINED_GLASS_PANE
+    name: '&r'
+    lore: []
+    slots: 0,1,2,3,4,5,6,7,8,9,17,18,26,27,35,36,37,38,39,40,41,42,43,44
+    glow: false
+  owner:
+    enabled: true
+    item: BOOK
+    name: '&6Chủ Máy'
+    lore:
+    - '&e<owner>'
+    slots: '22'
+    glow: false
+  pick-up:
+    enabled: true
+    item: BARRIER
+    name: '&6Nhặt'
+    lore:
+    - '&aNhấn để nhặt máy'
+    slots: '23'
+    glow: false
+  time-left:
+    enabled: true
+    item: CLOCK
+    name: '&6Thời gian để tái tạo'
+    lore:
+    - '&a<time>'
+    slots: '21'
+    glow: false
