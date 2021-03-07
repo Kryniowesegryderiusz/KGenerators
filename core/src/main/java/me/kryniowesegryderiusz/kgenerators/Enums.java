@@ -180,7 +180,7 @@ public abstract class Enums {
 		GeneratorMenuFiller(EnumMenuInventory.Generator, "filler", new MenuItem("GRAY_STAINED_GLASS_PANE", "&r", false, "0,1,2,3,4,5,6,7,8,9,17,18,26,27,35,36,37,38,39,40,41,42,43,44")),
 		GeneratorMenuTimeLeft(EnumMenuInventory.Generator,"time-left", new MenuItem("CLOCK", "&aTime left for regeneration", false, "21" , "&a<time>")),
 		GeneratorMenuOwner(EnumMenuInventory.Generator,"owner", new MenuItem("BOOK", "&aGenerator owner", false, "22", "&e<owner>")),
-		GeneratorMenuPickUp(EnumMenuInventory.Generator,"pick-up", new MenuItem("BARRIER", "&aPick up", false, "34", "&aClick here to pick up generator")),
+		GeneratorMenuPickUp(EnumMenuInventory.Generator,"pick-up", new MenuItem("BARRIER", "&aPick up", false, "23", "&aClick here to pick up generator")),
 		GeneratorMenuQuit(EnumMenuInventory.Generator,"quit", new  MenuItem("ARROW", "&cQuit", false, "40", "&6Quit menu")),
 		
 		MainMenuFiller(EnumMenuInventory.Main, "filler", new MenuItem("GRAY_STAINED_GLASS_PANE", "&r", false, "0,1,2,3,4,5,6,7,8,36,37,38,39,40,41,42,43,44")),

@@ -1,5 +1,7 @@
 package me.kryniowesegryderiusz.kgenerators.gui;
 
+import java.util.ArrayList;
+
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
@@ -17,10 +19,12 @@ public class GeneratorMenu implements Listener {
 	
 	public static Inventory get(Player player, GeneratorLocation gLocation)
 	{
+		ArrayList<EnumMenuItem> exludedEnumMenuItems = new ArrayList<EnumMenuItem>();
+		
 		String time = Schedules.timeLeftFormatted(gLocation);
 		if (time.equals("")) time = Lang.getMessage(EnumMessage.CommandsTimeLeftFormatNone, false, false);
 
-		Inventory menu = Lang.getMenuInventory(EnumMenuInventory.Generator).getInv(EnumMenuInventory.Generator, player, "<owner>", gLocation.getOwner().getName(), "<time>", time);
+		Inventory menu = Lang.getMenuInventory(EnumMenuInventory.Generator).getInv(EnumMenuInventory.Generator, player, exludedEnumMenuItems, "<owner>", gLocation.getOwner().getName(), "<time>", time);
 		
 		return menu;
 	}

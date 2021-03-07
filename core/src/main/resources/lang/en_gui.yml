@@ -22,7 +22,7 @@ generator:
     name: '&aPick up'
     lore:
     - '&aClick here to pick up generator'
-    slots: '34'
+    slots: '23'
     glow: false
   time-left:
     enabled: true

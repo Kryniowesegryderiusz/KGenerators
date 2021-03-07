@@ -22,7 +22,7 @@ generator:
     name: '&aZbierz'
     lore:
     - '&aKliknij, by zebrać generator'
-    slots: '34'
+    slots: '23'
     glow: false
   time-left:
     enabled: true
