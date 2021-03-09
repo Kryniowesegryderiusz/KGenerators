@@ -6,7 +6,7 @@ import java.nio.file.Files;
 
 import me.kryniowesegryderiusz.kgenerators.Main;
 
-public abstract class ConfigManager {
+public class ConfigManager {
 	   
     private static Main PLUGIN = Main.getInstance();
    

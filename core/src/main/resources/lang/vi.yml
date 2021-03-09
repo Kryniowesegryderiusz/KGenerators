@@ -105,5 +105,7 @@ messages:
       format: '&e/kgenerators <subcommand> &7<help>'
 holograms:
   remaining-time:
+  - ''
   - '&6Thời Gian Tái Tạo:'
   - '&e<time>'
+  - ''

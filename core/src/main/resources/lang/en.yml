@@ -18,6 +18,7 @@ messages:
       cant-place-double-below-block: '&cYou can''t place double generator below any block!'
       cant-place-double-below-generator: '&cYou can''t place double generator below other generator!'
     per-player-generator:
+      owner-none: '&cNone'
       cant-place-more: '&cYou can''t place more than &6<number> &cgenerators!'
       cant-place-more-type: '&cYou can''t place more than &6<number> <generator> &cgenerators!'
       cant-pick-up: '&cYou can''t pick up generator owned by &6<owner>&c!'
@@ -105,5 +106,7 @@ messages:
       format: '&e/kgenerators <subcommand> &7<help>'
 holograms:
   remaining-time:
+  - ''
   - '&6Time left:'
   - '&e<time>'
+  - ''

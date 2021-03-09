@@ -9,6 +9,7 @@ import me.kryniowesegryderiusz.kgenerators.Enums.EnumMessage;
 import me.kryniowesegryderiusz.kgenerators.Enums.EnumWGFlags;
 import me.kryniowesegryderiusz.kgenerators.classes.Generator;
 import me.kryniowesegryderiusz.kgenerators.classes.GeneratorLocation;
+import me.kryniowesegryderiusz.kgenerators.managers.Players;
 
 public class PickUp {
 	
@@ -20,7 +21,7 @@ public class PickUp {
 		
 		Generator generator = gLocation.getGenerator();
 		
-		if (!PerPlayerGenerators.canPickUp(p, gLocation))
+		if (!Players.getPlayer(p).canPickUp(gLocation))
 		{
 			return;
 		}

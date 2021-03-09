@@ -12,7 +12,6 @@ import me.kryniowesegryderiusz.kgenerators.Main;
 import me.kryniowesegryderiusz.kgenerators.Enums.GeneratorType;
 import me.kryniowesegryderiusz.kgenerators.classes.Generator;
 import me.kryniowesegryderiusz.kgenerators.classes.GeneratorLocation;
-import me.kryniowesegryderiusz.kgenerators.handlers.PerPlayerGenerators;
 import me.kryniowesegryderiusz.kgenerators.managers.Locations;
 import me.kryniowesegryderiusz.kgenerators.managers.Schedules;
 
@@ -46,7 +45,7 @@ public class onBlockPistonEvent implements Listener {
 			if (generator != null) {
 				if (generator.getType() == GeneratorType.SINGLE && generator.isAllowPistonPush()) {
 					if (generator.getPlaceholder() == null || !generator.getPlaceholder().equals(Main.getBlocksUtils().getItemStackByBlock(block))) {
-						if (PerPlayerGenerators.canPush(generator))
+						if (!generator.getOnlyOwnerUse())
 						{
 							Schedules.schedule(gLocation);
 						}
@@ -66,7 +65,7 @@ public class onBlockPistonEvent implements Listener {
 				if (bGenerator.getType() == GeneratorType.DOUBLE && bGenerator.isAllowPistonPush())
 				{
 					if (bGenerator.getPlaceholder() == null || !bGenerator.getPlaceholder().equals(Main.getBlocksUtils().getItemStackByBlock(block))) {
-						if (PerPlayerGenerators.canPush(bGenerator))
+						if (!bGenerator.getOnlyOwnerUse())
 						{
 							Schedules.schedule(bgLocation);
 						}

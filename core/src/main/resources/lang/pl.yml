@@ -22,6 +22,7 @@ messages:
       cant-place-double-below-block: '&cNie możesz postawić podwójnego generatora pod innym blokiem!'
       cant-place-double-below-generator: '&cNie możesz postawić podwójnego generatora pod innym generatorem!'
     per-player-generator:
+      owner-none: '&cBrak'
       cant-place-more: '&cNie możesz postawić więcej niż &6<number> &cgeneratorów!'
       cant-place-more-type: '&cNie możesz postawić więcej niż &6<number> &cgeneratorów <generator> &c!'
       cant-pick-up: '&cNie możesz podnieść generatora gracza &6<owner>&c!'
@@ -109,5 +110,7 @@ messages:
       format: '&e/kgenerators <subcommand> &7<help>'
 holograms:
   remaining-time:
+  - ''
   - '&6Czas:'
   - '&e<time>'
+  - ''

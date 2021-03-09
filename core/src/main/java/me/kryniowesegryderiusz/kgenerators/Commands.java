@@ -27,10 +27,10 @@ import me.kryniowesegryderiusz.kgenerators.files.LangFiles;
 import me.kryniowesegryderiusz.kgenerators.files.UpgradesFile;
 import me.kryniowesegryderiusz.kgenerators.gui.Menus;
 import me.kryniowesegryderiusz.kgenerators.files.ConfigFile;
-import me.kryniowesegryderiusz.kgenerators.handlers.PerPlayerGenerators;
 import me.kryniowesegryderiusz.kgenerators.handlers.Vault;
 import me.kryniowesegryderiusz.kgenerators.managers.Generators;
 import me.kryniowesegryderiusz.kgenerators.managers.Locations;
+import me.kryniowesegryderiusz.kgenerators.managers.Players;
 import me.kryniowesegryderiusz.kgenerators.managers.Schedules;
 import me.kryniowesegryderiusz.kgenerators.managers.Upgrades;
 
@@ -400,7 +400,7 @@ public class Commands implements CommandExecutor {
 			
 			for (Entry<String, Generator> e : Generators.getEntrySet())
 			{
-				String nr = String.valueOf(PerPlayerGenerators.getPlayerGeneratorsCount(player, e.getKey()));
+				String nr = String.valueOf(Players.getPlayer(player).getGeneratorsCount(e.getKey()));
 				
 				Lang.addReplecable("<number>", nr);
 				Lang.addReplecable("<generator>", e.getValue().getGeneratorItem().getItemMeta().getDisplayName());

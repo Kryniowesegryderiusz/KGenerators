@@ -3,6 +3,7 @@
 #Need help? Join KGenerators discord: https://discord.gg/BZRjhpP4Ab
 
 #Choose lang file. Default possibilities are en, pl, vi
+#If you want to add your own language contact us on discord
 lang: en
 
 #By default generator will generate block only on air. Here you can add blocks, which will be replaced by generated block.

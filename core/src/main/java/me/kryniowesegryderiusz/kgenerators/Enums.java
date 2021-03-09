@@ -5,7 +5,7 @@ import me.kryniowesegryderiusz.kgenerators.classes.MenuItem;
 import me.kryniowesegryderiusz.kgenerators.classes.StringContent;
 import me.kryniowesegryderiusz.kgenerators.classes.MenuInventory;
 
-public abstract class Enums {
+public class Enums {
 	
 	/*
 	 * Standard messages
@@ -34,6 +34,7 @@ public abstract class Enums {
     	GeneratorsPPGCantPlaceMoreType("generators.per-player-generator.cant-place-more-type", "&cYou cant place more than &6<number> <generator> &cgenerators!"),
     	GeneratorsPPGCantPickUp("generators.per-player-generator.cant-pick-up", "&cYou cant pick up generator owned by &6<owner>&c!"),
     	GeneratorsPPGCantUse("generators.per-player-generator.cant-use", "&cYou cant use generator owned by &6<owner>&c!"),
+    	GeneratorsPPGOwnerNone("generators.per-player-generator.owner-none", "&cNone"),
     	
     	GeneratorsProtectionCantChangeGeneratorItem("generators.protection.cant-change-generator-item", "&cYou cant change generator item!"),
     	
@@ -140,7 +141,7 @@ public abstract class Enums {
 	
 	public static enum EnumHologram
 	{
-		RemainingTime("remaining-time", new StringContent("&6Time left:", "&e<time>"));
+		RemainingTime("remaining-time", new StringContent("", "&6Time left:", "&e<time>", ""));
 
 		@Getter
 		String key;

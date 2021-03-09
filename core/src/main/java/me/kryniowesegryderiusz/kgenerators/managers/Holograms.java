@@ -48,6 +48,8 @@ public class Holograms {
 				updateHologram(line, hologram, Locations.get(generatorLocation));
 			else if (Locations.exists(generatorLocation.add(0,-1,0)))
 				updateHologram(line, hologram, Locations.get(generatorLocation));
+			else if (Locations.exists(generatorLocation.add(0,-1,0)))
+				updateHologram(line, hologram, Locations.get(generatorLocation));
 			else
 				hologram.delete();
 		}

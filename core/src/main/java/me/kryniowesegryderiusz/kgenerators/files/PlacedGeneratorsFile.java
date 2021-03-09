@@ -14,9 +14,10 @@ import org.bukkit.entity.Player;
 import me.kryniowesegryderiusz.kgenerators.Logger;
 import me.kryniowesegryderiusz.kgenerators.Main;
 import me.kryniowesegryderiusz.kgenerators.classes.Generator;
-import me.kryniowesegryderiusz.kgenerators.handlers.PerPlayerGenerators;
+import me.kryniowesegryderiusz.kgenerators.classes.GeneratorPlayer;
 import me.kryniowesegryderiusz.kgenerators.managers.Generators;
 import me.kryniowesegryderiusz.kgenerators.managers.Locations;
+import me.kryniowesegryderiusz.kgenerators.managers.Players;
 import me.kryniowesegryderiusz.kgenerators.utils.Config;
 import me.kryniowesegryderiusz.kgenerators.utils.ConfigManager;
 
@@ -40,7 +41,7 @@ public class PlacedGeneratorsFile {
         Bukkit.getScheduler().runTask(Main.getInstance(), () -> {
         	
         	Locations.clear();
-        	PerPlayerGenerators.clear();
+        	Players.clear();
         	
         	Config config = file;
         	
@@ -58,35 +59,21 @@ public class PlacedGeneratorsFile {
         		
         		String generatorID = config.getString(generatorLocationString+".generatorID");
         		
-        		Player owner;
-        		
         		if (config.contains(generatorLocationString+".owner"))
         		{
-        			owner = Bukkit.getPlayer(config.getString(generatorLocationString+".owner"));
-        		}
-        		else
-        		{
-        			owner = null;
-        		}   		
+        			Players.createPlayer(config.getString(generatorLocationString+".owner"));
+        		}		
         		
-        		//0world 1x 2y 3z
-        		String coordinates[] = generatorLocationString.split(",");
-        		
-        		String world = coordinates[0];    		
-        		int x = Integer.parseInt(coordinates[1]);
-        		int y = Integer.parseInt(coordinates[2]);
-        		int z = Integer.parseInt(coordinates[3]);
-        		
-        		World bukkitWorld = Main.getInstance().getServer().getWorld(world);
-        		
-        		if (bukkitWorld == null)
+        		GeneratorPlayer gPlayer = Players.getPlayer(config.getString(generatorLocationString+".owner"));
+       		
+        		String world = generatorLocationString.split(",")[0];    		
+        		if (Main.getInstance().getServer().getWorld(world) == null)
         		{
         			if (!errWorlds.contains(world))
         				errWorlds.add(world);
         			err = true;
         		}
-        		
-        		Location generatorLocation = new Location(bukkitWorld, x, y, z);
+        		Location generatorLocation = FilesFunctions.stringToLocation(generatorLocationString);
         		
         		if (generatorID != null){
         			if (!Generators.exists(generatorID))
@@ -105,8 +92,8 @@ public class PlacedGeneratorsFile {
         		
         		if (!err)
         		{
-        			Locations.add(generatorID, generatorLocation, owner);
-    				PerPlayerGenerators.addGeneratorToPlayer(owner, generatorID);
+        			Locations.add(generatorID, generatorLocation, gPlayer);
+        			gPlayer.addGeneratorToPlayer(generatorID);
     				amount++;
         		}
         		else

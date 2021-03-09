@@ -63,6 +63,7 @@ public class Schedules {
 		if (delay <= Main.getSettings().getGenerationCheckFrequency()) GenerateBlock.generate(gLocation);
 		else 
 		{
+			GenerateBlock.generatePlaceholder(gLocation);
 			schedules.put(gLocation, delay);
 			if (!place && Main.dependencies.contains(EnumDependency.HolographicDisplays) && generator.isHologram())
 			{

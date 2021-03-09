@@ -39,7 +39,6 @@ public class MainMenu implements Listener {
 		for (Entry<String, Generator> e : Generators.getEntrySet())
 		{
 			MenuItem generatorMenuItem = generatorItem.clone();
-			String generatorId = e.getKey();
 			Generator generator = e.getValue();
 			
 			if (generatorMenuItem.getItemType().contains("<generator>"))

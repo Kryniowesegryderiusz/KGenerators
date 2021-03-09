@@ -21,7 +21,7 @@ import me.kryniowesegryderiusz.kgenerators.classes.MenuInventory;
 import me.kryniowesegryderiusz.kgenerators.classes.MenuItem;
 import me.kryniowesegryderiusz.kgenerators.utils.Config;
 
-public abstract class Lang {
+public class Lang {
 	
 	private static LinkedHashMap<String, String> lang = new LinkedHashMap<String, String>();
 	

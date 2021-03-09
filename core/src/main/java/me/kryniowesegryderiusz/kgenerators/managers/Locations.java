@@ -5,9 +5,8 @@ import java.util.HashMap;
 import javax.annotation.Nullable;
 
 import org.bukkit.Location;
-import org.bukkit.entity.Player;
-
 import me.kryniowesegryderiusz.kgenerators.classes.GeneratorLocation;
+import me.kryniowesegryderiusz.kgenerators.classes.GeneratorPlayer;
 
 public class Locations {
 	
@@ -26,7 +25,7 @@ public class Locations {
 		else return null;
 	}
 	
-	public static void add(String id, Location location, Player owner)
+	public static void add(String id, Location location, GeneratorPlayer owner)
 	{
 		locations.put(location, new GeneratorLocation(id, location, owner));
 	}

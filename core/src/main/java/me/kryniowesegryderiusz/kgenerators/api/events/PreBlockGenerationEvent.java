@@ -1,13 +1,15 @@
 package me.kryniowesegryderiusz.kgenerators.api.events;
 
+import javax.annotation.Nullable;
+
 import org.bukkit.Location;
-import org.bukkit.entity.Player;
 import org.bukkit.event.Cancellable;
 import org.bukkit.event.Event;
 import org.bukkit.event.HandlerList;
 
 import lombok.Getter;
 import me.kryniowesegryderiusz.kgenerators.classes.Generator;
+import me.kryniowesegryderiusz.kgenerators.classes.GeneratorPlayer;
 
 public class PreBlockGenerationEvent extends Event implements Cancellable {
 
@@ -20,9 +22,9 @@ public class PreBlockGenerationEvent extends Event implements Cancellable {
     Generator generator;
     
     @Getter
-    Player owner;
+    @Nullable GeneratorPlayer owner;
 
-    public PreBlockGenerationEvent(Location location, Generator generator, Player owner) {
+    public PreBlockGenerationEvent(Location location, Generator generator, GeneratorPlayer owner) {
 		this.location = location;
 		this.generator = generator;
 		this.owner = owner;

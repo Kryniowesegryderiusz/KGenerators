@@ -22,7 +22,7 @@ import me.kryniowesegryderiusz.kgenerators.managers.Schedules;
 import me.kryniowesegryderiusz.kgenerators.utils.RandomSelector;
 import me.kryniowesegryderiusz.kgenerators.xseries.XMaterial;
 
-public abstract class GenerateBlock {
+public class GenerateBlock {
 	
 	/*
 	 * @param location Generator Location
@@ -78,7 +78,10 @@ public abstract class GenerateBlock {
 		Main.getInstance().getServer().getPluginManager().callEvent(new PostBlockGenerationEvent(location, generator, gLocation.getOwner()));
 	}
 	
-	public static void generatePlaceholder (Generator generator, Location location) {
+	public static void generatePlaceholder (GeneratorLocation gLocation) {
+		Generator generator = gLocation.getGenerator();
+		Location location = gLocation.getLocation().clone();
+		if (generator.getType() == GeneratorType.DOUBLE) location.add(0,1,0);
 		if (generator.getPlaceholder() != null && generator.getDelay() > 1) {
 			Main.getInstance().getServer().getScheduler().scheduleSyncDelayedTask(Main.getInstance(), new Runnable() {
 				  public void run() {

@@ -12,7 +12,7 @@ import me.kryniowesegryderiusz.kgenerators.managers.Locations;
 import me.kryniowesegryderiusz.kgenerators.managers.Schedules;
 import me.kryniowesegryderiusz.kgenerators.xseries.XMaterial;
 
-public abstract class Remove {
+public class Remove {
 	
 	public static void removeGenerator(GeneratorLocation gLocation, boolean drop) {
 		final ItemStack air = XMaterial.AIR.parseItem();
@@ -22,7 +22,7 @@ public abstract class Remove {
 		Locations.remove(location);
 		Schedules.remove(gLocation);
 		PlacedGeneratorsFile.removeGeneratorFromFile(location);
-		PerPlayerGenerators.removeGeneratorFromPlayer(gLocation.getOwner(), gLocation.getGeneratorId());
+		gLocation.getOwner().removeGeneratorFromPlayer(gLocation.getGeneratorId());
 		
 		if (drop) {
 			location.getWorld().dropItem(location, generator.getGeneratorItem());

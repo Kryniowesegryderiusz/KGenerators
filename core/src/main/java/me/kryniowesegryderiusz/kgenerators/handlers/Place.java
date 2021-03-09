@@ -11,8 +11,10 @@ import me.kryniowesegryderiusz.kgenerators.Enums.EnumMessage;
 import me.kryniowesegryderiusz.kgenerators.Enums.GeneratorType;
 import me.kryniowesegryderiusz.kgenerators.classes.Generator;
 import me.kryniowesegryderiusz.kgenerators.classes.GeneratorLocation;
+import me.kryniowesegryderiusz.kgenerators.classes.GeneratorPlayer;
 import me.kryniowesegryderiusz.kgenerators.files.PlacedGeneratorsFile;
 import me.kryniowesegryderiusz.kgenerators.managers.Locations;
+import me.kryniowesegryderiusz.kgenerators.managers.Players;
 import me.kryniowesegryderiusz.kgenerators.managers.Schedules;
 
 public class Place {
@@ -21,7 +23,9 @@ public class Place {
 	{
     	Location aLocation = location.clone().add(0,1,0);
     	
-    	if (player != null && !PerPlayerGenerators.canPlace(player, generator.getId()))
+    	GeneratorPlayer pGenerator = Players.getPlayer(player);
+    	
+    	if (!pGenerator.canPlace(generator.getId()))
 	    {
 	    	return false;
 	    }
@@ -37,10 +41,10 @@ public class Place {
     		if (player != null) Lang.sendMessage(player, EnumMessage.GeneratorsPlaceDoubleBelowGenerator);
     		return false;
     	}
-    	GeneratorLocation gLocation = new GeneratorLocation(generator.getId(), location, player);
+    	GeneratorLocation gLocation = new GeneratorLocation(generator.getId(), location, Players.getPlayer(player));
     	Locations.add(gLocation);
     	PlacedGeneratorsFile.saveGeneratorToFile(location, player, generator.getId());
-    	if (player != null) PerPlayerGenerators.addGeneratorToPlayer(player, generator.getId());
+    	if (!pGenerator.isNone()) pGenerator.addGeneratorToPlayer(generator.getId());
     	
     	
     	if (generator.getAfterPlaceWaitModifier() == 0)

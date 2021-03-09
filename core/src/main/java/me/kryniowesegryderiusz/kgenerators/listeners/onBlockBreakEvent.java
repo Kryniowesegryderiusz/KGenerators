@@ -18,8 +18,8 @@ import me.kryniowesegryderiusz.kgenerators.Enums.EnumWGFlags;
 import me.kryniowesegryderiusz.kgenerators.classes.Generator;
 import me.kryniowesegryderiusz.kgenerators.classes.GeneratorLocation;
 import me.kryniowesegryderiusz.kgenerators.handlers.ActionHandler;
-import me.kryniowesegryderiusz.kgenerators.handlers.PerPlayerGenerators;
 import me.kryniowesegryderiusz.kgenerators.managers.Locations;
+import me.kryniowesegryderiusz.kgenerators.managers.Players;
 import me.kryniowesegryderiusz.kgenerators.managers.Schedules;
 
 public class onBlockBreakEvent implements Listener {
@@ -53,7 +53,7 @@ public class onBlockBreakEvent implements Listener {
 					|| block.equals(bGenerator.getPlaceholder())) {
 				
 				if (block.equals(bGenerator.getPlaceholder()) 
-						|| !PerPlayerGenerators.canUse(player, bgLocation) 
+						|| !Players.getPlayer(player).canUse(bgLocation)
 						|| !hasPermissionToMineCheck(player, bGenerator)) {
 					e.setCancelled(true);
 					return;
@@ -83,7 +83,7 @@ public class onBlockBreakEvent implements Listener {
 				
 				if (ActionHandler.handler(EnumInteraction.BREAK, gLocation, player)
 						|| block.equals(generator.getPlaceholder()) 
-						|| !PerPlayerGenerators.canUse(player, gLocation) 
+						|| !Players.getPlayer(player).canUse(gLocation)
 						|| !hasPermissionToMineCheck(player, generator)) {
 					e.setCancelled(true);
 					return;
