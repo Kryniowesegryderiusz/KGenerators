@@ -46,17 +46,19 @@ public class MenuInventory {
 			if (enumMenuItem.getMenuInventory() == menuInventory &&  !exludedEnumMenuItems.contains(enumMenuItem))
 			{
 				MenuItem menuItem = Lang.getMenuItem(enumMenuItem);
-
-				for(int i = 0; i < rep.size(); i=i+2)
+				if (menuItem.isEnabled())
 				{
-					menuItem.replace(rep.get(i), rep.get(i+1));
-				}
-				
-				ItemStack item = menuItem.build();
-				
-				for (int i : menuItem.getSlots())
-				{
-					menu.setItem(i, item);
+					for(int i = 0; i < rep.size(); i=i+2)
+					{
+						menuItem.replace(rep.get(i), rep.get(i+1));
+					}
+					
+					ItemStack item = menuItem.build();
+					
+					for (int i : menuItem.getSlots())
+					{
+						menu.setItem(i, item);
+					}
 				}
 			}
 		}

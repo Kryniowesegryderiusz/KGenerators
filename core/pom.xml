@@ -7,7 +7,7 @@
   <parent>
     <groupId>me.kryniowesegryderiusz</groupId>
     <artifactId>kgenerators-parent</artifactId>
-    <version>4.1.2</version>
+    <version>4.2.1</version>
   </parent>
 
 	<repositories>
@@ -46,6 +46,7 @@
 			<artifactId>SuperiorSkyblockAPI</artifactId>
 			<version>b18</version> <!-- b18 now  -->
 		</dependency>
+		
 		<dependency>
 			<groupId>com.google.code.findbugs</groupId>
 			<artifactId>jsr305</artifactId>
@@ -60,14 +61,7 @@
 		    <scope>system</scope>
 		    <systemPath>${project.basedir}/dependencies/JetsMinions.jar</systemPath>
 		</dependency>
-		
-	    <dependency>
-	        <groupId>com.github.MilkBowl</groupId>
-	        <artifactId>VaultAPI</artifactId>
-	        <version>1.7</version>
-	        <scope>provided</scope>
-	    </dependency>
-		
+
 		<!--  Project Lombok -->
 		<dependency>
 			<groupId>org.projectlombok</groupId>

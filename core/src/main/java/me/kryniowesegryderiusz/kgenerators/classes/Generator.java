@@ -46,6 +46,8 @@ public class Generator {
     private Boolean onlyOwnerPickUp = false;
     @Getter @Setter
     private Boolean onlyOwnerUse = false;
+    @Getter @Setter
+    private Boolean onlyOwnerStorage = false;
     
     private double fullChance = 0.0;
 	  

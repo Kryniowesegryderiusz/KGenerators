@@ -2,7 +2,7 @@
 #https://www.spigotmc.org/resources/79246/
 #Need help? Join KGenerators discord: https://discord.gg/BZRjhpP4Ab
 
-#Choose lang file. Default possibilities are en, pl, vi
+#Choose lang file. Default possibilities are en, pl, ro, vi
 #If you want to add your own language contact us on discord
 lang: en
 
@@ -20,7 +20,9 @@ generators-actionbar-messages: true
 #2 - remove generator
 explosion-handler: 0
 
-#per-player-generators are explained more on: https://github.com/Kryniowesegryderiusz/KGenerators/wiki/Per-Player-Generators
+#Per player generators options add bunch of features related to limiting
+#pick up, usage and placing generator per player
+#You can find more on https://github.com/Kryniowesegryderiusz/KGenerators/wiki/Per-Player-Generators
 per-player-generators:
   #Enables limit, usage and pickup checks
   enabled: false

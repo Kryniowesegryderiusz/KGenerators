@@ -6,10 +6,14 @@ import java.util.Optional;
 import org.bukkit.inventory.ItemStack;
 
 import me.kryniowesegryderiusz.kgenerators.Logger;
+import me.kryniowesegryderiusz.kgenerators.managers.Generators;
 
 public abstract class XUtils {
 	
     public static ItemStack parseItemStack(String s, String place, boolean isBlockCheck) {
+    	
+    	if (Generators.exists(s))
+    		return Generators.get(s).getGeneratorItem();
     	
     	Optional<XMaterial> oxm = XMaterial.matchXMaterial(s);
 		try {
@@ -21,7 +25,7 @@ public abstract class XUtils {
 			}
 			return xm.parseItem();
 		} catch (NoSuchElementException e) {
-			Logger.error(place+": " + s + " is not a proper material! Using STONE!");
+			Logger.error(place+": " + s + " is not a proper material or generator id! Using STONE!");
 			//e.printStackTrace();
 		}
 		return XMaterial.STONE.parseItem();

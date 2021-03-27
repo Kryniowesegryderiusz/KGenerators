@@ -62,7 +62,7 @@ public class ChancesMenu implements Listener {
 		
 		int slot = e.getSlot();
 		
-		if (EnumMenuItem.ChancesMenuBack.getMenuItem().getSlots().contains(slot))
+		if (EnumMenuItem.ChancesMenuBack.getMenuItem().getSlots().contains(slot) && Lang.getMenuItem(EnumMenuItem.ChancesMenuBack).isEnabled())
 		{
 			Menus.openMainMenu((Player) e.getWhoClicked());
 		}

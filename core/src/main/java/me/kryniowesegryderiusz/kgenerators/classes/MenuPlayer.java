@@ -11,11 +11,19 @@ public class MenuPlayer {
 	@Getter
 	Player player;
 	@Getter
-	GeneratorLocation gLocation;
-	@Getter
 	Inventory inventory;
 	@Getter
 	EnumMenuInventory menuInventory;
+	
+	@Getter
+	GeneratorLocation gLocation;
+	
+	public MenuPlayer(Player player, EnumMenuInventory menuInventory, Inventory inventory)
+	{
+		this.player = player;
+		this.menuInventory = menuInventory;
+		this.inventory = inventory;
+	}
 	
 	public MenuPlayer(Player player, EnumMenuInventory menuInventory, Inventory inventory, GeneratorLocation gLocation)
 	{

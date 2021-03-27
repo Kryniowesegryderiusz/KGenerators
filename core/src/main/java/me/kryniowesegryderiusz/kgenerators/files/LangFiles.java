@@ -2,7 +2,6 @@ package me.kryniowesegryderiusz.kgenerators.files;
 
 import java.io.File;
 import java.io.IOException;
-
 import org.bukkit.configuration.InvalidConfigurationException;
 
 import me.kryniowesegryderiusz.kgenerators.Lang;
@@ -20,21 +19,19 @@ public class LangFiles {
 
     	FilesFunctions.mkdir("lang");
 
+    	String[] langs = {"en", "pl", "ro", "vi"}; 
+    	
     	/*
     	 * Adding resource lang files
     	 */
-    	if (!new File(Main.getInstance().getDataFolder(), "lang/en.yml").exists())
-    		Main.getInstance().saveResource("lang/en.yml", false);
-    	if (!new File(Main.getInstance().getDataFolder(), "lang/pl.yml").exists())
-    		Main.getInstance().saveResource("lang/pl.yml", false);
-    	if (!new File(Main.getInstance().getDataFolder(), "lang/en_gui.yml").exists())
-    		Main.getInstance().saveResource("lang/en_gui.yml", false);
-    	if (!new File(Main.getInstance().getDataFolder(), "lang/pl_gui.yml").exists())
-    		Main.getInstance().saveResource("lang/pl_gui.yml", false);
-    	if (!new File(Main.getInstance().getDataFolder(), "lang/vi.yml").exists())
-    		Main.getInstance().saveResource("lang/vi.yml", false);
-    	if (!new File(Main.getInstance().getDataFolder(), "lang/vi_gui.yml").exists())
-    		Main.getInstance().saveResource("lang/vi_gui.yml", false);
+    	
+    	for (String l : langs)
+    	{
+        	if (!new File(Main.getInstance().getDataFolder(), "lang/"+l+".yml").exists())
+        		Main.getInstance().saveResource("lang/"+l+".yml", false);
+        	if (!new File(Main.getInstance().getDataFolder(), "lang/"+l+"_gui.yml").exists())
+        		Main.getInstance().saveResource("lang/"+l+"_gui.yml", false);
+    	}
     	
     	/*
     	 * Loading configs

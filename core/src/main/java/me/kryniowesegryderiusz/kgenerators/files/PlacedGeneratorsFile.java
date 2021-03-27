@@ -73,7 +73,7 @@ public class PlacedGeneratorsFile {
         				errWorlds.add(world);
         			err = true;
         		}
-        		Location generatorLocation = FilesFunctions.stringToLocation(generatorLocationString);
+        		Location generatorLocation = Locations.stringToLocation(generatorLocationString);
         		
         		if (generatorID != null){
         			if (!Generators.exists(generatorID))
@@ -133,7 +133,7 @@ public class PlacedGeneratorsFile {
 	
 	public static void saveGeneratorToFile(Location location, Player player, String generatorID)
 	{	
-		String sLocation = FilesFunctions.locationToString(location);
+		String sLocation = Locations.locationToString(location);
 		file.set(sLocation+".generatorID", generatorID);
 		if (player != null) file.set(sLocation+".owner", player.getName());
 		
@@ -146,7 +146,7 @@ public class PlacedGeneratorsFile {
 	
 	public static void removeGeneratorFromFile(Location location)
 	{
-		String sLocation = FilesFunctions.locationToString(location);
+		String sLocation = Locations.locationToString(location);
 		
 		file.set(sLocation+".generatorID", null);
 		file.set(sLocation+".owner", null);

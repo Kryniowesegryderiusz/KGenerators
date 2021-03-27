@@ -17,6 +17,7 @@ import me.kryniowesegryderiusz.kgenerators.utils.Config;
 import me.kryniowesegryderiusz.kgenerators.xseries.XUtils;
 
 public class MenuItem implements Cloneable {
+	@Getter
 	private boolean enabled = true;
 	@Getter
 	private String itemType;
@@ -153,7 +154,10 @@ public class MenuItem implements Cloneable {
 
 	@SuppressWarnings("unchecked")
 	public void load(EnumMenuItem menu, Config config) {
-		String path = menu.getKey();
+		load(menu.getKey(), config);
+	}
+	
+	public void load(String path, Config config) {
 		if (config.contains(path))
 		{
 			this.itemType = config.getString(path+".item");

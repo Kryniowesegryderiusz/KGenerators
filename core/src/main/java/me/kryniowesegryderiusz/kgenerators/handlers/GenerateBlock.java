@@ -12,6 +12,7 @@ import com.bgsoftware.superiorskyblock.api.island.Island;
 
 import me.kryniowesegryderiusz.kgenerators.Enums.EnumDependency;
 import me.kryniowesegryderiusz.kgenerators.Enums.GeneratorType;
+import me.kryniowesegryderiusz.kgenerators.Logger;
 import me.kryniowesegryderiusz.kgenerators.Main;
 import me.kryniowesegryderiusz.kgenerators.api.events.PostBlockGenerationEvent;
 import me.kryniowesegryderiusz.kgenerators.api.events.PreBlockGenerationEvent;
@@ -31,12 +32,13 @@ public class GenerateBlock {
 	static ItemStack pistonHead = XMaterial.PISTON_HEAD.parseItem();
 	
 	public static void generate(GeneratorLocation gLocation) {
-		
+			
 		Generator generator = gLocation.getGenerator();
 		Location location = gLocation.getLocation();
 		
-		PreBlockGenerationEvent event = new PreBlockGenerationEvent(location, generator, gLocation.getOwner());
+		PreBlockGenerationEvent event = new PreBlockGenerationEvent(gLocation);
 		Main.getInstance().getServer().getPluginManager().callEvent(event);
+		
 		if (event.isCancelled()) return;
 	
 		Location diggableBlockLocation = location.clone();
@@ -75,7 +77,7 @@ public class GenerateBlock {
 			  }
 		  }
 		  
-		Main.getInstance().getServer().getPluginManager().callEvent(new PostBlockGenerationEvent(location, generator, gLocation.getOwner()));
+		Main.getInstance().getServer().getPluginManager().callEvent(new PostBlockGenerationEvent(gLocation));
 	}
 	
 	public static void generatePlaceholder (GeneratorLocation gLocation) {

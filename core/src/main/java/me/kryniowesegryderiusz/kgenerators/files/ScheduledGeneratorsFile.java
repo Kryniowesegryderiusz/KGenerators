@@ -47,7 +47,7 @@ public class ScheduledGeneratorsFile {
 			int amount = 0;
         	for(String generatorLocationString: mainSection.getKeys(false))
         	{
-        		Location location = FilesFunctions.stringToLocation(generatorLocationString);
+        		Location location = Locations.stringToLocation(generatorLocationString);
         		GeneratorLocation gLocation = Locations.get(location);
         		Schedules.insert(gLocation, file.getInt(generatorLocationString + ".delay"));
         		if (gLocation.getGenerator().isHologram()) Holograms.createHologram(gLocation);
@@ -72,7 +72,7 @@ public class ScheduledGeneratorsFile {
 			
 		for(Entry<GeneratorLocation, Integer> e : Schedules.getSchedules().entrySet())
 		{
-			file.set(FilesFunctions.locationToString(e.getKey().getLocation()) + ".delay", e.getValue());
+			file.set(Locations.locationToString(e.getKey().getLocation()) + ".delay", e.getValue());
 		}
 		
 		try {

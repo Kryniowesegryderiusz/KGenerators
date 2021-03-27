@@ -10,7 +10,7 @@ import org.bukkit.configuration.file.YamlConfiguration;
 public class Config extends YamlConfiguration{
     File file;
     File folder;
-    Config(File file){
+    public Config(File file){
         super();
         this.file = file;
     }

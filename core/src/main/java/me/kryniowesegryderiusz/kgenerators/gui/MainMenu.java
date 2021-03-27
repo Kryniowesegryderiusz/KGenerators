@@ -78,7 +78,7 @@ public class MainMenu implements Listener {
 		int slot = e.getSlot();
 		
 		ArrayList<Integer> slotList = EnumMenuItem.MainMenuGenerator.getMenuItem().getSlots();
-		if (slotList.contains(slot))
+		if (slotList.contains(slot) && Lang.getMenuItem(EnumMenuItem.MainMenuGenerator).isEnabled())
 		{
 			int lastId = -1;
 			for (Entry<String, Generator> entry : Generators.getEntrySet())
@@ -104,7 +104,7 @@ public class MainMenu implements Listener {
 				}
 			}
 		}
-		if (EnumMenuItem.MainMenuQuit.getMenuItem().getSlots().contains(slot))
+		if (EnumMenuItem.MainMenuQuit.getMenuItem().getSlots().contains(slot) && Lang.getMenuItem(EnumMenuItem.MainMenuQuit).isEnabled())
 		{
 			Menus.closeInv((Player) e.getWhoClicked());
 		}

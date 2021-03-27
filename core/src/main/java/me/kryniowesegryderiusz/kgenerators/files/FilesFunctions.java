@@ -23,27 +23,4 @@ public class FilesFunctions {
 	         Logger.error("FilesFunctions: Can not create directory for "+dir);
 	      }
 	}
-	
-	static String locationToString(Location location)
-	{
-		int x = location.getBlockX();
-		int y = location.getBlockY();
-		int z = location.getBlockZ();
-		String world  = location.getWorld().getName();
-		String string = world + "," + x + "," + y + "," + z;
-		
-		return string;
-	}
-	
-	static Location stringToLocation (String string)
-	{
-		String[] parts = string.split(",");
-
-        final World w = Bukkit.getServer().getWorld(parts[0]);
-        final int x = Integer.parseInt(parts[1]);
-        final int y = Integer.parseInt(parts[2]);
-        final int z = Integer.parseInt(parts[3]);
-
-        return new Location(w, x, y, z);
-	}
 }

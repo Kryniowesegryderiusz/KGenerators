@@ -7,13 +7,13 @@ import org.bukkit.entity.Player;
 
 import me.kryniowesegryderiusz.kgenerators.Main;
 import me.kryniowesegryderiusz.kgenerators.classes.GeneratorLocation;
+import me.kryniowesegryderiusz.kgenerators.classes.Settings;
 import me.kryniowesegryderiusz.kgenerators.classes.Upgrade;
 import me.kryniowesegryderiusz.kgenerators.handlers.Place;
 import me.kryniowesegryderiusz.kgenerators.handlers.Remove;
 import me.kryniowesegryderiusz.kgenerators.managers.Generators;
 import me.kryniowesegryderiusz.kgenerators.managers.Locations;
 import me.kryniowesegryderiusz.kgenerators.managers.Schedules;
-import me.kryniowesegryderiusz.kgenerators.managers.Settings;
 import me.kryniowesegryderiusz.kgenerators.managers.Upgrades;
 
 public class KGeneratorsAPI

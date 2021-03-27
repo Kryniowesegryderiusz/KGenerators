@@ -16,9 +16,10 @@ example_generator:
   - "ABA"
   - " A "
   #Possible ingredients. No matter, which server version do you have use names from here: https://hub.spigotmc.org/javadocs/spigot/org/bukkit/Material.html
+  #You can use generator id here if you want to make one generator from another!
   ingredients:
     A: REDSTONE
-    B: STONE
+    B: ores_generator
       
 stone_generator_level_1:
   shape:

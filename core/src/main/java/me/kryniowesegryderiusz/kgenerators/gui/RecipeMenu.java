@@ -95,7 +95,7 @@ public class RecipeMenu implements Listener {
 		if (!Menus.isVieving((Player) e.getWhoClicked(), EnumMenuInventory.Recipe)) return;
 		
 		int slot = e.getSlot();
-		if (EnumMenuItem.RecipeMenuBack.getMenuItem().getSlots().contains(slot))
+		if (EnumMenuItem.RecipeMenuBack.getMenuItem().getSlots().contains(slot) && Lang.getMenuItem(EnumMenuItem.RecipeMenuBack).isEnabled())
 		{
 			Menus.openMainMenu((Player) e.getWhoClicked());
 		}

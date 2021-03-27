@@ -11,7 +11,7 @@ import me.kryniowesegryderiusz.kgenerators.Enums.EnumAction;
 import me.kryniowesegryderiusz.kgenerators.Logger;
 import me.kryniowesegryderiusz.kgenerators.Main;
 import me.kryniowesegryderiusz.kgenerators.classes.GeneratorAction;
-import me.kryniowesegryderiusz.kgenerators.managers.Settings;
+import me.kryniowesegryderiusz.kgenerators.classes.Settings;
 import me.kryniowesegryderiusz.kgenerators.utils.Config;
 import me.kryniowesegryderiusz.kgenerators.utils.ConfigManager;
 import me.kryniowesegryderiusz.kgenerators.xseries.XUtils;

@@ -53,6 +53,9 @@ example_generator:
     #Disables also piston-push event
     #Doesnt work for third-party plugins ex. breaking blocks hoppers
     only-owner-use: false
+    #Should only owner be able to open afk storage?
+    #Requires afk-storage enabled in config.yml
+    only-owner-storage: true
 
 stone_generator_level_1:
   generator: END_STONE

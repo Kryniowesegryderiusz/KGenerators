@@ -1,10 +1,15 @@
 package me.kryniowesegryderiusz.kgenerators.managers;
 
 import java.util.HashMap;
+import java.util.Map.Entry;
+import java.util.Set;
 
 import javax.annotation.Nullable;
 
+import org.bukkit.Bukkit;
 import org.bukkit.Location;
+import org.bukkit.World;
+
 import me.kryniowesegryderiusz.kgenerators.classes.GeneratorLocation;
 import me.kryniowesegryderiusz.kgenerators.classes.GeneratorPlayer;
 
@@ -42,5 +47,38 @@ public class Locations {
 
 	public static void clear() {
 		locations.clear();
+	}
+	
+	public static Set<Entry<Location, GeneratorLocation>> getEntrySet()
+	{
+		return locations.entrySet();
+	}
+	
+	/*
+	 * Converters
+	 */
+	
+	
+	public static String locationToString(Location location)
+	{
+		int x = location.getBlockX();
+		int y = location.getBlockY();
+		int z = location.getBlockZ();
+		String world  = location.getWorld().getName();
+		String string = world + "," + x + "," + y + "," + z;
+		
+		return string;
+	}
+	
+	public static Location stringToLocation (String string)
+	{
+		String[] parts = string.split(",");
+
+        final World w = Bukkit.getServer().getWorld(parts[0]);
+        final int x = Integer.parseInt(parts[1]);
+        final int y = Integer.parseInt(parts[2]);
+        final int z = Integer.parseInt(parts[3]);
+
+        return new Location(w, x, y, z);
 	}
 }

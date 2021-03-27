@@ -12,6 +12,7 @@ import lombok.Setter;
 import me.kryniowesegryderiusz.kgenerators.Enums.EnumDependency;
 import me.kryniowesegryderiusz.kgenerators.Enums.GeneratorType;
 import me.kryniowesegryderiusz.kgenerators.classes.Generator;
+import me.kryniowesegryderiusz.kgenerators.classes.Settings;
 import me.kryniowesegryderiusz.kgenerators.files.GeneratorsFile;
 import me.kryniowesegryderiusz.kgenerators.files.LangFiles;
 import me.kryniowesegryderiusz.kgenerators.files.PlacedGeneratorsFile;
@@ -39,7 +40,6 @@ import me.kryniowesegryderiusz.kgenerators.listeners.onPlayerInteractEvent;
 import me.kryniowesegryderiusz.kgenerators.managers.Generators;
 import me.kryniowesegryderiusz.kgenerators.managers.Holograms;
 import me.kryniowesegryderiusz.kgenerators.managers.Schedules;
-import me.kryniowesegryderiusz.kgenerators.managers.Settings;
 import me.kryniowesegryderiusz.kgenerators.multiversion.ActionBar;
 import me.kryniowesegryderiusz.kgenerators.multiversion.BlocksUtils;
 import me.kryniowesegryderiusz.kgenerators.multiversion.MultiVersion;
@@ -83,9 +83,6 @@ public class Main extends JavaPlugin {
 		metrics.addCustomChart(new Metrics.SingleLineChart("number_of_double_generators", () -> Generators.amount(GeneratorType.DOUBLE)));
 		
 		metrics.addCustomChart(new Metrics.SimplePie("per_player_generators_enabled", () -> String.valueOf(Main.getSettings().isPerPlayerGenerators()) ));
-    	
-    	/* Logger setup */
-    	Logger.setup();
     	
     	/* Dependencies check */
     	dependenciesCheck();
@@ -136,6 +133,8 @@ public class Main extends JavaPlugin {
     public void onLoad() {
     	
     	instance = this;
+    	/* Logger setup */
+    	Logger.setup();
     	MultiVersion.setup();
     	
     }
@@ -147,8 +146,10 @@ public class Main extends JavaPlugin {
     }
     
     
-    private void dependenciesCheck() {
+    public static void dependenciesCheck() {
     	Bukkit.getScheduler().runTask(Main.getInstance(), () -> {
+    		dependencies.clear();
+    		
 	    	if (Bukkit.getPluginManager().isPluginEnabled("SuperiorSkyblock2")) {
 	    		Logger.info("Dependencies: Detected plugin SuperiorSkyblock2. Hooking into it.");
 	    		dependencies.add(EnumDependency.SuperiorSkyblock2);
@@ -196,7 +197,17 @@ public class Main extends JavaPlugin {
 	    	}
 	    	else
 	    	{
-	    		Logger.info("Dependencies: Vault economy was not found! Generators upgrade feature will not work!");
+	    		Logger.warn("Dependencies: Vault economy was not found! Some features could not work!");
+	    	}
+	    	
+	    	if (Vault.setupPermissions())
+	    	{
+	    		Logger.info("Dependencies: Detected Vault permissions. Hooked into it.");
+	    		dependencies.add(EnumDependency.VaultPermissions);
+	    	}
+	    	else
+	    	{
+	    		Logger.warn("Dependencies: Vault permissions was not found! Some features could not work!");
 	    	}
     	});
 	}

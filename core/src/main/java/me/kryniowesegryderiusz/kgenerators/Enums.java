@@ -38,6 +38,9 @@ public class Enums {
     	
     	GeneratorsProtectionCantChangeGeneratorItem("generators.protection.cant-change-generator-item", "&cYou cant change generator item!"),
     	
+    	GeneratorsMenuCantOpenAlreadyViewed("generators.menus.cant-open-already-viewed", "&cYou cant open this menu right now! Someone is using it!"),
+    	GeneratorsMenuCantOpenNotOwner("generators.menus.cant-open-not-owner", "&cYou cant open this menu! Only generator owner can do it!"),
+    	
     	VaultEconomyNoEconomyAvaible("economy.no-economy-avaible", "&cThere is no economy system avaible!"),
     	VaultEconomyNotEnoughMoney("economy.not-enough-money", "&cYou dont have enough money! You need &6<cost>$&c!"),
     	VaultEconomyGeneratorUpgraded("economy.done", "&aYou upgraded &e<number> &agenerators for &e<cost>$&a!"),
@@ -328,5 +331,6 @@ public class Enums {
 		SuperiorSkyblock2,
 		BentoBox,
 		VaultEconomy,
+		VaultPermissions,
 	}
 }

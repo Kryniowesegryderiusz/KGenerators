@@ -14,7 +14,6 @@ import com.sk89q.worldguard.protection.flags.registry.FlagRegistry;
 import me.kryniowesegryderiusz.kgenerators.Logger;
 import me.kryniowesegryderiusz.kgenerators.Main;
 import me.kryniowesegryderiusz.kgenerators.Enums.EnumWGFlags;
-import me.kryniowesegryderiusz.kgenerators.classes.GeneratorLocation;
 
 public class WorldGuardUtils_1_8 implements WorldGuardUtils {
 	

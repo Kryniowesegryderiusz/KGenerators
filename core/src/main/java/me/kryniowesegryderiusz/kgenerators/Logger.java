@@ -20,6 +20,8 @@ import java.util.Date;
 import java.util.List;
 
 import org.bukkit.command.CommandSender;
+import org.bukkit.plugin.Plugin;
+
 import me.kryniowesegryderiusz.kgenerators.Enums.EnumLog;
 import me.kryniowesegryderiusz.kgenerators.Enums.EnumMessage;
 
@@ -27,6 +29,7 @@ public class Logger {
 	
 	static String logFile = "log.txt";
 	static String configFile = "config.yml";
+	static String generatorsFile = "generators.yml";
 	static String recipesFile = "recipes.yml";
 	
 	private static void log(Object object, EnumLog logType)
@@ -131,10 +134,20 @@ public class Logger {
 						String fileString = "";
 						fileString += "Server version: " + Main.getInstance().getServer().getVersion() + "\n";
 						fileString += "Plugin version: " + Main.getInstance().getDescription().getVersion() + "\n";
-						fileString += "Enabled dependencies: " + Main.dependencies.toString() + "\n\n";
+						fileString += "Enabled dependencies: " + Main.dependencies.toString() + "\n";
+						
+						fileString += "Enabled plugins: ";
+						for (Plugin plugin : Main.getInstance().getServer().getPluginManager().getPlugins())
+						{
+							fileString += plugin.getName() + " " + plugin.getDescription().getVersion() + ", ";
+						}
+							
+						fileString += "\n\n";
+							
 						try {
 							fileString += getLinesFromFile(logFile) + "\n";
 							fileString += getLinesFromFile(configFile) + "\n";
+							fileString += getLinesFromFile(generatorsFile) + "\n";
 							fileString += getLinesFromFile(recipesFile);
 							
 							String url = postHaste(sender, fileString, false);

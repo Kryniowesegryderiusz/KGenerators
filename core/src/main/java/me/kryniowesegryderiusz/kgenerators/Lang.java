@@ -41,17 +41,24 @@ public class Lang {
 		 * Regular lang
 		 */
 		
-		for(Map.Entry<String, String> entry : lang.entrySet()) {
+		for(Map.Entry<String, String> entry : lang.entrySet())
+		{
 			
 			String mpath = entry.getKey();
 			String fpath = "messages." + mpath;
 			
 			if (!config.contains(fpath)) {
 				config.set(fpath, entry.getValue());
-				config.saveConfig();
 			}
 			
 			lang.put(mpath, ChatColor.translateAlternateColorCodes('&', config.getString(fpath)));
+			
+			try {
+				config.saveConfig();
+			} catch (IOException e) {
+				Logger.error("Lang: Cant save lang file!");
+				Logger.error(e);
+			}
 		}
 		
 		/*
@@ -65,7 +72,6 @@ public class Lang {
 			
 			if (!config.contains(path)) {
 				config.set(path, e.getValue());
-				config.saveConfig();
 			}
 			ArrayList<String> gotHolo = (ArrayList<String>) config.getStringList(path);
 			ArrayList<String> holo = new ArrayList<String>();

@@ -16,7 +16,7 @@ import me.kryniowesegryderiusz.kgenerators.Main;
 import me.kryniowesegryderiusz.kgenerators.Enums.EnumAction;
 import me.kryniowesegryderiusz.kgenerators.Enums.EnumInteraction;
 import me.kryniowesegryderiusz.kgenerators.classes.GeneratorAction;
-import me.kryniowesegryderiusz.kgenerators.managers.Settings;
+import me.kryniowesegryderiusz.kgenerators.classes.Settings;
 import me.kryniowesegryderiusz.kgenerators.utils.Config;
 import me.kryniowesegryderiusz.kgenerators.utils.ConfigManager;
 import me.kryniowesegryderiusz.kgenerators.xseries.XUtils;
@@ -322,7 +322,7 @@ public class FilesConverter {
 			addToFile(file, "#https://www.spigotmc.org/resources/79246/");
 			addToFile(file, "#Need help? Join KGenerators discord: https://discord.gg/BZRjhpP4Ab");
 			addToFile(file, "");
-			addToFile(file, "#Choose lang file. Default possibilities are en, pl");
+			addToFile(file, "#Choose lang file. Default possibilities are en, pl, ro, vi");
 			addToFile(file, "lang: " + settings.getLang());
 			Logger.info("FilesConverter: Added lang settings to config file");
 		}
@@ -342,7 +342,9 @@ public class FilesConverter {
 		if (!config.contains("can-generate-instead"))
 		{
 			addToFile(file, "");
-			addToFile(file, "#per-player-generators are explained more on: https://github.com/Kryniowesegryderiusz/KGenerators/wiki/Per-Player-Generators");
+			addToFile(file, "#Per player generators settings add bunch of features related to limiting ");
+			addToFile(file, "#pick up, usage and placing generator per player");
+			addToFile(file, "#You can find more on https://github.com/Kryniowesegryderiusz/KGenerators/wiki/Per-Player-Generators");
 			addToFile(file, "per-player-generators:");
 			addToFile(file, "  #Enables limit, usage and pickup checks");
 			addToFile(file, "  enabled: " + settings.isPerPlayerGenerators());
@@ -404,6 +406,16 @@ public class FilesConverter {
 			addToFile(file, "  #Set -1 to not update GUI");
 			addToFile(file, "  gui-update: 20");
 			Logger.info("FilesConverter: Added intervals settings to config file");
+		}
+		
+		if (!config.contains("afk-storage"))
+		{
+			addToFile(file, "");
+			addToFile(file, "#Afk storages adds auto mining feature to generators");
+			addToFile(file, "#You can dinf more on: ");
+			addToFile(file, "afk-storage:");
+			addToFile(file, "  enabled: false");
+			Logger.info("FilesConverter: Added afk storage settings to config file");
 		}
 	}
 	

@@ -72,7 +72,7 @@ public class UpgradeMenu implements Listener {
 		if (!Menus.isVieving((Player) e.getWhoClicked(), EnumMenuInventory.Upgrade)) return;
 		
 		int slot = e.getSlot();
-		if (EnumMenuItem.UpgradeMenuBack.getMenuItem().getSlots().contains(slot))
+		if (EnumMenuItem.UpgradeMenuBack.getMenuItem().getSlots().contains(slot) && Lang.getMenuItem(EnumMenuItem.UpgradeMenuBack).isEnabled())
 		{
 			Menus.openMainMenu((Player) e.getWhoClicked());
 		}

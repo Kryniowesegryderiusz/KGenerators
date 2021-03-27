@@ -55,6 +55,7 @@ public class Commands implements CommandExecutor {
 				    	UpgradesFile.load();
 				    	LangFiles.loadLang();
 						Lang.sendMessage(sender, EnumMessage.CommandsReloadDone);
+						Main.dependenciesCheck();
 					}
 					else
 					{

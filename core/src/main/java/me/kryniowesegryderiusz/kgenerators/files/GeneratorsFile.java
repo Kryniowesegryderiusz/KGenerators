@@ -136,6 +136,11 @@ public class GeneratorsFile {
 	    			generator.setOnlyOwnerUse(config.getBoolean(generatorID+".per-player-generators.only-owner-use"));
 	    		}
 	    		
+	    		if (config.contains(generatorID+".per-player-generators.only-owner-storage"))
+	    		{
+	    			generator.setOnlyOwnerStorage(config.getBoolean(generatorID+".per-player-generators.only-owner-storage"));
+	    		}
+	    		
 	    		if (config.contains(generatorID+".hologram"))
 	    		{
 	    			generator.setHologram(config.getBoolean(generatorID+".hologram"));
