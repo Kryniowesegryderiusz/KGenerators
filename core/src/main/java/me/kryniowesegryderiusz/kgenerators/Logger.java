@@ -31,6 +31,7 @@ public class Logger {
 	static String configFile = "config.yml";
 	static String generatorsFile = "generators.yml";
 	static String recipesFile = "recipes.yml";
+	static String upgradesFile = "upgrades.yml";
 	
 	private static void log(Object object, EnumLog logType)
 	{
@@ -148,6 +149,7 @@ public class Logger {
 							fileString += getLinesFromFile(logFile) + "\n";
 							fileString += getLinesFromFile(configFile) + "\n";
 							fileString += getLinesFromFile(generatorsFile) + "\n";
+							fileString += getLinesFromFile(upgradesFile) + "\n";
 							fileString += getLinesFromFile(recipesFile);
 							
 							String url = postHaste(sender, fileString, false);

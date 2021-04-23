@@ -34,6 +34,7 @@ example_generator:
   #If not generator will wait time from delay option after placing
   generate-immediately-after-place: true
   #Should generator spawn placeholder block after mining generated block and before next generation?
+  #Its not recommended to set this block same as one of generated blocks (chances section) as it'd look confusing!
   #Type material if you want to use that feature or '' if you dont.
   placeholder: BEDROCK
   #Should pistons be able to move generated block and generate new one?

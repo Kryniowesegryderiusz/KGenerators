@@ -58,18 +58,16 @@ public class Schedules {
 	}
 
 	public static void schedule(GeneratorLocation gLocation, boolean place) {
-		Generator generator = gLocation.getGenerator();
-		int delay = generator.getDelay();
-		if (delay <= Main.getSettings().getGenerationCheckFrequency()) GenerateBlock.generate(gLocation);
-		else 
+		
+		GenerateBlock.generatePlaceholder(gLocation);
+		
+		if (!place && Main.dependencies.contains(EnumDependency.HolographicDisplays) && gLocation.getGenerator().isHologram())
 		{
-			GenerateBlock.generatePlaceholder(gLocation);
-			schedules.put(gLocation, delay);
-			if (!place && Main.dependencies.contains(EnumDependency.HolographicDisplays) && generator.isHologram())
-			{
-				Holograms.createHologram(gLocation);
-			}
+			Holograms.createHologram(gLocation);
 		}
+		
+		schedules.put(gLocation, gLocation.getGenerator().getDelay());
+		
 	}
 	
 	public static void schedule(GeneratorLocation gLocation) {

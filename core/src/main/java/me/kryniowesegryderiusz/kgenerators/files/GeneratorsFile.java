@@ -75,11 +75,11 @@ public class GeneratorsFile {
 	    	      }
 	    		meta.setLore(lore);
 	    		lore.clear();
-	    		meta.addItemFlags(ItemFlag.HIDE_ENCHANTS);
+	    		if (glow)
+	    			meta.addItemFlags(ItemFlag.HIDE_ENCHANTS);
 	    		generatorItem.setItemMeta(meta);
-	    		if(glow){
+	    		if (glow)
 	    			generatorItem.addUnsafeEnchantment(Enchantment.LOOT_BONUS_BLOCKS, 1);
-	    		}
 	    		
 	    		int chancesAmount = 0;
 	    		LinkedHashMap<ItemStack, Double> chances = new LinkedHashMap<ItemStack, Double>();
@@ -104,6 +104,8 @@ public class GeneratorsFile {
 	    		if (config.contains(generatorID+".placeholder") && !config.getString(generatorID+".placeholder").isEmpty()) {
 	    			String placeholderString = config.getString(generatorID+".placeholder");	
 	    			generator.setPlaceholder(XUtils.parseItemStack(placeholderString, "Generators file", true));
+	    			if (generator.getChances().containsKey(generator.getPlaceholder()))
+	    				Logger.warn("Generators file: Generator " + generatorID + " has placeholder block set same as one of generated blocks! Its not the best idea, as it'd look confusing! Consider changing it!");
 	    		}
 	    		
 	    		if (config.contains(generatorID+".generate-immediately-after-place") && !config.getString(generatorID+".generate-immediately-after-place").isEmpty()) {

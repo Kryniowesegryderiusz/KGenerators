@@ -15,6 +15,10 @@ public class BlocksUtils_1_8 implements BlocksUtils {
 
 	@Override
 	public ItemStack getItemStackByBlock(Block block) {
+		
+		if (block.getType() == Material.GLOWING_REDSTONE_ORE)
+			return new ItemStack(Material.REDSTONE_ORE);
+		
 		MaterialData data = block.getState().getData();
 		ItemStack item = data.toItemStack();
 		item.setAmount(1);

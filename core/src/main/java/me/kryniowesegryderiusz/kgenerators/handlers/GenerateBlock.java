@@ -3,6 +3,7 @@ package me.kryniowesegryderiusz.kgenerators.handlers;
 import java.util.HashMap;
 import java.util.Random;
 
+import org.bukkit.Bukkit;
 import org.bukkit.Location;
 import org.bukkit.block.Block;
 import org.bukkit.inventory.ItemStack;
@@ -84,16 +85,14 @@ public class GenerateBlock {
 		Generator generator = gLocation.getGenerator();
 		Location location = gLocation.getLocation().clone();
 		if (generator.getType() == GeneratorType.DOUBLE) location.add(0,1,0);
-		if (generator.getPlaceholder() != null && generator.getDelay() > 1) {
-			Main.getInstance().getServer().getScheduler().scheduleSyncDelayedTask(Main.getInstance(), new Runnable() {
-				  public void run() {
-					  ItemStack m = Main.getBlocksUtils().getItemStackByBlock(location.getBlock());
-					  
-					  if (Main.getBlocksUtils().isAir(location.getBlock()) || generator.getChances().containsKey(m) || generator.getGeneratorBlock().equals(m)) {
-						  Main.getBlocksUtils().setBlock(location, generator.getPlaceholder());
-					  }
+		if (generator.getPlaceholder() != null) {
+			Bukkit.getScheduler().runTask(Main.getInstance(), () -> {
+				  ItemStack m = Main.getBlocksUtils().getItemStackByBlock(location.getBlock());
+				  
+				  if (Main.getBlocksUtils().isAir(location.getBlock()) || generator.getChances().containsKey(m) || generator.getGeneratorBlock().equals(m)) {
+					  Main.getBlocksUtils().setBlock(location, generator.getPlaceholder());
 				  }
-			}, 1L);
+			});
 		}
 	}
 	

@@ -152,11 +152,11 @@ public class MenuItem implements Cloneable {
 		
 	}
 
-	@SuppressWarnings("unchecked")
 	public void load(EnumMenuItem menu, Config config) {
 		load(menu.getKey(), config);
 	}
 	
+	@SuppressWarnings("unchecked")
 	public void load(String path, Config config) {
 		if (config.contains(path))
 		{

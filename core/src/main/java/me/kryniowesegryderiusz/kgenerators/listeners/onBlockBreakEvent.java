@@ -52,7 +52,7 @@ public class onBlockBreakEvent implements Listener {
 			if (bGenerator.getChances().containsKey(block) 
 					|| block.equals(bGenerator.getPlaceholder())) {
 				
-				if (block.equals(bGenerator.getPlaceholder()) 
+				if ((block.equals(bGenerator.getPlaceholder()) && Schedules.getSchedules().containsKey(bgLocation))
 						|| !Players.getPlayer(player).canUse(bgLocation)
 						|| !hasPermissionToMineCheck(player, bGenerator)) {
 					e.setCancelled(true);
@@ -82,7 +82,7 @@ public class onBlockBreakEvent implements Listener {
 			if (generator.getChances().containsKey(block) || generator.getGeneratorBlock().equals(block) || block.equals(generator.getPlaceholder())) {
 				
 				if (ActionHandler.handler(EnumInteraction.BREAK, gLocation, player)
-						|| block.equals(generator.getPlaceholder()) 
+						|| (block.equals(generator.getPlaceholder()) && Schedules.getSchedules().containsKey(gLocation)) 
 						|| !Players.getPlayer(player).canUse(gLocation)
 						|| !hasPermissionToMineCheck(player, generator)) {
 					e.setCancelled(true);
