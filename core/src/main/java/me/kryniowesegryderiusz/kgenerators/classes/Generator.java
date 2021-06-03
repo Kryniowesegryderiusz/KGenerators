@@ -7,7 +7,7 @@ import org.bukkit.inventory.ItemStack;
 
 import lombok.Getter;
 import lombok.Setter;
-import me.kryniowesegryderiusz.kgenerators.Enums.GeneratorType;
+import me.kryniowesegryderiusz.kgenerators.enums.GeneratorType;
 import me.kryniowesegryderiusz.kgenerators.managers.Upgrades;
 
 public class Generator {
@@ -39,15 +39,6 @@ public class Generator {
 	
 	@Getter @Setter
 	private boolean hologram = false;
-	
-	@Getter @Setter
-	private Integer placeLimit = -1;
-	@Getter @Setter
-    private Boolean onlyOwnerPickUp = false;
-    @Getter @Setter
-    private Boolean onlyOwnerUse = false;
-    @Getter @Setter
-    private Boolean onlyOwnerStorage = false;
     
     private double fullChance = 0.0;
 	  
@@ -93,6 +84,11 @@ public class Generator {
 	public ItemStack getGeneratorItem()
 	{
 		return this.generatorItem.clone();
+	}
+	
+	public String getGeneratorItemName()
+	{
+		return this.generatorItem.getItemMeta().getDisplayName();
 	}
 	
 	public Upgrade getUpgrade()

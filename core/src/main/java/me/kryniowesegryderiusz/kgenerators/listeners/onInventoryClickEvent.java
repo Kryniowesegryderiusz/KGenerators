@@ -6,7 +6,7 @@ import org.bukkit.event.Listener;
 import org.bukkit.event.inventory.InventoryClickEvent;
 import org.bukkit.event.inventory.InventoryType;
 
-import me.kryniowesegryderiusz.kgenerators.Enums.EnumMessage;
+import me.kryniowesegryderiusz.kgenerators.enums.Message;
 import me.kryniowesegryderiusz.kgenerators.Lang;
 import me.kryniowesegryderiusz.kgenerators.Main;
 import me.kryniowesegryderiusz.kgenerators.managers.Generators;
@@ -18,9 +18,9 @@ public class onInventoryClickEvent implements Listener {
 	public void inventoryClickEvent(InventoryClickEvent e)
 	{
 		 if (((MultiVersion.isHigher(13) && e.getInventory() != null && e.getInventory().getType() == InventoryType.GRINDSTONE) || (e.getInventory() != null && e.getInventory().getType() == InventoryType.ANVIL)) 
-				 && Generators.get(e.getCurrentItem()) != null ) {
+				 && e.getCurrentItem() != null && Generators.get(e.getCurrentItem()) != null ) {
 			 
-			 Lang.sendMessage(e.getWhoClicked(), EnumMessage.GeneratorsProtectionCantChangeGeneratorItem);
+			 Lang.sendMessage(e.getWhoClicked(), Message.GENERATOR_PROTECTION_CANT_CHANGE_GENERATOR_ITEM);
 			 e.setCancelled(true);
 			 Main.getInstance().getServer().getScheduler().scheduleSyncDelayedTask(Main.getInstance(), new Runnable() {
 					@Override

@@ -9,11 +9,15 @@ import org.bukkit.entity.Player;
 import org.bukkit.event.Listener;
 import org.bukkit.inventory.Inventory;
 
-import me.kryniowesegryderiusz.kgenerators.Enums.EnumMenuInventory;
+import me.kryniowesegryderiusz.kgenerators.enums.Dependency;
+import me.kryniowesegryderiusz.kgenerators.enums.MenuInventoryType;
+import me.kryniowesegryderiusz.kgenerators.enums.Message;
+import me.kryniowesegryderiusz.kgenerators.Lang;
 import me.kryniowesegryderiusz.kgenerators.Main;
 import me.kryniowesegryderiusz.kgenerators.classes.Generator;
 import me.kryniowesegryderiusz.kgenerators.classes.GeneratorLocation;
 import me.kryniowesegryderiusz.kgenerators.classes.MenuPlayer;
+import me.kryniowesegryderiusz.kgenerators.hooks.BentoBoxHook;
 
 public class Menus implements Listener {
 	
@@ -62,43 +66,55 @@ public class Menus implements Listener {
 	
 	public static void openGeneratorMenu(Player p, GeneratorLocation gLocation)
 	{
+		if (Main.dependencies.contains(Dependency.BentoBox) && !p.hasPermission("kgenerators.bypass.bentobox") && !BentoBoxHook.isAllowed(p, BentoBoxHook.Type.OPEN_MENU_FLAG))
+		{
+			Lang.sendMessage(p, Message.GENERATOR_MENU_CANT_OPEN_HERE);
+			return;
+		}
+		
 		Inventory menu = GeneratorMenu.get(p, gLocation);
-		guis.put(p, new MenuPlayer(p, EnumMenuInventory.Generator, menu, gLocation));
+		guis.put(p, new MenuPlayer(p, MenuInventoryType.GENERATOR, menu, gLocation));
 		p.openInventory(menu);
 	}
 
 	public static void openMainMenu(Player p) {
 		Inventory menu = MainMenu.get(p);
-		guis.put(p, new MenuPlayer(p, EnumMenuInventory.Main, menu));
+		guis.put(p, new MenuPlayer(p, MenuInventoryType.MAIN, menu));
 		p.openInventory(menu);
 	}
 	
 	public static void openChancesMenu(Player p, Generator generator) {
 		Inventory menu = ChancesMenu.get(p, generator);
-		guis.put(p, new MenuPlayer(p, EnumMenuInventory.Chances, menu));
+		guis.put(p, new MenuPlayer(p, MenuInventoryType.CHANCES, menu));
 		p.openInventory(menu);
 	}
 	
 	public static void openRecipeMenu(Player p, Generator generator) {
 		Inventory menu = RecipeMenu.get(p, generator);
-		guis.put(p, new MenuPlayer(p, EnumMenuInventory.Recipe, menu));
+		guis.put(p, new MenuPlayer(p, MenuInventoryType.RECIPE, menu));
+		p.openInventory(menu);
+	}
+	
+	public static void openLimitsMenu(Player p) {
+		Inventory menu = LimitsMenu.get(p);
+		guis.put(p, new MenuPlayer(p, MenuInventoryType.LIMITS, menu));
 		p.openInventory(menu);
 	}
 	
 	public static void openUpgradeMenu(Player p, Generator generator) {
 		Inventory menu = UpgradeMenu.get(p, generator);
-		guis.put(p, new MenuPlayer(p, EnumMenuInventory.Upgrade, menu));
+		guis.put(p, new MenuPlayer(p, MenuInventoryType.UPGRADE, menu));
 		p.openInventory(menu);
 	}
 	
-	public static boolean isVieving(Player p, EnumMenuInventory enumMenuInventory)
+	public static boolean isVieving(Player p, MenuInventoryType enumMenuInventory)
 	{
 		if (guis.containsKey(p) && guis.get(p).getMenuInventory() == enumMenuInventory)
 			return true;
 		return false;
 	}
 	
-	public static Player isSomeoneVieving(EnumMenuInventory enumMenuInventory, GeneratorLocation gLocation)
+	public static Player isSomeoneVieving(MenuInventoryType enumMenuInventory, GeneratorLocation gLocation)
 	{
 		for (Entry<Player, MenuPlayer> e : guis.entrySet())
 		{

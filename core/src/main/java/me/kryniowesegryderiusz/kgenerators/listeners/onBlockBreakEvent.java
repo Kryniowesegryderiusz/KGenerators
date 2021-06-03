@@ -10,14 +10,15 @@ import org.bukkit.inventory.ItemStack;
 
 import me.kryniowesegryderiusz.kgenerators.Lang;
 import me.kryniowesegryderiusz.kgenerators.Main;
-import me.kryniowesegryderiusz.kgenerators.Enums.GeneratorType;
-import me.kryniowesegryderiusz.kgenerators.Enums.EnumDependency;
-import me.kryniowesegryderiusz.kgenerators.Enums.EnumInteraction;
-import me.kryniowesegryderiusz.kgenerators.Enums.EnumMessage;
-import me.kryniowesegryderiusz.kgenerators.Enums.EnumWGFlags;
+import me.kryniowesegryderiusz.kgenerators.enums.GeneratorType;
+import me.kryniowesegryderiusz.kgenerators.enums.Dependency;
+import me.kryniowesegryderiusz.kgenerators.enums.Interaction;
+import me.kryniowesegryderiusz.kgenerators.enums.Message;
+import me.kryniowesegryderiusz.kgenerators.enums.WGFlag;
 import me.kryniowesegryderiusz.kgenerators.classes.Generator;
 import me.kryniowesegryderiusz.kgenerators.classes.GeneratorLocation;
 import me.kryniowesegryderiusz.kgenerators.handlers.ActionHandler;
+import me.kryniowesegryderiusz.kgenerators.hooks.BentoBoxHook;
 import me.kryniowesegryderiusz.kgenerators.managers.Locations;
 import me.kryniowesegryderiusz.kgenerators.managers.Players;
 import me.kryniowesegryderiusz.kgenerators.managers.Schedules;
@@ -54,7 +55,8 @@ public class onBlockBreakEvent implements Listener {
 				
 				if ((block.equals(bGenerator.getPlaceholder()) && Schedules.getSchedules().containsKey(bgLocation))
 						|| !Players.getPlayer(player).canUse(bgLocation)
-						|| !hasPermissionToMineCheck(player, bGenerator)) {
+						|| !hasPermissionToMineCheck(player, bGenerator)
+						|| !hasDependenciesCheck(player, location)) {
 					e.setCancelled(true);
 					return;
 				}
@@ -69,7 +71,7 @@ public class onBlockBreakEvent implements Listener {
 		if (generator != null && generator.getType() == GeneratorType.DOUBLE)
 		{
 			if (generator.getGeneratorBlock().equals(block)) {
-				ActionHandler.handler(EnumInteraction.BREAK, gLocation, player);
+				ActionHandler.handler(Interaction.BREAK, gLocation, player);
 				e.setCancelled(true);
 				return;
 			}
@@ -81,10 +83,11 @@ public class onBlockBreakEvent implements Listener {
 		{
 			if (generator.getChances().containsKey(block) || generator.getGeneratorBlock().equals(block) || block.equals(generator.getPlaceholder())) {
 				
-				if (ActionHandler.handler(EnumInteraction.BREAK, gLocation, player)
+				if (ActionHandler.handler(Interaction.BREAK, gLocation, player)
 						|| (block.equals(generator.getPlaceholder()) && Schedules.getSchedules().containsKey(gLocation)) 
 						|| !Players.getPlayer(player).canUse(gLocation)
-						|| !hasPermissionToMineCheck(player, generator)) {
+						|| !hasPermissionToMineCheck(player, generator)
+						|| !hasDependenciesCheck(player, location)) {
 					e.setCancelled(true);
 					return;
 				}
@@ -98,13 +101,16 @@ public class onBlockBreakEvent implements Listener {
 			}
 		}
 		
-		if (Main.dependencies.contains(EnumDependency.WorldGuard) && !player.hasPermission("kgenerators.bypass.worldguard") && Main.getWorldGuardUtils().worldGuardFlagCheck(location, player, EnumWGFlags.ONLY_GEN_BREAK))
+		/*
+		 * 
+		 */
+		
+		if (Main.dependencies.contains(Dependency.WorldGuard) && !player.hasPermission("kgenerators.bypass.worldguard") && Main.getWorldGuardUtils().worldGuardFlagCheck(location, player, WGFlag.ONLY_GEN_BREAK))
 		{
-			Lang.sendMessage(player, EnumMessage.GeneratorsDiggingOnlyGen);
+			Lang.sendMessage(player, Message.GENERATORS_DIGGING_ONLY_GEN);
 			e.setCancelled(true);
 			return;
 		}
-		
 	}
 	
 	boolean hasPermissionToMineCheck (Player player, Generator generator)
@@ -114,7 +120,21 @@ public class onBlockBreakEvent implements Listener {
 		{
 			Lang.addReplecable("<permission>", permission);
 			Lang.addReplecable("<generator>", generator.getGeneratorItem().getItemMeta().getDisplayName());
-			Lang.sendMessage(player, EnumMessage.GeneratorsDiggingNoPermission);
+			Lang.sendMessage(player, Message.GENERATORS_DIGGING_NO_PERMISSION);
+			return false;
+		}
+		return true;
+	}
+	
+	/**
+	 * Check if could break
+	 * @return
+	 */
+	boolean hasDependenciesCheck(Player player, Location location)
+	{
+		if (Main.dependencies.contains(Dependency.BentoBox) && !player.hasPermission("kgenerators.bypass.bentobox") && !BentoBoxHook.isAllowed(player, BentoBoxHook.Type.USE_FLAG))
+		{
+			Lang.sendMessage(player, Message.GENERATORS_DIGGING_CANT_HERE);
 			return false;
 		}
 		return true;

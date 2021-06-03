@@ -7,7 +7,7 @@
   <parent>
     <groupId>me.kryniowesegryderiusz</groupId>
     <artifactId>kgenerators-parent</artifactId>
-    <version>4.2.3</version>
+    <version>5.0.0</version>
   </parent>
 
 	<repositories>
@@ -61,6 +61,12 @@
 		    <scope>system</scope>
 		    <systemPath>${project.basedir}/dependencies/JetsMinions.jar</systemPath>
 		</dependency>
+		
+		<dependency>
+		    <groupId>com.github.Slimefun</groupId>
+		    <artifactId>Slimefun4</artifactId>
+		    <version>RC-22</version>
+		</dependency>
 
 		<!--  Project Lombok -->
 		<dependency>
@@ -85,6 +91,15 @@
 	        <version>1.7</version>
 	        <scope>provided</scope>
 	    </dependency>
+	    
+	    <!-- BentoBox -->
+	    <dependency>
+	      <groupId>world.bentobox</groupId>
+	      <artifactId>bentobox</artifactId>
+	      <version>1.16.1</version>
+	      <scope>provided</scope>
+	    </dependency>
+	    
 
 		
 

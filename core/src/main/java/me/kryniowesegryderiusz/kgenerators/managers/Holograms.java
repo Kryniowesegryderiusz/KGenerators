@@ -8,21 +8,21 @@ import com.gmail.filoghost.holographicdisplays.api.HologramsAPI;
 
 import me.kryniowesegryderiusz.kgenerators.Lang;
 import me.kryniowesegryderiusz.kgenerators.Main;
-import me.kryniowesegryderiusz.kgenerators.Enums.EnumDependency;
-import me.kryniowesegryderiusz.kgenerators.Enums.EnumHologram;
 import me.kryniowesegryderiusz.kgenerators.classes.GeneratorLocation;
+import me.kryniowesegryderiusz.kgenerators.enums.Dependency;
+import me.kryniowesegryderiusz.kgenerators.enums.HologramText;
 
 public class Holograms {
 	
 	public static void createHologram(GeneratorLocation gLocation)
 	{
-		if(!Main.dependencies.contains(EnumDependency.HolographicDisplays)) return;
+		if(!Main.dependencies.contains(Dependency.HolographicDisplays)) return;
 		
 		if (gLocation == null) return;
 		Hologram hologram = HologramsAPI.createHologram(Main.getInstance(), gLocation.getHologramLocation());
 		
 		String time = Schedules.timeLeftFormatted(gLocation);
-		for (String s : Lang.getHologram(EnumHologram.RemainingTime))
+		for (String s : Lang.getHologram(HologramText.REMAINING_TIME))
 		{
 			if (s.contains("<time>")) s = s.replaceAll("<time>", time);
 			hologram.appendTextLine(s);
@@ -32,10 +32,10 @@ public class Holograms {
 	
 	static void everyFreq()
 	{
-		if(!Main.dependencies.contains(EnumDependency.HolographicDisplays)) return;
+		if(!Main.dependencies.contains(Dependency.HolographicDisplays)) return;
 		
 		int line = -1;
-		for (String s : Lang.getHologram(EnumHologram.RemainingTime))
+		for (String s : Lang.getHologram(HologramText.REMAINING_TIME))
 		{
 			line++;
 			if (s.contains("<time>")) break;
@@ -67,13 +67,13 @@ public class Holograms {
 		if (line < hologram.size())
 		{
 			hologram.removeLine(line);
-			hologram.insertTextLine(line, Lang.getHologram(EnumHologram.RemainingTime).get(line).replaceAll("<time>", time));
+			hologram.insertTextLine(line, Lang.getHologram(HologramText.REMAINING_TIME).get(line).replaceAll("<time>", time));
 		}
 	}
 	
 	static void removeHologram(GeneratorLocation gLocation)
 	{
-		if(!Main.dependencies.contains(EnumDependency.HolographicDisplays)) return;
+		if(!Main.dependencies.contains(Dependency.HolographicDisplays)) return;
 		
 		for (Hologram hologram : HologramsAPI.getHolograms(Main.getInstance()))
 		{

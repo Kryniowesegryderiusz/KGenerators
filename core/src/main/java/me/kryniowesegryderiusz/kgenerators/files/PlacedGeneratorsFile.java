@@ -25,7 +25,7 @@ public class PlacedGeneratorsFile {
 	
 	static Config file;
 	
-	public static void loadPlacedGenerators()
+	public static void load()
 	{
     	try {
     		file = ConfigManager.getConfig("placed.yml", "/data", false, true);
@@ -93,7 +93,7 @@ public class PlacedGeneratorsFile {
         		if (!err)
         		{
         			Locations.add(generatorID, generatorLocation, gPlayer);
-        			gPlayer.addGeneratorToPlayer(generatorID);
+        			gPlayer.addGeneratorToPlayer(Generators.get(generatorID));
     				amount++;
         		}
         		else

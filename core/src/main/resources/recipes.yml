@@ -6,7 +6,6 @@
 
 # WARNING! To add/update/remove recipe you HAVE TO RESTART SERVER!
 
-
 #EXAMPLE RECIPE IS ONLY AN EXAMPLE AND ITS NOT LOADED!
 # Recipe for example_generator:
 example_generator:
@@ -20,6 +19,8 @@ example_generator:
   ingredients:
     A: REDSTONE
     B: ores_generator
+
+#Below you can find pre-configured recipes. You can freely edit/remove them and add new ones ^^
       
 stone_generator_level_1:
   shape:

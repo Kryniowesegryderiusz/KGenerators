@@ -13,9 +13,9 @@ import org.bukkit.inventory.Inventory;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.Recipe;
 
-import me.kryniowesegryderiusz.kgenerators.Enums.EnumMenuInventory;
-import me.kryniowesegryderiusz.kgenerators.Enums.EnumMenuItem;
-import me.kryniowesegryderiusz.kgenerators.Enums.EnumMenuItemAdditional;
+import me.kryniowesegryderiusz.kgenerators.enums.MenuInventoryType;
+import me.kryniowesegryderiusz.kgenerators.enums.MenuItemType;
+import me.kryniowesegryderiusz.kgenerators.enums.MenuItemAdditionalLines;
 import me.kryniowesegryderiusz.kgenerators.classes.Generator;
 import me.kryniowesegryderiusz.kgenerators.classes.MenuItem;
 import me.kryniowesegryderiusz.kgenerators.Lang;
@@ -28,12 +28,21 @@ public class MainMenu implements Listener {
 	
 	public static Inventory get(Player player)
 	{
-		ArrayList<EnumMenuItem> exludedEnumMenuItems = new ArrayList<EnumMenuItem>();
-		exludedEnumMenuItems.add(EnumMenuItem.MainMenuGenerator);
+		ArrayList<MenuItemType> exludedEnumMenuItems = new ArrayList<MenuItemType>();
+		exludedEnumMenuItems.add(MenuItemType.MAIN_MENU_GENERATOR);
+		exludedEnumMenuItems.add(MenuItemType.MAIN_MENU_LIMITS);
 		
-		Inventory menu = Lang.getMenuInventory(EnumMenuInventory.Main).getInv(EnumMenuInventory.Main, player, exludedEnumMenuItems);
+		Inventory menu = Lang.getMenuInventory(MenuInventoryType.MAIN).getInv(MenuInventoryType.MAIN, player, exludedEnumMenuItems);
 		
-		MenuItem generatorItem = EnumMenuItem.MainMenuGenerator.getMenuItem();
+		if (Main.getSettings().isLimits() && Lang.getMenuItem(MenuItemType.MAIN_MENU_LIMITS).isEnabled())
+		{
+			for (int i : MenuItemType.MAIN_MENU_LIMITS.getMenuItem().getSlots())
+			{
+				menu.setItem(i, Lang.getMenuItem(MenuItemType.MAIN_MENU_LIMITS).build());
+			}
+		}
+		
+		MenuItem generatorItem = MenuItemType.MAIN_MENU_GENERATOR.getMenuItem();
 		ArrayList<Integer> slotList = generatorItem.getSlots();
 		int lastId = -1;
 		for (Entry<String, Generator> e : Generators.getEntrySet())
@@ -49,11 +58,11 @@ public class MainMenu implements Listener {
 			List<Recipe> recipe = Main.getInstance().getServer().getRecipesFor(generator.getGeneratorItem());
 			if (!recipe.isEmpty() && recipe.get(0).getResult().equals(generator.getGeneratorItem()))
 			{
-				generatorMenuItem.addLore(Lang.getMenuItemAdditionalLines(EnumMenuItemAdditional.Recipe));
+				generatorMenuItem.addLore(Lang.getMenuItemAdditionalLines(MenuItemAdditionalLines.RECIPE));
 			}
 			else if (Upgrades.couldBeObtained(generator.getId()))
 			{
-				generatorMenuItem.addLore(Lang.getMenuItemAdditionalLines(EnumMenuItemAdditional.Upgrade));
+				generatorMenuItem.addLore(Lang.getMenuItemAdditionalLines(MenuItemAdditionalLines.UPGRADE));
 			}
 			
 			lastId++;
@@ -65,7 +74,7 @@ public class MainMenu implements Listener {
 				Logger.error(1);
 			}
 		}
-		
+
 		return menu;
 	}
 	
@@ -73,18 +82,25 @@ public class MainMenu implements Listener {
 	public void onClick(final InventoryClickEvent e)
 	{
 		if(e.isCancelled()) return;
-		if (!Menus.isVieving((Player) e.getWhoClicked(), EnumMenuInventory.Main)) return;
+		if (!Menus.isVieving((Player) e.getWhoClicked(), MenuInventoryType.MAIN)) return;
 		
 		int slot = e.getSlot();
 		
-		ArrayList<Integer> slotList = EnumMenuItem.MainMenuGenerator.getMenuItem().getSlots();
-		if (slotList.contains(slot) && Lang.getMenuItem(EnumMenuItem.MainMenuGenerator).isEnabled())
+		if (MenuItemType.MAIN_MENU_QUIT.getMenuItem().getSlots().contains(slot) && Lang.getMenuItem(MenuItemType.MAIN_MENU_QUIT).isEnabled())
+		{
+			Menus.closeInv((Player) e.getWhoClicked());
+		}
+		else if (Main.getSettings().isLimits() && MenuItemType.MAIN_MENU_LIMITS.getMenuItem().getSlots().contains(slot) && Lang.getMenuItem(MenuItemType.MAIN_MENU_LIMITS).isEnabled())
+		{
+			Menus.openLimitsMenu((Player) e.getWhoClicked());
+		}
+		else if (MenuItemType.MAIN_MENU_GENERATOR.getMenuItem().getSlots().contains(slot) && Lang.getMenuItem(MenuItemType.MAIN_MENU_GENERATOR).isEnabled())
 		{
 			int lastId = -1;
 			for (Entry<String, Generator> entry : Generators.getEntrySet())
 			{
 				lastId++;
-				if(slotList.get(lastId) == slot)
+				if(MenuItemType.MAIN_MENU_GENERATOR.getMenuItem().getSlots().get(lastId) == slot)
 				{
 					if (e.getClick() == ClickType.LEFT)
 						Menus.openChancesMenu((Player) e.getWhoClicked(), entry.getValue());
@@ -103,10 +119,6 @@ public class MainMenu implements Listener {
 					}
 				}
 			}
-		}
-		if (EnumMenuItem.MainMenuQuit.getMenuItem().getSlots().contains(slot) && Lang.getMenuItem(EnumMenuItem.MainMenuQuit).isEnabled())
-		{
-			Menus.closeInv((Player) e.getWhoClicked());
 		}
 		e.setCancelled(true);
 	}

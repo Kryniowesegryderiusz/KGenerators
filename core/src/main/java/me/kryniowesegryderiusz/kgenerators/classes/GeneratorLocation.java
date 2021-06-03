@@ -2,7 +2,7 @@ package me.kryniowesegryderiusz.kgenerators.classes;
 
 import org.bukkit.Location;
 import lombok.Getter;
-import me.kryniowesegryderiusz.kgenerators.Enums.GeneratorType;
+import me.kryniowesegryderiusz.kgenerators.enums.GeneratorType;
 import me.kryniowesegryderiusz.kgenerators.handlers.Remove;
 import me.kryniowesegryderiusz.kgenerators.managers.Generators;
 import me.kryniowesegryderiusz.kgenerators.managers.Schedules;

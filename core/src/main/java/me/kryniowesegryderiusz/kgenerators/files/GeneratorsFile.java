@@ -12,10 +12,10 @@ import org.bukkit.inventory.ItemFlag;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.meta.ItemMeta;
 
-import me.kryniowesegryderiusz.kgenerators.Enums;
 import me.kryniowesegryderiusz.kgenerators.Logger;
 import me.kryniowesegryderiusz.kgenerators.Main;
 import me.kryniowesegryderiusz.kgenerators.classes.Generator;
+import me.kryniowesegryderiusz.kgenerators.enums.GeneratorType;
 import me.kryniowesegryderiusz.kgenerators.managers.Generators;
 import me.kryniowesegryderiusz.kgenerators.utils.Config;
 import me.kryniowesegryderiusz.kgenerators.utils.ConfigManager;
@@ -24,7 +24,7 @@ import me.kryniowesegryderiusz.kgenerators.xseries.XUtils;
 public class GeneratorsFile {
 	
 	@SuppressWarnings("unchecked")
-	public static void loadGenerators()
+	public static void load()
 	{
 		Config config;
 
@@ -99,7 +99,7 @@ public class GeneratorsFile {
 	    			chancesAmount++;
 	    		}
 	    		
-	    		Generator generator = new Generator(generatorID, XUtils.parseItemStack(generatorBlock, "Generators file", true), generatorItem, delay, Enums.getGeneratorTypeByString(type), chances);
+	    		Generator generator = new Generator(generatorID, XUtils.parseItemStack(generatorBlock, "Generators file", true), generatorItem, delay, GeneratorType.Functions.getGeneratorTypeByString(type), chances);
 	    		
 	    		if (config.contains(generatorID+".placeholder") && !config.getString(generatorID+".placeholder").isEmpty()) {
 	    			String placeholderString = config.getString(generatorID+".placeholder");	
@@ -121,26 +121,6 @@ public class GeneratorsFile {
 	    		
 	    		if (config.contains(generatorID+".allow-piston-push")) {
 	    			generator.setAllowPistonPush(config.getBoolean(generatorID+".allow-piston-push"));
-	    		}
-	    		
-	    		if (config.contains(generatorID+".per-player-generators.place-limit"))
-	    		{
-	    			generator.setPlaceLimit(config.getInt(generatorID+".per-player-generators.place-limit"));
-	    		}
-	    		
-	    		if (config.contains(generatorID+".per-player-generators.only-owner-pickup"))
-	    		{
-	    			generator.setOnlyOwnerPickUp(config.getBoolean(generatorID+".per-player-generators.only-owner-pickup"));
-	    		}
-	    		
-	    		if (config.contains(generatorID+".per-player-generators.only-owner-use"))
-	    		{
-	    			generator.setOnlyOwnerUse(config.getBoolean(generatorID+".per-player-generators.only-owner-use"));
-	    		}
-	    		
-	    		if (config.contains(generatorID+".per-player-generators.only-owner-storage"))
-	    		{
-	    			generator.setOnlyOwnerStorage(config.getBoolean(generatorID+".per-player-generators.only-owner-storage"));
 	    		}
 	    		
 	    		if (config.contains(generatorID+".hologram"))

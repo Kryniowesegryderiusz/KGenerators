@@ -16,8 +16,8 @@ import org.bukkit.inventory.ShapedRecipe;
 import me.kryniowesegryderiusz.kgenerators.Lang;
 import me.kryniowesegryderiusz.kgenerators.Logger;
 import me.kryniowesegryderiusz.kgenerators.Main;
-import me.kryniowesegryderiusz.kgenerators.Enums.EnumMenuInventory;
-import me.kryniowesegryderiusz.kgenerators.Enums.EnumMenuItem;
+import me.kryniowesegryderiusz.kgenerators.enums.MenuInventoryType;
+import me.kryniowesegryderiusz.kgenerators.enums.MenuItemType;
 import me.kryniowesegryderiusz.kgenerators.classes.Generator;
 import me.kryniowesegryderiusz.kgenerators.classes.MenuItem;
 
@@ -25,17 +25,17 @@ public class RecipeMenu implements Listener {
 	
 	public static Inventory get(Player player, Generator generator)
 	{
-		ArrayList<EnumMenuItem> exludedEnumMenuItems = new ArrayList<EnumMenuItem>();
-		exludedEnumMenuItems.add(EnumMenuItem.RecipeMenuIngredients);
-		exludedEnumMenuItems.add(EnumMenuItem.RecipeMenuResult);
+		ArrayList<MenuItemType> exludedEnumMenuItems = new ArrayList<MenuItemType>();
+		exludedEnumMenuItems.add(MenuItemType.RECIPE_MENU_INGREDIENS);
+		exludedEnumMenuItems.add(MenuItemType.RECIPE_MENU_RESULT);
 		
-		Inventory menu = Lang.getMenuInventory(EnumMenuInventory.Recipe).getInv(EnumMenuInventory.Recipe, player, exludedEnumMenuItems);
+		Inventory menu = Lang.getMenuInventory(MenuInventoryType.RECIPE).getInv(MenuInventoryType.RECIPE, player, exludedEnumMenuItems);
 		
 		/*
 		 * Ingredients
 		 */
 		
-		MenuItem ingredientsItem = EnumMenuItem.RecipeMenuIngredients.getMenuItem();
+		MenuItem ingredientsItem = MenuItemType.RECIPE_MENU_INGREDIENS.getMenuItem();
 		ArrayList<Integer> slotList = ingredientsItem.getSlots();
 		int lastId = -1;
 		List<Recipe> recipes = Main.getInstance().getServer().getRecipesFor(generator.getGeneratorItem());
@@ -72,7 +72,7 @@ public class RecipeMenu implements Listener {
 		 * Result Item
 		 */
 		
-		MenuItem resultItem = EnumMenuItem.RecipeMenuResult.getMenuItem();
+		MenuItem resultItem = MenuItemType.RECIPE_MENU_RESULT.getMenuItem();
 		
 		resultItem.setItemStack(generator.getGeneratorItem());
 		
@@ -92,10 +92,10 @@ public class RecipeMenu implements Listener {
 	public void onClick(final InventoryClickEvent e)
 	{
 		if(e.isCancelled()) return;
-		if (!Menus.isVieving((Player) e.getWhoClicked(), EnumMenuInventory.Recipe)) return;
+		if (!Menus.isVieving((Player) e.getWhoClicked(), MenuInventoryType.RECIPE)) return;
 		
 		int slot = e.getSlot();
-		if (EnumMenuItem.RecipeMenuBack.getMenuItem().getSlots().contains(slot) && Lang.getMenuItem(EnumMenuItem.RecipeMenuBack).isEnabled())
+		if (MenuItemType.RECIPE_MENU_BACK.getMenuItem().getSlots().contains(slot) && Lang.getMenuItem(MenuItemType.RECIPE_MENU_BACK).isEnabled())
 		{
 			Menus.openMainMenu((Player) e.getWhoClicked());
 		}

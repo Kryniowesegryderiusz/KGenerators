@@ -4,7 +4,7 @@ import org.bukkit.Location;
 import org.bukkit.inventory.ItemStack;
 
 import me.kryniowesegryderiusz.kgenerators.Main;
-import me.kryniowesegryderiusz.kgenerators.Enums.GeneratorType;
+import me.kryniowesegryderiusz.kgenerators.enums.GeneratorType;
 import me.kryniowesegryderiusz.kgenerators.classes.Generator;
 import me.kryniowesegryderiusz.kgenerators.classes.GeneratorLocation;
 import me.kryniowesegryderiusz.kgenerators.files.PlacedGeneratorsFile;
@@ -22,7 +22,7 @@ public class Remove {
 		Locations.remove(location);
 		Schedules.remove(gLocation);
 		PlacedGeneratorsFile.removeGeneratorFromFile(location);
-		gLocation.getOwner().removeGeneratorFromPlayer(gLocation.getGeneratorId());
+		gLocation.getOwner().removeGeneratorFromPlayer(gLocation.getGenerator());
 		
 		if (drop) {
 			location.getWorld().dropItem(location, generator.getGeneratorItem());

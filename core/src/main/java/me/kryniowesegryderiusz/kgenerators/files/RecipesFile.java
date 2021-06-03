@@ -11,7 +11,7 @@ import me.kryniowesegryderiusz.kgenerators.utils.ConfigManager;
 
 public class RecipesFile {
 	
-	public static void loadRecipes()
+	public static void load()
 	{
 		
 		Config config;

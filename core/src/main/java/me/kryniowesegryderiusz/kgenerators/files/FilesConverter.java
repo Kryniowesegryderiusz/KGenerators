@@ -13,10 +13,10 @@ import org.bukkit.inventory.ItemStack;
 
 import me.kryniowesegryderiusz.kgenerators.Logger;
 import me.kryniowesegryderiusz.kgenerators.Main;
-import me.kryniowesegryderiusz.kgenerators.Enums.EnumAction;
-import me.kryniowesegryderiusz.kgenerators.Enums.EnumInteraction;
+import me.kryniowesegryderiusz.kgenerators.Settings;
+import me.kryniowesegryderiusz.kgenerators.enums.Action;
+import me.kryniowesegryderiusz.kgenerators.enums.Interaction;
 import me.kryniowesegryderiusz.kgenerators.classes.GeneratorAction;
-import me.kryniowesegryderiusz.kgenerators.classes.Settings;
 import me.kryniowesegryderiusz.kgenerators.utils.Config;
 import me.kryniowesegryderiusz.kgenerators.utils.ConfigManager;
 import me.kryniowesegryderiusz.kgenerators.xseries.XUtils;
@@ -133,15 +133,6 @@ public class FilesConverter {
 				}
 				settings.setGeneratingWhitelist(generatingWhitelist);
 			}
-			if (config.contains("settings.per-player-generators.enabled"))
-			{
-				settings.setPerPlayerGenerators(config.getBoolean("settings.per-player-generators.enabled"));
-			}
-			
-			if (config.contains("settings.per-player-generators.overall-place-limit"))
-			{
-				settings.setPerPlayerGeneratorsPlaceLimit(config.getInt("settings.per-player-generators.overall-place-limit"));
-			}
 			
 			if (config.contains("settings.generators-actionbar-messages"))
 			{
@@ -153,19 +144,19 @@ public class FilesConverter {
 				settings.setExplosionHandler((short) config.getInt("settings.explosion-handler"));
 			}
 			
-			EnumInteraction interaction;
+			Interaction interaction;
 			ItemStack item;
 			boolean sneak;
 			
 			if (config.contains("settings.pick-up.mode"))
 			{
-				if (config.getString("settings.pick-up.mode").equals("BREAK")) interaction = EnumInteraction.BREAK;
-				else if (config.getString("settings.pick-up.mode").equals("RIGHT_CLICK")) interaction = EnumInteraction.RIGHT_CLICK;
-				else interaction = EnumInteraction.LEFT_CLICK;
+				if (config.getString("settings.pick-up.mode").equals("BREAK")) interaction = Interaction.BREAK;
+				else if (config.getString("settings.pick-up.mode").equals("RIGHT_CLICK")) interaction = Interaction.RIGHT_CLICK;
+				else interaction = Interaction.LEFT_CLICK;
 			}
 			else
 			{
-				interaction = EnumInteraction.LEFT_CLICK;
+				interaction = Interaction.LEFT_CLICK;
 			}
 			
 			if (config.contains("settings.pick-up.item"))
@@ -180,9 +171,9 @@ public class FilesConverter {
 			
 			if (config.contains("settings.pick-up.sneak")) sneak = config.getBoolean("settings.pick-up.sneak");
 			else sneak = true;
-			settings.addGeneratorAction(EnumAction.PICKUP, new GeneratorAction(EnumAction.PICKUP, interaction, item, sneak));
-			settings.addGeneratorAction(EnumAction.OPENGUI, new GeneratorAction(EnumAction.OPENGUI, EnumInteraction.NONE, null, false));
-			settings.addGeneratorAction(EnumAction.TIMELEFT, new GeneratorAction(EnumAction.TIMELEFT, EnumInteraction.NONE, null, false));
+			settings.addGeneratorAction(Action.PICKUP, new GeneratorAction(Action.PICKUP, interaction, item, sneak));
+			settings.addGeneratorAction(Action.OPENGUI, new GeneratorAction(Action.OPENGUI, Interaction.NONE, null, false));
+			settings.addGeneratorAction(Action.TIMELEFT, new GeneratorAction(Action.TIMELEFT, Interaction.NONE, null, false));
 			
 			/*
 			 * Converting generators definitions
@@ -339,22 +330,6 @@ public class FilesConverter {
 			Logger.info("FilesConverter: Added can-generate-instead settings to config file");
 		}
 		
-		if (!config.contains("can-generate-instead"))
-		{
-			addToFile(file, "");
-			addToFile(file, "#Per player generators settings add bunch of features related to limiting ");
-			addToFile(file, "#pick up, usage and placing generator per player");
-			addToFile(file, "#You can find more on https://github.com/Kryniowesegryderiusz/KGenerators/wiki/Per-Player-Generators");
-			addToFile(file, "per-player-generators:");
-			addToFile(file, "  #Enables limit, usage and pickup checks");
-			addToFile(file, "  enabled: " + settings.isPerPlayerGenerators());
-			addToFile(file, "  #Set default overall place limit (count of all player's generators)");
-			addToFile(file, "  #Set to -1 to disable that limit");
-			addToFile(file, "  #Can be overwritten by permission: kgenerators.overallplacelimit.<limit>");
-			addToFile(file, "  overall-place-limit: -1");
-			Logger.info("FilesConverter: Added per-player-generators settings to config file");
-		}
-		
 		if (!config.contains("actions"))
 		{
 			addToFile(file, "");
@@ -365,28 +340,28 @@ public class FilesConverter {
 			addToFile(file, "actions:");
 			addToFile(file, "  #Action, which will be used for picking up generators");
 			addToFile(file, "  pick-up:");
-			addToFile(file, "    mode: " + settings.getAction(EnumAction.PICKUP).getInteraction().toString());
-			if (settings.getAction(EnumAction.PICKUP).getItem() != null)
-				addToFile(file, "    item: " + settings.getAction(EnumAction.PICKUP).getItem().getType().toString());
+			addToFile(file, "    mode: " + settings.getAction(Action.PICKUP).getInteraction().toString());
+			if (settings.getAction(Action.PICKUP).getItem() != null)
+				addToFile(file, "    item: " + settings.getAction(Action.PICKUP).getItem().getType().toString());
 			else
 				addToFile(file, "    item: ANY");
-			addToFile(file, "    sneak: " + String.valueOf(settings.getAction(EnumAction.PICKUP).isSneak()));
+			addToFile(file, "    sneak: " + String.valueOf(settings.getAction(Action.PICKUP).isSneak()));
 			addToFile(file, "  #Action, which will be used for opening generator gui");
 			addToFile(file, "  open-gui:");
-			addToFile(file, "    mode: " + settings.getAction(EnumAction.OPENGUI).getInteraction().toString());
-			if (settings.getAction(EnumAction.PICKUP).getItem() != null)
-				addToFile(file, "    item: " + settings.getAction(EnumAction.OPENGUI).getItem().getType().toString());
+			addToFile(file, "    mode: " + settings.getAction(Action.OPENGUI).getInteraction().toString());
+			if (settings.getAction(Action.PICKUP).getItem() != null)
+				addToFile(file, "    item: " + settings.getAction(Action.OPENGUI).getItem().getType().toString());
 			else
 				addToFile(file, "    item: ANY");
-			addToFile(file, "    sneak: " + String.valueOf(settings.getAction(EnumAction.OPENGUI).isSneak()));
+			addToFile(file, "    sneak: " + String.valueOf(settings.getAction(Action.OPENGUI).isSneak()));
 			addToFile(file, "  #Action, which will be used for checking how much time left before regeneration");
 			addToFile(file, "  time-left-check:");
-			addToFile(file, "    mode: " + settings.getAction(EnumAction.TIMELEFT).getInteraction().toString());
-			if (settings.getAction(EnumAction.TIMELEFT).getItem() != null)
-				addToFile(file, "    item: " + settings.getAction(EnumAction.PICKUP).getItem().getType().toString());
+			addToFile(file, "    mode: " + settings.getAction(Action.TIMELEFT).getInteraction().toString());
+			if (settings.getAction(Action.TIMELEFT).getItem() != null)
+				addToFile(file, "    item: " + settings.getAction(Action.PICKUP).getItem().getType().toString());
 			else
 				addToFile(file, "    item: ANY");
-			addToFile(file, "    sneak: " + String.valueOf(settings.getAction(EnumAction.TIMELEFT).isSneak()));
+			addToFile(file, "    sneak: " + String.valueOf(settings.getAction(Action.TIMELEFT).isSneak()));
 			Logger.info("FilesConverter: Added actions settings to config file");
 		}
 		

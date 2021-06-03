@@ -11,7 +11,9 @@ example_generator_id_level_1:
   next-level: example_generator_id_level_2
   #Upgrade cost in currency
   cost: 500
-  
+
+#Below you can find pre-configured upgrades. You can freely edit/remove them and add new ones ^^
+
 stone_generator_level_1:
   next-level: stone_generator_level_2
   cost: 500

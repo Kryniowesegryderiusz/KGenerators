@@ -1,4 +1,4 @@
-package me.kryniowesegryderiusz.kgenerators.classes;
+package me.kryniowesegryderiusz.kgenerators;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -8,7 +8,8 @@ import org.bukkit.inventory.ItemStack;
 
 import lombok.Getter;
 import lombok.Setter;
-import me.kryniowesegryderiusz.kgenerators.Enums.EnumAction;
+import me.kryniowesegryderiusz.kgenerators.classes.GeneratorAction;
+import me.kryniowesegryderiusz.kgenerators.enums.Action;
 
 public class Settings {
 	
@@ -19,16 +20,10 @@ public class Settings {
 	private String lang = "en";
 	
 	@Setter @Getter
-	private boolean perPlayerGenerators = false;
-	
-	@Setter @Getter
-	private int perPlayerGeneratorsPlaceLimit = -1;
-	
-	@Setter @Getter
 	private boolean actionbarMessages = true;
 	
 	@Getter
-	private LinkedHashMap<EnumAction, GeneratorAction> actions = new LinkedHashMap<EnumAction, GeneratorAction>();
+	private LinkedHashMap<Action, GeneratorAction> actions = new LinkedHashMap<Action, GeneratorAction>();
 	
 	@Setter @Getter
 	private boolean pickUpSneak = true;
@@ -47,19 +42,23 @@ public class Settings {
 	private int guiUpdateFrequency = 20;
 	
 	@Setter @Getter
-	private HashMap<EnumAction, GeneratorAction> guis = new HashMap<EnumAction, GeneratorAction>();
+	private HashMap<Action, GeneratorAction> guis = new HashMap<Action, GeneratorAction>();
+	
+	
+	@Setter @Getter
+	private boolean limits = false;
 	
 	public Settings()
 	{
 		
 	}
 	
-	public void addGeneratorAction(EnumAction action, GeneratorAction gaction)
+	public void addGeneratorAction(Action action, GeneratorAction gaction)
 	{
 		actions.put(action, gaction);
 	}
 	
-	public GeneratorAction getAction(EnumAction action)
+	public GeneratorAction getAction(Action action)
 	{
 		return actions.get(action);
 	}

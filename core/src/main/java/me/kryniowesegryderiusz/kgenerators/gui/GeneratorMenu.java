@@ -7,9 +7,9 @@ import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
 import org.bukkit.event.inventory.InventoryClickEvent;
 import org.bukkit.inventory.Inventory;
-import me.kryniowesegryderiusz.kgenerators.Enums.EnumMenuInventory;
-import me.kryniowesegryderiusz.kgenerators.Enums.EnumMenuItem;
-import me.kryniowesegryderiusz.kgenerators.Enums.EnumMessage;
+import me.kryniowesegryderiusz.kgenerators.enums.MenuInventoryType;
+import me.kryniowesegryderiusz.kgenerators.enums.MenuItemType;
+import me.kryniowesegryderiusz.kgenerators.enums.Message;
 import me.kryniowesegryderiusz.kgenerators.Lang;
 import me.kryniowesegryderiusz.kgenerators.Main;
 import me.kryniowesegryderiusz.kgenerators.classes.GeneratorLocation;
@@ -20,12 +20,12 @@ public class GeneratorMenu implements Listener {
 	
 	public static Inventory get(Player player, GeneratorLocation gLocation)
 	{
-		ArrayList<EnumMenuItem> exludedEnumMenuItems = new ArrayList<EnumMenuItem>();
+		ArrayList<MenuItemType> exludedEnumMenuItems = new ArrayList<MenuItemType>();
 				
 		String time = Schedules.timeLeftFormatted(gLocation);
-		if (time.equals("")) time = Lang.getMessage(EnumMessage.CommandsTimeLeftFormatNone, false, false);
+		if (time.equals("")) time = Lang.getMessage(Message.COMMANDS_TIME_LEFT_FORMAT_NONE, false, false);
 
-		Inventory menu = Lang.getMenuInventory(EnumMenuInventory.Generator).getInv(EnumMenuInventory.Generator, player, exludedEnumMenuItems, "<owner>", gLocation.getOwner().getName(), "<time>", time);
+		Inventory menu = Lang.getMenuInventory(MenuInventoryType.GENERATOR).getInv(MenuInventoryType.GENERATOR, player, exludedEnumMenuItems, "<owner>", gLocation.getOwner().getName(), "<time>", time);
 		
 		return menu;
 	}
@@ -39,16 +39,16 @@ public class GeneratorMenu implements Listener {
 	public void onClick(final InventoryClickEvent e)
 	{
 		if(e.isCancelled()) return;
-		if (!Menus.isVieving((Player) e.getWhoClicked(), EnumMenuInventory.Generator)) return;
+		if (!Menus.isVieving((Player) e.getWhoClicked(), MenuInventoryType.GENERATOR)) return;
 		
 		int slot = e.getSlot();
-		if (EnumMenuItem.GeneratorMenuPickUp.getMenuItem().getSlots().contains(slot) && Lang.getMenuItem(EnumMenuItem.GeneratorMenuPickUp).isEnabled())
+		if (MenuItemType.GENERATOR_MENU_PICK_UP.getMenuItem().getSlots().contains(slot) && Lang.getMenuItem(MenuItemType.GENERATOR_MENU_PICK_UP).isEnabled())
 		{
 			Player p = (Player) e.getWhoClicked();
 			PickUp.pickup(p, Menus.getMenuPlayer(p).getGLocation());
 			Menus.closeInv(p);
 		}
-		if (EnumMenuItem.GeneratorMenuQuit.getMenuItem().getSlots().contains(slot) && Lang.getMenuItem(EnumMenuItem.GeneratorMenuQuit).isEnabled())
+		if (MenuItemType.GENERATOR_MENU_QUIT.getMenuItem().getSlots().contains(slot) && Lang.getMenuItem(MenuItemType.GENERATOR_MENU_QUIT).isEnabled())
 		{
 			Menus.closeInv((Player) e.getWhoClicked());
 		}

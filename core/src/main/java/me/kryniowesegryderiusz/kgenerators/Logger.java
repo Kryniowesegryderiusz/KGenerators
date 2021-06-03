@@ -22,8 +22,8 @@ import java.util.List;
 import org.bukkit.command.CommandSender;
 import org.bukkit.plugin.Plugin;
 
-import me.kryniowesegryderiusz.kgenerators.Enums.EnumLog;
-import me.kryniowesegryderiusz.kgenerators.Enums.EnumMessage;
+import me.kryniowesegryderiusz.kgenerators.enums.LogType;
+import me.kryniowesegryderiusz.kgenerators.enums.Message;
 
 public class Logger {
 	
@@ -32,14 +32,15 @@ public class Logger {
 	static String generatorsFile = "generators.yml";
 	static String recipesFile = "recipes.yml";
 	static String upgradesFile = "upgrades.yml";
+	static String limitsFile = "limits.yml";
 	
-	private static void log(Object object, EnumLog logType)
+	private static void log(Object object, LogType logType)
 	{
 		String message = logType.getHeader() + "";
 		if (object instanceof String)
 		{
 			message += (String) object;
-			if(logType.equals(EnumLog.ERROR)) Main.getInstance().getLogger().warning(message);
+			if(logType.equals(LogType.ERROR)) Main.getInstance().getLogger().warning(message);
 			else Main.getInstance().getLogger().info(message);
 		}
 		else if (object instanceof Exception)
@@ -53,22 +54,22 @@ public class Logger {
 	
 	public static void error(Object object)
 	{
-		log(object, EnumLog.ERROR);	
+		log(object, LogType.ERROR);	
 	}
 	
 	public static void warn(Object object)
 	{
-		log(object, EnumLog.WARNINGS);	
+		log(object, LogType.WARNINGS);	
 	}
 	
 	public static void info(Object object)
 	{
-		log(object, EnumLog.INFO);	
+		log(object, LogType.INFO);	
 	}
 	
 	public static void debug(Object object)
 	{
-		log(object, EnumLog.DEBUG);	
+		log(object, LogType.DEBUG);	
 	}
 	
 	private static String exceptionStacktraceToString(Exception e)
@@ -150,17 +151,18 @@ public class Logger {
 							fileString += getLinesFromFile(configFile) + "\n";
 							fileString += getLinesFromFile(generatorsFile) + "\n";
 							fileString += getLinesFromFile(upgradesFile) + "\n";
+							fileString += getLinesFromFile(limitsFile) + "\n";
 							fileString += getLinesFromFile(recipesFile);
 							
 							String url = postHaste(sender, fileString, false);
 							if (url != null)
 							{
 								Lang.addReplecable("<url>", url);
-								Lang.sendMessage(sender, EnumMessage.CommandsDebugDone);
+								Lang.sendMessage(sender, Message.COMMANDS_DEBUG_DONE);
 							}
 							
 						} catch (IOException e) {
-							Lang.sendMessage(sender, EnumMessage.CommandsDebugError);
+							Lang.sendMessage(sender, Message.COMMANDS_DEBUG_ERROR);
 							Logger.error(e);
 						}
 					}
@@ -202,7 +204,7 @@ public class Logger {
 			BufferedReader reader = new BufferedReader(new InputStreamReader(conn.getInputStream()));
 			response = reader.readLine();
 		} catch (IOException e) {
-			Lang.sendMessage(sender, EnumMessage.CommandsDebugError);
+			Lang.sendMessage(sender, Message.COMMANDS_DEBUG_ERROR);
 			Logger.error(e);
 		}
 		

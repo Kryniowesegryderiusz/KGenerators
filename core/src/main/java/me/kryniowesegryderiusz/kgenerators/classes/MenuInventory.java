@@ -10,8 +10,8 @@ import org.bukkit.inventory.ItemStack;
 
 import lombok.Getter;
 import me.kryniowesegryderiusz.kgenerators.Lang;
-import me.kryniowesegryderiusz.kgenerators.Enums.EnumMenuInventory;
-import me.kryniowesegryderiusz.kgenerators.Enums.EnumMenuItem;
+import me.kryniowesegryderiusz.kgenerators.enums.MenuInventoryType;
+import me.kryniowesegryderiusz.kgenerators.enums.MenuItemType;
 import me.kryniowesegryderiusz.kgenerators.utils.Config;
 
 public class MenuInventory {
@@ -35,13 +35,13 @@ public class MenuInventory {
 	 * @param replecables String, by String "key", "value"
 	 * @return
 	 */
-	public Inventory getInv(EnumMenuInventory menuInventory, Player player, ArrayList<EnumMenuItem> exludedEnumMenuItems, String... replecables)
+	public Inventory getInv(MenuInventoryType menuInventory, Player player, ArrayList<MenuItemType> exludedEnumMenuItems, String... replecables)
 	{
 		ArrayList<String> rep = new ArrayList<>(Arrays.asList(replecables));
 		
 		Inventory menu = Bukkit.createInventory(player, this.slots, this.name);
 		
-		for(EnumMenuItem enumMenuItem : EnumMenuItem.values())
+		for(MenuItemType enumMenuItem : MenuItemType.values())
 		{
 			if (enumMenuItem.getMenuInventory() == menuInventory &&  !exludedEnumMenuItems.contains(enumMenuItem))
 			{
@@ -66,12 +66,12 @@ public class MenuInventory {
 		return menu;
 	}
 	
-	public Inventory getInv(EnumMenuInventory menuInventory, Player player, String... replecables)
+	public Inventory getInv(MenuInventoryType menuInventory, Player player, String... replecables)
 	{
 		return getInv(menuInventory, player, null, replecables);
 	}
 	
-	public void load(EnumMenuInventory menu, Config config) {
+	public void load(MenuInventoryType menu, Config config) {
 		String path = menu.getKey();
 		if (config.contains(path))
 		{

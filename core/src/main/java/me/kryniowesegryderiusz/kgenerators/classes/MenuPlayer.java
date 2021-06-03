@@ -3,7 +3,7 @@ package me.kryniowesegryderiusz.kgenerators.classes;
 import org.bukkit.entity.Player;
 import org.bukkit.inventory.Inventory;
 import lombok.Getter;
-import me.kryniowesegryderiusz.kgenerators.Enums.EnumMenuInventory;
+import me.kryniowesegryderiusz.kgenerators.enums.MenuInventoryType;
 import me.kryniowesegryderiusz.kgenerators.gui.GeneratorMenu;
 
 public class MenuPlayer {
@@ -13,19 +13,19 @@ public class MenuPlayer {
 	@Getter
 	Inventory inventory;
 	@Getter
-	EnumMenuInventory menuInventory;
+	MenuInventoryType menuInventory;
 	
 	@Getter
 	GeneratorLocation gLocation;
 	
-	public MenuPlayer(Player player, EnumMenuInventory menuInventory, Inventory inventory)
+	public MenuPlayer(Player player, MenuInventoryType menuInventory, Inventory inventory)
 	{
 		this.player = player;
 		this.menuInventory = menuInventory;
 		this.inventory = inventory;
 	}
 	
-	public MenuPlayer(Player player, EnumMenuInventory menuInventory, Inventory inventory, GeneratorLocation gLocation)
+	public MenuPlayer(Player player, MenuInventoryType menuInventory, Inventory inventory, GeneratorLocation gLocation)
 	{
 		this.player = player;
 		this.menuInventory = menuInventory;
@@ -41,7 +41,7 @@ public class MenuPlayer {
 	{		
 		if (this.inventory.getViewers().isEmpty()) return false;
 		
-		if (menuInventory == EnumMenuInventory.Generator)
+		if (menuInventory == MenuInventoryType.GENERATOR)
 			GeneratorMenu.update(this.inventory, this.player, this.gLocation);
 		
 		return true;

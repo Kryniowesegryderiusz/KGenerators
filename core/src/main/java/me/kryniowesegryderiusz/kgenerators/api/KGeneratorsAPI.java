@@ -6,8 +6,8 @@ import org.bukkit.Location;
 import org.bukkit.entity.Player;
 
 import me.kryniowesegryderiusz.kgenerators.Main;
+import me.kryniowesegryderiusz.kgenerators.Settings;
 import me.kryniowesegryderiusz.kgenerators.classes.GeneratorLocation;
-import me.kryniowesegryderiusz.kgenerators.classes.Settings;
 import me.kryniowesegryderiusz.kgenerators.classes.Upgrade;
 import me.kryniowesegryderiusz.kgenerators.handlers.Place;
 import me.kryniowesegryderiusz.kgenerators.handlers.Remove;
