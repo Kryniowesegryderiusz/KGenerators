@@ -16,7 +16,7 @@ import me.kryniowesegryderiusz.kgenerators.managers.Limits;
 import me.kryniowesegryderiusz.kgenerators.managers.Locations;
 import me.kryniowesegryderiusz.kgenerators.managers.Schedules;
 
-public class BlockPistonEventListener implements Listener {
+public class BlockPistonListener implements Listener {
 
 	@EventHandler
 	public void BlockPistonExtendEvent (final BlockPistonExtendEvent e){

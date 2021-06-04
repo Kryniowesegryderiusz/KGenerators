@@ -14,7 +14,7 @@ import me.kryniowesegryderiusz.kgenerators.handlers.ActionHandler;
 import me.kryniowesegryderiusz.kgenerators.managers.Locations;
 import me.kryniowesegryderiusz.kgenerators.multiversion.MultiVersion;
 
-public class PlayerInteractEventListener implements Listener {
+public class PlayerInteractListener implements Listener {
 	
 	@SuppressWarnings("deprecation")
 	@EventHandler(priority = EventPriority.HIGH)

@@ -24,7 +24,7 @@ import me.kryniowesegryderiusz.kgenerators.Main;
 import me.kryniowesegryderiusz.kgenerators.managers.Generators;
 import me.kryniowesegryderiusz.kgenerators.managers.Upgrades;
 
-public class MainMenu implements Listener {
+public class MainMenu {
 	
 	public static Inventory get(Player player, int page)
 	{
@@ -98,17 +98,8 @@ public class MainMenu implements Listener {
 		return menu;
 	}
 	
-	@EventHandler
-	public void onClick(final InventoryClickEvent e)
+	public static void onClick(Player p, int slot, ClickType clickType)
 	{
-		if(e.isCancelled()) return;
-		
-		Player p = (Player) e.getWhoClicked();
-		
-		if (!Menus.isVieving(p, MenuInventoryType.MAIN)) return;
-		
-		int slot = e.getSlot();
-		
 		if (Lang.getMenuItem(MenuItemType.MAIN_MENU_QUIT).getSlots().contains(slot) && Lang.getMenuItem(MenuItemType.MAIN_MENU_QUIT).isEnabled())
 		{
 			Menus.closeInv(p);
@@ -137,24 +128,23 @@ public class MainMenu implements Listener {
 				
 				if(Lang.getMenuItem(MenuItemType.MAIN_MENU_GENERATOR).getSlots().get(lastId) == slot)
 				{
-					if (e.getClick() == ClickType.LEFT)
-						Menus.openChancesMenu((Player) e.getWhoClicked(), entry.getValue());
-					else if (e.getClick() == ClickType.RIGHT)
+					if (clickType == ClickType.LEFT)
+						Menus.openChancesMenu(p, entry.getValue());
+					else if (clickType == ClickType.RIGHT)
 					{
 						Generator generator = entry.getValue();
 						List<Recipe> recipe = Main.getInstance().getServer().getRecipesFor(generator.getGeneratorItem());
 						if (!recipe.isEmpty() && recipe.get(0).getResult().equals(generator.getGeneratorItem()))
 						{
-							Menus.openRecipeMenu((Player) e.getWhoClicked(), generator);
+							Menus.openRecipeMenu(p, generator);
 						}
 						else if (Upgrades.couldBeObtained(generator.getId()))
 						{
-							Menus.openUpgradeMenu((Player) e.getWhoClicked(), generator);
+							Menus.openUpgradeMenu(p, generator);
 						}
 					}
 				}
 			}
 		}
-		e.setCancelled(true);
 	}
 }

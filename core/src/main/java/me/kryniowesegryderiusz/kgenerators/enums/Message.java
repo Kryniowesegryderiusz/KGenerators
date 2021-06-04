@@ -53,7 +53,8 @@ public enum Message implements IMessage {
 	COMMANDS_LIST_NO_PERMISSION("commands.list.no-permission", "&cYou dont have permission &8(&7<permission>&8)&c to list generators"),
 	COMMANDS_LIST_HELP("commands.list.help", "List all generators"),
 	
-	COMMANDS_MENU_OPENED_OTHERS("commands.menu.opened-others", "&aOpened &e<generator> <menu> menu &afor &e<player>&"),
+	COMMANDS_MENU_OPENED_OTHERS("commands.menu.opened-others", "&aOpened &e<generator> <menu> menu &afor &e<player>"),
+	COMMANDS_MENU_ERROR("commands.menu.error", "&cAn error occured, while using menus! Contact with administrator!"),
 	COMMANDS_MENU_NO_PERMISSION("commands.menu.no-permission", "&cYou dont have permission &8(&7<permission>&8)&c to open menu!"),
 	COMMANDS_MENU_NO_PERMISSION_OTHERS("commands.menu.no-permission-others", "&cYou dont have permission &8(&7<permission>&8)&c to open menu for other players!"),
 	COMMANDS_MENU_HELP("commands.menu.help", "Opens menu"),

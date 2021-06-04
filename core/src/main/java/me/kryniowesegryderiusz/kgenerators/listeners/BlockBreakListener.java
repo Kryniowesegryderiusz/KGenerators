@@ -23,7 +23,7 @@ import me.kryniowesegryderiusz.kgenerators.managers.Locations;
 import me.kryniowesegryderiusz.kgenerators.managers.Players;
 import me.kryniowesegryderiusz.kgenerators.managers.Schedules;
 
-public class BlockBreakEventListener implements Listener {
+public class BlockBreakListener implements Listener {
 	
 	@EventHandler(priority = EventPriority.HIGH)
 	public void BlockBreakEvent(final BlockBreakEvent e)

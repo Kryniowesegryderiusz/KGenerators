@@ -17,7 +17,7 @@ import me.kryniowesegryderiusz.kgenerators.classes.MenuItem;
 import me.kryniowesegryderiusz.kgenerators.Lang;
 import me.kryniowesegryderiusz.kgenerators.Logger;
 
-public class ChancesMenu implements Listener {
+public class ChancesMenu {
 	
 	public static Inventory get(Player player, Generator generator)
 	{
@@ -54,19 +54,11 @@ public class ChancesMenu implements Listener {
 		return menu;
 	}
 	
-	@EventHandler
-	public void onClick(final InventoryClickEvent e)
-	{
-		if(e.isCancelled()) return;
-		Player p = (Player) e.getWhoClicked();
-		if (!Menus.isVieving(p, MenuInventoryType.CHANCES)) return;
-		
-		int slot = e.getSlot();
-		
+	public static void onClick(Player p, int slot)
+	{		
 		if (Lang.getMenuItem(MenuItemType.CHANCES_MENU_BACK).getSlots().contains(slot) && Lang.getMenuItem(MenuItemType.CHANCES_MENU_BACK).isEnabled())
 		{
 			Menus.openMainMenu(p, Menus.getMenuPlayer(p).getGenerator());
 		}
-		e.setCancelled(true);
 	}
 }

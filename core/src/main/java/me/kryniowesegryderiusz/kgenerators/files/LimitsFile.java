@@ -90,8 +90,15 @@ public class LimitsFile {
 				}
 				else
 				{
-					Logger.error("Limits file: " + id + " doesnt have generators set!");
-					error = true;
+					if (id.equals("global_limits"))
+					{
+						gens.addAll(Generators.getAll());
+					}
+					else
+					{
+						Logger.error("Limits file: " + id + " doesnt have generators set!");
+						error = true;
+					}
 				}
 				
 				Limit limit = new Limit(id, name, item, gens);

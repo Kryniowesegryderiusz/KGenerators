@@ -33,15 +33,11 @@ example_limit_group:
 
 #Below you can find pre-configured limits. You can freely edit/remove them and add new ones ^^
 
-#This limits players to have max 50 generators at all 
+#This limits players to have max 50 generators at all
+#It affeccts all generators
 global_limits:
   name: "Global limit"
   item: PLAYER_HEAD
-  generators:
-  - stone_generator_level_1
-  - stone_generator_level_2
-  - wood_generator
-  - ores_generator
   place-limit: 50
 
 #This limits players to have max 20 stone generators at all, no matter, which level they have

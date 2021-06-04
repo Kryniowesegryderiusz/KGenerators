@@ -23,7 +23,7 @@ import me.kryniowesegryderiusz.kgenerators.classes.Generator;
 import me.kryniowesegryderiusz.kgenerators.classes.MenuItem;
 import me.kryniowesegryderiusz.kgenerators.classes.Recipe;
 
-public class RecipeMenu implements Listener {
+public class RecipeMenu {
 	
 	public static Inventory get(Player player, Generator generator)
 	{
@@ -90,19 +90,12 @@ public class RecipeMenu implements Listener {
 		return menu;
 	}
 	
-	@EventHandler
-	public void onClick(final InventoryClickEvent e)
+	public static void onClick(Player p, int slot)
 	{
-		if(e.isCancelled()) return;
-		Player p = (Player) e.getWhoClicked();
-		if (!Menus.isVieving(p, MenuInventoryType.RECIPE)) return;
-		
-		int slot = e.getSlot();
 		if (Lang.getMenuItem(MenuItemType.RECIPE_MENU_BACK).getSlots().contains(slot) && Lang.getMenuItem(MenuItemType.RECIPE_MENU_BACK).isEnabled())
 		{
 			Menus.openMainMenu(p, Menus.getMenuPlayer(p).getGenerator());
 		}
-		e.setCancelled(true);
 	}
 
 }

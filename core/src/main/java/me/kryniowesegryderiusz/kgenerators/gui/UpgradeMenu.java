@@ -17,7 +17,7 @@ import me.kryniowesegryderiusz.kgenerators.classes.MenuItem;
 import me.kryniowesegryderiusz.kgenerators.managers.Generators;
 import me.kryniowesegryderiusz.kgenerators.managers.Upgrades;
 
-public class UpgradeMenu implements Listener {
+public class UpgradeMenu {
 	
 	public static Inventory get(Player player, Generator generator)
 	{		
@@ -65,19 +65,12 @@ public class UpgradeMenu implements Listener {
 		return menu;
 	}
 	
-	@EventHandler
-	public void onClick(final InventoryClickEvent e)
+	public static void onClick(Player p, int slot)
 	{
-		if(e.isCancelled()) return;
-		Player p = (Player) e.getWhoClicked();
-		if (!Menus.isVieving(p, MenuInventoryType.UPGRADE)) return;
-		
-		int slot = e.getSlot();
 		if (Lang.getMenuItem(MenuItemType.UPGRADE_MENU_BACK).getSlots().contains(slot) && Lang.getMenuItem(MenuItemType.UPGRADE_MENU_BACK).isEnabled())
 		{
 			Menus.openMainMenu(p, Menus.getMenuPlayer(p).getGenerator());
 		}
-		e.setCancelled(true);
 	}
 
 }

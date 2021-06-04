@@ -3,20 +3,16 @@ package me.kryniowesegryderiusz.kgenerators.gui;
 import java.util.ArrayList;
 
 import org.bukkit.entity.Player;
-import org.bukkit.event.EventHandler;
-import org.bukkit.event.Listener;
-import org.bukkit.event.inventory.InventoryClickEvent;
 import org.bukkit.inventory.Inventory;
 import me.kryniowesegryderiusz.kgenerators.enums.MenuInventoryType;
 import me.kryniowesegryderiusz.kgenerators.enums.MenuItemType;
 import me.kryniowesegryderiusz.kgenerators.enums.Message;
 import me.kryniowesegryderiusz.kgenerators.Lang;
-import me.kryniowesegryderiusz.kgenerators.Main;
 import me.kryniowesegryderiusz.kgenerators.classes.GeneratorLocation;
 import me.kryniowesegryderiusz.kgenerators.handlers.PickUp;
 import me.kryniowesegryderiusz.kgenerators.managers.Schedules;
 
-public class GeneratorMenu implements Listener {
+public class GeneratorMenu {
 	
 	public static Inventory get(Player player, GeneratorLocation gLocation)
 	{
@@ -35,14 +31,8 @@ public class GeneratorMenu implements Listener {
 		inventory.setContents(get(player, gLocation).getContents());
 	}
 	
-	@EventHandler
-	public void onClick(final InventoryClickEvent e)
-	{
-		if(e.isCancelled()) return;
-		Player p = (Player) e.getWhoClicked();
-		if (!Menus.isVieving(p, MenuInventoryType.GENERATOR)) return;
-		
-		int slot = e.getSlot();
+	public static void onClick(Player p, int slot)
+	{	
 		if (Lang.getMenuItem(MenuItemType.GENERATOR_MENU_PICK_UP).getSlots().contains(slot) && Lang.getMenuItem(MenuItemType.GENERATOR_MENU_PICK_UP).isEnabled())
 		{
 			PickUp.pickup(p, Menus.getMenuPlayer(p).getGLocation());
@@ -52,7 +42,5 @@ public class GeneratorMenu implements Listener {
 		{
 			Menus.closeInv(p);
 		}
-		
-		e.setCancelled(true);
 	}
 }

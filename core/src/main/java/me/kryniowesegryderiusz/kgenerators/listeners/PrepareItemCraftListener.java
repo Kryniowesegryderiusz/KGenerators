@@ -13,7 +13,7 @@ import me.kryniowesegryderiusz.kgenerators.classes.Recipe;
 import me.kryniowesegryderiusz.kgenerators.managers.Generators;
 import me.kryniowesegryderiusz.kgenerators.managers.Recipes;
 
-public class PrepareItemCraftEventListener implements Listener {
+public class PrepareItemCraftListener implements Listener {
 	
 	@EventHandler 
 	public void onPrepareItemCraftEvent(PrepareItemCraftEvent  e)

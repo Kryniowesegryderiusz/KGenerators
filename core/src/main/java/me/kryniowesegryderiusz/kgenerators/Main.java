@@ -32,15 +32,15 @@ import me.kryniowesegryderiusz.kgenerators.hooks.SlimefunHook;
 import me.kryniowesegryderiusz.kgenerators.hooks.JetsMinionsHook;
 import me.kryniowesegryderiusz.kgenerators.files.ConfigFile;
 import me.kryniowesegryderiusz.kgenerators.files.FilesConverter;
-import me.kryniowesegryderiusz.kgenerators.listeners.BlockBreakEventListener;
-import me.kryniowesegryderiusz.kgenerators.listeners.BlockPistonEventListener;
-import me.kryniowesegryderiusz.kgenerators.listeners.BlockPlaceEventListener;
-import me.kryniowesegryderiusz.kgenerators.listeners.CraftItemEventListener;
+import me.kryniowesegryderiusz.kgenerators.listeners.BlockBreakListener;
+import me.kryniowesegryderiusz.kgenerators.listeners.BlockPistonListener;
+import me.kryniowesegryderiusz.kgenerators.listeners.BlockPlaceListener;
+import me.kryniowesegryderiusz.kgenerators.listeners.CraftItemListener;
 import me.kryniowesegryderiusz.kgenerators.listeners.ExplosionListener;
-import me.kryniowesegryderiusz.kgenerators.listeners.FurnaceSmeltEventListener;
-import me.kryniowesegryderiusz.kgenerators.listeners.InventoryClickEventListener;
-import me.kryniowesegryderiusz.kgenerators.listeners.PlayerInteractEventListener;
-import me.kryniowesegryderiusz.kgenerators.listeners.PrepareItemCraftEventListener;
+import me.kryniowesegryderiusz.kgenerators.listeners.FurnaceSmeltListener;
+import me.kryniowesegryderiusz.kgenerators.listeners.InventoryClickListener;
+import me.kryniowesegryderiusz.kgenerators.listeners.PlayerInteractListener;
+import me.kryniowesegryderiusz.kgenerators.listeners.PrepareItemCraftListener;
 import me.kryniowesegryderiusz.kgenerators.managers.Generators;
 import me.kryniowesegryderiusz.kgenerators.managers.Holograms;
 import me.kryniowesegryderiusz.kgenerators.managers.Schedules;
@@ -113,23 +113,15 @@ public class Main extends JavaPlugin {
     	
     	this.getServer().getPluginCommand("kgenerators").setExecutor(new Commands());
 
-    	this.getServer().getPluginManager().registerEvents(new BlockBreakEventListener(), this);
-    	this.getServer().getPluginManager().registerEvents(new BlockPlaceEventListener(), this);
-    	this.getServer().getPluginManager().registerEvents(new CraftItemEventListener(), this);
-    	this.getServer().getPluginManager().registerEvents(new BlockPistonEventListener(), this);
+    	this.getServer().getPluginManager().registerEvents(new BlockBreakListener(), this);
+    	this.getServer().getPluginManager().registerEvents(new BlockPlaceListener(), this);
+    	this.getServer().getPluginManager().registerEvents(new CraftItemListener(), this);
+    	this.getServer().getPluginManager().registerEvents(new BlockPistonListener(), this);
     	this.getServer().getPluginManager().registerEvents(new ExplosionListener(), this);
-    	this.getServer().getPluginManager().registerEvents(new PlayerInteractEventListener(), this);
-    	this.getServer().getPluginManager().registerEvents(new InventoryClickEventListener(), this);
-    	this.getServer().getPluginManager().registerEvents(new FurnaceSmeltEventListener(), this);
-    	this.getServer().getPluginManager().registerEvents(new PrepareItemCraftEventListener(), this);
-        	
-    	this.getServer().getPluginManager().registerEvents(new GeneratorMenu(), this);
-    	this.getServer().getPluginManager().registerEvents(new MainMenu(), this);
-    	this.getServer().getPluginManager().registerEvents(new ChancesMenu(), this);
-    	this.getServer().getPluginManager().registerEvents(new RecipeMenu(), this);
-    	this.getServer().getPluginManager().registerEvents(new UpgradeMenu(), this);
-    	this.getServer().getPluginManager().registerEvents(new LimitsMenu(), this);
-    	
+    	this.getServer().getPluginManager().registerEvents(new PlayerInteractListener(), this);
+    	this.getServer().getPluginManager().registerEvents(new InventoryClickListener(), this);
+    	this.getServer().getPluginManager().registerEvents(new FurnaceSmeltListener(), this);
+    	this.getServer().getPluginManager().registerEvents(new PrepareItemCraftListener(), this);    	
     }
 
 	@Override

@@ -145,6 +145,13 @@ public class Menus implements Listener {
 		return false;
 	}
 	
+	public static MenuInventoryType getVieving(Player p)
+	{
+		if (guis.containsKey(p))
+			return guis.get(p).getMenuInventory();
+		return null;
+	}
+	
 	public static Player isSomeoneVieving(MenuInventoryType enumMenuInventory, GeneratorLocation gLocation)
 	{
 		for (Entry<Player, MenuPlayer> e : guis.entrySet())

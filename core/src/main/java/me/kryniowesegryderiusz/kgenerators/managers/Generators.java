@@ -1,5 +1,6 @@
 package me.kryniowesegryderiusz.kgenerators.managers;
 
+import java.util.Collection;
 import java.util.LinkedHashMap;
 import java.util.Map.Entry;
 import java.util.Set;
@@ -40,6 +41,11 @@ public class Generators {
 			if (entry.getValue().getGeneratorItem().getItemMeta().equals(item.getItemMeta())) return entry.getValue();
 		}
 		return null;
+	}
+	
+	public static Collection<Generator> getAll()
+	{
+		return generators.values();
 	}
 	
 	public static Set<Entry<String, Generator>> getEntrySet()
