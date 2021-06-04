@@ -16,7 +16,7 @@ import me.kryniowesegryderiusz.kgenerators.handlers.Place;
 import me.kryniowesegryderiusz.kgenerators.managers.Generators;
 import me.kryniowesegryderiusz.kgenerators.managers.Locations;
 
-public class onBlockPlaceEvent implements Listener {
+public class BlockPlaceEventListener implements Listener {
 	
 	@EventHandler(priority = EventPriority.HIGH)
 	public void BlockPlaceEvent(final BlockPlaceEvent e){

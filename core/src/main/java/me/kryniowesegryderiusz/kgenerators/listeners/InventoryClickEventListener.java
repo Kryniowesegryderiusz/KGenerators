@@ -12,7 +12,7 @@ import me.kryniowesegryderiusz.kgenerators.Main;
 import me.kryniowesegryderiusz.kgenerators.managers.Generators;
 import me.kryniowesegryderiusz.kgenerators.multiversion.MultiVersion;
 
-public class onInventoryClickEvent implements Listener {
+public class InventoryClickEventListener implements Listener {
 	
 	@EventHandler(priority = EventPriority.HIGH)
 	public void inventoryClickEvent(InventoryClickEvent e)

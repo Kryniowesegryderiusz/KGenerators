@@ -2,12 +2,12 @@ package me.kryniowesegryderiusz.kgenerators.enums;
 
 public enum Dependency
 {
-	WorldGuard,
-	JetsMinions,
-	HolographicDisplays,
-	SuperiorSkyblock2,
-	BentoBox,
-	VaultEconomy,
-	VaultPermissions,
-	Slimefun,
+	WORLD_GUARD,
+	JETS_MINIONS,
+	HOLOGRAPHIC_DISPLAYS,
+	SUPERIOR_SKYBLOCK_2,
+	BENTO_BOX,
+	VAULT_ECONOMY,
+	VAULT_PERMISSIONS,
+	SLIMEFUN,
 }

@@ -45,7 +45,7 @@ public class MultiVersion {
     	}
     	else
     	{
-    		recipesPackage = packageName + ".RecipesLoader_1_13";
+    		recipesPackage = packageName + ".RecipesLoader_1_12";
     		blocksPackage = packageName + ".BlocksUtils_1_13";
     		wgPackage = packageName + ".WorldGuardUtils_1_13";
     		actionBarPackage = packageName + ".ActionBar_1_9";

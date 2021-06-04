@@ -27,8 +27,8 @@ public class PickUp {
 			return;
 		}
 		
-		if ((Main.dependencies.contains(Dependency.WorldGuard) && !p.hasPermission("kgenerators.bypass.worldguard") && !Main.getWorldGuardUtils().worldGuardFlagCheck(gLocation.getLocation(), p, WGFlag.PICK_UP))
-				|| (Main.dependencies.contains(Dependency.BentoBox) && !p.hasPermission("kgenerators.bypass.bentobox") && !BentoBoxHook.isAllowed(p, BentoBoxHook.Type.PICKUP_FLAG)))
+		if ((Main.dependencies.contains(Dependency.WORLD_GUARD) && !p.hasPermission("kgenerators.bypass.worldguard") && !Main.getWorldGuardUtils().worldGuardFlagCheck(gLocation.getLocation(), p, WGFlag.PICK_UP))
+				|| (Main.dependencies.contains(Dependency.BENTO_BOX) && !p.hasPermission("kgenerators.bypass.bentobox") && !BentoBoxHook.isAllowed(p, BentoBoxHook.Type.PICKUP_FLAG)))
 		{
 			Lang.sendMessage(p, Message.GENERATORS_PICK_UP_CANT_HERE);
 			return;

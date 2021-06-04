@@ -33,7 +33,7 @@ example_limit_group:
 
 #Below you can find pre-configured limits. You can freely edit/remove them and add new ones ^^
 
-#This limits players to have max 50 generators at all
+#This limits players to have max 50 generators at all 
 global_limits:
   name: "Global limit"
   item: PLAYER_HEAD
@@ -45,6 +45,7 @@ global_limits:
   place-limit: 50
 
 #This limits players to have max 20 stone generators at all, no matter, which level they have
+#Additionally only owner can pick up them
 stone_generators_limits:
   name: "Stone generators limit"
   item: STONE
@@ -52,6 +53,7 @@ stone_generators_limits:
   - stone_generator_level_1
   - stone_generator_level_2
   place-limit: 20
+  only-owner-pickup: true
 
 #This limits players to have max 10 stone_generator_level_1 and sets it's item to generator's item
 stone_generator_level_1_limits:

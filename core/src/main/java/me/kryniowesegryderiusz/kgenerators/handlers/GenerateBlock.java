@@ -71,7 +71,7 @@ public class GenerateBlock {
 			  }
 		  }
 		  
-		  if (Main.dependencies.contains(Dependency.SuperiorSkyblock2)) {
+		  if (Main.dependencies.contains(Dependency.SUPERIOR_SKYBLOCK_2)) {
 			  Island island = SuperiorSkyblockAPI.getGrid().getIslandAt(diggableBlockLocation);
 			  if (island != null) {
 				  island.handleBlockPlace(diggableBlock);

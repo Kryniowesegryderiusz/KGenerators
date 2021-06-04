@@ -12,13 +12,21 @@ example_generator:
   # Shape of generator in crafting table. Used letters are items defined in ingredients section. You can use space, if you dont want to set item in slot.
   shape:
   - " A "
-  - "ABA"
+  - "BCB"
   - " A "
   #Possible ingredients. No matter, which server version do you have use names from here: https://hub.spigotmc.org/javadocs/spigot/org/bukkit/Material.html
   #You can use generator id here if you want to make one generator from another!
   ingredients:
+    #"A" used in shape is just a redstone
     A: REDSTONE
+    #"B" is item of ores_generator
     B: ores_generator
+    #"C" is other custom configured item
+    C:
+      item: STONE
+      name: "Magic stone"
+      lore:
+      - "&cThats Magic Stone"
 
 #Below you can find pre-configured recipes. You can freely edit/remove them and add new ones ^^
       
@@ -38,5 +46,5 @@ ores_generator:
   - "CAC"
   ingredients:
     A: REDSTONE
-    B: COAL
+    B: stone_generator_level_1
     C: COAL_BLOCK

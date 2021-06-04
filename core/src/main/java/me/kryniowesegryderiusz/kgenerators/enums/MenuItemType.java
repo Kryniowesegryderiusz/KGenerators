@@ -13,7 +13,7 @@ public enum MenuItemType
 	
 	MAIN_MENU_FILLER(MenuInventoryType.MAIN, "filler", new MenuItem("GRAY_STAINED_GLASS_PANE", "&r", false, "0,1,2,3,4,5,6,7,8,36,37,38,39,40,41,42,43,44")),
 	MAIN_MENU_GENERATOR(MenuInventoryType.MAIN,"generator", new MenuItem("<generator>", "&a<generator_name>", false, "9,10,11,12,13,14,15,16,17,18,19,20,21,22,23,24,25,26,27,28,29,30,31,32,33,34,35" , "&6Left click:", "&eCheck generator chances")),
-	MAIN_MENU_LIMITS(MenuInventoryType.MAIN,"limits", new MenuItem("PLAYER_HEAD", "&aPick up", false, "8", "&eClick here to check limits")),
+	MAIN_MENU_LIMITS(MenuInventoryType.MAIN,"limits", new MenuItem("PLAYER_HEAD", "&aLimits", false, "8", "&eClick here to check limits")),
 	MAIN_MENU_QUIT(MenuInventoryType.MAIN,"quit", new  MenuItem("ARROW", "&cQuit", false, "40", "&6Quit menu")),
 	
 	CHANCES_MENU_FILLER(MenuInventoryType.CHANCES, "filler", new MenuItem("GRAY_STAINED_GLASS_PANE", "&r", false, "0,1,2,3,4,5,6,7,8,36,37,38,39,40,41,42,43,44")),

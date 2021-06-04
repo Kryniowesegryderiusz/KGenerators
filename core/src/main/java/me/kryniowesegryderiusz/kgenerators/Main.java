@@ -32,14 +32,15 @@ import me.kryniowesegryderiusz.kgenerators.hooks.SlimefunHook;
 import me.kryniowesegryderiusz.kgenerators.hooks.JetsMinionsHook;
 import me.kryniowesegryderiusz.kgenerators.files.ConfigFile;
 import me.kryniowesegryderiusz.kgenerators.files.FilesConverter;
-import me.kryniowesegryderiusz.kgenerators.listeners.onBlockBreakEvent;
-import me.kryniowesegryderiusz.kgenerators.listeners.onBlockPistonEvent;
-import me.kryniowesegryderiusz.kgenerators.listeners.onBlockPlaceEvent;
-import me.kryniowesegryderiusz.kgenerators.listeners.onCraftItemEvent;
-import me.kryniowesegryderiusz.kgenerators.listeners.onExplosion;
-import me.kryniowesegryderiusz.kgenerators.listeners.onFurnaceSmeltEvent;
-import me.kryniowesegryderiusz.kgenerators.listeners.onInventoryClickEvent;
-import me.kryniowesegryderiusz.kgenerators.listeners.onPlayerInteractEvent;
+import me.kryniowesegryderiusz.kgenerators.listeners.BlockBreakEventListener;
+import me.kryniowesegryderiusz.kgenerators.listeners.BlockPistonEventListener;
+import me.kryniowesegryderiusz.kgenerators.listeners.BlockPlaceEventListener;
+import me.kryniowesegryderiusz.kgenerators.listeners.CraftItemEventListener;
+import me.kryniowesegryderiusz.kgenerators.listeners.ExplosionListener;
+import me.kryniowesegryderiusz.kgenerators.listeners.FurnaceSmeltEventListener;
+import me.kryniowesegryderiusz.kgenerators.listeners.InventoryClickEventListener;
+import me.kryniowesegryderiusz.kgenerators.listeners.PlayerInteractEventListener;
+import me.kryniowesegryderiusz.kgenerators.listeners.PrepareItemCraftEventListener;
 import me.kryniowesegryderiusz.kgenerators.managers.Generators;
 import me.kryniowesegryderiusz.kgenerators.managers.Holograms;
 import me.kryniowesegryderiusz.kgenerators.managers.Schedules;
@@ -112,15 +113,16 @@ public class Main extends JavaPlugin {
     	
     	this.getServer().getPluginCommand("kgenerators").setExecutor(new Commands());
 
-    	this.getServer().getPluginManager().registerEvents(new onBlockBreakEvent(), this);
-    	this.getServer().getPluginManager().registerEvents(new onBlockPlaceEvent(), this);
-    	this.getServer().getPluginManager().registerEvents(new onCraftItemEvent(), this);
-    	this.getServer().getPluginManager().registerEvents(new onBlockPistonEvent(), this);
-    	this.getServer().getPluginManager().registerEvents(new onExplosion(), this);
-    	this.getServer().getPluginManager().registerEvents(new onPlayerInteractEvent(), this);
-    	this.getServer().getPluginManager().registerEvents(new onInventoryClickEvent(), this);
-    	this.getServer().getPluginManager().registerEvents(new onFurnaceSmeltEvent(), this);
-    	
+    	this.getServer().getPluginManager().registerEvents(new BlockBreakEventListener(), this);
+    	this.getServer().getPluginManager().registerEvents(new BlockPlaceEventListener(), this);
+    	this.getServer().getPluginManager().registerEvents(new CraftItemEventListener(), this);
+    	this.getServer().getPluginManager().registerEvents(new BlockPistonEventListener(), this);
+    	this.getServer().getPluginManager().registerEvents(new ExplosionListener(), this);
+    	this.getServer().getPluginManager().registerEvents(new PlayerInteractEventListener(), this);
+    	this.getServer().getPluginManager().registerEvents(new InventoryClickEventListener(), this);
+    	this.getServer().getPluginManager().registerEvents(new FurnaceSmeltEventListener(), this);
+    	this.getServer().getPluginManager().registerEvents(new PrepareItemCraftEventListener(), this);
+        	
     	this.getServer().getPluginManager().registerEvents(new GeneratorMenu(), this);
     	this.getServer().getPluginManager().registerEvents(new MainMenu(), this);
     	this.getServer().getPluginManager().registerEvents(new ChancesMenu(), this);
@@ -153,30 +155,30 @@ public class Main extends JavaPlugin {
     		
 	    	if (Bukkit.getPluginManager().isPluginEnabled("SuperiorSkyblock2")) {
 	    		Logger.info("Dependencies: Detected plugin SuperiorSkyblock2. Hooking into it.");
-	    		dependencies.add(Dependency.SuperiorSkyblock2);
+	    		dependencies.add(Dependency.SUPERIOR_SKYBLOCK_2);
 	    	}
 	    	
 	    	if (Bukkit.getPluginManager().isPluginEnabled("BentoBox")) {
 	    		Logger.info("Dependencies: Detected plugin BentoBox. Hooking into it.");
 	    		BentoBoxHook.setup();
-	    		dependencies.add(Dependency.BentoBox);
+	    		dependencies.add(Dependency.BENTO_BOX);
 	    	}
 	    	
 	    	if (Bukkit.getPluginManager().isPluginEnabled("JetsMinions")) {
 	    		Logger.info("Dependencies: Detected plugin JetsMinions. Hooking into it.");
 	    		Main.getInstance().getServer().getPluginManager().registerEvents(new JetsMinionsHook(), Main.getInstance());
-	    		dependencies.add(Dependency.JetsMinions);
+	    		dependencies.add(Dependency.JETS_MINIONS);
 	    	}
 	    	
 	    	if (Bukkit.getPluginManager().isPluginEnabled("Slimefun")) {
 	    		Logger.info("Dependencies: Detected plugin Slimefun. Hooking into it.");
 	    		Main.getInstance().getServer().getPluginManager().registerEvents(new SlimefunHook(), Main.getInstance());
-	    		dependencies.add(Dependency.Slimefun);
+	    		dependencies.add(Dependency.SLIMEFUN);
 	    	}
 	    	
 	    	if (worldGuardUtils != null && Main.getWorldGuardUtils().isWorldGuardHooked()) {
 	   			Logger.info("Dependencies: Detected plugin WorldGuard. Hooked into it.");
-	   			dependencies.add(Dependency.WorldGuard);
+	   			dependencies.add(Dependency.WORLD_GUARD);
 	    	}
 	    	else if (worldGuardUtils != null)
 	    	{
@@ -188,7 +190,7 @@ public class Main extends JavaPlugin {
 	    	if (Bukkit.getPluginManager().isPluginEnabled("HolographicDisplays"))
 	    	{
 	    		Logger.info("Dependencies: Detected plugin HolographicDisplays. Hooked into it.");
-	   			dependencies.add(Dependency.HolographicDisplays);
+	   			dependencies.add(Dependency.HOLOGRAPHIC_DISPLAYS);
 	    	}
 	    	else
 	    	{
@@ -202,7 +204,7 @@ public class Main extends JavaPlugin {
 	    	if (Vault.setupEconomy())
 	    	{
 	    		Logger.info("Dependencies: Detected Vault economy. Hooked into it.");
-	    		dependencies.add(Dependency.VaultEconomy);
+	    		dependencies.add(Dependency.VAULT_ECONOMY);
 	    	}
 	    	else
 	    	{
@@ -212,7 +214,7 @@ public class Main extends JavaPlugin {
 	    	if (Vault.setupPermissions())
 	    	{
 	    		Logger.info("Dependencies: Detected Vault permissions. Hooked into it.");
-	    		dependencies.add(Dependency.VaultPermissions);
+	    		dependencies.add(Dependency.VAULT_PERMISSIONS);
 	    	}
 	    	else
 	    	{

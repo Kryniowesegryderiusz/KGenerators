@@ -13,7 +13,7 @@ import me.kryniowesegryderiusz.kgenerators.enums.Message;
 import me.kryniowesegryderiusz.kgenerators.classes.Generator;
 import me.kryniowesegryderiusz.kgenerators.managers.Generators;
 
-public class onCraftItemEvent implements Listener {
+public class CraftItemEventListener implements Listener {
 	
 	@EventHandler
 	public void CraftItemEvent(final CraftItemEvent e){

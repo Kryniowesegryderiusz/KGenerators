@@ -13,7 +13,7 @@ public abstract class XUtils {
     public static ItemStack parseItemStack(String s, String place, boolean isBlockCheck) {
     	
     	if (Generators.exists(s))
-    		return Generators.get(s).getGeneratorItem();
+    		return Generators.get(s).getGeneratorItem().clone();
     	
     	Optional<XMaterial> oxm = XMaterial.matchXMaterial(s);
 		try {

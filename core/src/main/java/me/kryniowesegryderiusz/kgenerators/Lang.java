@@ -20,6 +20,7 @@ import me.kryniowesegryderiusz.kgenerators.classes.MenuInventory;
 import me.kryniowesegryderiusz.kgenerators.classes.MenuItem;
 import me.kryniowesegryderiusz.kgenerators.enums.Message;
 import me.kryniowesegryderiusz.kgenerators.utils.Config;
+import me.kryniowesegryderiusz.kgenerators.xseries.XMaterial;
 
 public class Lang {
 
@@ -31,9 +32,11 @@ public class Lang {
 	private static HashMap<MenuInventoryType, MenuInventory> menuInventories = new HashMap<MenuInventoryType, MenuInventory>();
 	private static HashMap<String, ArrayList<String>> menuItemsAdditionalLines = new HashMap<String, ArrayList<String>>();
 	
+	private static HashMap<String, String> customNames = new HashMap<String, String>();
+	
 	private static LinkedHashMap<String, String> replecables = new LinkedHashMap<String, String>();
 
-	public static void loadMessages(Config config, Config guiConfig) throws IOException {
+	public static void loadMessages(Config config, Config guiConfig, Config configCustomNames) throws IOException {
 
 		addDefaults();
 		registerMessages(Message.class);
@@ -119,6 +122,18 @@ public class Lang {
 			}
 			menuItemsAdditionalLines.put(e.getKey(), lines);
     	}
+		
+		/*
+		 * Custom names
+		 */
+		
+		if (configCustomNames != null)
+		{
+			for(String obj: configCustomNames.getConfigurationSection("").getKeys(false))
+	    	{
+	    		customNames.put(obj, configCustomNames.getString(obj));
+	    	}
+		}
 		
 	}
 	
@@ -260,12 +275,15 @@ public class Lang {
      * Other
      */
     
-    public static String getItemTypeName(ItemStack item)
+    @SuppressWarnings("unlikely-arg-type")
+	public static String getItemTypeName(ItemStack item)
     {
     	String name = "";
     	
-    	if (item.hasItemMeta() && item.getItemMeta().hasLocalizedName())
-    		name = item.getItemMeta().getLocalizedName();
+    	if (item.hasItemMeta() && item.getItemMeta().hasDisplayName())
+    		name = item.getItemMeta().getDisplayName();
+    	else if (customNames.get(XMaterial.matchXMaterial(item)) != null)
+    		name = customNames.get(XMaterial.matchXMaterial(item));
     	else
     	{
     		String type = item.getType().toString();

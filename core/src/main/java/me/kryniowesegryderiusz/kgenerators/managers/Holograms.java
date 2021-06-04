@@ -16,7 +16,7 @@ public class Holograms {
 	
 	public static void createHologram(GeneratorLocation gLocation)
 	{
-		if(!Main.dependencies.contains(Dependency.HolographicDisplays)) return;
+		if(!Main.dependencies.contains(Dependency.HOLOGRAPHIC_DISPLAYS)) return;
 		
 		if (gLocation == null) return;
 		Hologram hologram = HologramsAPI.createHologram(Main.getInstance(), gLocation.getHologramLocation());
@@ -32,7 +32,7 @@ public class Holograms {
 	
 	static void everyFreq()
 	{
-		if(!Main.dependencies.contains(Dependency.HolographicDisplays)) return;
+		if(!Main.dependencies.contains(Dependency.HOLOGRAPHIC_DISPLAYS)) return;
 		
 		int line = -1;
 		for (String s : Lang.getHologram(HologramText.REMAINING_TIME))
@@ -73,7 +73,7 @@ public class Holograms {
 	
 	static void removeHologram(GeneratorLocation gLocation)
 	{
-		if(!Main.dependencies.contains(Dependency.HolographicDisplays)) return;
+		if(!Main.dependencies.contains(Dependency.HOLOGRAPHIC_DISPLAYS)) return;
 		
 		for (Hologram hologram : HologramsAPI.getHolograms(Main.getInstance()))
 		{

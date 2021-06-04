@@ -23,7 +23,7 @@ import me.kryniowesegryderiusz.kgenerators.managers.Locations;
 import me.kryniowesegryderiusz.kgenerators.managers.Players;
 import me.kryniowesegryderiusz.kgenerators.managers.Schedules;
 
-public class onBlockBreakEvent implements Listener {
+public class BlockBreakEventListener implements Listener {
 	
 	@EventHandler(priority = EventPriority.HIGH)
 	public void BlockBreakEvent(final BlockBreakEvent e)
@@ -105,7 +105,7 @@ public class onBlockBreakEvent implements Listener {
 		 * 
 		 */
 		
-		if (Main.dependencies.contains(Dependency.WorldGuard) && !player.hasPermission("kgenerators.bypass.worldguard") && Main.getWorldGuardUtils().worldGuardFlagCheck(location, player, WGFlag.ONLY_GEN_BREAK))
+		if (Main.dependencies.contains(Dependency.WORLD_GUARD) && !player.hasPermission("kgenerators.bypass.worldguard") && Main.getWorldGuardUtils().worldGuardFlagCheck(location, player, WGFlag.ONLY_GEN_BREAK))
 		{
 			Lang.sendMessage(player, Message.GENERATORS_DIGGING_ONLY_GEN);
 			e.setCancelled(true);
@@ -132,7 +132,7 @@ public class onBlockBreakEvent implements Listener {
 	 */
 	boolean hasDependenciesCheck(Player player, Location location)
 	{
-		if (Main.dependencies.contains(Dependency.BentoBox) && !player.hasPermission("kgenerators.bypass.bentobox") && !BentoBoxHook.isAllowed(player, BentoBoxHook.Type.USE_FLAG))
+		if (Main.dependencies.contains(Dependency.BENTO_BOX) && !player.hasPermission("kgenerators.bypass.bentobox") && !BentoBoxHook.isAllowed(player, BentoBoxHook.Type.USE_FLAG))
 		{
 			Lang.sendMessage(player, Message.GENERATORS_DIGGING_CANT_HERE);
 			return false;

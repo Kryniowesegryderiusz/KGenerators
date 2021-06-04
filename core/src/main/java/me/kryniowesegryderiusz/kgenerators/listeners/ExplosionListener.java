@@ -13,7 +13,7 @@ import me.kryniowesegryderiusz.kgenerators.Main;
 import me.kryniowesegryderiusz.kgenerators.handlers.Remove;
 import me.kryniowesegryderiusz.kgenerators.managers.Locations;
 
-public class onExplosion implements Listener {
+public class ExplosionListener implements Listener {
 	
 	@EventHandler
 	public void onUnknown(final BlockExplodeEvent e)

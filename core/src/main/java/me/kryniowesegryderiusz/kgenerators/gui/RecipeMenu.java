@@ -1,6 +1,7 @@
 package me.kryniowesegryderiusz.kgenerators.gui;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import org.bukkit.Material;
@@ -10,7 +11,6 @@ import org.bukkit.event.Listener;
 import org.bukkit.event.inventory.InventoryClickEvent;
 import org.bukkit.inventory.Inventory;
 import org.bukkit.inventory.ItemStack;
-import org.bukkit.inventory.Recipe;
 import org.bukkit.inventory.ShapedRecipe;
 
 import me.kryniowesegryderiusz.kgenerators.Lang;
@@ -18,8 +18,10 @@ import me.kryniowesegryderiusz.kgenerators.Logger;
 import me.kryniowesegryderiusz.kgenerators.Main;
 import me.kryniowesegryderiusz.kgenerators.enums.MenuInventoryType;
 import me.kryniowesegryderiusz.kgenerators.enums.MenuItemType;
+import me.kryniowesegryderiusz.kgenerators.managers.Recipes;
 import me.kryniowesegryderiusz.kgenerators.classes.Generator;
 import me.kryniowesegryderiusz.kgenerators.classes.MenuItem;
+import me.kryniowesegryderiusz.kgenerators.classes.Recipe;
 
 public class RecipeMenu implements Listener {
 	
@@ -38,9 +40,9 @@ public class RecipeMenu implements Listener {
 		MenuItem ingredientsItem = MenuItemType.RECIPE_MENU_INGREDIENS.getMenuItem();
 		ArrayList<Integer> slotList = ingredientsItem.getSlots();
 		int lastId = -1;
-		List<Recipe> recipes = Main.getInstance().getServer().getRecipesFor(generator.getGeneratorItem());
-		ShapedRecipe recipe = (ShapedRecipe) recipes.get(0);
-		Map<Character,ItemStack> ingredients = recipe.getIngredientMap();
+
+		Recipe recipe = Recipes.get(generator);
+		HashMap<Character,ItemStack> ingredients = recipe.getIngredients();
 		for (String s : recipe.getShape())
 		{
 			for (char c : s.toCharArray())

@@ -66,7 +66,7 @@ public class Menus implements Listener {
 	
 	public static void openGeneratorMenu(Player p, GeneratorLocation gLocation)
 	{
-		if (Main.dependencies.contains(Dependency.BentoBox) && !p.hasPermission("kgenerators.bypass.bentobox") && !BentoBoxHook.isAllowed(p, BentoBoxHook.Type.OPEN_MENU_FLAG))
+		if (Main.dependencies.contains(Dependency.BENTO_BOX) && !p.hasPermission("kgenerators.bypass.bentobox") && !BentoBoxHook.isAllowed(p, BentoBoxHook.Type.OPEN_MENU_FLAG))
 		{
 			Lang.sendMessage(p, Message.GENERATOR_MENU_CANT_OPEN_HERE);
 			return;

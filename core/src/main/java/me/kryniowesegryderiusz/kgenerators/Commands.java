@@ -240,7 +240,7 @@ public class Commands implements CommandExecutor {
 					if (sender instanceof Player){
 						Player p = (Player) sender;
 						if (sender.hasPermission("kgenerators.upgrade")){
-							if (Main.dependencies.contains(Dependency.VaultEconomy))
+							if (Main.dependencies.contains(Dependency.VAULT_ECONOMY))
 							{
 								ItemStack items = p.getItemInHand();
 								Generator generator = Generators.get(items);
