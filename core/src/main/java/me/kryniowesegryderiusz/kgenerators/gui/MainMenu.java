@@ -26,26 +26,46 @@ import me.kryniowesegryderiusz.kgenerators.managers.Upgrades;
 
 public class MainMenu implements Listener {
 	
-	public static Inventory get(Player player)
+	public static Inventory get(Player player, int page)
 	{
 		ArrayList<MenuItemType> exludedEnumMenuItems = new ArrayList<MenuItemType>();
 		exludedEnumMenuItems.add(MenuItemType.MAIN_MENU_GENERATOR);
 		exludedEnumMenuItems.add(MenuItemType.MAIN_MENU_LIMITS);
+		exludedEnumMenuItems.add(MenuItemType.MAIN_MENU_PAGE_PREVIOUS);
+		exludedEnumMenuItems.add(MenuItemType.MAIN_MENU_PAGE_NEXT);
 		
 		Inventory menu = Lang.getMenuInventory(MenuInventoryType.MAIN).getInv(MenuInventoryType.MAIN, player, exludedEnumMenuItems);
 		
 		if (Main.getSettings().isLimits() && Lang.getMenuItem(MenuItemType.MAIN_MENU_LIMITS).isEnabled())
 		{
-			for (int i : MenuItemType.MAIN_MENU_LIMITS.getMenuItem().getSlots())
+			for (int i : Lang.getMenuItem(MenuItemType.MAIN_MENU_LIMITS).getSlots())
 			{
 				menu.setItem(i, Lang.getMenuItem(MenuItemType.MAIN_MENU_LIMITS).build());
 			}
 		}
 		
-		MenuItem generatorItem = MenuItemType.MAIN_MENU_GENERATOR.getMenuItem();
+		if (page > 0)
+		{
+			for (int i : Lang.getMenuItem(MenuItemType.MAIN_MENU_PAGE_PREVIOUS).getSlots())
+			{
+				menu.setItem(i, Lang.getMenuItem(MenuItemType.MAIN_MENU_PAGE_PREVIOUS).build());
+			}
+		}
+		
+		int nrOfGenerators = Lang.getMenuItem(MenuItemType.MAIN_MENU_GENERATOR).getSlots().size();
+		
+		if (Generators.getEntrySet().size() > (page+1)*nrOfGenerators)
+		{
+			for (int i : Lang.getMenuItem(MenuItemType.MAIN_MENU_PAGE_NEXT).getSlots())
+			{
+				menu.setItem(i, Lang.getMenuItem(MenuItemType.MAIN_MENU_PAGE_NEXT).build());
+			}
+		}
+		
+		MenuItem generatorItem = Lang.getMenuItem(MenuItemType.MAIN_MENU_GENERATOR);
 		ArrayList<Integer> slotList = generatorItem.getSlots();
 		int lastId = -1;
-		for (Entry<String, Generator> e : Generators.getEntrySet())
+		for (Entry<String, Generator> e : Generators.getSpecifiedEntrySet(page*nrOfGenerators, nrOfGenerators))
 		{
 			MenuItem generatorMenuItem = generatorItem.clone();
 			Generator generator = e.getValue();
@@ -70,8 +90,8 @@ public class MainMenu implements Listener {
 			try {
 				menu.setItem(slotList.get(lastId), readyItem);
 			} catch (Exception e1) {
-				Logger.error("Lang: There is probably more generators than slots set in /lang/gui/main.generator");
-				Logger.error(1);
+				Logger.error("MainMenu: Something went wrong, while creating MainMenu index " + lastId + " on page " + page);
+				Logger.error(e1);
 			}
 		}
 
@@ -82,25 +102,40 @@ public class MainMenu implements Listener {
 	public void onClick(final InventoryClickEvent e)
 	{
 		if(e.isCancelled()) return;
-		if (!Menus.isVieving((Player) e.getWhoClicked(), MenuInventoryType.MAIN)) return;
+		
+		Player p = (Player) e.getWhoClicked();
+		
+		if (!Menus.isVieving(p, MenuInventoryType.MAIN)) return;
 		
 		int slot = e.getSlot();
 		
-		if (MenuItemType.MAIN_MENU_QUIT.getMenuItem().getSlots().contains(slot) && Lang.getMenuItem(MenuItemType.MAIN_MENU_QUIT).isEnabled())
+		if (Lang.getMenuItem(MenuItemType.MAIN_MENU_QUIT).getSlots().contains(slot) && Lang.getMenuItem(MenuItemType.MAIN_MENU_QUIT).isEnabled())
 		{
-			Menus.closeInv((Player) e.getWhoClicked());
+			Menus.closeInv(p);
 		}
-		else if (Main.getSettings().isLimits() && MenuItemType.MAIN_MENU_LIMITS.getMenuItem().getSlots().contains(slot) && Lang.getMenuItem(MenuItemType.MAIN_MENU_LIMITS).isEnabled())
+		else if (Main.getSettings().isLimits() && Lang.getMenuItem(MenuItemType.MAIN_MENU_LIMITS).getSlots().contains(slot) && Lang.getMenuItem(MenuItemType.MAIN_MENU_LIMITS).isEnabled())
 		{
-			Menus.openLimitsMenu((Player) e.getWhoClicked());
+			Menus.openLimitsMenu(p);
 		}
-		else if (MenuItemType.MAIN_MENU_GENERATOR.getMenuItem().getSlots().contains(slot) && Lang.getMenuItem(MenuItemType.MAIN_MENU_GENERATOR).isEnabled())
+		else if (Menus.getMenuPlayer(p).getPage() > 0 && Lang.getMenuItem(MenuItemType.MAIN_MENU_PAGE_PREVIOUS).getSlots().contains(slot) && Lang.getMenuItem(MenuItemType.MAIN_MENU_PAGE_PREVIOUS).isEnabled())
+		{
+			Menus.openMainMenu(p, Menus.getMenuPlayer(p).getPage()-1);
+		}
+		else if (Generators.getEntrySet().size() > (Menus.getMenuPlayer(p).getPage()+1)*Lang.getMenuItem(MenuItemType.MAIN_MENU_GENERATOR).getSlots().size() 
+				&& Lang.getMenuItem(MenuItemType.MAIN_MENU_PAGE_NEXT).getSlots().contains(slot) && Lang.getMenuItem(MenuItemType.MAIN_MENU_PAGE_NEXT).isEnabled())
+		{
+			Menus.openMainMenu(p, Menus.getMenuPlayer(p).getPage()+1);
+		}
+		else if (Lang.getMenuItem(MenuItemType.MAIN_MENU_GENERATOR).getSlots().contains(slot) && Lang.getMenuItem(MenuItemType.MAIN_MENU_GENERATOR).isEnabled())
 		{
 			int lastId = -1;
-			for (Entry<String, Generator> entry : Generators.getEntrySet())
+			for (Entry<String, Generator> entry : Generators.getSpecifiedEntrySet(Menus.getMenuPlayer(p).getPage()*Lang.getMenuItem(MenuItemType.MAIN_MENU_GENERATOR).getSlots().size(), Lang.getMenuItem(MenuItemType.MAIN_MENU_GENERATOR).getSlots().size()))
 			{
 				lastId++;
-				if(MenuItemType.MAIN_MENU_GENERATOR.getMenuItem().getSlots().get(lastId) == slot)
+				if (Lang.getMenuItem(MenuItemType.MAIN_MENU_GENERATOR).getSlots().size() == lastId)
+					break;
+				
+				if(Lang.getMenuItem(MenuItemType.MAIN_MENU_GENERATOR).getSlots().get(lastId) == slot)
 				{
 					if (e.getClick() == ClickType.LEFT)
 						Menus.openChancesMenu((Player) e.getWhoClicked(), entry.getValue());

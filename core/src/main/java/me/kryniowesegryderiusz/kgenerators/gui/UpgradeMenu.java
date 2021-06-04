@@ -69,12 +69,13 @@ public class UpgradeMenu implements Listener {
 	public void onClick(final InventoryClickEvent e)
 	{
 		if(e.isCancelled()) return;
-		if (!Menus.isVieving((Player) e.getWhoClicked(), MenuInventoryType.UPGRADE)) return;
+		Player p = (Player) e.getWhoClicked();
+		if (!Menus.isVieving(p, MenuInventoryType.UPGRADE)) return;
 		
 		int slot = e.getSlot();
-		if (MenuItemType.UPGRADE_MENU_BACK.getMenuItem().getSlots().contains(slot) && Lang.getMenuItem(MenuItemType.UPGRADE_MENU_BACK).isEnabled())
+		if (Lang.getMenuItem(MenuItemType.UPGRADE_MENU_BACK).getSlots().contains(slot) && Lang.getMenuItem(MenuItemType.UPGRADE_MENU_BACK).isEnabled())
 		{
-			Menus.openMainMenu((Player) e.getWhoClicked());
+			Menus.openMainMenu(p, Menus.getMenuPlayer(p).getGenerator());
 		}
 		e.setCancelled(true);
 	}

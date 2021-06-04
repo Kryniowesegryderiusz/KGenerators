@@ -26,7 +26,7 @@ public class ChancesMenu implements Listener {
 		
 		Inventory menu = Lang.getMenuInventory(MenuInventoryType.CHANCES).getInv(MenuInventoryType.CHANCES, player, exludedEnumMenuItems);
 
-		MenuItem generatorMenuItem = MenuItemType.CHANCES_MENU_CHANCE.getMenuItem();
+		MenuItem generatorMenuItem = Lang.getMenuItem(MenuItemType.CHANCES_MENU_CHANCE);
 		
 		ArrayList<Integer> slotList = generatorMenuItem.getSlots();
 		int lastId = -1;
@@ -58,13 +58,14 @@ public class ChancesMenu implements Listener {
 	public void onClick(final InventoryClickEvent e)
 	{
 		if(e.isCancelled()) return;
-		if (!Menus.isVieving((Player) e.getWhoClicked(), MenuInventoryType.CHANCES)) return;
+		Player p = (Player) e.getWhoClicked();
+		if (!Menus.isVieving(p, MenuInventoryType.CHANCES)) return;
 		
 		int slot = e.getSlot();
 		
-		if (MenuItemType.CHANCES_MENU_BACK.getMenuItem().getSlots().contains(slot) && Lang.getMenuItem(MenuItemType.CHANCES_MENU_BACK).isEnabled())
+		if (Lang.getMenuItem(MenuItemType.CHANCES_MENU_BACK).getSlots().contains(slot) && Lang.getMenuItem(MenuItemType.CHANCES_MENU_BACK).isEnabled())
 		{
-			Menus.openMainMenu((Player) e.getWhoClicked());
+			Menus.openMainMenu(p, Menus.getMenuPlayer(p).getGenerator());
 		}
 		e.setCancelled(true);
 	}

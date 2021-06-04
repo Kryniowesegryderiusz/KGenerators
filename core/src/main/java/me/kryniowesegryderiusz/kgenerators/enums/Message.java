@@ -1,7 +1,7 @@
 package me.kryniowesegryderiusz.kgenerators.enums;
 
 import lombok.Getter;
-import me.kryniowesegryderiusz.kgenerators.IMessage;
+import me.kryniowesegryderiusz.kgenerators.api.interfaces.IMessage;
 
 public enum Message implements IMessage {
 	Prefix("prefix", "&8[&6KGenerators&8] "),

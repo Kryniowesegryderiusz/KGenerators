@@ -47,6 +47,24 @@ public class Generators {
 		return generators.entrySet();
 	}
 	
+	public static Set<Entry<String, Generator>> getSpecifiedEntrySet(int firstGeneratorNr, int numberOfGenerators)
+	{
+		LinkedHashMap<String, Generator> gens = new LinkedHashMap<String, Generator>();
+		int nr = 0;
+		for (Entry<String, Generator> e : generators.entrySet())
+		{
+			if (nr >= firstGeneratorNr)
+			{
+				if (nr < firstGeneratorNr+numberOfGenerators)
+					gens.put(e.getKey(), e.getValue());
+				else
+					break;
+			}
+			nr++;
+		}
+		return gens.entrySet();
+	}
+	
 	public static boolean exists(String id)
 	{
 		if (generators.containsKey(id)) return true;

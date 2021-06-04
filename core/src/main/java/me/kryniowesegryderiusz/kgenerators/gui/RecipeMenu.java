@@ -37,7 +37,7 @@ public class RecipeMenu implements Listener {
 		 * Ingredients
 		 */
 		
-		MenuItem ingredientsItem = MenuItemType.RECIPE_MENU_INGREDIENS.getMenuItem();
+		MenuItem ingredientsItem = Lang.getMenuItem(MenuItemType.RECIPE_MENU_INGREDIENS);
 		ArrayList<Integer> slotList = ingredientsItem.getSlots();
 		int lastId = -1;
 
@@ -74,7 +74,7 @@ public class RecipeMenu implements Listener {
 		 * Result Item
 		 */
 		
-		MenuItem resultItem = MenuItemType.RECIPE_MENU_RESULT.getMenuItem();
+		MenuItem resultItem = Lang.getMenuItem(MenuItemType.RECIPE_MENU_RESULT);
 		
 		resultItem.setItemStack(generator.getGeneratorItem());
 		
@@ -94,12 +94,13 @@ public class RecipeMenu implements Listener {
 	public void onClick(final InventoryClickEvent e)
 	{
 		if(e.isCancelled()) return;
-		if (!Menus.isVieving((Player) e.getWhoClicked(), MenuInventoryType.RECIPE)) return;
+		Player p = (Player) e.getWhoClicked();
+		if (!Menus.isVieving(p, MenuInventoryType.RECIPE)) return;
 		
 		int slot = e.getSlot();
-		if (MenuItemType.RECIPE_MENU_BACK.getMenuItem().getSlots().contains(slot) && Lang.getMenuItem(MenuItemType.RECIPE_MENU_BACK).isEnabled())
+		if (Lang.getMenuItem(MenuItemType.RECIPE_MENU_BACK).getSlots().contains(slot) && Lang.getMenuItem(MenuItemType.RECIPE_MENU_BACK).isEnabled())
 		{
-			Menus.openMainMenu((Player) e.getWhoClicked());
+			Menus.openMainMenu(p, Menus.getMenuPlayer(p).getGenerator());
 		}
 		e.setCancelled(true);
 	}

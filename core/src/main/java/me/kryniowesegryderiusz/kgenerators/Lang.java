@@ -16,6 +16,7 @@ import me.kryniowesegryderiusz.kgenerators.enums.MenuItemType;
 import me.kryniowesegryderiusz.kgenerators.enums.MenuItemAdditionalLines;
 import me.kryniowesegryderiusz.kgenerators.enums.HologramText;
 import me.kryniowesegryderiusz.kgenerators.enums.MenuInventoryType;
+import me.kryniowesegryderiusz.kgenerators.api.interfaces.IMessage;
 import me.kryniowesegryderiusz.kgenerators.classes.MenuInventory;
 import me.kryniowesegryderiusz.kgenerators.classes.MenuItem;
 import me.kryniowesegryderiusz.kgenerators.enums.Message;
@@ -28,6 +29,7 @@ public class Lang {
 	
 	private static HashMap<String, ArrayList<String>> holograms = new HashMap<String, ArrayList<String>>();
 	
+	//<T extends Enum<T> & IMenuItemType> 
 	private static HashMap<MenuItemType, MenuItem> menuItems = new HashMap<MenuItemType, MenuItem>();
 	private static HashMap<MenuInventoryType, MenuInventory> menuInventories = new HashMap<MenuInventoryType, MenuInventory>();
 	private static HashMap<String, ArrayList<String>> menuItemsAdditionalLines = new HashMap<String, ArrayList<String>>();
@@ -263,6 +265,10 @@ public class Lang {
     	}
     }
     
+    /**
+     * Registers class with messages
+     * @param enum slass implementing IMessage
+     */
     public static <T extends Enum<T> & IMessage> void registerMessages(Class<T> c)
     {
         for(IMessage im : c.getEnumConstants())

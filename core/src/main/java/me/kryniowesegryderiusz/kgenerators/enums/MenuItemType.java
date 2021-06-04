@@ -1,9 +1,10 @@
 package me.kryniowesegryderiusz.kgenerators.enums;
 
 import lombok.Getter;
+import me.kryniowesegryderiusz.kgenerators.api.interfaces.IMenuItemType;
 import me.kryniowesegryderiusz.kgenerators.classes.MenuItem;
 
-public enum MenuItemType
+public enum MenuItemType implements IMenuItemType
 {
 	GENERATOR_MENU_FILLER(MenuInventoryType.GENERATOR, "filler", new MenuItem("GRAY_STAINED_GLASS_PANE", "&r", false, "0,1,2,3,4,5,6,7,8,9,17,18,26,27,35,36,37,38,39,40,41,42,43,44")),
 	GENERATOR_MENU_TIME_LEFT(MenuInventoryType.GENERATOR,"time-left", new MenuItem("CLOCK", "&aTime left for regeneration", false, "21" , "&a<time>")),
@@ -14,7 +15,9 @@ public enum MenuItemType
 	MAIN_MENU_FILLER(MenuInventoryType.MAIN, "filler", new MenuItem("GRAY_STAINED_GLASS_PANE", "&r", false, "0,1,2,3,4,5,6,7,8,36,37,38,39,40,41,42,43,44")),
 	MAIN_MENU_GENERATOR(MenuInventoryType.MAIN,"generator", new MenuItem("<generator>", "&a<generator_name>", false, "9,10,11,12,13,14,15,16,17,18,19,20,21,22,23,24,25,26,27,28,29,30,31,32,33,34,35" , "&6Left click:", "&eCheck generator chances")),
 	MAIN_MENU_LIMITS(MenuInventoryType.MAIN,"limits", new MenuItem("PLAYER_HEAD", "&aLimits", false, "8", "&eClick here to check limits")),
-	MAIN_MENU_QUIT(MenuInventoryType.MAIN,"quit", new  MenuItem("ARROW", "&cQuit", false, "40", "&6Quit menu")),
+	MAIN_MENU_QUIT(MenuInventoryType.MAIN,"quit", new  MenuItem("BARRIER", "&cQuit", false, "40", "&6Quit menu")),
+	MAIN_MENU_PAGE_PREVIOUS(MenuInventoryType.MAIN,"page.previous", new  MenuItem("ARROW", "&cPrevious page", false, "38", "&6Click to back", "&6to previous page")),
+	MAIN_MENU_PAGE_NEXT(MenuInventoryType.MAIN,"page.next", new  MenuItem("ARROW", "&cNext page", false, "42", "&6Click to go", "&6to next page")),
 	
 	CHANCES_MENU_FILLER(MenuInventoryType.CHANCES, "filler", new MenuItem("GRAY_STAINED_GLASS_PANE", "&r", false, "0,1,2,3,4,5,6,7,8,36,37,38,39,40,41,42,43,44")),
 	CHANCES_MENU_CHANCE(MenuInventoryType.CHANCES,"block", new MenuItem("<block>", "&a<block_name>", false, "9,10,11,12,13,14,15,16,17,18,19,20,21,22,23,24,25,26" , "&6Chance: &e<chance>%")),

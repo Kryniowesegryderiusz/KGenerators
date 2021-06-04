@@ -1,9 +1,10 @@
 package me.kryniowesegryderiusz.kgenerators.enums;
 
 import lombok.Getter;
+import me.kryniowesegryderiusz.kgenerators.api.interfaces.IMenuItemAdditionalLines;
 import me.kryniowesegryderiusz.kgenerators.classes.StringContent;
 
-public enum MenuItemAdditionalLines
+public enum MenuItemAdditionalLines implements IMenuItemAdditionalLines
 {
 	RECIPE("recipe", new StringContent("", "&6Right click:", "&echeck the recipe")),
 	UPGRADE("upgrade", new StringContent("", "&6Right click:", "&echeck how to", "&eget from upgrade")),

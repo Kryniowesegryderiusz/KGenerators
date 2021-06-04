@@ -39,18 +39,18 @@ public class GeneratorMenu implements Listener {
 	public void onClick(final InventoryClickEvent e)
 	{
 		if(e.isCancelled()) return;
-		if (!Menus.isVieving((Player) e.getWhoClicked(), MenuInventoryType.GENERATOR)) return;
+		Player p = (Player) e.getWhoClicked();
+		if (!Menus.isVieving(p, MenuInventoryType.GENERATOR)) return;
 		
 		int slot = e.getSlot();
-		if (MenuItemType.GENERATOR_MENU_PICK_UP.getMenuItem().getSlots().contains(slot) && Lang.getMenuItem(MenuItemType.GENERATOR_MENU_PICK_UP).isEnabled())
+		if (Lang.getMenuItem(MenuItemType.GENERATOR_MENU_PICK_UP).getSlots().contains(slot) && Lang.getMenuItem(MenuItemType.GENERATOR_MENU_PICK_UP).isEnabled())
 		{
-			Player p = (Player) e.getWhoClicked();
 			PickUp.pickup(p, Menus.getMenuPlayer(p).getGLocation());
 			Menus.closeInv(p);
 		}
-		if (MenuItemType.GENERATOR_MENU_QUIT.getMenuItem().getSlots().contains(slot) && Lang.getMenuItem(MenuItemType.GENERATOR_MENU_QUIT).isEnabled())
+		if (Lang.getMenuItem(MenuItemType.GENERATOR_MENU_QUIT).getSlots().contains(slot) && Lang.getMenuItem(MenuItemType.GENERATOR_MENU_QUIT).isEnabled())
 		{
-			Menus.closeInv((Player) e.getWhoClicked());
+			Menus.closeInv(p);
 		}
 		
 		e.setCancelled(true);

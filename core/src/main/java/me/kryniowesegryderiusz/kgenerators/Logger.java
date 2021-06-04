@@ -48,6 +48,12 @@ public class Logger {
 			message += exceptionStacktraceToString((Exception) object);
 			((Exception) object).printStackTrace();
 		}
+		else
+		{
+			message += object.toString();
+			if(logType.equals(LogType.ERROR)) Main.getInstance().getLogger().warning(message);
+			else Main.getInstance().getLogger().info(message);
+		}
 		
 		logToFile(message, logFile);
 	}

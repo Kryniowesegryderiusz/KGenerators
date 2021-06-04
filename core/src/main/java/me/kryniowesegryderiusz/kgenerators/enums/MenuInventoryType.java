@@ -1,9 +1,10 @@
 package me.kryniowesegryderiusz.kgenerators.enums;
 
 import lombok.Getter;
+import me.kryniowesegryderiusz.kgenerators.api.interfaces.IMenuInventoryType;
 import me.kryniowesegryderiusz.kgenerators.classes.MenuInventory;
 
-public enum MenuInventoryType
+public enum MenuInventoryType implements IMenuInventoryType
 {
 	GENERATOR("generator", new MenuInventory("&9Generator info", 45)),
 	

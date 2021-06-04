@@ -33,7 +33,7 @@ public class LimitsMenu implements Listener {
 		
 		Inventory menu = Lang.getMenuInventory(MenuInventoryType.LIMITS).getInv(MenuInventoryType.LIMITS, player, exludedEnumMenuItems);
 		
-		ArrayList<Integer> slotList = MenuItemType.LIMITS_MENU_LIMIT.getMenuItem().getSlots();
+		ArrayList<Integer> slotList = Lang.getMenuItem(MenuItemType.LIMITS_MENU_LIMIT).getSlots();
 		int lastId = -1;
 		
 		GeneratorPlayer gp = Players.getPlayer(player);
@@ -87,13 +87,14 @@ public class LimitsMenu implements Listener {
 	public void onClick(final InventoryClickEvent e)
 	{
 		if(e.isCancelled()) return;
-		if (!Menus.isVieving((Player) e.getWhoClicked(), MenuInventoryType.LIMITS)) return;
+		Player p = (Player) e.getWhoClicked();
+		if (!Menus.isVieving(p, MenuInventoryType.LIMITS)) return;
 		
 		int slot = e.getSlot();
 		
-		if (MenuItemType.LIMITS_MENU_BACK.getMenuItem().getSlots().contains(slot) && Lang.getMenuItem(MenuItemType.LIMITS_MENU_BACK).isEnabled())
+		if (Lang.getMenuItem(MenuItemType.LIMITS_MENU_BACK).getSlots().contains(slot) && Lang.getMenuItem(MenuItemType.LIMITS_MENU_BACK).isEnabled())
 		{
-			Menus.openMainMenu((Player) e.getWhoClicked());
+			Menus.openMainMenu(p, Menus.getMenuPlayer(p).getGenerator());
 		}
 		e.setCancelled(true);
 	}
