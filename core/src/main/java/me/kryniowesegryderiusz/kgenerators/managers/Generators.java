@@ -83,7 +83,6 @@ public class Generators {
 	 * @param item
 	 * @return generatorId of doubled recipe, otherwise null
 	 */
-	
 	public static String exactGeneratorItemExists(String generatorId, ItemStack item)
 	{
 

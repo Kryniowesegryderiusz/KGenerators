@@ -48,4 +48,10 @@ public class GeneratorLocation {
 	{
 		Remove.removeGenerator(this, drop);
 	}
+	
+	@Override
+	public String toString()
+	{
+		return "Generator " + this.generatorId + " owned by " + this.owner.getName() + " placed in " + this.location.toString();
+	}
 }

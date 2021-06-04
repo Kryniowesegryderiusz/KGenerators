@@ -8,17 +8,23 @@ import org.bukkit.Bukkit;
 import org.bukkit.Material;
 import org.bukkit.configuration.InvalidConfigurationException;
 import org.bukkit.entity.Player;
+import org.bukkit.event.EventHandler;
+import org.bukkit.event.Listener;
 
 import me.kryniowesegryderiusz.kgenerators.Logger;
 import me.kryniowesegryderiusz.kgenerators.Main;
+import me.kryniowesegryderiusz.kgenerators.managers.Locations;
 import me.kryniowesegryderiusz.kgenerators.utils.Config;
 import world.bentobox.bentobox.BentoBox;
+import world.bentobox.bentobox.api.events.island.IslandDeleteChunksEvent;
+import world.bentobox.bentobox.api.events.island.IslandDeletedEvent;
 import world.bentobox.bentobox.api.flags.Flag;
 import world.bentobox.bentobox.api.user.User;
 import world.bentobox.bentobox.database.objects.Island;
+import world.bentobox.bentobox.database.objects.IslandDeletion;
 import world.bentobox.bentobox.managers.RanksManager;
 
-public class BentoBoxHook {
+public class BentoBoxHook implements Listener {
 	
 	public static enum Type
 	{
@@ -33,6 +39,7 @@ public class BentoBoxHook {
 	
 	public static void setup()
 	{
+		Main.getInstance().getServer().getPluginManager().registerEvents(new BentoBoxHook(), Main.getInstance());
 		/*
 		 * Set up new setting
 		 */
@@ -119,5 +126,11 @@ public class BentoBoxHook {
 		}
 		return true;
 	}
-
+	
+	@EventHandler
+	public void onDeleteEvent (IslandDeleteChunksEvent e)
+	{
+		IslandDeletion id = e.getDeletedIslandInfo();
+		Locations.bulkRemoveGenerators(id.getWorld(), id.getMinX(), 0, id.getMinZ(), id.getMaxX(), id.getWorld().getMaxHeight(), id.getMaxZ(), false);
+	}
 }
