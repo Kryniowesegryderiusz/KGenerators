@@ -112,6 +112,7 @@ public class Main extends JavaPlugin {
     	Menus.setup();
     	
     	this.getServer().getPluginCommand("kgenerators").setExecutor(new Commands());
+    	this.getServer().getPluginCommand("kgenerators").setTabCompleter(new CommandTabCompleter());
 
     	this.getServer().getPluginManager().registerEvents(new BlockBreakListener(), this);
     	this.getServer().getPluginManager().registerEvents(new BlockPlaceListener(), this);

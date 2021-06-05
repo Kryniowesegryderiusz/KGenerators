@@ -234,6 +234,26 @@ public class Lang {
     	}
     }
     
+    /**
+     * Gets command list
+     * @param list for subcommands of commands or null if just regular commands
+     * @return
+     */
+    public static ArrayList<String> getCommands(CommandSender sender) {
+    	
+    	ArrayList<String> commands = new ArrayList<String>();
+    	
+    	for(Map.Entry<String, String> entry : lang.entrySet()) {
+    		String path = entry.getKey();
+    		String[] spath = path.split("\\.");
+    		
+    		if (spath.length == 3 && spath[0].equals("commands") && spath[2].equals("help") && sender.hasPermission("kgenerators." + spath[1])) {
+    			commands.add(spath[1]);
+    		}
+    	}
+		return commands;
+    }
+    
     public static void addReplecable(String key, String value) {
     	replecables.put(key, value);
     }

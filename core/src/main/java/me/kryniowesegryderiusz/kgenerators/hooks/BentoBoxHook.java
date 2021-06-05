@@ -2,6 +2,7 @@ package me.kryniowesegryderiusz.kgenerators.hooks;
 
 import java.io.File;
 import java.io.IOException;
+import java.util.ArrayList;
 import java.util.Optional;
 
 import org.bukkit.Bukkit;
@@ -13,6 +14,10 @@ import org.bukkit.event.Listener;
 
 import me.kryniowesegryderiusz.kgenerators.Logger;
 import me.kryniowesegryderiusz.kgenerators.Main;
+import me.kryniowesegryderiusz.kgenerators.Settings;
+import me.kryniowesegryderiusz.kgenerators.classes.GeneratorPlayer;
+import me.kryniowesegryderiusz.kgenerators.classes.Limit;
+import me.kryniowesegryderiusz.kgenerators.enums.Dependency;
 import me.kryniowesegryderiusz.kgenerators.managers.Locations;
 import me.kryniowesegryderiusz.kgenerators.utils.Config;
 import world.bentobox.bentobox.BentoBox;

@@ -8,7 +8,9 @@ import org.bukkit.inventory.ItemStack;
 import lombok.Getter;
 import lombok.Setter;
 import me.kryniowesegryderiusz.kgenerators.Lang;
+import me.kryniowesegryderiusz.kgenerators.enums.Dependency;
 import me.kryniowesegryderiusz.kgenerators.enums.Message;
+import me.kryniowesegryderiusz.kgenerators.hooks.BentoBoxHook;
 
 public class Limit {
 	
@@ -26,7 +28,7 @@ public class Limit {
 	private boolean onlyOwnerPickUp = false;
 	@Getter @Setter
 	private boolean onlyOwnerUse = false;
-
+	
 	public Limit(String id, String name, ItemStack item, ArrayList<Generator> generators)
 	{
 		this.id = id;
@@ -70,11 +72,17 @@ public class Limit {
 	 */
 	public Boolean fulfillsOnlyOwnerPickUp(GeneratorPlayer gp, GeneratorLocation gLocation)
 	{
-		return ownerCheck(gp, gLocation, Message.GENERATORS_LIMITS_CANT_PICK_UP);
+		if (this.onlyOwnerPickUp)
+			return ownerCheck(gp, gLocation, Message.GENERATORS_LIMITS_CANT_PICK_UP);
+		else
+			return true;
 	}
 
 	public Boolean fulfillsOnlyOwnerUse(GeneratorPlayer gp, GeneratorLocation gLocation){
-		return ownerCheck(gp, gLocation, Message.GENERATORS_LIMITS_CANT_PICK_USE);
+		if (this.onlyOwnerUse)
+			return ownerCheck(gp, gLocation, Message.GENERATORS_LIMITS_CANT_USE);
+		else
+			return true;
 	}
 	
 	private boolean ownerCheck(GeneratorPlayer gp, GeneratorLocation gLocation, Message message)
@@ -90,16 +98,14 @@ public class Limit {
 		/* To prevent errors if generator havent any owner */
 		if (gLocation.getOwner().isNone())
 			return true;
-		
-		if (this.isOnlyOwnerPickUp())
-		{				
-			if (gp != gLocation.getOwner())
-			{
-				Lang.addReplecable("<owner>", gLocation.getOwner().getName());
-				Lang.sendMessage(player, message);
-				return false;
-			}
+					
+		if (gp != gLocation.getOwner())
+		{
+			Lang.addReplecable("<owner>", gLocation.getOwner().getName());
+			Lang.sendMessage(player, message);
+			return false;
 		}
+		
 		return true;
 	}
 }

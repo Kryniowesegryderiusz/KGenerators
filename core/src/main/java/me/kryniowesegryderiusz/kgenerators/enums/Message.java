@@ -27,7 +27,7 @@ public enum Message implements IMessage {
 	
 	GENERATORS_LIMITS_CANT_MORE("generators.limits.cant-place-more-type", "&cYou cant place more than &6<number> <generator> &cgenerators, because of &6<limit>&c!"),
 	GENERATORS_LIMITS_CANT_PICK_UP("generators.limits.cant-pick-up", "&cYou cant pick up generator owned by &6<owner>&c!"),
-	GENERATORS_LIMITS_CANT_PICK_USE("generators.limits.cant-use", "&cYou cant use generator owned by &6<owner>&c!"),
+	GENERATORS_LIMITS_CANT_USE("generators.limits.cant-use", "&cYou cant use generator owned by &6<owner>&c!"),
 	
 	GENERATOR_PROTECTION_CANT_CHANGE_GENERATOR_ITEM("generators.protection.cant-change-generator-item", "&cYou cant change generator item!"),
 	
