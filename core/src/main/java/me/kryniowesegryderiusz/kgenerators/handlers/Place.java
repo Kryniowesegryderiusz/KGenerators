@@ -6,6 +6,7 @@ import org.bukkit.Location;
 import org.bukkit.entity.Player;
 
 import me.kryniowesegryderiusz.kgenerators.Lang;
+import me.kryniowesegryderiusz.kgenerators.Logger;
 import me.kryniowesegryderiusz.kgenerators.Main;
 import me.kryniowesegryderiusz.kgenerators.enums.Message;
 import me.kryniowesegryderiusz.kgenerators.enums.GeneratorType;
@@ -46,6 +47,10 @@ public class Place {
     	PlacedGeneratorsFile.saveGeneratorToFile(location, player, generator.getId());
     	if (!pGenerator.isNone()) pGenerator.addGeneratorToPlayer(generator);
     	
+    	if (player != null)
+    		Logger.info(player.getName() + " placed " + generator.getId() + " in " + gLocation.toStringLocation());
+    	else
+    		Logger.info("Something placed " + generator.getId() + " in " + gLocation.toStringLocation());
     	
     	if (generator.getAfterPlaceWaitModifier() == 0)
     	{

@@ -1,17 +1,14 @@
 package me.kryniowesegryderiusz.kgenerators.multiversion;
 
-import java.util.HashMap;
-
 import org.bukkit.NamespacedKey;
 import org.bukkit.inventory.ItemStack;
+import org.bukkit.inventory.RecipeChoice;
 import org.bukkit.inventory.ShapedRecipe;
+
 import me.kryniowesegryderiusz.kgenerators.Main;
 import me.kryniowesegryderiusz.kgenerators.classes.Generator;
-import me.kryniowesegryderiusz.kgenerators.classes.Recipe;
 
-public class RecipesLoader_1_12 implements RecipesLoader {
-	
-	HashMap<Generator, Recipe> recipes = new HashMap<Generator, Recipe>();
+public class RecipesLoader_1_13 implements RecipesLoader {
 
 	@Override
 	public ShapedRecipe getShapedRecipe(Generator generator) {
@@ -22,7 +19,7 @@ public class RecipesLoader_1_12 implements RecipesLoader {
 
 	@Override
 	public ShapedRecipe setIngredient(ShapedRecipe shaped, char c, ItemStack item) {
-		shaped.setIngredient(c, item.getData());
+		shaped.setIngredient(c, new RecipeChoice.ExactChoice(item));
 		return shaped;
 	}
 

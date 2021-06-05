@@ -121,7 +121,8 @@ public class Main extends JavaPlugin {
     	this.getServer().getPluginManager().registerEvents(new PlayerInteractListener(), this);
     	this.getServer().getPluginManager().registerEvents(new InventoryClickListener(), this);
     	this.getServer().getPluginManager().registerEvents(new FurnaceSmeltListener(), this);
-    	this.getServer().getPluginManager().registerEvents(new PrepareItemCraftListener(), this);    	
+    	if (!MultiVersion.isHigher(12))
+    		this.getServer().getPluginManager().registerEvents(new PrepareItemCraftListener(), this);    	
     }
 
 	@Override

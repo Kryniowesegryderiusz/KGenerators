@@ -3,6 +3,7 @@ package me.kryniowesegryderiusz.kgenerators.handlers;
 import org.bukkit.entity.Player;
 
 import me.kryniowesegryderiusz.kgenerators.Lang;
+import me.kryniowesegryderiusz.kgenerators.Logger;
 import me.kryniowesegryderiusz.kgenerators.Main;
 import me.kryniowesegryderiusz.kgenerators.enums.Dependency;
 import me.kryniowesegryderiusz.kgenerators.enums.Message;
@@ -35,6 +36,7 @@ public class PickUp {
 		}
 		
 		Remove.removeGenerator(gLocation, true);
+		Logger.info(p.getName() + " picked up " + gLocation.toString());
 		Lang.addReplecable("<generator>", generator.getGeneratorItem().getItemMeta().getDisplayName());
 		Lang.sendMessage(p, Message.GENERATORS_PICK_UP_SUCCESFULL);
 		return;

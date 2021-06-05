@@ -70,11 +70,13 @@ public class Locations {
 				ArrayList<GeneratorLocation> generatorLocationsToRemove = new ArrayList<GeneratorLocation>();
 				for (Entry<Location, GeneratorLocation> e : locations.entrySet())
 				{
+					//Detected BentoBox removing island with unknown owner in world bskyblock_world starting at -50,750 and ending at 50,850
+					
 					Location l = e.getKey();
 					if (l.getWorld() == world
 							&& l.getX() >= minX && l.getX() <= maxX
 							&& l.getY() >= minY && l.getY() <= maxY
-							&& l.getX() >= minZ && l.getZ() <= maxZ)
+							&& l.getZ() >= minZ && l.getZ() <= maxZ)
 					{
 						generatorLocationsToRemove.add(e.getValue());
 					}

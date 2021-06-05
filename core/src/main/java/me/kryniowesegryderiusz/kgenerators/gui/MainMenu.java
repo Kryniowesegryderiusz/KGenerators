@@ -22,6 +22,7 @@ import me.kryniowesegryderiusz.kgenerators.Lang;
 import me.kryniowesegryderiusz.kgenerators.Logger;
 import me.kryniowesegryderiusz.kgenerators.Main;
 import me.kryniowesegryderiusz.kgenerators.managers.Generators;
+import me.kryniowesegryderiusz.kgenerators.managers.Recipes;
 import me.kryniowesegryderiusz.kgenerators.managers.Upgrades;
 
 public class MainMenu {
@@ -75,8 +76,7 @@ public class MainMenu {
 			
 			generatorMenuItem.replace("<generator_name>", generator.getGeneratorItem().getItemMeta().getDisplayName());
 			
-			List<Recipe> recipe = Main.getInstance().getServer().getRecipesFor(generator.getGeneratorItem());
-			if (!recipe.isEmpty() && recipe.get(0).getResult().equals(generator.getGeneratorItem()))
+			if (Recipes.get(generator) != null)
 			{
 				generatorMenuItem.addLore(Lang.getMenuItemAdditionalLines(MenuItemAdditionalLines.RECIPE));
 			}
@@ -133,8 +133,7 @@ public class MainMenu {
 					else if (clickType == ClickType.RIGHT)
 					{
 						Generator generator = entry.getValue();
-						List<Recipe> recipe = Main.getInstance().getServer().getRecipesFor(generator.getGeneratorItem());
-						if (!recipe.isEmpty() && recipe.get(0).getResult().equals(generator.getGeneratorItem()))
+						if (Recipes.get(generator) != null)
 						{
 							Menus.openRecipeMenu(p, generator);
 						}

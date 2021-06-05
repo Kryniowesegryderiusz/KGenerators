@@ -32,13 +32,13 @@ public class UpgradeMenu {
 		/*
 		 * Ingredient item
 		 */
-		MenuItem ingredientItem = MenuItemType.UPGRADE_MENU_INGREDIENT.getMenuItem();
+		MenuItem ingredientItem = Lang.getMenuItem(MenuItemType.UPGRADE_MENU_INGREDIENT);
 		
 		ingredientItem.setItemStack(previousGenerator.getGeneratorItem());
 		
 		if (ingredientItem.getItemType().contains("<generator>"))
 			ingredientItem.setItemStack(previousGenerator.getGeneratorItem());
-		ingredientItem.replace("<generator_name>", previousGenerator.getGeneratorItem().getItemMeta().getDisplayName());
+		ingredientItem.replace("<generator_name>", previousGenerator.getGeneratorItemName());
 		
 		ItemStack readyItem = ingredientItem.build();
 
@@ -49,13 +49,11 @@ public class UpgradeMenu {
 		 * Result Item
 		 */
 				
-		MenuItem resultItem = MenuItemType.UPGRADE_MENU_RESULT.getMenuItem();
-		
-		resultItem.setItemStack(generator.getGeneratorItem());
+		MenuItem resultItem = Lang.getMenuItem(MenuItemType.UPGRADE_MENU_RESULT);
 		
 		if (resultItem.getItemType().contains("<generator>"))
 			resultItem.setItemStack(generator.getGeneratorItem());
-		resultItem.replace("<generator_name>", generator.getGeneratorItem().getItemMeta().getDisplayName());
+		resultItem.replace("<generator_name>", generator.getGeneratorItemName());
 		
 		readyItem = resultItem.build();
 

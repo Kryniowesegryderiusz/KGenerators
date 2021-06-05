@@ -52,6 +52,16 @@ public class GeneratorLocation {
 	@Override
 	public String toString()
 	{
-		return "Generator " + this.generatorId + " owned by " + this.owner.getName() + " placed in " + this.location.toString();
+		if (this.owner != null)
+			return this.generatorId + " owned by " + this.owner.getName() 
+			+ " placed in " + toStringLocation();
+		else
+			return this.generatorId + " owned by no one"
+			+ " placed in " + toStringLocation();
+	}
+	public String toStringLocation()
+	{
+		return "world " + this.location.getWorld().getName()
+		+ " at " + String.valueOf(this.location.getX()) + ", " + String.valueOf(this.location.getY()) + ", " + String.valueOf(this.location.getZ());
 	}
 }

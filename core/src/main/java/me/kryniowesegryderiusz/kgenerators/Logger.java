@@ -15,6 +15,7 @@ import java.net.URL;
 import java.nio.charset.Charset;
 import java.nio.charset.StandardCharsets;
 import java.nio.file.Paths;
+import java.nio.file.StandardCopyOption;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.List;
@@ -24,10 +25,11 @@ import org.bukkit.plugin.Plugin;
 
 import me.kryniowesegryderiusz.kgenerators.enums.LogType;
 import me.kryniowesegryderiusz.kgenerators.enums.Message;
+import me.kryniowesegryderiusz.kgenerators.files.FilesFunctions;
 
 public class Logger {
 	
-	static String logFile = "log.txt";
+	static String logFile = "logs/latest.log";
 	static String configFile = "config.yml";
 	static String generatorsFile = "generators.yml";
 	static String recipesFile = "recipes.yml";
@@ -126,10 +128,18 @@ public class Logger {
 	
 	public static void setup()
 	{
+		FilesFunctions.mkdir("logs");
 		File saveTo = new File(Main.getInstance().getDataFolder(), logFile);
         if (saveTo.exists())
         {
-            saveTo.delete();
+        	try {
+        		Date now = new Date();
+        		SimpleDateFormat format = new SimpleDateFormat("dd-MM-yyyy_HH-mm-ss");
+				Files.move(saveTo.toPath(), new File(Main.getInstance().getDataFolder(), "logs/"+format.format(now).toString()+".log").toPath(), StandardCopyOption.REPLACE_EXISTING);
+			} catch (IOException e) {
+				Logger.error("Cannot create new logs file");
+				Logger.error(e);
+			}
         }
 	}
 	

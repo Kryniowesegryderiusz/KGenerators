@@ -17,7 +17,6 @@ import me.kryniowesegryderiusz.kgenerators.managers.Locations;
 import me.kryniowesegryderiusz.kgenerators.utils.Config;
 import world.bentobox.bentobox.BentoBox;
 import world.bentobox.bentobox.api.events.island.IslandDeleteChunksEvent;
-import world.bentobox.bentobox.api.events.island.IslandDeletedEvent;
 import world.bentobox.bentobox.api.flags.Flag;
 import world.bentobox.bentobox.api.user.User;
 import world.bentobox.bentobox.database.objects.Island;
@@ -131,6 +130,7 @@ public class BentoBoxHook implements Listener {
 	public void onDeleteEvent (IslandDeleteChunksEvent e)
 	{
 		IslandDeletion id = e.getDeletedIslandInfo();
+		Logger.info("Detected BentoBox removing island in world " + id.getWorld().getName() + " starting at " + id.getMinX() + "," + id.getMinZ() + " and ending at " + id.getMaxX()+","+id.getMaxZ());
 		Locations.bulkRemoveGenerators(id.getWorld(), id.getMinX(), 0, id.getMinZ(), id.getMaxX(), id.getWorld().getMaxHeight(), id.getMaxZ(), false);
 	}
 }

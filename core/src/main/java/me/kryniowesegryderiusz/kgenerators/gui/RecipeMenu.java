@@ -3,12 +3,9 @@ package me.kryniowesegryderiusz.kgenerators.gui;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
+
 import org.bukkit.Material;
 import org.bukkit.entity.Player;
-import org.bukkit.event.EventHandler;
-import org.bukkit.event.Listener;
-import org.bukkit.event.inventory.InventoryClickEvent;
 import org.bukkit.inventory.Inventory;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.ShapedRecipe;
@@ -40,7 +37,7 @@ public class RecipeMenu {
 		MenuItem ingredientsItem = Lang.getMenuItem(MenuItemType.RECIPE_MENU_INGREDIENS);
 		ArrayList<Integer> slotList = ingredientsItem.getSlots();
 		int lastId = -1;
-
+		
 		Recipe recipe = Recipes.get(generator);
 		HashMap<Character,ItemStack> ingredients = recipe.getIngredients();
 		for (String s : recipe.getShape())

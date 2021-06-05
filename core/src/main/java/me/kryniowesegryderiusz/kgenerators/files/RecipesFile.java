@@ -87,7 +87,7 @@ public class RecipesFile {
 		                } else {
 		                  item = XUtils.parseItemStack(file.getString(generatorID + ".ingredients." + ingredientsString), "Recipes file", false);
 		                } 
-		                shapedRecipe.setIngredient(ingredientsChar, item.getData());
+		                shapedRecipe = Main.getRecipesLoader().setIngredient(shapedRecipe, ingredientsChar, item);
 		                recipe.addIngredient(ingredientsChar, item);
 		              } 
 		            
