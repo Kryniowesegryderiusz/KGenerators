@@ -13,6 +13,7 @@ import com.bgsoftware.superiorskyblock.api.island.Island;
 
 import me.kryniowesegryderiusz.kgenerators.enums.Dependency;
 import me.kryniowesegryderiusz.kgenerators.enums.GeneratorType;
+import me.kryniowesegryderiusz.kgenerators.hooks.SuperiorSkyblock2Hook;
 import me.kryniowesegryderiusz.kgenerators.Logger;
 import me.kryniowesegryderiusz.kgenerators.Main;
 import me.kryniowesegryderiusz.kgenerators.api.events.PostBlockGenerationEvent;
@@ -72,10 +73,7 @@ public class GenerateBlock {
 		  }
 		  
 		  if (Main.dependencies.contains(Dependency.SUPERIOR_SKYBLOCK_2)) {
-			  Island island = SuperiorSkyblockAPI.getGrid().getIslandAt(diggableBlockLocation);
-			  if (island != null) {
-				  island.handleBlockPlace(diggableBlock);
-			  }
+			  SuperiorSkyblock2Hook.handleBlockPlace(diggableBlock);
 		  }
 		  
 		Main.getInstance().getServer().getPluginManager().callEvent(new PostBlockGenerationEvent(gLocation));

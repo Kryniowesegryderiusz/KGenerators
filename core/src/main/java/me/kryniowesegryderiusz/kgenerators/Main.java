@@ -29,6 +29,7 @@ import me.kryniowesegryderiusz.kgenerators.gui.UpgradeMenu;
 import me.kryniowesegryderiusz.kgenerators.handlers.Vault;
 import me.kryniowesegryderiusz.kgenerators.hooks.BentoBoxHook;
 import me.kryniowesegryderiusz.kgenerators.hooks.SlimefunHook;
+import me.kryniowesegryderiusz.kgenerators.hooks.SuperiorSkyblock2Hook;
 import me.kryniowesegryderiusz.kgenerators.hooks.JetsMinionsHook;
 import me.kryniowesegryderiusz.kgenerators.files.ConfigFile;
 import me.kryniowesegryderiusz.kgenerators.files.FilesConverter;
@@ -149,6 +150,7 @@ public class Main extends JavaPlugin {
     		
 	    	if (Bukkit.getPluginManager().isPluginEnabled("SuperiorSkyblock2")) {
 	    		Logger.info("Dependencies: Detected plugin SuperiorSkyblock2. Hooking into it.");
+	    		SuperiorSkyblock2Hook.setup();
 	    		dependencies.add(Dependency.SUPERIOR_SKYBLOCK_2);
 	    	}
 	    	
