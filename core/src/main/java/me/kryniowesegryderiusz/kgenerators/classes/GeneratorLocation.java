@@ -1,6 +1,8 @@
 package me.kryniowesegryderiusz.kgenerators.classes;
 
 import org.bukkit.Location;
+import org.bukkit.entity.Player;
+
 import lombok.Getter;
 import me.kryniowesegryderiusz.kgenerators.enums.GeneratorType;
 import me.kryniowesegryderiusz.kgenerators.handlers.Remove;
@@ -47,6 +49,11 @@ public class GeneratorLocation {
 	public void remove(boolean drop)
 	{
 		Remove.removeGenerator(this, drop);
+	}
+	
+	public void remove(Player toWho)
+	{
+		Remove.removeGenerator(this, toWho);
 	}
 	
 	@Override

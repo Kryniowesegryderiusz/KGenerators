@@ -70,6 +70,42 @@ public class KGeneratorsAPI
 	}
 	
 	/**
+	 * Removes generator with all required checks
+	 * Just fire it
+	 * 
+	 * @param location Generator to remove location
+	 * @param drop Determines if generator item should drop
+	 */
+	public static void removeGenerator(GeneratorLocation generatorLocation, boolean drop)
+	{
+		Remove.removeGenerator(generatorLocation, drop);
+	}
+	
+	/**
+	 * Removes generator with all required checks and gives it to player if pick-up-to-eq is enabled
+	 * Just fire it
+	 * 
+	 * @param location Generator to remove location
+	 * @param drop Determines if generator item should drop
+	 */
+	public static void removeGenerator(Location location, Player toWho)
+	{
+		Remove.removeGenerator(location, toWho);
+	}
+	
+	/**
+	 * Removes generator with all required checks and gives it to player if pick-up-to-eq is enabled
+	 * Just fire it
+	 * 
+	 * @param location Generator to remove location
+	 * @param drop Determines if generator item should drop
+	 */
+	public static void removeGenerator(GeneratorLocation generatorLocation, Player toWho)
+	{
+		Remove.removeGenerator(generatorLocation, toWho);
+	}
+	
+	/**
 	 * Regenerates generator block immediately;
 	 * 
 	 * @param location Generator location

@@ -383,14 +383,21 @@ public class FilesConverter {
 			Logger.info("FilesConverter: Added intervals settings to config file");
 		}
 		
-		if (!config.contains("afk-storage"))
+		if (!config.contains("disabled-worlds"))
 		{
 			addToFile(file, "");
-			addToFile(file, "#Afk storages adds auto mining feature to generators");
-			addToFile(file, "#You can dinf more on: ");
-			addToFile(file, "afk-storage:");
-			addToFile(file, "  enabled: false");
-			Logger.info("FilesConverter: Added afk storage settings to config file");
+			addToFile(file, "#List of worlds, where generators will not be enabled:");
+			addToFile(file, "disabled-worlds:");
+			addToFile(file, "- test_world");
+			Logger.info("FilesConverter: Added disabled-worlds settings to config file");
+		}
+			
+		if (!config.contains("pick-up-to-eq"))
+		{
+			addToFile(file, "");
+			addToFile(file, "#Should generators be picked up directly to equipment?");
+			addToFile(file, "pick-up-to-eq: true");
+			Logger.info("FilesConverter: Added pick-up-to-eq settings to config file");
 		}
 	}
 	

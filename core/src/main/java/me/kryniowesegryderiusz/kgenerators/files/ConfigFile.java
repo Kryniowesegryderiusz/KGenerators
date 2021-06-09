@@ -76,6 +76,16 @@ public class ConfigFile {
 		if (config.contains("intervals.gui-update"))
 			settings.setHologramUpdateFrequency(config.getInt("intervals.gui-update"));
 		
+		if (config.contains("pick-up-to-eq"))
+		{
+			settings.setPickUpToEq(config.getBoolean("pick-up-to-eq"));
+		}
+		
+		if (config.contains("disabled-worlds") )
+		{
+			settings.getDisabledWorlds().addAll((ArrayList<String>) config.getList("disabled-worlds"));
+		}
+		
 		Main.setSettings(settings);
 	}
 

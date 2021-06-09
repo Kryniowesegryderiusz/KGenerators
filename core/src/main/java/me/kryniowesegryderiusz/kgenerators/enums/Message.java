@@ -7,6 +7,7 @@ public enum Message implements IMessage {
 	Prefix("prefix", "&8[&6KGenerators&8] "),
 	
 	GENERATORS_ANY_OWNER_NONE("generators.any.owner-none", "&cNone"),
+	GENERATORS_ANY_DISABLED_WORLD("generators.any.disabled", "&cGenerators are disabled in this world!"),
 	
 	GENERATORS_DIGGING_CANT_HERE("generators.digging.cant-here", "&cYou can't dig generated blocks here!"),
 	GENERATORS_DIGGING_ONLY_GEN("generators.digging.only-gen", "&cYou can only dig generated blocks here!"),

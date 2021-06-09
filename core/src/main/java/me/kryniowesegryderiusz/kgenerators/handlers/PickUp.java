@@ -35,7 +35,7 @@ public class PickUp {
 			return;
 		}
 		
-		Remove.removeGenerator(gLocation, true);
+		Remove.removeGenerator(gLocation, p);
 		Logger.info(p.getName() + " picked up " + gLocation.toString());
 		Lang.addReplecable("<generator>", generator.getGeneratorItem().getItemMeta().getDisplayName());
 		Lang.sendMessage(p, Message.GENERATORS_PICK_UP_SUCCESFULL);

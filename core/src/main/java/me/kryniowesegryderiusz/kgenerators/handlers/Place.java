@@ -20,11 +20,24 @@ import me.kryniowesegryderiusz.kgenerators.managers.Schedules;
 
 public class Place {
 	
+	/**
+	 * Handle place of generator
+	 * @param location
+	 * @param generator
+	 * @param player
+	 * @return whether placing was successful
+	 */
 	public static boolean place (Location location, Generator generator, @Nullable Player player)
 	{
     	Location aLocation = location.clone().add(0,1,0);
     	GeneratorLocation gLocation = new GeneratorLocation(generator.getId(), location, Players.getPlayer(player));
     	GeneratorPlayer pGenerator = Players.getPlayer(player);
+    	
+    	if (Main.getSettings().isWorldDisabled(location.getWorld()))
+    	{
+    		Lang.sendMessage(player, Message.GENERATORS_ANY_DISABLED_WORLD);
+    		return false;
+    	}
     	
     	if (!pGenerator.canPlace(gLocation))
 	    {

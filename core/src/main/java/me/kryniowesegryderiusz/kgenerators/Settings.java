@@ -4,6 +4,7 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.LinkedHashMap;
 
+import org.bukkit.World;
 import org.bukkit.inventory.ItemStack;
 
 import lombok.Getter;
@@ -35,6 +36,12 @@ public class Settings {
 	private short explosionHandler = 0;
 	
 	@Setter @Getter
+	private boolean pickUpToEq = true;
+	
+	@Getter
+	private ArrayList<String> disabledWorlds = new ArrayList<String>();
+	
+	@Setter @Getter
 	private int generationCheckFrequency = 10;
 	@Setter @Getter
 	private int hologramUpdateFrequency = 20;
@@ -61,6 +68,11 @@ public class Settings {
 	public GeneratorAction getAction(Action action)
 	{
 		return actions.get(action);
+	}
+	
+	public boolean isWorldDisabled(World world)
+	{
+		return this.disabledWorlds.contains(world.getName());
 	}
 	
 }
