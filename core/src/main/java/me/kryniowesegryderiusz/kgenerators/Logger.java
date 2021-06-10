@@ -15,6 +15,7 @@ import java.net.URL;
 import java.nio.charset.Charset;
 import java.nio.charset.StandardCharsets;
 import java.nio.file.Paths;
+import java.nio.file.StandardCopyOption;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.List;
@@ -22,24 +23,26 @@ import java.util.List;
 import org.bukkit.command.CommandSender;
 import org.bukkit.plugin.Plugin;
 
-import me.kryniowesegryderiusz.kgenerators.Enums.EnumLog;
-import me.kryniowesegryderiusz.kgenerators.Enums.EnumMessage;
+import me.kryniowesegryderiusz.kgenerators.enums.LogType;
+import me.kryniowesegryderiusz.kgenerators.enums.Message;
+import me.kryniowesegryderiusz.kgenerators.files.FilesFunctions;
 
 public class Logger {
 	
-	static String logFile = "log.txt";
+	static String logFile = "logs/latest.log";
 	static String configFile = "config.yml";
 	static String generatorsFile = "generators.yml";
 	static String recipesFile = "recipes.yml";
 	static String upgradesFile = "upgrades.yml";
+	static String limitsFile = "limits.yml";
 	
-	private static void log(Object object, EnumLog logType)
+	private static void log(Object object, LogType logType)
 	{
 		String message = logType.getHeader() + "";
 		if (object instanceof String)
 		{
 			message += (String) object;
-			if(logType.equals(EnumLog.ERROR)) Main.getInstance().getLogger().warning(message);
+			if(logType.equals(LogType.ERROR)) Main.getInstance().getLogger().warning(message);
 			else Main.getInstance().getLogger().info(message);
 		}
 		else if (object instanceof Exception)
@@ -47,28 +50,34 @@ public class Logger {
 			message += exceptionStacktraceToString((Exception) object);
 			((Exception) object).printStackTrace();
 		}
+		else
+		{
+			message += object.toString();
+			if(logType.equals(LogType.ERROR)) Main.getInstance().getLogger().warning(message);
+			else Main.getInstance().getLogger().info(message);
+		}
 		
 		logToFile(message, logFile);
 	}
 	
 	public static void error(Object object)
 	{
-		log(object, EnumLog.ERROR);	
+		log(object, LogType.ERROR);	
 	}
 	
 	public static void warn(Object object)
 	{
-		log(object, EnumLog.WARNINGS);	
+		log(object, LogType.WARNINGS);	
 	}
 	
 	public static void info(Object object)
 	{
-		log(object, EnumLog.INFO);	
+		log(object, LogType.INFO);	
 	}
 	
 	public static void debug(Object object)
 	{
-		log(object, EnumLog.DEBUG);	
+		log(object, LogType.DEBUG);	
 	}
 	
 	private static String exceptionStacktraceToString(Exception e)
@@ -119,10 +128,18 @@ public class Logger {
 	
 	public static void setup()
 	{
+		FilesFunctions.mkdir("logs");
 		File saveTo = new File(Main.getInstance().getDataFolder(), logFile);
         if (saveTo.exists())
         {
-            saveTo.delete();
+        	try {
+        		Date now = new Date();
+        		SimpleDateFormat format = new SimpleDateFormat("dd-MM-yyyy_HH-mm-ss");
+				Files.move(saveTo.toPath(), new File(Main.getInstance().getDataFolder(), "logs/"+format.format(now).toString()+".log").toPath(), StandardCopyOption.REPLACE_EXISTING);
+			} catch (IOException e) {
+				Logger.error("Cannot create new logs file");
+				Logger.error(e);
+			}
         }
 	}
 	
@@ -150,17 +167,18 @@ public class Logger {
 							fileString += getLinesFromFile(configFile) + "\n";
 							fileString += getLinesFromFile(generatorsFile) + "\n";
 							fileString += getLinesFromFile(upgradesFile) + "\n";
+							fileString += getLinesFromFile(limitsFile) + "\n";
 							fileString += getLinesFromFile(recipesFile);
 							
 							String url = postHaste(sender, fileString, false);
 							if (url != null)
 							{
 								Lang.addReplecable("<url>", url);
-								Lang.sendMessage(sender, EnumMessage.CommandsDebugDone);
+								Lang.sendMessage(sender, Message.COMMANDS_DEBUG_DONE);
 							}
 							
 						} catch (IOException e) {
-							Lang.sendMessage(sender, EnumMessage.CommandsDebugError);
+							Lang.sendMessage(sender, Message.COMMANDS_DEBUG_ERROR);
 							Logger.error(e);
 						}
 					}
@@ -202,7 +220,7 @@ public class Logger {
 			BufferedReader reader = new BufferedReader(new InputStreamReader(conn.getInputStream()));
 			response = reader.readLine();
 		} catch (IOException e) {
-			Lang.sendMessage(sender, EnumMessage.CommandsDebugError);
+			Lang.sendMessage(sender, Message.COMMANDS_DEBUG_ERROR);
 			Logger.error(e);
 		}
 		

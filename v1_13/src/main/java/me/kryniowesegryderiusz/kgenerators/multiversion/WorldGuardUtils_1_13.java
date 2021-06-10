@@ -16,7 +16,7 @@ import com.sk89q.worldguard.protection.managers.RegionManager;
 import com.sk89q.worldguard.protection.regions.RegionContainer;
 
 import me.kryniowesegryderiusz.kgenerators.Logger;
-import me.kryniowesegryderiusz.kgenerators.Enums.EnumWGFlags;
+import me.kryniowesegryderiusz.kgenerators.enums.WGFlag;
 import me.kryniowesegryderiusz.kgenerators.classes.GeneratorLocation;
 import me.kryniowesegryderiusz.kgenerators.multiversion.WorldGuardUtils;
 
@@ -46,14 +46,14 @@ public class WorldGuardUtils_1_13 implements WorldGuardUtils {
 				return;
 			}
 			
-			for (EnumWGFlags eflag : EnumWGFlags.values())
+			for (WGFlag eflag : WGFlag.values())
 			{
 				Logger.info("WorldGuard: Registering " + eflag.getFlagId() + " flag");
 				try {
 					StateFlag flag = new StateFlag(eflag.getFlagId(), eflag.getDefaultState());
 					registry.register(flag);
-					if (eflag == EnumWGFlags.PICK_UP) PICK_UP_FLAG = flag;
-					if (eflag == EnumWGFlags.ONLY_GEN_BREAK) ONLY_GEN_BREAK_FLAG = flag;
+					if (eflag == WGFlag.PICK_UP) PICK_UP_FLAG = flag;
+					if (eflag == WGFlag.ONLY_GEN_BREAK) ONLY_GEN_BREAK_FLAG = flag;
 					
 				}
 				catch (FlagConflictException e)
@@ -63,8 +63,8 @@ public class WorldGuardUtils_1_13 implements WorldGuardUtils {
 			        if (existing instanceof StateFlag) {
 			        	Logger.warn("WorldGuard: Overriding flag!");
 			        	
-			        	if (eflag == EnumWGFlags.PICK_UP) PICK_UP_FLAG = (StateFlag) existing;
-						if (eflag == EnumWGFlags.ONLY_GEN_BREAK) ONLY_GEN_BREAK_FLAG = (StateFlag) existing;
+			        	if (eflag == WGFlag.PICK_UP) PICK_UP_FLAG = (StateFlag) existing;
+						if (eflag == WGFlag.ONLY_GEN_BREAK) ONLY_GEN_BREAK_FLAG = (StateFlag) existing;
 
 			        } else {
 			            Logger.error("WorldGuard: Flag overriding not possible! Types dont match!");
@@ -81,7 +81,7 @@ public class WorldGuardUtils_1_13 implements WorldGuardUtils {
 
 	/* Returns if pick up is allow/deny */
 	@Override
-	public boolean worldGuardFlagCheck(Location location, Player player, EnumWGFlags flag) {
+	public boolean worldGuardFlagCheck(Location location, Player player, WGFlag flag) {
 		
 		RegionContainer container = WorldGuard.getInstance().getPlatform().getRegionContainer();
 		
@@ -91,8 +91,8 @@ public class WorldGuardUtils_1_13 implements WorldGuardUtils {
 		LocalPlayer localPlayer = WorldGuardPlugin.inst().wrapPlayer(player);
 		
 		StateFlag stateFlag = null;
-		if (flag == EnumWGFlags.PICK_UP) stateFlag = PICK_UP_FLAG;
-		if (flag == EnumWGFlags.ONLY_GEN_BREAK) stateFlag = ONLY_GEN_BREAK_FLAG;
+		if (flag == WGFlag.PICK_UP) stateFlag = PICK_UP_FLAG;
+		if (flag == WGFlag.ONLY_GEN_BREAK) stateFlag = ONLY_GEN_BREAK_FLAG;
 		
 		if (flag != null && regionSet.testState(localPlayer, stateFlag)) return true;
 		return false;

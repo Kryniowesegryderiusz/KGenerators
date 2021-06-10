@@ -7,39 +7,38 @@ import lombok.Getter;
 import me.kryniowesegryderiusz.kgenerators.Logger;
 import me.kryniowesegryderiusz.kgenerators.utils.Config;
 import me.kryniowesegryderiusz.kgenerators.xseries.XUtils;
-import me.kryniowesegryderiusz.kgenerators.Enums;
-import me.kryniowesegryderiusz.kgenerators.Enums.EnumAction;
-import me.kryniowesegryderiusz.kgenerators.Enums.EnumInteraction;
+import me.kryniowesegryderiusz.kgenerators.enums.Action;
+import me.kryniowesegryderiusz.kgenerators.enums.Interaction;
 
 public class GeneratorAction {
 	
 	@Getter
-	EnumAction action;
+	Action action;
 	@Getter
-	EnumInteraction interaction = EnumInteraction.NONE;
+	Interaction interaction = Interaction.NONE;
 	@Getter
 	ItemStack item = null;
 	@Getter
 	boolean sneak = false;
 	
-	public GeneratorAction(EnumAction action, Config config, String path)
+	public GeneratorAction(Action action, Config config, String path)
 	{
 		this.action = action;
 		
 		path += ".";
 		if (config.contains(path+"mode"))
 		{
-			this.interaction = Enums.getModeByString(config.getString(path+"mode"));
-			if (action != EnumAction.PICKUP && this.interaction == EnumInteraction.BREAK)
+			this.interaction = Interaction.Functions.getModeByString(config.getString(path+"mode"));
+			if (action != Action.PICKUP && this.interaction == Interaction.BREAK)
 			{
 				Logger.error("Settings: You cannot set BREAK action to " + action.toString() + "! Using NONE!");
-				this.interaction = EnumInteraction.NONE;
+				this.interaction = Interaction.NONE;
 			}
 		}
 		else
 		{
 			Logger.warn("Settings: Action mode for " + action.toString() + " is not set! Using NONE!");
-			this.interaction = EnumInteraction.NONE;
+			this.interaction = Interaction.NONE;
 		}
 		
 		if (config.contains(path+"item"))
@@ -66,7 +65,7 @@ public class GeneratorAction {
 		
 	}
 	
-	public GeneratorAction(EnumAction action, EnumInteraction interaction, ItemStack item, boolean sneak)
+	public GeneratorAction(Action action, Interaction interaction, ItemStack item, boolean sneak)
 	{
 		this.action = action;
 		this.interaction = interaction;
@@ -74,7 +73,7 @@ public class GeneratorAction {
 		this.sneak = sneak;
 	}
 
-	public boolean requirementsMet(EnumInteraction gotInteraction, Player p)
+	public boolean requirementsMet(Interaction gotInteraction, Player p)
 	{
 		if (gotInteraction != this.interaction) return false;
 		else if (item != null && p.getInventory().getItemInMainHand().getType() != item.getType()) return false;

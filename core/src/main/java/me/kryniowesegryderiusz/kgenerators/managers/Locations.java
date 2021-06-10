@@ -1,5 +1,6 @@
 package me.kryniowesegryderiusz.kgenerators.managers;
 
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map.Entry;
 import java.util.Set;
@@ -10,8 +11,11 @@ import org.bukkit.Bukkit;
 import org.bukkit.Location;
 import org.bukkit.World;
 
+import me.kryniowesegryderiusz.kgenerators.Logger;
+import me.kryniowesegryderiusz.kgenerators.Main;
 import me.kryniowesegryderiusz.kgenerators.classes.GeneratorLocation;
 import me.kryniowesegryderiusz.kgenerators.classes.GeneratorPlayer;
+import me.kryniowesegryderiusz.kgenerators.handlers.Remove;
 
 public class Locations {
 	
@@ -55,9 +59,45 @@ public class Locations {
 	}
 	
 	/*
-	 * Converters
+	 * Bulk updates
 	 */
 	
+	public static void bulkRemoveGenerators(World world, int minX, int minY, int minZ, int maxX, int maxY, int maxZ, boolean dropGenerator)
+	{
+		Main.getInstance().getServer().getScheduler().runTaskAsynchronously(Main.getInstance(), new Runnable() {
+			@Override
+			public void run() {
+				ArrayList<GeneratorLocation> generatorLocationsToRemove = new ArrayList<GeneratorLocation>();
+				for (Entry<Location, GeneratorLocation> e : locations.entrySet())
+				{
+					//Detected BentoBox removing island with unknown owner in world bskyblock_world starting at -50,750 and ending at 50,850
+					
+					Location l = e.getKey();
+					if (l.getWorld() == world
+							&& l.getX() >= minX && l.getX() <= maxX
+							&& l.getY() >= minY && l.getY() <= maxY
+							&& l.getZ() >= minZ && l.getZ() <= maxZ)
+					{
+						generatorLocationsToRemove.add(e.getValue());
+					}
+				}
+				Main.getInstance().getServer().getScheduler().runTask(Main.getInstance(), new Runnable() {
+					@Override
+					public void run() {
+						for (GeneratorLocation gloc : generatorLocationsToRemove)
+						{
+							Logger.info("Bulk generator removal: " + gloc.toString());
+							Remove.removeGenerator(gloc, dropGenerator);
+						}
+					}
+				});
+			}
+		});
+	}
+	
+	/*
+	 * Converters
+	 */
 	
 	public static String locationToString(Location location)
 	{

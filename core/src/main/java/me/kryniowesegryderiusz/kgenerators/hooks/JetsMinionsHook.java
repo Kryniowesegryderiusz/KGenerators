@@ -1,4 +1,4 @@
-package me.kryniowesegryderiusz.kgenerators.listeners;
+package me.kryniowesegryderiusz.kgenerators.hooks;
 
 import org.bukkit.Location;
 import org.bukkit.event.EventHandler;
@@ -7,13 +7,13 @@ import org.bukkit.inventory.ItemStack;
 
 import me.jet315.minions.events.MinerBlockBreakEvent;
 import me.kryniowesegryderiusz.kgenerators.Main;
-import me.kryniowesegryderiusz.kgenerators.Enums.GeneratorType;
+import me.kryniowesegryderiusz.kgenerators.enums.GeneratorType;
 import me.kryniowesegryderiusz.kgenerators.classes.Generator;
 import me.kryniowesegryderiusz.kgenerators.classes.GeneratorLocation;
 import me.kryniowesegryderiusz.kgenerators.managers.Locations;
 import me.kryniowesegryderiusz.kgenerators.managers.Schedules;
 
-public class onJetsMinions implements Listener {
+public class JetsMinionsHook implements Listener {
 	
 	@EventHandler
 	public void MinionBreakEvent(final MinerBlockBreakEvent e){

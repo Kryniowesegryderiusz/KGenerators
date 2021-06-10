@@ -1,10 +1,13 @@
 package me.kryniowesegryderiusz.kgenerators.multiversion;
 
-import me.kryniowesegryderiusz.kgenerators.utils.Config;
+import org.bukkit.inventory.ItemStack;
+import org.bukkit.inventory.ShapedRecipe;
+
+import me.kryniowesegryderiusz.kgenerators.classes.Generator;
 
 public interface RecipesLoader {
 	
-	public void loadRecipes(Config config);
+	public ShapedRecipe getShapedRecipe(Generator generator);
+	public ShapedRecipe setIngredient(ShapedRecipe shaped, char c, ItemStack item);
 	
-
 }

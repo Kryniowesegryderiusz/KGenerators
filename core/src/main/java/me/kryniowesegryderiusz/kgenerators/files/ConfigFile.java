@@ -7,11 +7,11 @@ import java.util.ArrayList;
 import org.bukkit.configuration.InvalidConfigurationException;
 import org.bukkit.inventory.ItemStack;
 
-import me.kryniowesegryderiusz.kgenerators.Enums.EnumAction;
+import me.kryniowesegryderiusz.kgenerators.enums.Action;
 import me.kryniowesegryderiusz.kgenerators.Logger;
 import me.kryniowesegryderiusz.kgenerators.Main;
+import me.kryniowesegryderiusz.kgenerators.Settings;
 import me.kryniowesegryderiusz.kgenerators.classes.GeneratorAction;
-import me.kryniowesegryderiusz.kgenerators.classes.Settings;
 import me.kryniowesegryderiusz.kgenerators.utils.Config;
 import me.kryniowesegryderiusz.kgenerators.utils.ConfigManager;
 import me.kryniowesegryderiusz.kgenerators.xseries.XUtils;
@@ -55,24 +55,14 @@ public class ConfigFile {
 			settings.setLang(config.getString("lang"));
 		}
 		
-		if (config.contains("per-player-generators.enabled"))
-		{
-			settings.setPerPlayerGenerators(config.getBoolean("per-player-generators.enabled"));
-		}
-		
-		if (config.contains("per-player-generators.overall-place-limit"))
-		{
-			settings.setPerPlayerGeneratorsPlaceLimit(config.getInt("per-player-generators.overall-place-limit"));
-		}
-		
 		if (config.contains("generators-actionbar-messages"))
 		{
 			settings.setActionbarMessages(config.getBoolean("generators-actionbar-messages"));
 		}
 		
-		settings.addGeneratorAction(EnumAction.PICKUP, new GeneratorAction(EnumAction.PICKUP, config, "actions.pick-up"));
-		settings.addGeneratorAction(EnumAction.OPENGUI, new GeneratorAction(EnumAction.OPENGUI, config, "actions.open-gui"));
-		settings.addGeneratorAction(EnumAction.TIMELEFT, new GeneratorAction(EnumAction.TIMELEFT, config, "actions.time-left-check"));
+		settings.addGeneratorAction(Action.PICKUP, new GeneratorAction(Action.PICKUP, config, "actions.pick-up"));
+		settings.addGeneratorAction(Action.OPENGUI, new GeneratorAction(Action.OPENGUI, config, "actions.open-gui"));
+		settings.addGeneratorAction(Action.TIMELEFT, new GeneratorAction(Action.TIMELEFT, config, "actions.time-left-check"));
 		
 		if (config.contains("explosion-handler"))
 		{
@@ -85,6 +75,16 @@ public class ConfigFile {
 			settings.setHologramUpdateFrequency(config.getInt("intervals.generation-check"));
 		if (config.contains("intervals.gui-update"))
 			settings.setHologramUpdateFrequency(config.getInt("intervals.gui-update"));
+		
+		if (config.contains("pick-up-to-eq"))
+		{
+			settings.setPickUpToEq(config.getBoolean("pick-up-to-eq"));
+		}
+		
+		if (config.contains("disabled-worlds") )
+		{
+			settings.getDisabledWorlds().addAll((ArrayList<String>) config.getList("disabled-worlds"));
+		}
 		
 		Main.setSettings(settings);
 	}

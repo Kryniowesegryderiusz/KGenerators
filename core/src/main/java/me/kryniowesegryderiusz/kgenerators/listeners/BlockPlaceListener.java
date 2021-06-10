@@ -8,15 +8,15 @@ import org.bukkit.event.Listener;
 import org.bukkit.event.block.BlockPlaceEvent;
 import org.bukkit.inventory.ItemStack;
 
-import me.kryniowesegryderiusz.kgenerators.Enums.GeneratorType;
+import me.kryniowesegryderiusz.kgenerators.enums.GeneratorType;
 import me.kryniowesegryderiusz.kgenerators.Lang;
-import me.kryniowesegryderiusz.kgenerators.Enums.EnumMessage;
+import me.kryniowesegryderiusz.kgenerators.enums.Message;
 import me.kryniowesegryderiusz.kgenerators.classes.Generator;
 import me.kryniowesegryderiusz.kgenerators.handlers.Place;
 import me.kryniowesegryderiusz.kgenerators.managers.Generators;
 import me.kryniowesegryderiusz.kgenerators.managers.Locations;
 
-public class onBlockPlaceEvent implements Listener {
+public class BlockPlaceListener implements Listener {
 	
 	@EventHandler(priority = EventPriority.HIGH)
 	public void BlockPlaceEvent(final BlockPlaceEvent e){
@@ -56,7 +56,7 @@ public class onBlockPlaceEvent implements Listener {
 			return false;
 		}
 
-		Lang.sendMessage(p, EnumMessage.GeneratorsPlaceCantPlaceBlock);
+		Lang.sendMessage(p, Message.GENERATORS_PLACE_CANT_PLACE_BLOCK);
 		return true;
 	}
 }

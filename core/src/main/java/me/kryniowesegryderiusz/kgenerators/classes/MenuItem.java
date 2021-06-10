@@ -12,7 +12,7 @@ import org.bukkit.inventory.meta.ItemMeta;
 import lombok.Getter;
 import lombok.Setter;
 import me.kryniowesegryderiusz.kgenerators.Main;
-import me.kryniowesegryderiusz.kgenerators.Enums.EnumMenuItem;
+import me.kryniowesegryderiusz.kgenerators.enums.MenuItemType;
 import me.kryniowesegryderiusz.kgenerators.utils.Config;
 import me.kryniowesegryderiusz.kgenerators.xseries.XUtils;
 
@@ -113,6 +113,29 @@ public class MenuItem implements Cloneable {
 		}
 	}
 	
+	public void replaceLore(String key, ArrayList<String> array)
+	{
+		ArrayList<String> newDesc = new ArrayList<String>();
+		for (String s : this.lore)
+		{
+			if (s.contains(key))
+			{
+				if (array != null)
+				{
+					for (String as : array)
+					{
+						newDesc.add(ChatColor.translateAlternateColorCodes('&', as));
+					}
+				}
+			}
+			else
+			{
+				newDesc.add(s);
+			}
+		}
+		this.lore = newDesc;
+	}
+	
 	public ItemStack build()
 	{
 		ItemStack item;
@@ -152,7 +175,7 @@ public class MenuItem implements Cloneable {
 		
 	}
 
-	public void load(EnumMenuItem menu, Config config) {
+	public void load(MenuItemType menu, Config config) {
 		load(menu.getKey(), config);
 	}
 	

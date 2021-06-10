@@ -12,30 +12,36 @@ import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Player;
 import org.bukkit.inventory.ItemStack;
 
-import me.kryniowesegryderiusz.kgenerators.Enums.EnumMenuItem;
-import me.kryniowesegryderiusz.kgenerators.Enums.EnumMenuItemAdditional;
-import me.kryniowesegryderiusz.kgenerators.Enums.EnumHologram;
-import me.kryniowesegryderiusz.kgenerators.Enums.EnumMenuInventory;
-import me.kryniowesegryderiusz.kgenerators.Enums.EnumMessage;
+import me.kryniowesegryderiusz.kgenerators.enums.MenuItemType;
+import me.kryniowesegryderiusz.kgenerators.enums.MenuItemAdditionalLines;
+import me.kryniowesegryderiusz.kgenerators.enums.HologramText;
+import me.kryniowesegryderiusz.kgenerators.enums.MenuInventoryType;
+import me.kryniowesegryderiusz.kgenerators.api.interfaces.IMessage;
 import me.kryniowesegryderiusz.kgenerators.classes.MenuInventory;
 import me.kryniowesegryderiusz.kgenerators.classes.MenuItem;
+import me.kryniowesegryderiusz.kgenerators.enums.Message;
 import me.kryniowesegryderiusz.kgenerators.utils.Config;
+import me.kryniowesegryderiusz.kgenerators.xseries.XMaterial;
 
 public class Lang {
-	
+
 	private static LinkedHashMap<String, String> lang = new LinkedHashMap<String, String>();
 	
 	private static HashMap<String, ArrayList<String>> holograms = new HashMap<String, ArrayList<String>>();
 	
-	private static HashMap<EnumMenuItem, MenuItem> menuItems = new HashMap<EnumMenuItem, MenuItem>();
-	private static HashMap<EnumMenuInventory, MenuInventory> menuInventories = new HashMap<EnumMenuInventory, MenuInventory>();
+	//<T extends Enum<T> & IMenuItemType> 
+	private static HashMap<MenuItemType, MenuItem> menuItems = new HashMap<MenuItemType, MenuItem>();
+	private static HashMap<MenuInventoryType, MenuInventory> menuInventories = new HashMap<MenuInventoryType, MenuInventory>();
 	private static HashMap<String, ArrayList<String>> menuItemsAdditionalLines = new HashMap<String, ArrayList<String>>();
+	
+	private static HashMap<String, String> customNames = new HashMap<String, String>();
 	
 	private static LinkedHashMap<String, String> replecables = new LinkedHashMap<String, String>();
 
-	public static void loadMessages(Config config, Config guiConfig) throws IOException {
+	public static void loadMessages(Config config, Config guiConfig, Config configCustomNames) throws IOException {
 
 		addDefaults();
+		registerMessages(Message.class);
 		
 		/*
 		 * Regular lang
@@ -85,11 +91,11 @@ public class Lang {
 		/*
 		 * Guis
 		 */
-		for (Entry<EnumMenuInventory, MenuInventory> e : menuInventories.entrySet())
+		for (Entry<MenuInventoryType, MenuInventory> e : menuInventories.entrySet())
     	{
 			e.getValue().load(e.getKey(), guiConfig);
     	}
-		for (Entry<EnumMenuItem, MenuItem> e : menuItems.entrySet())
+		for (Entry<MenuItemType, MenuItem> e : menuItems.entrySet())
     	{
 			e.getValue().load(e.getKey(), guiConfig);
     	}
@@ -119,10 +125,22 @@ public class Lang {
 			menuItemsAdditionalLines.put(e.getKey(), lines);
     	}
 		
+		/*
+		 * Custom names
+		 */
+		
+		if (configCustomNames != null)
+		{
+			for(String obj: configCustomNames.getConfigurationSection("").getKeys(false))
+	    	{
+	    		customNames.put(obj, configCustomNames.getString(obj));
+	    	}
+		}
+		
 	}
 	
     @SuppressWarnings("rawtypes")
-	public static void sendMessage (CommandSender sender, EnumMessage m, boolean forceChat){
+	public static <T extends Enum<T> & IMessage> void sendMessage (CommandSender sender, T m, boolean forceChat, boolean prefix){
     	String key = m.getKey();
     	String message = lang.get(key);
     	if (message != null && message.length() != 0){
@@ -132,7 +150,8 @@ public class Lang {
 	        	message = message.replace(partKey, partValue);
 	        }
 	        
-	        message = lang.get("prefix") + message;
+	        if (prefix)
+	        	message = lang.get("prefix") + message;
 	        
         	String[] splittedMessage = message.split("\n");
     		for (String s : splittedMessage) {
@@ -151,12 +170,12 @@ public class Lang {
 		}
     }
     
-    public static void sendMessage (CommandSender sender, EnumMessage m){
-    	sendMessage (sender, m, false);
+    public static <T extends Enum<T> & IMessage> void sendMessage (CommandSender sender, T m){
+    	sendMessage(sender, m, false, true);
     }
     
 	@SuppressWarnings("rawtypes")
-	public static String getMessage (EnumMessage m, boolean prefix, boolean cleanReplecables){
+	public static <T extends Enum<T> & IMessage> String getMessage (T m, boolean prefix, boolean cleanReplecables){
 		String message = lang.get(m.getKey());
     	if (message != null && message.length() != 0){
     		
@@ -177,26 +196,26 @@ public class Lang {
 		return null;
     }
 	
-	public static String getMessage (EnumMessage m){
+	public static <T extends Enum<T> & IMessage> String getMessage (T m){
 		return getMessage(m, false, true);
 	}
 	
-	public static ArrayList<String> getHologram(EnumHologram h)
+	public static ArrayList<String> getHologram(HologramText h)
 	{
 		return holograms.get(h.getKey());
 	}
 	
-	public static ArrayList<String> getMenuItemAdditionalLines(EnumMenuItemAdditional a)
+	public static ArrayList<String> getMenuItemAdditionalLines(MenuItemAdditionalLines a)
 	{
 		return menuItemsAdditionalLines.get(a.getKey());
 	}
 	
-	public static MenuItem getMenuItem(EnumMenuItem m)
+	public static MenuItem getMenuItem(MenuItemType m)
 	{
 		return menuItems.get(m).clone();
 	}
 	
-	public static MenuInventory getMenuInventory(EnumMenuInventory m)
+	public static MenuInventory getMenuInventory(MenuInventoryType m)
 	{
 		return menuInventories.get(m);
 	}
@@ -212,8 +231,27 @@ public class Lang {
     		if (spath.length == 3 && spath[0].equals("commands") && spath[2].equals("help") && sender.hasPermission("kgenerators." + spath[1])) {
     			sender.sendMessage(lang.get("commands.help.format").replace("<subcommand>", spath[1]).replace("<help>", entry.getValue()));
     		}
-    		
     	}
+    }
+    
+    /**
+     * Gets command list
+     * @param list for subcommands of commands or null if just regular commands
+     * @return
+     */
+    public static ArrayList<String> getCommands(CommandSender sender) {
+    	
+    	ArrayList<String> commands = new ArrayList<String>();
+    	
+    	for(Map.Entry<String, String> entry : lang.entrySet()) {
+    		String path = entry.getKey();
+    		String[] spath = path.split("\\.");
+    		
+    		if (spath.length == 3 && spath[0].equals("commands") && spath[2].equals("help") && sender.hasPermission("kgenerators." + spath[1])) {
+    			commands.add(spath[1]);
+    		}
+    	}
+		return commands;
     }
     
     public static void addReplecable(String key, String value) {
@@ -223,43 +261,55 @@ public class Lang {
     private static void addDefaults()
     {
     	lang.clear();
-    	for (EnumMessage m : EnumMessage.values()) {
-    		lang.put(m.getKey(), m.getDefaultMessage());
-    	}
     	
     	holograms.clear();
-    	for (EnumHologram e : EnumHologram.values())
+    	for (HologramText e : HologramText.values())
     	{
     		holograms.put(e.getKey(), e.getStringContent().getLines());
     	}
     	
     	menuItems.clear();
-    	for (EnumMenuItem g : EnumMenuItem.values()) {
+    	for (MenuItemType g : MenuItemType.values()) {
     		menuItems.put(g, g.getMenuItem());
     	}
     	
     	menuInventories.clear();
-    	for (EnumMenuInventory g : EnumMenuInventory.values()) {
+    	for (MenuInventoryType g : MenuInventoryType.values()) {
     		menuInventories.put(g, g.getMenuInventory());
     	}
     	
     	menuItemsAdditionalLines.clear();
-    	for (EnumMenuItemAdditional e : EnumMenuItemAdditional.values())
+    	for (MenuItemAdditionalLines e : MenuItemAdditionalLines.values())
     	{
     		menuItemsAdditionalLines.put(e.getKey(), e.getStringContent().getLines());
     	}
+    }
+    
+    /**
+     * Registers class with messages
+     * @param enum slass implementing IMessage
+     */
+    public static <T extends Enum<T> & IMessage> void registerMessages(Class<T> c)
+    {
+        for(IMessage im : c.getEnumConstants())
+        {
+        	lang.put(im.getKey(), im.getMessage());
+        }
     }
     
     /*
      * Other
      */
     
-    public static String getItemTypeName(ItemStack item)
+    @SuppressWarnings("unlikely-arg-type")
+	public static String getItemTypeName(ItemStack item)
     {
     	String name = "";
     	
-    	if (item.hasItemMeta() && item.getItemMeta().hasLocalizedName())
-    		name = item.getItemMeta().getLocalizedName();
+    	if (item.hasItemMeta() && item.getItemMeta().hasDisplayName())
+    		name = item.getItemMeta().getDisplayName();
+    	else if (customNames.get(XMaterial.matchXMaterial(item)) != null)
+    		name = customNames.get(XMaterial.matchXMaterial(item));
     	else
     	{
     		String type = item.getType().toString();

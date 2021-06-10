@@ -6,7 +6,7 @@ import org.bukkit.event.inventory.FurnaceSmeltEvent;
 
 import me.kryniowesegryderiusz.kgenerators.managers.Generators;
 
-public class onFurnaceSmeltEvent implements Listener {
+public class FurnaceSmeltListener implements Listener {
 	
 	@EventHandler
 	public void furnaceSmeltEvent(final FurnaceSmeltEvent e)

@@ -9,13 +9,14 @@ import org.bukkit.event.Listener;
 import org.bukkit.event.block.BlockPistonExtendEvent;
 import org.bukkit.event.block.BlockPistonRetractEvent;
 import me.kryniowesegryderiusz.kgenerators.Main;
-import me.kryniowesegryderiusz.kgenerators.Enums.GeneratorType;
+import me.kryniowesegryderiusz.kgenerators.enums.GeneratorType;
 import me.kryniowesegryderiusz.kgenerators.classes.Generator;
 import me.kryniowesegryderiusz.kgenerators.classes.GeneratorLocation;
+import me.kryniowesegryderiusz.kgenerators.managers.Limits;
 import me.kryniowesegryderiusz.kgenerators.managers.Locations;
 import me.kryniowesegryderiusz.kgenerators.managers.Schedules;
 
-public class onBlockPistonEvent implements Listener {
+public class BlockPistonListener implements Listener {
 
 	@EventHandler
 	public void BlockPistonExtendEvent (final BlockPistonExtendEvent e){
@@ -44,11 +45,8 @@ public class onBlockPistonEvent implements Listener {
 			
 			if (generator != null) {
 				if (generator.getType() == GeneratorType.SINGLE && generator.isAllowPistonPush()) {
-					if (generator.getPlaceholder() == null || !generator.getPlaceholder().equals(Main.getBlocksUtils().getItemStackByBlock(block))) {
-						if (!generator.getOnlyOwnerUse())
-						{
-							Schedules.schedule(gLocation);
-						}
+					if ((generator.getPlaceholder() == null || !generator.getPlaceholder().equals(Main.getBlocksUtils().getItemStackByBlock(block))) && !Limits.isOnlyOwnerUse(generator)) {
+						Schedules.schedule(gLocation);
 					}
 					else
 					{
@@ -64,11 +62,8 @@ public class onBlockPistonEvent implements Listener {
 			if (bGenerator != null) {
 				if (bGenerator.getType() == GeneratorType.DOUBLE && bGenerator.isAllowPistonPush())
 				{
-					if (bGenerator.getPlaceholder() == null || !bGenerator.getPlaceholder().equals(Main.getBlocksUtils().getItemStackByBlock(block))) {
-						if (!bGenerator.getOnlyOwnerUse())
-						{
-							Schedules.schedule(bgLocation);
-						}
+					if ((bGenerator.getPlaceholder() == null || !bGenerator.getPlaceholder().equals(Main.getBlocksUtils().getItemStackByBlock(block))) && !Limits.isOnlyOwnerUse(bGenerator)) {
+						Schedules.schedule(bgLocation);
 					}
 					else
 					{

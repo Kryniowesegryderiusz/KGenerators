@@ -10,35 +10,35 @@ import org.bukkit.inventory.Inventory;
 import org.bukkit.inventory.ItemStack;
 
 import me.kryniowesegryderiusz.kgenerators.Lang;
-import me.kryniowesegryderiusz.kgenerators.Enums.EnumMenuInventory;
-import me.kryniowesegryderiusz.kgenerators.Enums.EnumMenuItem;
+import me.kryniowesegryderiusz.kgenerators.enums.MenuInventoryType;
+import me.kryniowesegryderiusz.kgenerators.enums.MenuItemType;
 import me.kryniowesegryderiusz.kgenerators.classes.Generator;
 import me.kryniowesegryderiusz.kgenerators.classes.MenuItem;
 import me.kryniowesegryderiusz.kgenerators.managers.Generators;
 import me.kryniowesegryderiusz.kgenerators.managers.Upgrades;
 
-public class UpgradeMenu implements Listener {
+public class UpgradeMenu {
 	
 	public static Inventory get(Player player, Generator generator)
 	{		
-		ArrayList<EnumMenuItem> exludedEnumMenuItems = new ArrayList<EnumMenuItem>();
-		exludedEnumMenuItems.add(EnumMenuItem.UpgradeMenuIngredient);
-		exludedEnumMenuItems.add(EnumMenuItem.UpgradeMenuResult);
+		ArrayList<MenuItemType> exludedEnumMenuItems = new ArrayList<MenuItemType>();
+		exludedEnumMenuItems.add(MenuItemType.UPGRADE_MENU_INGREDIENT);
+		exludedEnumMenuItems.add(MenuItemType.UPGRADE_MENU_RESULT);
 		
 		Generator previousGenerator = Generators.get(Upgrades.getPreviousGeneratorId(generator.getId()));
 		
-		Inventory menu = Lang.getMenuInventory(EnumMenuInventory.Upgrade).getInv(EnumMenuInventory.Upgrade, player, exludedEnumMenuItems, "<cost>", String.valueOf(previousGenerator.getUpgrade().getCost()));
+		Inventory menu = Lang.getMenuInventory(MenuInventoryType.UPGRADE).getInv(MenuInventoryType.UPGRADE, player, exludedEnumMenuItems, "<cost>", String.valueOf(previousGenerator.getUpgrade().getCost()));
 		
 		/*
 		 * Ingredient item
 		 */
-		MenuItem ingredientItem = EnumMenuItem.UpgradeMenuIngredient.getMenuItem();
+		MenuItem ingredientItem = Lang.getMenuItem(MenuItemType.UPGRADE_MENU_INGREDIENT);
 		
 		ingredientItem.setItemStack(previousGenerator.getGeneratorItem());
 		
 		if (ingredientItem.getItemType().contains("<generator>"))
 			ingredientItem.setItemStack(previousGenerator.getGeneratorItem());
-		ingredientItem.replace("<generator_name>", previousGenerator.getGeneratorItem().getItemMeta().getDisplayName());
+		ingredientItem.replace("<generator_name>", previousGenerator.getGeneratorItemName());
 		
 		ItemStack readyItem = ingredientItem.build();
 
@@ -49,13 +49,11 @@ public class UpgradeMenu implements Listener {
 		 * Result Item
 		 */
 				
-		MenuItem resultItem = EnumMenuItem.UpgradeMenuResult.getMenuItem();
-		
-		resultItem.setItemStack(generator.getGeneratorItem());
+		MenuItem resultItem = Lang.getMenuItem(MenuItemType.UPGRADE_MENU_RESULT);
 		
 		if (resultItem.getItemType().contains("<generator>"))
 			resultItem.setItemStack(generator.getGeneratorItem());
-		resultItem.replace("<generator_name>", generator.getGeneratorItem().getItemMeta().getDisplayName());
+		resultItem.replace("<generator_name>", generator.getGeneratorItemName());
 		
 		readyItem = resultItem.build();
 
@@ -65,18 +63,12 @@ public class UpgradeMenu implements Listener {
 		return menu;
 	}
 	
-	@EventHandler
-	public void onClick(final InventoryClickEvent e)
+	public static void onClick(Player p, int slot)
 	{
-		if(e.isCancelled()) return;
-		if (!Menus.isVieving((Player) e.getWhoClicked(), EnumMenuInventory.Upgrade)) return;
-		
-		int slot = e.getSlot();
-		if (EnumMenuItem.UpgradeMenuBack.getMenuItem().getSlots().contains(slot) && Lang.getMenuItem(EnumMenuItem.UpgradeMenuBack).isEnabled())
+		if (Lang.getMenuItem(MenuItemType.UPGRADE_MENU_BACK).getSlots().contains(slot) && Lang.getMenuItem(MenuItemType.UPGRADE_MENU_BACK).isEnabled())
 		{
-			Menus.openMainMenu((Player) e.getWhoClicked());
+			Menus.openMainMenu(p, Menus.getMenuPlayer(p).getGenerator());
 		}
-		e.setCancelled(true);
 	}
 
 }

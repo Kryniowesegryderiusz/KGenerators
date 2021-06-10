@@ -8,8 +8,9 @@ import org.bukkit.OfflinePlayer;
 import org.bukkit.entity.Player;
 
 import lombok.Getter;
-import me.kryniowesegryderiusz.kgenerators.Enums.EnumMessage;
+import me.kryniowesegryderiusz.kgenerators.enums.Message;
 import me.kryniowesegryderiusz.kgenerators.managers.Generators;
+import me.kryniowesegryderiusz.kgenerators.managers.Limits;
 import me.kryniowesegryderiusz.kgenerators.Lang;
 import me.kryniowesegryderiusz.kgenerators.Main;
 
@@ -47,42 +48,42 @@ public class GeneratorPlayer {
 		if (!isNone)
 			return this.nick;
 		else
-			return Lang.getMessage(EnumMessage.GeneratorsPPGOwnerNone, false, false);
+			return Lang.getMessage(Message.GENERATORS_ANY_OWNER_NONE, false, false);
 	}
 	
 	/*
 	 * Per player generators
 	 */
 	
-	private HashMap<String, Integer> playersGenerators = new HashMap<String, Integer>();
+	private HashMap<Generator, Integer> playersGenerators = new HashMap<Generator, Integer>();
 	
-	public void addGeneratorToPlayer(String generatorId)
+	public void addGeneratorToPlayer(Generator generator)
 	{
 		if (isNone)
 			return;
 		
-		if (playersGenerators.containsKey(generatorId))
+		if (playersGenerators.containsKey(generator))
 		{
-			int nr = playersGenerators.get(generatorId);
+			int nr = playersGenerators.get(generator);
 			nr ++;
-			playersGenerators.put(generatorId, nr);
+			playersGenerators.put(generator, nr);
 		}
 		else
 		{
-			playersGenerators.put(generatorId, 1);
+			playersGenerators.put(generator, 1);
 		}
 	}
 	
-	public void removeGeneratorFromPlayer(String generatorId)
+	public void removeGeneratorFromPlayer(Generator generator)
 	{
 		if (isNone)
 			return;
 		
-		if (playersGenerators.containsKey(generatorId))
+		if (playersGenerators.containsKey(generator))
 		{
-			int nr = playersGenerators.get(generatorId);
+			int nr = playersGenerators.get(generator);
 			nr--;
-			playersGenerators.put(generatorId, nr);
+			playersGenerators.put(generator, nr);
 		}
 	}
 	
@@ -92,20 +93,20 @@ public class GeneratorPlayer {
 			return 0;
 		
 		int nr = 0;
-		for (Entry<String, Integer> e : playersGenerators.entrySet())
+		for (Entry<Generator, Integer> e : playersGenerators.entrySet())
 		{
 			nr = nr + e.getValue();
 		}
 		return nr;
 	}
 	
-	public Integer getGeneratorsCount(String generatorId)
+	public Integer getGeneratorsCount(Generator generator)
 	{
 		if (isNone)
 			return 0;
 		
-		if (playersGenerators.containsKey(generatorId))
-			return playersGenerators.get(generatorId);
+		if (playersGenerators.containsKey(generator))
+			return playersGenerators.get(generator);
 		else
 			return 0;
 	}
@@ -117,40 +118,16 @@ public class GeneratorPlayer {
 	 * @param generatorId
 	 * @return
 	 */
-	public Boolean canPlace(String generatorId)
-	{		
-		if (Main.getSettings().isPerPlayerGenerators())
+	public Boolean canPlace(GeneratorLocation gLoc)
+	{	
+		if (!Main.getSettings().isLimits())
+			return true;
+		
+		PlayerLimits pl = new PlayerLimits(this.getOnlinePlayer());
+		for (Limit limit : Limits.getValues())
 		{
-			if (this.isNone)
-				return true;
-			
-			Player player = getOnlinePlayer();
-			PlayerLimits pLimits = new PlayerLimits(player);
-			int globalLimit = pLimits.getGlobalLimit();
-			int generatorLimit = pLimits.getLimit(generatorId);
-						
-			/* Checking global limit */
-			if (globalLimit >= 0)
-			{
-				if (getAllGeneratorsCount() >= globalLimit)
-				{
-					Lang.addReplecable("<number>", String.valueOf(globalLimit));
-					Lang.sendMessage(player, EnumMessage.GeneratorsPPGCantPlaceMore);
-					return false;
-				}
-			}
-			
-			/* Checking per generator limit */
-			if (generatorLimit >= 0)
-			{
-				if (getGeneratorsCount(generatorId) >= generatorLimit)
-				{
-					Lang.addReplecable("<number>", String.valueOf(generatorLimit));
-					Lang.addReplecable("<generator>", Generators.get(generatorId).getGeneratorItem().getItemMeta().getDisplayName());
-					Lang.sendMessage(player, EnumMessage.GeneratorsPPGCantPlaceMoreType);
-					return false;
-				}
-			}
+			if (!limit.fulfillsPlaceLimit(this, gLoc, pl))
+				return false;
 		}
 		return true;
 	}
@@ -161,38 +138,27 @@ public class GeneratorPlayer {
 	 * @param gLocation
 	 * @return
 	 */
-	public Boolean canPickUp(GeneratorLocation gLocation)
+	public Boolean canPickUp(GeneratorLocation gLoc)
 	{
-		return ownerCheck(gLocation, EnumMessage.GeneratorsPPGCantPickUp);
+		if (!Main.getSettings().isLimits())
+			return true;
+		
+		for (Limit limit : Limits.getValues())
+		{
+			if (!limit.fulfillsOnlyOwnerPickUp(this, gLoc))
+				return false;
+		}
+		return true;
 	}
 
-	public Boolean canUse(GeneratorLocation gLocation){
-		return ownerCheck(gLocation, EnumMessage.GeneratorsPPGCantUse);
-	}
-	
-	private boolean ownerCheck(GeneratorLocation gLocation, EnumMessage message)
-	{
-		if (Main.getSettings().isPerPlayerGenerators())
+	public Boolean canUse(GeneratorLocation gLoc){
+		if (!Main.getSettings().isLimits())
+			return true;
+		
+		for (Limit limit : Limits.getValues())
 		{
-			Player player = getOnlinePlayer();
-			
-			if (player.hasPermission("kgenerators.bypass.onlyownerchecks"))
-				return true;
-			
-			/* To prevent errors if generator havent any owner */
-			if (gLocation.getOwner().isNone())
-				return true;
-			/* end */
-			
-			if (gLocation.getGenerator().getOnlyOwnerPickUp())
-			{				
-				if (this != gLocation.getOwner())
-				{
-					Lang.addReplecable("<owner>", gLocation.getOwner().getName());
-					Lang.sendMessage(player, message);
-					return false;
-				}
-			}
+			if (!limit.fulfillsOnlyOwnerUse(this, gLoc))
+				return false;
 		}
 		return true;
 	}

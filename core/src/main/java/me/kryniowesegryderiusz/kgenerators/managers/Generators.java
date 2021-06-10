@@ -1,5 +1,6 @@
 package me.kryniowesegryderiusz.kgenerators.managers;
 
+import java.util.Collection;
 import java.util.LinkedHashMap;
 import java.util.Map.Entry;
 import java.util.Set;
@@ -8,7 +9,7 @@ import javax.annotation.Nullable;
 
 import org.bukkit.inventory.ItemStack;
 
-import me.kryniowesegryderiusz.kgenerators.Enums.GeneratorType;
+import me.kryniowesegryderiusz.kgenerators.enums.GeneratorType;
 import me.kryniowesegryderiusz.kgenerators.classes.Generator;
 
 public class Generators {
@@ -42,9 +43,32 @@ public class Generators {
 		return null;
 	}
 	
+	public static Collection<Generator> getAll()
+	{
+		return generators.values();
+	}
+	
 	public static Set<Entry<String, Generator>> getEntrySet()
 	{
 		return generators.entrySet();
+	}
+	
+	public static Set<Entry<String, Generator>> getSpecifiedEntrySet(int firstGeneratorNr, int numberOfGenerators)
+	{
+		LinkedHashMap<String, Generator> gens = new LinkedHashMap<String, Generator>();
+		int nr = 0;
+		for (Entry<String, Generator> e : generators.entrySet())
+		{
+			if (nr >= firstGeneratorNr)
+			{
+				if (nr < firstGeneratorNr+numberOfGenerators)
+					gens.put(e.getKey(), e.getValue());
+				else
+					break;
+			}
+			nr++;
+		}
+		return gens.entrySet();
 	}
 	
 	public static boolean exists(String id)
@@ -59,7 +83,6 @@ public class Generators {
 	 * @param item
 	 * @return generatorId of doubled recipe, otherwise null
 	 */
-	
 	public static String exactGeneratorItemExists(String generatorId, ItemStack item)
 	{
 

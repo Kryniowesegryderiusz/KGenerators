@@ -6,8 +6,8 @@ import org.bukkit.Location;
 import org.bukkit.entity.Player;
 
 import me.kryniowesegryderiusz.kgenerators.Main;
+import me.kryniowesegryderiusz.kgenerators.Settings;
 import me.kryniowesegryderiusz.kgenerators.classes.GeneratorLocation;
-import me.kryniowesegryderiusz.kgenerators.classes.Settings;
 import me.kryniowesegryderiusz.kgenerators.classes.Upgrade;
 import me.kryniowesegryderiusz.kgenerators.handlers.Place;
 import me.kryniowesegryderiusz.kgenerators.handlers.Remove;
@@ -67,6 +67,42 @@ public class KGeneratorsAPI
 	public static void removeGenerator(Location location, boolean drop)
 	{
 		Remove.removeGenerator(location, drop);
+	}
+	
+	/**
+	 * Removes generator with all required checks
+	 * Just fire it
+	 * 
+	 * @param location Generator to remove location
+	 * @param drop Determines if generator item should drop
+	 */
+	public static void removeGenerator(GeneratorLocation generatorLocation, boolean drop)
+	{
+		Remove.removeGenerator(generatorLocation, drop);
+	}
+	
+	/**
+	 * Removes generator with all required checks and gives it to player if pick-up-to-eq is enabled
+	 * Just fire it
+	 * 
+	 * @param location Generator to remove location
+	 * @param drop Determines if generator item should drop
+	 */
+	public static void removeGenerator(Location location, Player toWho)
+	{
+		Remove.removeGenerator(location, toWho);
+	}
+	
+	/**
+	 * Removes generator with all required checks and gives it to player if pick-up-to-eq is enabled
+	 * Just fire it
+	 * 
+	 * @param location Generator to remove location
+	 * @param drop Determines if generator item should drop
+	 */
+	public static void removeGenerator(GeneratorLocation generatorLocation, Player toWho)
+	{
+		Remove.removeGenerator(generatorLocation, toWho);
 	}
 	
 	/**

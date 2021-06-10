@@ -10,23 +10,23 @@ import org.bukkit.event.inventory.InventoryClickEvent;
 import org.bukkit.inventory.Inventory;
 import org.bukkit.inventory.ItemStack;
 
-import me.kryniowesegryderiusz.kgenerators.Enums.EnumMenuInventory;
-import me.kryniowesegryderiusz.kgenerators.Enums.EnumMenuItem;
+import me.kryniowesegryderiusz.kgenerators.enums.MenuInventoryType;
+import me.kryniowesegryderiusz.kgenerators.enums.MenuItemType;
 import me.kryniowesegryderiusz.kgenerators.classes.Generator;
 import me.kryniowesegryderiusz.kgenerators.classes.MenuItem;
 import me.kryniowesegryderiusz.kgenerators.Lang;
 import me.kryniowesegryderiusz.kgenerators.Logger;
 
-public class ChancesMenu implements Listener {
+public class ChancesMenu {
 	
 	public static Inventory get(Player player, Generator generator)
 	{
-		ArrayList<EnumMenuItem> exludedEnumMenuItems = new ArrayList<EnumMenuItem>();
-		exludedEnumMenuItems.add(EnumMenuItem.ChancesMenuChance);
+		ArrayList<MenuItemType> exludedEnumMenuItems = new ArrayList<MenuItemType>();
+		exludedEnumMenuItems.add(MenuItemType.CHANCES_MENU_CHANCE);
 		
-		Inventory menu = Lang.getMenuInventory(EnumMenuInventory.Chances).getInv(EnumMenuInventory.Chances, player, exludedEnumMenuItems);
+		Inventory menu = Lang.getMenuInventory(MenuInventoryType.CHANCES).getInv(MenuInventoryType.CHANCES, player, exludedEnumMenuItems);
 
-		MenuItem generatorMenuItem = EnumMenuItem.ChancesMenuChance.getMenuItem();
+		MenuItem generatorMenuItem = Lang.getMenuItem(MenuItemType.CHANCES_MENU_CHANCE);
 		
 		ArrayList<Integer> slotList = generatorMenuItem.getSlots();
 		int lastId = -1;
@@ -54,18 +54,11 @@ public class ChancesMenu implements Listener {
 		return menu;
 	}
 	
-	@EventHandler
-	public void onClick(final InventoryClickEvent e)
-	{
-		if(e.isCancelled()) return;
-		if (!Menus.isVieving((Player) e.getWhoClicked(), EnumMenuInventory.Chances)) return;
-		
-		int slot = e.getSlot();
-		
-		if (EnumMenuItem.ChancesMenuBack.getMenuItem().getSlots().contains(slot) && Lang.getMenuItem(EnumMenuItem.ChancesMenuBack).isEnabled())
+	public static void onClick(Player p, int slot)
+	{		
+		if (Lang.getMenuItem(MenuItemType.CHANCES_MENU_BACK).getSlots().contains(slot) && Lang.getMenuItem(MenuItemType.CHANCES_MENU_BACK).isEnabled())
 		{
-			Menus.openMainMenu((Player) e.getWhoClicked());
+			Menus.openMainMenu(p, Menus.getMenuPlayer(p).getGenerator());
 		}
-		e.setCancelled(true);
 	}
 }

@@ -1,46 +1,45 @@
 package me.kryniowesegryderiusz.kgenerators.gui;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
+
 import org.bukkit.Material;
 import org.bukkit.entity.Player;
-import org.bukkit.event.EventHandler;
-import org.bukkit.event.Listener;
-import org.bukkit.event.inventory.InventoryClickEvent;
 import org.bukkit.inventory.Inventory;
 import org.bukkit.inventory.ItemStack;
-import org.bukkit.inventory.Recipe;
 import org.bukkit.inventory.ShapedRecipe;
 
 import me.kryniowesegryderiusz.kgenerators.Lang;
 import me.kryniowesegryderiusz.kgenerators.Logger;
 import me.kryniowesegryderiusz.kgenerators.Main;
-import me.kryniowesegryderiusz.kgenerators.Enums.EnumMenuInventory;
-import me.kryniowesegryderiusz.kgenerators.Enums.EnumMenuItem;
+import me.kryniowesegryderiusz.kgenerators.enums.MenuInventoryType;
+import me.kryniowesegryderiusz.kgenerators.enums.MenuItemType;
+import me.kryniowesegryderiusz.kgenerators.managers.Recipes;
 import me.kryniowesegryderiusz.kgenerators.classes.Generator;
 import me.kryniowesegryderiusz.kgenerators.classes.MenuItem;
+import me.kryniowesegryderiusz.kgenerators.classes.Recipe;
 
-public class RecipeMenu implements Listener {
+public class RecipeMenu {
 	
 	public static Inventory get(Player player, Generator generator)
 	{
-		ArrayList<EnumMenuItem> exludedEnumMenuItems = new ArrayList<EnumMenuItem>();
-		exludedEnumMenuItems.add(EnumMenuItem.RecipeMenuIngredients);
-		exludedEnumMenuItems.add(EnumMenuItem.RecipeMenuResult);
+		ArrayList<MenuItemType> exludedEnumMenuItems = new ArrayList<MenuItemType>();
+		exludedEnumMenuItems.add(MenuItemType.RECIPE_MENU_INGREDIENS);
+		exludedEnumMenuItems.add(MenuItemType.RECIPE_MENU_RESULT);
 		
-		Inventory menu = Lang.getMenuInventory(EnumMenuInventory.Recipe).getInv(EnumMenuInventory.Recipe, player, exludedEnumMenuItems);
+		Inventory menu = Lang.getMenuInventory(MenuInventoryType.RECIPE).getInv(MenuInventoryType.RECIPE, player, exludedEnumMenuItems);
 		
 		/*
 		 * Ingredients
 		 */
 		
-		MenuItem ingredientsItem = EnumMenuItem.RecipeMenuIngredients.getMenuItem();
+		MenuItem ingredientsItem = Lang.getMenuItem(MenuItemType.RECIPE_MENU_INGREDIENS);
 		ArrayList<Integer> slotList = ingredientsItem.getSlots();
 		int lastId = -1;
-		List<Recipe> recipes = Main.getInstance().getServer().getRecipesFor(generator.getGeneratorItem());
-		ShapedRecipe recipe = (ShapedRecipe) recipes.get(0);
-		Map<Character,ItemStack> ingredients = recipe.getIngredientMap();
+		
+		Recipe recipe = Recipes.get(generator);
+		HashMap<Character,ItemStack> ingredients = recipe.getIngredients();
 		for (String s : recipe.getShape())
 		{
 			for (char c : s.toCharArray())
@@ -72,7 +71,7 @@ public class RecipeMenu implements Listener {
 		 * Result Item
 		 */
 		
-		MenuItem resultItem = EnumMenuItem.RecipeMenuResult.getMenuItem();
+		MenuItem resultItem = Lang.getMenuItem(MenuItemType.RECIPE_MENU_RESULT);
 		
 		resultItem.setItemStack(generator.getGeneratorItem());
 		
@@ -88,18 +87,12 @@ public class RecipeMenu implements Listener {
 		return menu;
 	}
 	
-	@EventHandler
-	public void onClick(final InventoryClickEvent e)
+	public static void onClick(Player p, int slot)
 	{
-		if(e.isCancelled()) return;
-		if (!Menus.isVieving((Player) e.getWhoClicked(), EnumMenuInventory.Recipe)) return;
-		
-		int slot = e.getSlot();
-		if (EnumMenuItem.RecipeMenuBack.getMenuItem().getSlots().contains(slot) && Lang.getMenuItem(EnumMenuItem.RecipeMenuBack).isEnabled())
+		if (Lang.getMenuItem(MenuItemType.RECIPE_MENU_BACK).getSlots().contains(slot) && Lang.getMenuItem(MenuItemType.RECIPE_MENU_BACK).isEnabled())
 		{
-			Menus.openMainMenu((Player) e.getWhoClicked());
+			Menus.openMainMenu(p, Menus.getMenuPlayer(p).getGenerator());
 		}
-		e.setCancelled(true);
 	}
 
 }

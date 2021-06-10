@@ -16,6 +16,7 @@ public class LangFiles {
 	{
 		Config config;
 		Config configGui;
+		Config configCustomNames;
 
     	FilesFunctions.mkdir("lang");
 
@@ -31,6 +32,8 @@ public class LangFiles {
         		Main.getInstance().saveResource("lang/"+l+".yml", false);
         	if (!new File(Main.getInstance().getDataFolder(), "lang/"+l+"_gui.yml").exists())
         		Main.getInstance().saveResource("lang/"+l+"_gui.yml", false);
+        	if (!new File(Main.getInstance().getDataFolder(), "lang/"+l+"_custom-names.yml").exists())
+        		Main.getInstance().saveResource("lang/"+l+"_custom_names.yml", false);
     	}
     	
     	/*
@@ -54,7 +57,15 @@ public class LangFiles {
 		}
     	
     	try {
-			Lang.loadMessages(config, configGui);
+    		configCustomNames = (ConfigManager.getConfig(Main.getSettings().getLang()+"_custom_names.yml", "/lang", false, false));
+    		configCustomNames.loadConfig();
+		} catch (IOException | InvalidConfigurationException e1) {
+			Logger.error("Lang: Cant find custom names lang file " + Main.getSettings().getLang());
+			return;
+		}
+    	
+    	try {
+			Lang.loadMessages(config, configGui, configCustomNames);
 		} catch (IOException e) {
 			Logger.error(e);
 		}

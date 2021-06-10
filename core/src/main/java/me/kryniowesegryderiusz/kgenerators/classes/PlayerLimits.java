@@ -7,99 +7,69 @@ import java.util.Map.Entry;
 import org.bukkit.entity.Player;
 import org.bukkit.permissions.PermissionAttachmentInfo;
 
-import me.kryniowesegryderiusz.kgenerators.Main;
-import me.kryniowesegryderiusz.kgenerators.managers.Generators;
+import lombok.Getter;
+import me.kryniowesegryderiusz.kgenerators.managers.Limits;
 
 public class PlayerLimits {
 	
-	private int globalLimit;
-	private HashMap<String, Integer> generatorsLimits = new HashMap<String, Integer>();
+	@Getter
+
+	private HashMap<Limit, Integer> adjustedPlaceLimits = new HashMap<Limit, Integer>();
 	
+	/**
+	 * Creates limit map with limits adjusted by permissions
+	 * @param player
+	 */
 	public PlayerLimits(Player player)
-	{	
+	{
 		
-		/* Filling variables */
-		this.globalLimit = Main.getSettings().getPerPlayerGeneratorsPlaceLimit();
-		
-		for (Entry<String, Generator> e : Generators.getEntrySet())
+		/* Filling variables */		
+		for (Entry<String, Limit> e : Limits.getEntrySet())
 		{
-			this.generatorsLimits.put(e.getKey(), e.getValue().getPlaceLimit());
+			this.adjustedPlaceLimits.put(e.getValue(), e.getValue().getPlaceLimit());
 		}
 		
-		ArrayList<String> bypassedGenerators = new ArrayList<String>();
-		Boolean globalLimitBypass = false;
+		ArrayList<Limit> bypassedLimits = new ArrayList<Limit>();
 		
 		/* Checking limits */
 		player.recalculatePermissions();
 		
 		for (PermissionAttachmentInfo pai : player.getEffectivePermissions())
 		{
-			
 			String perm = pai.getPermission();
-			//Logger.log(player.getName() + " " + perm + " " + pai.getValue());
 			
-			if (perm.contains("kgenerators.overallplacelimit"))
-			{
-				String[] sperm = perm.split("\\.");
-				int limit;
-				try {
-					limit = Integer.parseInt(sperm[2]);
-					if (limit > this.globalLimit)
-					{
-						this.globalLimit = limit;
-					}
-				} catch (NumberFormatException e1) {}
-			}
-			
-			for (Entry<String, Generator> e : Generators.getEntrySet())
-			{
-				String generatorId = e.getKey();
-				
-				if (perm.contains("kgenerators.placelimit."+generatorId))
+			for (Limit limit : Limits.getValues())
+			{				
+				if (perm.contains("kgenerators.placelimit."+limit.getId()))
 				{
-					String[] sperm = perm.split("\\.");
-					int limit;
+					String[] sPerm = perm.split("\\.");
+					int amount;
 					try {
-						limit = Integer.parseInt(sperm[3]);
-						if (limit > this.generatorsLimits.get(generatorId))
+						amount = Integer.parseInt(sPerm[3]);
+						if (amount > this.adjustedPlaceLimits.get(limit))
 						{
-							this.generatorsLimits.put(generatorId, limit);
+							this.adjustedPlaceLimits.put(limit, amount);
 						}
 					} catch (NumberFormatException e1) {}
 				}
 				
-				if (perm.contains("kgenerators.placelimit."+generatorId+".bypass"))
+				if (perm.contains("kgenerators.placelimit."+limit.getId()+".bypass"))
 				{
-					bypassedGenerators.add(generatorId);
+					bypassedLimits.add(limit);
 				}
-			}
-			
-			if (perm.contains("kgenerators.overallplacelimit.bypass"))
-			{
-				globalLimitBypass = true;
 			}
 		}
 		
 		/* Adjusting limits basing on bypass permissions */
-		if (globalLimitBypass)
-		{
-			this.globalLimit = -1;
-		}
 		
-		for (String generatorId : bypassedGenerators)
+		for (Limit limit : bypassedLimits)
 		{
-			this.generatorsLimits.put(generatorId, -1);
+			this.adjustedPlaceLimits.put(limit, -1);
 		}
 	}
 	
-	public int getGlobalLimit()
+	public int getLimit(Limit limit)
 	{
-		return this.globalLimit;
+		return this.adjustedPlaceLimits.get(limit);
 	}
-	
-	public int getLimit(String generatorId)
-	{
-		return this.generatorsLimits.get(generatorId);
-	}
-
 }

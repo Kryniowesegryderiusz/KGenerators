@@ -9,12 +9,12 @@ import org.bukkit.plugin.java.JavaPlugin;
 
 import lombok.Getter;
 import lombok.Setter;
-import me.kryniowesegryderiusz.kgenerators.Enums.EnumDependency;
-import me.kryniowesegryderiusz.kgenerators.Enums.GeneratorType;
+import me.kryniowesegryderiusz.kgenerators.enums.Dependency;
+import me.kryniowesegryderiusz.kgenerators.enums.GeneratorType;
 import me.kryniowesegryderiusz.kgenerators.classes.Generator;
-import me.kryniowesegryderiusz.kgenerators.classes.Settings;
 import me.kryniowesegryderiusz.kgenerators.files.GeneratorsFile;
 import me.kryniowesegryderiusz.kgenerators.files.LangFiles;
+import me.kryniowesegryderiusz.kgenerators.files.LimitsFile;
 import me.kryniowesegryderiusz.kgenerators.files.PlacedGeneratorsFile;
 import me.kryniowesegryderiusz.kgenerators.files.RecipesFile;
 import me.kryniowesegryderiusz.kgenerators.files.ScheduledGeneratorsFile;
@@ -22,21 +22,26 @@ import me.kryniowesegryderiusz.kgenerators.files.UpgradesFile;
 import me.kryniowesegryderiusz.kgenerators.gui.MainMenu;
 import me.kryniowesegryderiusz.kgenerators.gui.ChancesMenu;
 import me.kryniowesegryderiusz.kgenerators.gui.GeneratorMenu;
+import me.kryniowesegryderiusz.kgenerators.gui.LimitsMenu;
 import me.kryniowesegryderiusz.kgenerators.gui.Menus;
 import me.kryniowesegryderiusz.kgenerators.gui.RecipeMenu;
 import me.kryniowesegryderiusz.kgenerators.gui.UpgradeMenu;
 import me.kryniowesegryderiusz.kgenerators.handlers.Vault;
+import me.kryniowesegryderiusz.kgenerators.hooks.BentoBoxHook;
+import me.kryniowesegryderiusz.kgenerators.hooks.SlimefunHook;
+import me.kryniowesegryderiusz.kgenerators.hooks.SuperiorSkyblock2Hook;
+import me.kryniowesegryderiusz.kgenerators.hooks.JetsMinionsHook;
 import me.kryniowesegryderiusz.kgenerators.files.ConfigFile;
 import me.kryniowesegryderiusz.kgenerators.files.FilesConverter;
-import me.kryniowesegryderiusz.kgenerators.listeners.onBlockBreakEvent;
-import me.kryniowesegryderiusz.kgenerators.listeners.onBlockPistonEvent;
-import me.kryniowesegryderiusz.kgenerators.listeners.onBlockPlaceEvent;
-import me.kryniowesegryderiusz.kgenerators.listeners.onCraftItemEvent;
-import me.kryniowesegryderiusz.kgenerators.listeners.onExplosion;
-import me.kryniowesegryderiusz.kgenerators.listeners.onFurnaceSmeltEvent;
-import me.kryniowesegryderiusz.kgenerators.listeners.onInventoryClickEvent;
-import me.kryniowesegryderiusz.kgenerators.listeners.onJetsMinions;
-import me.kryniowesegryderiusz.kgenerators.listeners.onPlayerInteractEvent;
+import me.kryniowesegryderiusz.kgenerators.listeners.BlockBreakListener;
+import me.kryniowesegryderiusz.kgenerators.listeners.BlockPistonListener;
+import me.kryniowesegryderiusz.kgenerators.listeners.BlockPlaceListener;
+import me.kryniowesegryderiusz.kgenerators.listeners.CraftItemListener;
+import me.kryniowesegryderiusz.kgenerators.listeners.ExplosionListener;
+import me.kryniowesegryderiusz.kgenerators.listeners.FurnaceSmeltListener;
+import me.kryniowesegryderiusz.kgenerators.listeners.InventoryClickListener;
+import me.kryniowesegryderiusz.kgenerators.listeners.PlayerInteractListener;
+import me.kryniowesegryderiusz.kgenerators.listeners.PrepareItemCraftListener;
 import me.kryniowesegryderiusz.kgenerators.managers.Generators;
 import me.kryniowesegryderiusz.kgenerators.managers.Holograms;
 import me.kryniowesegryderiusz.kgenerators.managers.Schedules;
@@ -59,7 +64,7 @@ public class Main extends JavaPlugin {
 	
 	/* Dependencies */
 	@Getter
-	public static ArrayList<EnumDependency> dependencies = new ArrayList<EnumDependency>();
+	public static ArrayList<Dependency> dependencies = new ArrayList<Dependency>();
 	
 	/* Multiversion reflections */
 	static @Getter @Setter
@@ -82,7 +87,7 @@ public class Main extends JavaPlugin {
 		metrics.addCustomChart(new Metrics.SingleLineChart("number_of_single_generators", () -> Generators.amount(GeneratorType.SINGLE)));
 		metrics.addCustomChart(new Metrics.SingleLineChart("number_of_double_generators", () -> Generators.amount(GeneratorType.DOUBLE)));
 		
-		metrics.addCustomChart(new Metrics.SimplePie("per_player_generators_enabled", () -> String.valueOf(Main.getSettings().isPerPlayerGenerators()) ));
+		metrics.addCustomChart(new Metrics.SimplePie("per_player_generators_enabled", () -> String.valueOf(Main.getSettings().isLimits()) ));
     	
     	/* Dependencies check */
     	dependenciesCheck();
@@ -92,10 +97,11 @@ public class Main extends JavaPlugin {
     	ConfigFile.globalSettingsLoader();
     	FilesConverter.updateConfig(settings);
     	
-    	GeneratorsFile.loadGenerators();
-    	RecipesFile.loadRecipes();
-    	PlacedGeneratorsFile.loadPlacedGenerators();
+    	GeneratorsFile.load();
+    	RecipesFile.load();
+    	PlacedGeneratorsFile.load();
     	UpgradesFile.load();
+    	LimitsFile.load();
     	
     	LangFiles.loadLang();
     	
@@ -107,26 +113,18 @@ public class Main extends JavaPlugin {
     	Menus.setup();
     	
     	this.getServer().getPluginCommand("kgenerators").setExecutor(new Commands());
+    	this.getServer().getPluginCommand("kgenerators").setTabCompleter(new CommandTabCompleter());
 
-    	this.getServer().getPluginManager().registerEvents(new onBlockBreakEvent(), this);
-    	this.getServer().getPluginManager().registerEvents(new onBlockPlaceEvent(), this);
-    	this.getServer().getPluginManager().registerEvents(new onCraftItemEvent(), this);
-    	this.getServer().getPluginManager().registerEvents(new onBlockPistonEvent(), this);
-    	this.getServer().getPluginManager().registerEvents(new onExplosion(), this);
-    	this.getServer().getPluginManager().registerEvents(new onPlayerInteractEvent(), this);
-    	this.getServer().getPluginManager().registerEvents(new onInventoryClickEvent(), this);
-    	this.getServer().getPluginManager().registerEvents(new onFurnaceSmeltEvent(), this);
-    	
-    	this.getServer().getPluginManager().registerEvents(new GeneratorMenu(), this);
-    	this.getServer().getPluginManager().registerEvents(new MainMenu(), this);
-    	this.getServer().getPluginManager().registerEvents(new ChancesMenu(), this);
-    	this.getServer().getPluginManager().registerEvents(new RecipeMenu(), this);
-    	this.getServer().getPluginManager().registerEvents(new UpgradeMenu(), this);
-    	
-    	if (dependencies.contains(EnumDependency.JetsMinions))
-    	{
-    		this.getServer().getPluginManager().registerEvents(new onJetsMinions(), this);
-    	}
+    	this.getServer().getPluginManager().registerEvents(new BlockBreakListener(), this);
+    	this.getServer().getPluginManager().registerEvents(new BlockPlaceListener(), this);
+    	this.getServer().getPluginManager().registerEvents(new CraftItemListener(), this);
+    	this.getServer().getPluginManager().registerEvents(new BlockPistonListener(), this);
+    	this.getServer().getPluginManager().registerEvents(new ExplosionListener(), this);
+    	this.getServer().getPluginManager().registerEvents(new PlayerInteractListener(), this);
+    	this.getServer().getPluginManager().registerEvents(new InventoryClickListener(), this);
+    	this.getServer().getPluginManager().registerEvents(new FurnaceSmeltListener(), this);
+    	if (!MultiVersion.isHigher(12))
+    		this.getServer().getPluginManager().registerEvents(new PrepareItemCraftListener(), this);    	
     }
 
 	@Override
@@ -152,22 +150,31 @@ public class Main extends JavaPlugin {
     		
 	    	if (Bukkit.getPluginManager().isPluginEnabled("SuperiorSkyblock2")) {
 	    		Logger.info("Dependencies: Detected plugin SuperiorSkyblock2. Hooking into it.");
-	    		dependencies.add(EnumDependency.SuperiorSkyblock2);
+	    		SuperiorSkyblock2Hook.setup();
+	    		dependencies.add(Dependency.SUPERIOR_SKYBLOCK_2);
 	    	}
 	    	
 	    	if (Bukkit.getPluginManager().isPluginEnabled("BentoBox")) {
 	    		Logger.info("Dependencies: Detected plugin BentoBox. Hooking into it.");
-	    		dependencies.add(EnumDependency.BentoBox);
+	    		BentoBoxHook.setup();
+	    		dependencies.add(Dependency.BENTO_BOX);
 	    	}
 	    	
 	    	if (Bukkit.getPluginManager().isPluginEnabled("JetsMinions")) {
 	    		Logger.info("Dependencies: Detected plugin JetsMinions. Hooking into it.");
-	    		dependencies.add(EnumDependency.JetsMinions);
+	    		Main.getInstance().getServer().getPluginManager().registerEvents(new JetsMinionsHook(), Main.getInstance());
+	    		dependencies.add(Dependency.JETS_MINIONS);
+	    	}
+	    	
+	    	if (Bukkit.getPluginManager().isPluginEnabled("Slimefun")) {
+	    		Logger.info("Dependencies: Detected plugin Slimefun. Hooking into it.");
+	    		Main.getInstance().getServer().getPluginManager().registerEvents(new SlimefunHook(), Main.getInstance());
+	    		dependencies.add(Dependency.SLIMEFUN);
 	    	}
 	    	
 	    	if (worldGuardUtils != null && Main.getWorldGuardUtils().isWorldGuardHooked()) {
 	   			Logger.info("Dependencies: Detected plugin WorldGuard. Hooked into it.");
-	   			dependencies.add(EnumDependency.WorldGuard);
+	   			dependencies.add(Dependency.WORLD_GUARD);
 	    	}
 	    	else if (worldGuardUtils != null)
 	    	{
@@ -179,7 +186,7 @@ public class Main extends JavaPlugin {
 	    	if (Bukkit.getPluginManager().isPluginEnabled("HolographicDisplays"))
 	    	{
 	    		Logger.info("Dependencies: Detected plugin HolographicDisplays. Hooked into it.");
-	   			dependencies.add(EnumDependency.HolographicDisplays);
+	   			dependencies.add(Dependency.HOLOGRAPHIC_DISPLAYS);
 	    	}
 	    	else
 	    	{
@@ -193,7 +200,7 @@ public class Main extends JavaPlugin {
 	    	if (Vault.setupEconomy())
 	    	{
 	    		Logger.info("Dependencies: Detected Vault economy. Hooked into it.");
-	    		dependencies.add(EnumDependency.VaultEconomy);
+	    		dependencies.add(Dependency.VAULT_ECONOMY);
 	    	}
 	    	else
 	    	{
@@ -203,7 +210,7 @@ public class Main extends JavaPlugin {
 	    	if (Vault.setupPermissions())
 	    	{
 	    		Logger.info("Dependencies: Detected Vault permissions. Hooked into it.");
-	    		dependencies.add(EnumDependency.VaultPermissions);
+	    		dependencies.add(Dependency.VAULT_PERMISSIONS);
 	    	}
 	    	else
 	    	{

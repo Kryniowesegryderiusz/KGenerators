@@ -9,8 +9,8 @@ import org.bukkit.Bukkit;
 import org.bukkit.Location;
 
 import lombok.Getter;
-import me.kryniowesegryderiusz.kgenerators.Enums.EnumDependency;
-import me.kryniowesegryderiusz.kgenerators.Enums.EnumMessage;
+import me.kryniowesegryderiusz.kgenerators.enums.Dependency;
+import me.kryniowesegryderiusz.kgenerators.enums.Message;
 import me.kryniowesegryderiusz.kgenerators.Lang;
 import me.kryniowesegryderiusz.kgenerators.Main;
 import me.kryniowesegryderiusz.kgenerators.classes.Generator;
@@ -61,7 +61,7 @@ public class Schedules {
 		
 		GenerateBlock.generatePlaceholder(gLocation);
 		
-		if (!place && Main.dependencies.contains(EnumDependency.HolographicDisplays) && gLocation.getGenerator().isHologram())
+		if (!place && Main.dependencies.contains(Dependency.HOLOGRAPHIC_DISPLAYS) && gLocation.getGenerator().isHologram())
 		{
 			Holograms.createHologram(gLocation);
 		}
@@ -107,10 +107,10 @@ public class Schedules {
 	
 	public static String timeLeftFormatted(GeneratorLocation gLocation, boolean removeMs)
 	{
-		LinkedHashMap<Integer, EnumMessage> times = new LinkedHashMap<Integer, EnumMessage>();
-		times.put(20*60*60*24, EnumMessage.CommandsTimeLeftFormatDay);
-		times.put(20*60*60, EnumMessage.CommandsTimeLeftFormatHour);
-		times.put(20*60, EnumMessage.CommandsTimeLeftFormatMin);
+		LinkedHashMap<Integer, Message> times = new LinkedHashMap<Integer, Message>();
+		times.put(20*60*60*24, Message.COMMANDS_TIME_LEFT_FORMAT_DAY);
+		times.put(20*60*60, Message.COMMANDS_TIME_LEFT_FORMAT_HOUR);
+		times.put(20*60, Message.COMMANDS_TIME_LEFT_FORMAT_MIN);
 
 		
 		int delay = timeLeft(gLocation);
@@ -118,7 +118,7 @@ public class Schedules {
 		
 		String s = "";
 		
-		for (Entry<Integer, EnumMessage> e : times.entrySet())
+		for (Entry<Integer, Message> e : times.entrySet())
 		{
 			if (delay >= e.getKey())
 			{
@@ -141,7 +141,7 @@ public class Schedules {
 			s += String.valueOf(d);
 		}
 		
-		s += Lang.getMessage(EnumMessage.CommandsTimeLeftFormatSec, false, false);
+		s += Lang.getMessage(Message.COMMANDS_TIME_LEFT_FORMAT_SEC, false, false);
 		
 		return s;
 	}

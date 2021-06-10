@@ -11,6 +11,13 @@ can-generate-instead:
   - WATER
   - LAVA
 
+#List of worlds, where generators wont be enabled:
+disabled-worlds:
+- test_world
+
+#Should generators be picked up directly to equipment?
+pick-up-to-eq: true
+
 #Should "generators" lang section be sent by actionbar instad of chat?
 generators-actionbar-messages: true
 
@@ -19,17 +26,6 @@ generators-actionbar-messages: true
 #1 - drop generator
 #2 - remove generator
 explosion-handler: 0
-
-#Per player generators options add bunch of features related to limiting
-#pick up, usage and placing generator per player
-#You can find more on https://github.com/Kryniowesegryderiusz/KGenerators/wiki/Per-Player-Generators
-per-player-generators:
-  #Enables limit, usage and pickup checks
-  enabled: false
-  #Set default overall place limit (count of all player's generators)
-  #Set to -1 to disable that limit
-  #Can be overwritten by permission: kgenerators.overallplacelimit.<limit>
-  overall-place-limit: -1
 
 #This configuration section is for configuring actions needed for particular features
 #Possible modes: BREAK (avaible only for pick-up), LEFT_CLICK, RIGHT_CLICK, NONE (ex. because of gui usage)

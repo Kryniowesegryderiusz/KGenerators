@@ -1,8 +1,11 @@
 package me.kryniowesegryderiusz.kgenerators.classes;
 
 import org.bukkit.Location;
+import org.bukkit.entity.Player;
+
 import lombok.Getter;
-import me.kryniowesegryderiusz.kgenerators.Enums.GeneratorType;
+import me.kryniowesegryderiusz.kgenerators.Main;
+import me.kryniowesegryderiusz.kgenerators.enums.GeneratorType;
 import me.kryniowesegryderiusz.kgenerators.handlers.Remove;
 import me.kryniowesegryderiusz.kgenerators.managers.Generators;
 import me.kryniowesegryderiusz.kgenerators.managers.Schedules;
@@ -47,5 +50,43 @@ public class GeneratorLocation {
 	public void remove(boolean drop)
 	{
 		Remove.removeGenerator(this, drop);
+	}
+	
+	public void remove(Player toWho)
+	{
+		Remove.removeGenerator(this, toWho);
+	}
+	
+	/**
+	 * Returns whether this generatorLocation is corrupted.
+	 * More precisely if there isnt any scheduled regeneration referred to it and there is nothing in place of that generator.
+	 * @return
+	 */
+	public boolean isBroken()
+	{
+		if (!Schedules.getSchedules().containsKey(this))
+		{
+			if (this.getGenerator().getType() == GeneratorType.SINGLE && Main.getBlocksUtils().isAir(this.location.getBlock()))
+				return true;
+			if (this.getGenerator().getType() == GeneratorType.DOUBLE && Main.getBlocksUtils().isAir(this.location.clone().add(0,1,0).getBlock()))
+				return true;
+		}
+		return false;
+	}
+	
+	@Override
+	public String toString()
+	{
+		if (this.owner != null)
+			return this.generatorId + " owned by " + this.owner.getName() 
+			+ " placed in " + toStringLocation();
+		else
+			return this.generatorId + " owned by no one"
+			+ " placed in " + toStringLocation();
+	}
+	public String toStringLocation()
+	{
+		return "world " + this.location.getWorld().getName()
+		+ " at " + String.valueOf(this.location.getX()) + ", " + String.valueOf(this.location.getY()) + ", " + String.valueOf(this.location.getZ());
 	}
 }

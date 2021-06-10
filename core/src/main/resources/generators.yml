@@ -42,21 +42,8 @@ example_generator:
   #Should hologram be displayed above generator?
   #Requires HolographicDisplays installed
   hologram: true
-  #Requires per-player-generators enabled in config.yml
-  per-player-generators:
-    #Default number of placed generators of that type per player
-    #Set to -1 to disable that limit
-    #Can be overwritten by permission: kgenerators.placelimit.<generator_id>.<limit>
-    place-limit: 10
-    #Should only owner be able to pick up generator?
-    only-owner-pickup: true
-    #Should only owner be able to break blocks of that generator?
-    #Disables also piston-push event
-    #Doesnt work for third-party plugins ex. breaking blocks hoppers
-    only-owner-use: false
-    #Should only owner be able to open afk storage?
-    #Requires afk-storage enabled in config.yml
-    only-owner-storage: true
+
+#Below you can find pre-configured generators. You can freely edit/remove them and add new ones ^^
 
 stone_generator_level_1:
   generator: END_STONE
@@ -75,10 +62,6 @@ stone_generator_level_1:
   generate-immediately-after-place: true
   placeholder: RED_SANDSTONE
   allow-piston-push: true
-  per-player-generators:
-    place-limit: -1
-    only-owner-pickup: true
-    only-owner-use: false
     
 #This generator is could be obtained by typing /kgenerators upgrade on previous one
 #Upgrade tree is avaible in upgrades.yml file!
@@ -97,10 +80,6 @@ stone_generator_level_2:
   generate-immediately-after-place: true
   placeholder: RED_SANDSTONE
   allow-piston-push: true
-  per-player-generators:
-    place-limit: -1
-    only-owner-pickup: true
-    only-owner-use: false
 
 #This generator has only required settings. As you see you dont have to use all of them (https://github.com/Kryniowesegryderiusz/KGenerators/wiki/Configuration-disclaimer)
 wood_generator:
