@@ -11,6 +11,7 @@ public enum MenuItemType implements IMenuItemType
 	GENERATOR_MENU_OWNER(MenuInventoryType.GENERATOR,"owner", new MenuItem("BOOK", "&aGenerator owner", false, "22", "&e<owner>")),
 	GENERATOR_MENU_PICK_UP(MenuInventoryType.GENERATOR,"pick-up", new MenuItem("BARRIER", "&aPick up", false, "23", "&eClick here to pick up generator")),
 	GENERATOR_MENU_QUIT(MenuInventoryType.GENERATOR,"quit", new  MenuItem("ARROW", "&cQuit", false, "40", "&6Quit menu")),
+	GENERATOR_MENU_RESET(MenuInventoryType.GENERATOR,"reset", new  MenuItem("MUSIC_DISC_11", "&cReset generator", false, "13", "&6This generator seems to be currupted!", "&6Click here to repair him")),
 	
 	MAIN_MENU_FILLER(MenuInventoryType.MAIN, "filler", new MenuItem("GRAY_STAINED_GLASS_PANE", "&r", false, "0,1,2,3,4,5,6,7,8,36,37,38,39,40,41,42,43,44")),
 	MAIN_MENU_GENERATOR(MenuInventoryType.MAIN,"generator", new MenuItem("<generator>", "&a<generator_name>", false, "9,10,11,12,13,14,15,16,17,18,19,20,21,22,23,24,25,26,27,28,29,30,31,32,33,34,35" , "&6Left click:", "&eCheck generator chances")),

@@ -4,6 +4,7 @@ import org.bukkit.Location;
 import org.bukkit.entity.Player;
 
 import lombok.Getter;
+import me.kryniowesegryderiusz.kgenerators.Main;
 import me.kryniowesegryderiusz.kgenerators.enums.GeneratorType;
 import me.kryniowesegryderiusz.kgenerators.handlers.Remove;
 import me.kryniowesegryderiusz.kgenerators.managers.Generators;
@@ -54,6 +55,23 @@ public class GeneratorLocation {
 	public void remove(Player toWho)
 	{
 		Remove.removeGenerator(this, toWho);
+	}
+	
+	/**
+	 * Returns whether this generatorLocation is corrupted.
+	 * More precisely if there isnt any scheduled regeneration referred to it and there is nothing in place of that generator.
+	 * @return
+	 */
+	public boolean isBroken()
+	{
+		if (!Schedules.getSchedules().containsKey(this))
+		{
+			if (this.getGenerator().getType() == GeneratorType.SINGLE && Main.getBlocksUtils().isAir(this.location.getBlock()))
+				return true;
+			if (this.getGenerator().getType() == GeneratorType.DOUBLE && Main.getBlocksUtils().isAir(this.location.clone().add(0,1,0).getBlock()))
+				return true;
+		}
+		return false;
 	}
 	
 	@Override

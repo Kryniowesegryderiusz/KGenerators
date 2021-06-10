@@ -8,6 +8,7 @@ public enum Message implements IMessage {
 	
 	GENERATORS_ANY_OWNER_NONE("generators.any.owner-none", "&cNone"),
 	GENERATORS_ANY_DISABLED_WORLD("generators.any.disabled", "&cGenerators are disabled in this world!"),
+	GENERATORS_ANY_REPAIRED("generators.any.repaired", "&aGenerator succesfully repaired!"),
 	
 	GENERATORS_DIGGING_CANT_HERE("generators.digging.cant-here", "&cYou can't dig generated blocks here!"),
 	GENERATORS_DIGGING_ONLY_GEN("generators.digging.only-gen", "&cYou can only dig generated blocks here!"),
