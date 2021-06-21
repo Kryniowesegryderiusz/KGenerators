@@ -39,6 +39,12 @@ public class Place {
     		return false;
     	}
     	
+    	if (!player.hasPermission("kgenerators.place."+generator.getId()))
+    	{
+    		Lang.sendMessage(player, Message.GENERATORS_PLACE_NO_PERMISSION);
+    		return false;
+    	}
+    	
     	if (!pGenerator.canPlace(gLocation))
 	    {
 	    	return false;

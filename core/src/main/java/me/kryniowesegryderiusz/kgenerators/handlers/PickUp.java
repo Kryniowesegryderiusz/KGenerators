@@ -23,6 +23,12 @@ public class PickUp {
 		
 		Generator generator = gLocation.getGenerator();
 		
+    	if (!p.hasPermission("kgenerators.pickup."+generator.getId()))
+    	{
+    		Lang.sendMessage(p, Message.GENERATORS_PICK_UP_NO_PERMISSION);
+    		return;
+    	}
+		
 		if (!Players.getPlayer(p).canPickUp(gLocation))
 		{
 			return;

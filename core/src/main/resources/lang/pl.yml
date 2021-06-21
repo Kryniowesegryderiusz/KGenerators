@@ -5,7 +5,12 @@
 messages:
   prefix: '&8[&6KGenerators&8] '
   generators:
+    any:
+      owner-none: '&cNikt'
+      disabled: '&cGeneratory są wyłączone na tym świecie!'
+      repaired: '&aGenerator naprawiony!'
     digging:
+      cant-here: '&cNie możesz tutaj kopać bloków z generatora!'
       only-gen: '&cW tym miejscu możesz kopać tylko wygenerowane bloki!'
       no-permission: '&cNie masz uprawnienia &8(&7<permission>&8)&c, żeby kopać <generator>&c!'
     crafting:
@@ -16,19 +21,21 @@ messages:
     pick-up:
       successful: '&aPodniesiono &e<generator>'
       cant-here: '&cNie możesz tutaj podnieść generatora!'
+      no-permission: '&cNie masz uprawnień &8(&7<permission>&8)&c, żeby podnieść generator tego typu'
     place:
       cant-here: '&cNie możesz tutaj postawić generatora!'
       cant-place-block: '&cNie możesz nic postawić w miejscu generatora'
       cant-place-double-below-block: '&cNie możesz postawić podwójnego generatora pod innym blokiem!'
       cant-place-double-below-generator: '&cNie możesz postawić podwójnego generatora pod innym generatorem!'
-    per-player-generator:
-      owner-none: '&cBrak'
-      cant-place-more: '&cNie możesz postawić więcej niż &6<number> &cgeneratorów!'
-      cant-place-more-type: '&cNie możesz postawić więcej niż &6<number> &cgeneratorów <generator> &c!'
-      cant-pick-up: '&cNie możesz podnieść generatora gracza &6<owner>&c!'
-      cant-use: '&cNie możesz kopać generatora gracza &6<owner>&c!'
+      no-permission: '&cNie masz uprawnień &8(&7<permission>&8)&c, żeby postawić generator tego typu'
+    limits:
+      cant-place-more-type: '&cNie możesz postawić więcej niż &6<number> generatorów <generator>&c, ze względu na limit &6<limit>&c!'
+      cant-pick-up: '&cNie możesz podnieść generatora należącego do &6<owner>&c!'
+      cant-use: '&cNie możesz używać generatora należącego do &6<owner>&c!'
     protection:
       cant-change-generator-item: '&cNie możesz edytować generatora!'
+    menus:
+      cant-open-here: '&cNie możesz tutaj używać tego menu!!'
   economy:
     no-economy-avaible: '&cEkonomia nie jest dostępna na serwerze!'
     not-enough-money: '&cNie masz wystarczająco dużo pieniędzy! Potrzebujesz &6<cost>$&c!'
@@ -56,16 +63,9 @@ messages:
       recieved: '&aOtrzymano generatory'
       no-permission: '&cNie masz uprawnienia &8(&7<permission>&8)&c, żeby wziąć generatory'
       help: Bierze wszystkie generatory
-    check:
-      header: '&aGracz &e<player> &apostawił:'
-      list: '&8- &e<number> <generator>'
-      no-permission-own: '&cNie masz uprawnienia &8(&7<permission>&8)&c, żeby sprawdzać graczy!'
-      help: Sprawdza generatory i limity gracza
     limits:
-      header: '&aGracz &e<player> &aposiada limity:'
-      specific: '&8- <generator>&a: &e<limit>'
-      overall: '&8- &aLimit ogólny: &e<limit>'
-      None: Brak
+      no-permission: '&cNie masz uprawnień &8(&7<permission>&8)&c, żeby otworzyć menu limitów!'
+      help: Sprawdza limity
     actions:
       no-permission: '&cNie masz uprawnienia &8(&7<permission>&8)&c, żeby sprawdzić akcje!'
       help: Sprawdza dostępne akcje
@@ -90,7 +90,10 @@ messages:
         days: dni
         none: Brak
     menu:
+      opened-others: '&aOtwarto menu generatora &e<generator> <menu> &agraczowi &e<player>'
+      error: '&cPodczas używania menu wystąpił błąd! Skontaktuj się z administratorem'
       no-permission: '&cNie masz uprawnienia &8(&7<permission>&8)&c, żeby otworzyć menu!'
+      no-permission-others: '&cNie masz uprawnienień &8(&7<permission>&8)&c, żeby otwierać menu generatora innym graczom!'
       help: Otwiera menu generatorów
     upgrade:
       no-next-level: '&cTen generator osiągnął już maksymalny poziom!'

@@ -6,7 +6,7 @@ import me.kryniowesegryderiusz.kgenerators.classes.MenuInventory;
 
 public enum MenuInventoryType implements IMenuInventoryType
 {
-	GENERATOR("generator", new MenuInventory("&9Generator info", 45)),
+	GENERATOR("generator", new MenuInventory("&9<generator_name>", 45)),
 	
 	MAIN("main", new MenuInventory("&9Generators", 45)),
 	CHANCES("chances", new MenuInventory("&9Blocks chances", 45)),
