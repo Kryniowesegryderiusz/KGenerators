@@ -1,5 +1,5 @@
 generator:
-  name: '&9Generator'
+  name: §9<generator_name>
   slots: 45
   filler:
     enabled: true
@@ -178,7 +178,46 @@ chances:
     - '&cpoprzedniej strony'
     slots: '40'
     glow: false
+limits:
+  name: §9Limity
+  slots: 45
+  limit:
+    enabled: true
+    item: <limit_display_item>
+    name: §a<limit_name>
+    lore:
+    - §6Postawiono §e<amount>§6/§e<limit>§6 generatorów typu
+    - <generators_list>
+    - <is_only_owner_use>
+    - <is_only_owner_pick_up>
+    slots: 9,10,11,12,13,14,15,16,17,18,19,20,21,22,23,24,25,26
+    glow: false
+  back:
+    enabled: true
+    item: ARROW
+    name: §cBack
+    lore:
+    - §6Get back to
+    - §cprevious page
+    slots: '40'
+    glow: false
+  filler:
+    enabled: true
+    item: GRAY_STAINED_GLASS_PANE
+    name: §r
+    lore: []
+    slots: 0,1,2,3,4,5,6,7,8,36,37,38,39,40,41,42,43,44
+    glow: false
 additional-lines:
+  limits:
+    only-owner-pick-up:
+    - '&cTylko właściciel może podnieść generator.'
+    all-generators:
+    - '&ewszystkie generatory'
+    generator-list:
+    - '&8- &e<generator_name>'
+    only-owner-use:
+    - '&cTylko właściciel może użyć generatora.'
   upgrade:
   - ''
   - '&6Kliknij prawym:'

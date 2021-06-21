@@ -56,10 +56,10 @@
         <!--  JetsMinions  -->
         <dependency>
 		    <groupId>me.jet315</groupId>
-		    <artifactId>JetsMinions</artifactId>
-		    <version>6.6.8</version>
+		    <artifactId>jetsminions</artifactId>
+		    <version>7.1.15</version>
 		    <scope>system</scope>
-		    <systemPath>${project.basedir}/dependencies/JetsMinions.jar</systemPath>
+		    <systemPath>${project.basedir}/dependencies/JetsMinions-7.1.15.jar</systemPath>
 		</dependency>
 		
 		<dependency>

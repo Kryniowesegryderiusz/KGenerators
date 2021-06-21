@@ -39,7 +39,14 @@ public class MenuInventory {
 	{
 		ArrayList<String> rep = new ArrayList<>(Arrays.asList(replecables));
 		
-		Inventory menu = Bukkit.createInventory(player, this.slots, this.name);
+		
+		String newName = this.name;
+		for(int i = 0; i < rep.size(); i=i+2)
+		{
+			newName = newName.replace(rep.get(i), rep.get(i+1));
+		}
+		
+		Inventory menu = Bukkit.createInventory(player, this.slots, newName);
 		
 		for(MenuItemType enumMenuItem : MenuItemType.values())
 		{

@@ -21,11 +21,13 @@ public enum Message implements IMessage {
 	
 	GENERATORS_PICK_UP_SUCCESFULL("generators.pick-up.successful", "&e<generator> &apicked up"),
 	GENERATORS_PICK_UP_CANT_HERE("generators.pick-up.cant-here", "&cYou cant pick up generator here!"),
+	GENERATORS_PICK_UP_NO_PERMISSION("generators.pick-up.no-permission", "&cYou dont have permission &8(&7<permission>&8)&c to pick up that type generator"),
 	
 	GENERATORS_PLACE_CANT_HERE("generators.place.cant-here", "&cYou cant place generator here!"),
 	GENERATORS_PLACE_CANT_PLACE_BLOCK("generators.place.cant-place-block", "&cYou cant place any block in generator's place"),
 	GENERATORS_PLACE_CANT_PLACE_DOUBLE_BELOW_BLOCK("generators.place.cant-place-double-below-block", "&cYou cant place double generator below any block!"),
 	GENERATORS_PLACE_CANT_PLACE_DOUBLE_BELOW_GENERATOR("generators.place.cant-place-double-below-generator", "&cYou cant place double generator below other generator!"),
+	GENERATORS_PLACE_NO_PERMISSION("generators.place.no-permission", "&cYou dont have permission &8(&7<permission>&8)&c to place that type generator"),
 	
 	GENERATORS_LIMITS_CANT_MORE("generators.limits.cant-place-more-type", "&cYou cant place more than &6<number> <generator> &cgenerators, because of &6<limit>&c!"),
 	GENERATORS_LIMITS_CANT_PICK_UP("generators.limits.cant-pick-up", "&cYou cant pick up generator owned by &6<owner>&c!"),
@@ -33,8 +35,6 @@ public enum Message implements IMessage {
 	
 	GENERATOR_PROTECTION_CANT_CHANGE_GENERATOR_ITEM("generators.protection.cant-change-generator-item", "&cYou cant change generator item!"),
 	
-	GENERATOR_MENU_CANT_OPEN_IN_USE("generators.menus.cant-open-already-viewed", "&cYou cant open this menu right now! Someone is using it!"),
-	GENERATOR_MENU_CANT_OPEN_NOT_OWNER("generators.menus.cant-open-not-owner", "&cYou cant open this menu! Only generator owner can do it!"),
 	GENERATOR_MENU_CANT_OPEN_HERE("generators.menus.cant-open-here", "&cYou cant open this menu here!"),
 	
 	VAULT_ECONOMY_NOT_AVAILABLE("economy.no-economy-avaible", "&cThere is no economy system avaible!"),

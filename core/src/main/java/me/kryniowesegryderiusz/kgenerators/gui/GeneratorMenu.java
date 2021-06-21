@@ -22,7 +22,7 @@ public class GeneratorMenu {
 		String time = Schedules.timeLeftFormatted(gLocation);
 		if (time.equals("")) time = Lang.getMessage(Message.COMMANDS_TIME_LEFT_FORMAT_NONE, false, false);
 			
-		Inventory menu = Lang.getMenuInventory(MenuInventoryType.GENERATOR).getInv(MenuInventoryType.GENERATOR, player, exludedEnumMenuItems, "<owner>", gLocation.getOwner().getName(), "<time>", time);
+		Inventory menu = Lang.getMenuInventory(MenuInventoryType.GENERATOR).getInv(MenuInventoryType.GENERATOR, player, exludedEnumMenuItems, "<owner>", gLocation.getOwner().getName(), "<time>", time, "<generator_name>", gLocation.getGenerator().getGeneratorItemName());
 		
 		if (gLocation.isBroken())
 		{
