@@ -22,12 +22,14 @@ public class MultiVersion {
     	String blocksPackage;
     	String wgPackage;
     	String actionBarPackage;
+    	String chatPackage;
     	
     	if (minor == 8) {
     		recipesPackage = packageName + ".RecipesLoader_1_8";
     		blocksPackage = packageName + ".BlocksUtils_1_8";
     		wgPackage = packageName + ".WorldGuardUtils_1_8";
     		actionBarPackage = packageName + ".ActionBar_1_8";
+    		chatPackage = packageName + ".ChatUtils_1_8";
     	} 
     	else if (minor == 9 || minor == 10 || minor == 11)
     	{
@@ -35,6 +37,7 @@ public class MultiVersion {
     		blocksPackage = packageName + ".BlocksUtils_1_8";
     		wgPackage = packageName + ".WorldGuardUtils_1_8";
     		actionBarPackage = packageName + ".ActionBar_1_9";
+    		chatPackage = packageName + ".ChatUtils_1_8";
     	}
     	else if (minor == 12)
     	{
@@ -42,6 +45,15 @@ public class MultiVersion {
     		blocksPackage = packageName + ".BlocksUtils_1_8";
     		wgPackage = packageName + ".WorldGuardUtils_1_8";
     		actionBarPackage = packageName + ".ActionBar_1_9";
+    		chatPackage = packageName + ".ChatUtils_1_8";
+    	}
+    	else if (minor == 12 || minor == 13 || minor == 14 || minor == 15)
+    	{
+    		recipesPackage = packageName + ".RecipesLoader_1_13";
+    		blocksPackage = packageName + ".BlocksUtils_1_13";
+    		wgPackage = packageName + ".WorldGuardUtils_1_13";
+    		actionBarPackage = packageName + ".ActionBar_1_9";
+    		chatPackage = packageName + ".ChatUtils_1_8";
     	}
     	else
     	{
@@ -49,6 +61,7 @@ public class MultiVersion {
     		blocksPackage = packageName + ".BlocksUtils_1_13";
     		wgPackage = packageName + ".WorldGuardUtils_1_13";
     		actionBarPackage = packageName + ".ActionBar_1_9";
+    		chatPackage = packageName + ".ChatUtils_1_16";
     	}
     	
     	try {
@@ -60,6 +73,7 @@ public class MultiVersion {
 	    		Main.setWorldGuardUtils(worldGuardUtils);
 	    	}
 			Main.setActionBar((ActionBar) Class.forName(actionBarPackage).newInstance());
+			Main.setChatUtils((ChatUtils) Class.forName(chatPackage).newInstance());
 			
 		} catch (InstantiationException | IllegalAccessException | ClassNotFoundException e3) {
 			Logger.error(e3);

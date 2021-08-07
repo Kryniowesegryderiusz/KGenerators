@@ -38,7 +38,7 @@ public class CommandTabCompleter implements TabCompleter {
 		if (args.length == 1)
 		{
 			ArrayList<String> help = Lang.getCommands(sender);
-			if (args[0].isBlank())
+			if (isBlank(args[0]))
 				c = help;
 			else
 				for (String s : help)
@@ -55,7 +55,7 @@ public class CommandTabCompleter implements TabCompleter {
 	ArrayList<String> getPlayers(String arg)
 	{
 		ArrayList<String> players = new ArrayList<String>();
-		if (arg.isBlank())
+		if (isBlank(arg))
 		{
 			for (Player p : Bukkit.getOnlinePlayers())
 			{
@@ -76,7 +76,7 @@ public class CommandTabCompleter implements TabCompleter {
 	ArrayList<String> getGenerators(String arg)
 	{
 		ArrayList<String> generators = new ArrayList<String>();
-		if (arg.isBlank())
+		if (isBlank(arg))
 		{
 			for (Generator g : Generators.getAll())
 			{
@@ -92,5 +92,12 @@ public class CommandTabCompleter implements TabCompleter {
 			}
 		}
 		return generators;
+	}
+	
+	boolean isBlank(String s)
+	{
+		if (s.isEmpty() || s.equals(" "))
+			return true;
+		return false;
 	}
 }

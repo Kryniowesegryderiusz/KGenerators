@@ -78,11 +78,10 @@ public class Schedules {
 		GenerateBlock.generate(gLocation);
 	}
 	
-	/*
+	/**
 	 * @param location Generator location
 	 * @return left ticks or -1 if not exist
 	 */
-	
 	public static int timeLeft(GeneratorLocation gLocation)
 	{
 		if (schedules.containsKey(gLocation))

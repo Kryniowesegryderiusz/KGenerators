@@ -79,7 +79,7 @@ public class RecipesFile {
 		                    ArrayList<String> lore = new ArrayList<>();
 		                    for (String s : (ArrayList<String>)file.getList(generatorID + ".ingredients." + ingredientsString + ".lore")) {
 		                      if (s != null)
-		                        lore.add(ChatColor.translateAlternateColorCodes('&', s)); 
+		                        lore.add(Main.getChatUtils().colorize(s)); 
 		                    } 
 		                    meta.setLore(lore);
 		                  } 

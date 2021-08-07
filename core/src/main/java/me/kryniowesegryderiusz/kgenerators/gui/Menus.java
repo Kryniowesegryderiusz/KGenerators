@@ -19,6 +19,7 @@ import me.kryniowesegryderiusz.kgenerators.classes.Generator;
 import me.kryniowesegryderiusz.kgenerators.classes.GeneratorLocation;
 import me.kryniowesegryderiusz.kgenerators.classes.MenuPlayer;
 import me.kryniowesegryderiusz.kgenerators.hooks.BentoBoxHook;
+import me.kryniowesegryderiusz.kgenerators.hooks.SuperiorSkyblock2Hook;
 import me.kryniowesegryderiusz.kgenerators.managers.Generators;
 
 public class Menus implements Listener {
@@ -68,7 +69,7 @@ public class Menus implements Listener {
 	
 	public static void openGeneratorMenu(Player p, GeneratorLocation gLocation)
 	{
-		if (Main.dependencies.contains(Dependency.BENTO_BOX) && !p.hasPermission("kgenerators.bypass.bentobox") && !BentoBoxHook.isAllowed(p, BentoBoxHook.Type.OPEN_MENU_FLAG))
+		if (!BentoBoxHook.isAllowed(p, BentoBoxHook.Type.OPEN_MENU_FLAG) || !SuperiorSkyblock2Hook.isAllowed(p, SuperiorSkyblock2Hook.Type.OPEN_MENU_FLAG))
 		{
 			Lang.sendMessage(p, Message.GENERATOR_MENU_CANT_OPEN_HERE);
 			return;

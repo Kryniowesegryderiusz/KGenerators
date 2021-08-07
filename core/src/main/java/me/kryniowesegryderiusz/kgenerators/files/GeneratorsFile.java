@@ -49,7 +49,7 @@ public class GeneratorsFile {
 	    		
 	    		String generatorBlock = config.getString(generatorID+".generator");
 	    		int delay = config.getInt(generatorID+".delay");
-	    		String name = ChatColor.translateAlternateColorCodes('&', config.getString(generatorID+".name"));
+	    		String name = Main.getChatUtils().colorize(config.getString(generatorID+".name"));
 	    		String type = config.getString(generatorID+".type").toLowerCase();
 	    		
 	    		if (!type.equals("single") && !type.equals("double")) {
@@ -70,7 +70,7 @@ public class GeneratorsFile {
 	    		meta.setDisplayName(name);
 	    		loreGot = (ArrayList<String>) config.getList(generatorID+".lore");
 	    	    for (String l : loreGot) {
-	    	    	l = ChatColor.translateAlternateColorCodes('&', l);
+	    	    	l = Main.getChatUtils().colorize(l);
 	    	    	lore.add(l);
 	    	      }
 	    		meta.setLore(lore);

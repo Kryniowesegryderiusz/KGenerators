@@ -11,6 +11,7 @@ import me.kryniowesegryderiusz.kgenerators.enums.WGFlag;
 import me.kryniowesegryderiusz.kgenerators.classes.Generator;
 import me.kryniowesegryderiusz.kgenerators.classes.GeneratorLocation;
 import me.kryniowesegryderiusz.kgenerators.hooks.BentoBoxHook;
+import me.kryniowesegryderiusz.kgenerators.hooks.SuperiorSkyblock2Hook;
 import me.kryniowesegryderiusz.kgenerators.managers.Players;
 
 public class PickUp {
@@ -25,6 +26,7 @@ public class PickUp {
 		
     	if (!p.hasPermission("kgenerators.pickup."+generator.getId()))
     	{
+    		Lang.addReplecable("<permission>", "kgenerators.pickup."+generator.getId());
     		Lang.sendMessage(p, Message.GENERATORS_PICK_UP_NO_PERMISSION);
     		return;
     	}
@@ -35,7 +37,8 @@ public class PickUp {
 		}
 		
 		if ((Main.dependencies.contains(Dependency.WORLD_GUARD) && !p.hasPermission("kgenerators.bypass.worldguard") && !Main.getWorldGuardUtils().worldGuardFlagCheck(gLocation.getLocation(), p, WGFlag.PICK_UP))
-				|| (Main.dependencies.contains(Dependency.BENTO_BOX) && !p.hasPermission("kgenerators.bypass.bentobox") && !BentoBoxHook.isAllowed(p, BentoBoxHook.Type.PICKUP_FLAG)))
+				|| !BentoBoxHook.isAllowed(p, BentoBoxHook.Type.PICKUP_FLAG) 
+				|| !SuperiorSkyblock2Hook.isAllowed(p, SuperiorSkyblock2Hook.Type.PICKUP_FLAG))
 		{
 			Lang.sendMessage(p, Message.GENERATORS_PICK_UP_CANT_HERE);
 			return;

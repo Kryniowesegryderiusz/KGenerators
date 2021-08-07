@@ -7,7 +7,7 @@
   <parent>
     <groupId>me.kryniowesegryderiusz</groupId>
     <artifactId>kgenerators-parent</artifactId>
-    <version>5.0.0</version>
+    <version>5.1.0</version>
   </parent>
 
 	<repositories>
@@ -100,9 +100,14 @@
 	      <scope>provided</scope>
 	    </dependency>
 	    
-
-		
-
+        <!--  IridiumSkyblock  -->
+        <dependency>
+		    <groupId>com.iridium</groupId>
+		    <artifactId>iridiumskyblock</artifactId>
+		    <version>3.0.7</version>
+		    <scope>system</scope>
+		    <systemPath>${project.basedir}/dependencies/IridiumSkyblock-3.0.7.jar</systemPath>
+		</dependency>
 	</dependencies>
 
    <build>

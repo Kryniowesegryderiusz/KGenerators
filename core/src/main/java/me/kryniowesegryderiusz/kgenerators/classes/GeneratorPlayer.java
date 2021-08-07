@@ -55,6 +55,7 @@ public class GeneratorPlayer {
 	 * Per player generators
 	 */
 	
+	@Getter
 	private HashMap<Generator, Integer> playersGenerators = new HashMap<Generator, Integer>();
 	
 	public void addGeneratorToPlayer(Generator generator)

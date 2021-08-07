@@ -19,6 +19,7 @@ import me.kryniowesegryderiusz.kgenerators.classes.Generator;
 import me.kryniowesegryderiusz.kgenerators.classes.GeneratorLocation;
 import me.kryniowesegryderiusz.kgenerators.handlers.ActionHandler;
 import me.kryniowesegryderiusz.kgenerators.hooks.BentoBoxHook;
+import me.kryniowesegryderiusz.kgenerators.hooks.SuperiorSkyblock2Hook;
 import me.kryniowesegryderiusz.kgenerators.managers.Locations;
 import me.kryniowesegryderiusz.kgenerators.managers.Players;
 import me.kryniowesegryderiusz.kgenerators.managers.Schedules;
@@ -132,7 +133,7 @@ public class BlockBreakListener implements Listener {
 	 */
 	boolean hasDependenciesCheck(Player player, Location location)
 	{
-		if (Main.dependencies.contains(Dependency.BENTO_BOX) && !player.hasPermission("kgenerators.bypass.bentobox") && !BentoBoxHook.isAllowed(player, BentoBoxHook.Type.USE_FLAG))
+		if (!BentoBoxHook.isAllowed(player, BentoBoxHook.Type.USE_FLAG) || !SuperiorSkyblock2Hook.isAllowed(player, SuperiorSkyblock2Hook.Type.USE_FLAG))
 		{
 			Lang.sendMessage(player, Message.GENERATORS_DIGGING_CANT_HERE);
 			return false;

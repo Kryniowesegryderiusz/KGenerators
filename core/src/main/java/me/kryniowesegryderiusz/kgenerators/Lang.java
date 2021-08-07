@@ -6,6 +6,8 @@ import java.util.HashMap;
 import java.util.LinkedHashMap;
 import java.util.Map;
 import java.util.Map.Entry;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 
 import org.bukkit.ChatColor;
 import org.bukkit.command.CommandSender;
@@ -57,7 +59,7 @@ public class Lang {
 				config.set(fpath, entry.getValue());
 			}
 			
-			lang.put(mpath, ChatColor.translateAlternateColorCodes('&', config.getString(fpath)));
+			lang.put(mpath, Main.getChatUtils().colorize(config.getString(fpath)));
 			
 			try {
 				config.saveConfig();
@@ -83,9 +85,16 @@ public class Lang {
 			ArrayList<String> holo = new ArrayList<String>();
 			for (String s : gotHolo)
 			{
-				holo.add(ChatColor.translateAlternateColorCodes('&', s));
+				holo.add(Main.getChatUtils().colorize(s));
 			}
 			holograms.put(e.getKey(), holo);
+			
+			try {
+				config.saveConfig();
+			} catch (IOException ex) {
+				Logger.error("Lang: Cant save lang file!");
+				Logger.error(ex);
+			}
     	}
 		
 		/*
@@ -120,7 +129,7 @@ public class Lang {
 			ArrayList<String> lines = new ArrayList<String>();
 			for (String s : gotLines)
 			{
-				lines.add(ChatColor.translateAlternateColorCodes('&', s));
+				lines.add(Main.getChatUtils().colorize(s));
 			}
 			menuItemsAdditionalLines.put(e.getKey(), lines);
     	}

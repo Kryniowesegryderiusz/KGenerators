@@ -10,6 +10,7 @@ import org.bukkit.inventory.ItemStack;
 
 import lombok.Getter;
 import me.kryniowesegryderiusz.kgenerators.Lang;
+import me.kryniowesegryderiusz.kgenerators.Main;
 import me.kryniowesegryderiusz.kgenerators.enums.MenuInventoryType;
 import me.kryniowesegryderiusz.kgenerators.enums.MenuItemType;
 import me.kryniowesegryderiusz.kgenerators.utils.Config;
@@ -23,7 +24,7 @@ public class MenuInventory {
 	
 	public MenuInventory(String name, int slots)
 	{
-		this.name = ChatColor.translateAlternateColorCodes('&', name);
+		this.name = Main.getChatUtils().colorize(name);;
 		this.slots = (short) slots;
 	}
 	
@@ -82,7 +83,7 @@ public class MenuInventory {
 		String path = menu.getKey();
 		if (config.contains(path))
 		{
-			if (config.contains(path+".name")) this.name = ChatColor.translateAlternateColorCodes('&', config.getString(path+".name"));
+			if (config.contains(path+".name")) this.name = Main.getChatUtils().colorize(config.getString(path+".name"));
 			if (config.contains(path+".slots")) this.slots = (short) config.getInt(path+".slots");
 		}
 		else

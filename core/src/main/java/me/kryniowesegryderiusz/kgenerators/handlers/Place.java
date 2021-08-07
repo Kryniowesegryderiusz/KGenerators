@@ -41,6 +41,7 @@ public class Place {
     	
     	if (!player.hasPermission("kgenerators.place."+generator.getId()))
     	{
+    		Lang.addReplecable("<permission>", "kgenerators.place."+generator.getId());
     		Lang.sendMessage(player, Message.GENERATORS_PLACE_NO_PERMISSION);
     		return false;
     	}

@@ -13,6 +13,7 @@ import org.bukkit.event.Listener;
 
 import me.kryniowesegryderiusz.kgenerators.Logger;
 import me.kryniowesegryderiusz.kgenerators.Main;
+import me.kryniowesegryderiusz.kgenerators.enums.Dependency;
 import me.kryniowesegryderiusz.kgenerators.managers.Locations;
 import me.kryniowesegryderiusz.kgenerators.utils.Config;
 import world.bentobox.bentobox.BentoBox;
@@ -109,8 +110,12 @@ public class BentoBoxHook implements Listener {
 	
 	public static boolean isAllowed(Player p, Type type)
 	{
+		if (!Main.dependencies.contains(Dependency.BENTO_BOX) || p.hasPermission("kgenerators.bypass.bentobox"))	
+			return true;
+		
 		Optional<Island> oisland = BentoBox.getInstance().getIslands().getIslandAt(p.getLocation());
-		if(oisland.isPresent()) {
+		
+		if (oisland.isPresent()) {
 			
 			Flag flag = null;
 			if (type == Type.PICKUP_FLAG)

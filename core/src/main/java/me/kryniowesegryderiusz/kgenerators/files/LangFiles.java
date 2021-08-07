@@ -32,7 +32,7 @@ public class LangFiles {
         		Main.getInstance().saveResource("lang/"+l+".yml", false);
         	if (!new File(Main.getInstance().getDataFolder(), "lang/"+l+"_gui.yml").exists())
         		Main.getInstance().saveResource("lang/"+l+"_gui.yml", false);
-        	if (!new File(Main.getInstance().getDataFolder(), "lang/"+l+"_custom-names.yml").exists())
+        	if (!new File(Main.getInstance().getDataFolder(), "lang/"+l+"_custom_names.yml").exists())
         		Main.getInstance().saveResource("lang/"+l+"_custom_names.yml", false);
     	}
     	

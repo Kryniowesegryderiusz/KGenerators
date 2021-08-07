@@ -77,7 +77,7 @@ public class MenuItem implements Cloneable {
 	public void addLore(String loreLine)
 	{
 		if (loreLine != null)
-			this.lore.add(ChatColor.translateAlternateColorCodes('&', loreLine));
+			this.lore.add(Main.getChatUtils().colorize(loreLine));
 	}
 	
 	public void addLore(String... lore)
@@ -85,7 +85,7 @@ public class MenuItem implements Cloneable {
 		for (String s : Arrays.asList(lore))
 		{
 			if (s != null)
-				this.lore.add(ChatColor.translateAlternateColorCodes('&', s));
+				this.lore.add(Main.getChatUtils().colorize(s));
 		}
 	}
 	
@@ -94,14 +94,14 @@ public class MenuItem implements Cloneable {
 		for (String s : lore)
 		{
 			if (s != null)
-				this.lore.add(ChatColor.translateAlternateColorCodes('&', s));
+				this.lore.add(Main.getChatUtils().colorize(s));
 		}
 	}
 	
 	public void setName(String name)
 	{
 		if (name != null)
-			this.name = ChatColor.translateAlternateColorCodes('&', name);
+			this.name = Main.getChatUtils().colorize(name);
 	}
 	
 	public void replace(String key, String value)
@@ -124,7 +124,7 @@ public class MenuItem implements Cloneable {
 				{
 					for (String as : array)
 					{
-						newDesc.add(ChatColor.translateAlternateColorCodes('&', as));
+						newDesc.add(Main.getChatUtils().colorize(as));
 					}
 				}
 			}

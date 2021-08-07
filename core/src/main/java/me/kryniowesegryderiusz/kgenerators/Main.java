@@ -28,6 +28,7 @@ import me.kryniowesegryderiusz.kgenerators.gui.RecipeMenu;
 import me.kryniowesegryderiusz.kgenerators.gui.UpgradeMenu;
 import me.kryniowesegryderiusz.kgenerators.handlers.Vault;
 import me.kryniowesegryderiusz.kgenerators.hooks.BentoBoxHook;
+import me.kryniowesegryderiusz.kgenerators.hooks.IridiumSkyblockHook;
 import me.kryniowesegryderiusz.kgenerators.hooks.SlimefunHook;
 import me.kryniowesegryderiusz.kgenerators.hooks.SuperiorSkyblock2Hook;
 import me.kryniowesegryderiusz.kgenerators.hooks.JetsMinionsHook;
@@ -47,6 +48,7 @@ import me.kryniowesegryderiusz.kgenerators.managers.Holograms;
 import me.kryniowesegryderiusz.kgenerators.managers.Schedules;
 import me.kryniowesegryderiusz.kgenerators.multiversion.ActionBar;
 import me.kryniowesegryderiusz.kgenerators.multiversion.BlocksUtils;
+import me.kryniowesegryderiusz.kgenerators.multiversion.ChatUtils;
 import me.kryniowesegryderiusz.kgenerators.multiversion.MultiVersion;
 import me.kryniowesegryderiusz.kgenerators.multiversion.RecipesLoader;
 import me.kryniowesegryderiusz.kgenerators.multiversion.WorldGuardUtils;
@@ -75,6 +77,8 @@ public class Main extends JavaPlugin {
 	private static WorldGuardUtils worldGuardUtils;
 	@Getter @Setter
 	private static ActionBar actionBar;
+	@Getter @Setter
+	private static ChatUtils chatUtils;
 	
     @Override
     public void onEnable() {
@@ -90,8 +94,9 @@ public class Main extends JavaPlugin {
 		metrics.addCustomChart(new Metrics.SimplePie("per_player_generators_enabled", () -> String.valueOf(Main.getSettings().isLimits()) ));
     	
     	/* Dependencies check */
+		dependencies.clear();
     	dependenciesCheck();
-    	
+    	dependenciesCheckPostponed();
     	FilesConverter.convert();
     	
     	ConfigFile.globalSettingsLoader();
@@ -143,14 +148,18 @@ public class Main extends JavaPlugin {
     	Menus.closeAll();
     }
     
-    
     public static void dependenciesCheck() {
+    	if (Bukkit.getPluginManager().getPlugin("SuperiorSkyblock2") != null) {
+    		SuperiorSkyblock2Hook.setup();
+    	}
+    }
+    
+    public static void dependenciesCheckPostponed() {
     	Bukkit.getScheduler().runTask(Main.getInstance(), () -> {
-    		dependencies.clear();
     		
 	    	if (Bukkit.getPluginManager().isPluginEnabled("SuperiorSkyblock2")) {
 	    		Logger.info("Dependencies: Detected plugin SuperiorSkyblock2. Hooking into it.");
-	    		SuperiorSkyblock2Hook.setup();
+	    		//Setup moved to standard check due to SS2 initialize event
 	    		dependencies.add(Dependency.SUPERIOR_SKYBLOCK_2);
 	    	}
 	    	
@@ -158,6 +167,12 @@ public class Main extends JavaPlugin {
 	    		Logger.info("Dependencies: Detected plugin BentoBox. Hooking into it.");
 	    		BentoBoxHook.setup();
 	    		dependencies.add(Dependency.BENTO_BOX);
+	    	}
+	    	
+	    	if (Bukkit.getPluginManager().isPluginEnabled("IridiumSkyblock")) {
+	    		Logger.info("Dependencies: Detected plugin IridiumSkyblock. Hooking into it.");
+	    		IridiumSkyblockHook.setup();
+	    		dependencies.add(Dependency.IRIDIUM_SKYBLOCK);
 	    	}
 	    	
 	    	if (Bukkit.getPluginManager().isPluginEnabled("JetsMinions")) {

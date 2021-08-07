@@ -25,6 +25,7 @@ import me.kryniowesegryderiusz.kgenerators.enums.Message;
 import me.kryniowesegryderiusz.kgenerators.files.GeneratorsFile;
 import me.kryniowesegryderiusz.kgenerators.files.LangFiles;
 import me.kryniowesegryderiusz.kgenerators.files.LimitsFile;
+import me.kryniowesegryderiusz.kgenerators.files.PlacedGeneratorsFile;
 import me.kryniowesegryderiusz.kgenerators.files.UpgradesFile;
 import me.kryniowesegryderiusz.kgenerators.gui.Menus;
 import me.kryniowesegryderiusz.kgenerators.files.ConfigFile;
@@ -53,6 +54,7 @@ public class Commands implements CommandExecutor {
 						Logger.info("Reload: KGenerators reload started");
 						ConfigFile.globalSettingsLoader();
 				    	GeneratorsFile.load();
+				    	Players.reload();
 				    	UpgradesFile.load();
 				    	LimitsFile.load();
 				    	LangFiles.loadLang();

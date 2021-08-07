@@ -4,12 +4,15 @@ import java.util.Map.Entry;
 
 import org.bukkit.entity.Player;
 
+import me.kryniowesegryderiusz.kgenerators.Lang;
 import me.kryniowesegryderiusz.kgenerators.Main;
 import me.kryniowesegryderiusz.kgenerators.classes.GeneratorAction;
 import me.kryniowesegryderiusz.kgenerators.classes.GeneratorLocation;
 import me.kryniowesegryderiusz.kgenerators.gui.Menus;
+import me.kryniowesegryderiusz.kgenerators.managers.Schedules;
 import me.kryniowesegryderiusz.kgenerators.enums.Action;
 import me.kryniowesegryderiusz.kgenerators.enums.Interaction;
+import me.kryniowesegryderiusz.kgenerators.enums.Message;
 
 public class ActionHandler {
 	
@@ -36,6 +39,11 @@ public class ActionHandler {
 						Menus.openGeneratorMenu(player, gLocation);
 						break;
 					case TIMELEFT:
+						if (Schedules.timeLeft(gLocation) > 0)
+						{
+							Lang.addReplecable("<time>", Schedules.timeLeftFormatted(gLocation));
+							Lang.sendMessage(player, Message.GENERATORS_TIME_LEFT_OUTPUT);
+						}
 						break;
 				}
 			}
