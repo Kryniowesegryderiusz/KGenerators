@@ -51,5 +51,10 @@ public class Vault {
     {
     	return perms.playerHas(Bukkit.getWorlds().get(0).getName(), offPlayer, perm);
     }
+    
+    public static String formatMoney(double money)
+    {
+    	return econ.format(money);
+    }
 
 }

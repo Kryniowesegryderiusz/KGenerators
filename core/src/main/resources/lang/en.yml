@@ -5,6 +5,7 @@ messages:
       owner-none: '&cNone'
       disabled: '&cGenerators are disabled in this world!'
       repaired: '&aGenerator succesfully repaired!'
+      no-longer-there: '&cGenerator is no longer there!'
     digging:
       cant-here: '&cYou can''t dig generated blocks here!'
       only-gen: '&cYou can only dig generated blocks here!'
@@ -39,8 +40,8 @@ messages:
       cant-open-here: '&cYou cant open this menu here!'
   economy:
     no-economy-avaible: '&cThere is no economy system avaible!'
-    not-enough-money: '&cYou dont have enough money! You need &6<cost>$&c!'
-    done: '&aYou upgraded &e<number> &agenerators for &e<cost>$&a!'
+    not-enough-money: '&cYou dont have enough money! You need &6<cost>&c!'
+    done: '&aYou upgraded &e<number> &agenerators for &e<cost>&a!'
   hooks:
     explode-pickaxe:
       cannot-use-on-double: '&cYou cannot use explosion pickaxe on type double generator!'
@@ -66,9 +67,9 @@ messages:
         open menu for other players!'
       help: Opens menu
     give:
-      generator-given: '&aGenerator <generator> &awas given to &e<player>'
-      generator-recieved: '&aGenerator <generator> &arecieved!'
-      usage: '&cUsage: &e/kgenerators give <player> <generator>'
+      generator-given: '&e<amount>x &a<generator> &awas given to &e<player>'
+      generator-recieved: '&aYou recieved &e<amount>x &a<generator>&a!'
+      usage: '&cUsage: &e/kgenerators give <player> <generator> [amount]'
       no-permission: '&cYou dont have permission &8(&7<permission>&8)&c to give generators'
       help: Give generator to player
     getall:

@@ -1,3 +1,75 @@
+generator:
+  name: §9<generator_name>
+  slots: 45
+  filler:
+    enabled: true
+    item: GRAY_STAINED_GLASS_PANE
+    name: §r
+    lore: []
+    slots: 0,1,2,3,4,5,6,7,8,9,17,18,26,27,35,36,37,38,39,40,41,42,43,44
+    glow: false
+  quit:
+    enabled: true
+    item: ARROW
+    name: §cQuit
+    lore:
+    - §6Quit menu
+    slots: '40'
+    glow: false
+  reset:
+    enabled: true
+    item: MUSIC_DISC_11
+    name: §cReset generator
+    lore:
+    - §6This generator seems to be currupted!
+    - §6Click here to repair him
+    slots: '13'
+    glow: false
+  owner:
+    enabled: true
+    item: BOOK
+    name: §aGenerator owner
+    lore:
+    - §e<owner>
+    slots: '22'
+    glow: false
+  time-left:
+    enabled: true
+    item: CLOCK
+    name: §aTime left for regeneration
+    lore:
+    - §a<time>
+    slots: '21'
+    glow: false
+  pick-up:
+    enabled: true
+    item: BARRIER
+    name: §aPick up
+    lore:
+    - §eClick here to pick up generator
+    slots: '23'
+    glow: false
+  upgrade:
+    enabled: true
+    item: EXPERIENCE_BOTTLE
+    name: §cUpgrade generator
+    lore:
+    - §6Click here to upgrade this generator!
+    - ''
+    - '§6Next stage: §e<next_generator>'
+    - '§6Cost: §e<cost>'
+    slots: '31'
+    glow: false
+  upgrade-maxed:
+    enabled: true
+    item: EXPERIENCE_BOTTLE
+    name: §cMaximum generator level
+    lore:
+    - §6This generator doesnt have 
+    - §6any further upgrades!
+    - §6You've maxed it!
+    slots: '31'
+    glow: false
 main:
   name: §9Generators
   slots: 45
@@ -51,57 +123,6 @@ main:
     lore:
     - §eClick here to check limits
     slots: '8'
-    glow: false
-generator:
-  name: §9<generator_name>
-  slots: 45
-  filler:
-    enabled: true
-    item: GRAY_STAINED_GLASS_PANE
-    name: §r
-    lore: []
-    slots: 0,1,2,3,4,5,6,7,8,9,17,18,26,27,35,36,37,38,39,40,41,42,43,44
-    glow: false
-  quit:
-    enabled: true
-    item: ARROW
-    name: §cQuit
-    lore:
-    - §6Quit menu
-    slots: '40'
-    glow: false
-  reset:
-    enabled: true
-    item: MUSIC_DISC_11
-    name: §cReset generator
-    lore:
-    - §6This generator seems to be currupted!
-    - §6Click here to repair him
-    slots: '13'
-    glow: false
-  owner:
-    enabled: true
-    item: BOOK
-    name: §aGenerator owner
-    lore:
-    - §e<owner>
-    slots: '22'
-    glow: false
-  time-left:
-    enabled: true
-    item: CLOCK
-    name: §aTime left for regeneration
-    lore:
-    - §a<time>
-    slots: '21'
-    glow: false
-  pick-up:
-    enabled: true
-    item: BARRIER
-    name: §aPick up
-    lore:
-    - §eClick here to pick up generator
-    slots: '23'
     glow: false
 chances:
   name: §9Blocks chances

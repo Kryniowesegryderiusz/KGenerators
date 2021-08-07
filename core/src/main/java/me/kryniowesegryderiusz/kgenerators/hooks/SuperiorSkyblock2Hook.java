@@ -4,9 +4,11 @@ import org.bukkit.Location;
 import org.bukkit.block.Block;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
+import org.bukkit.event.EventPriority;
 import org.bukkit.event.Listener;
 
 import com.bgsoftware.superiorskyblock.api.SuperiorSkyblockAPI;
+import com.bgsoftware.superiorskyblock.api.events.BlockStackEvent;
 import com.bgsoftware.superiorskyblock.api.events.IslandDisbandEvent;
 import com.bgsoftware.superiorskyblock.api.events.PluginInitializeEvent;
 import com.bgsoftware.superiorskyblock.api.island.Island;
@@ -53,6 +55,13 @@ public class SuperiorSkyblock2Hook implements Listener {
 		Logger.info("Detected SuperiorSkyblock2 removing island in world " + min.getWorld().getName() + " starting at " + min.getBlockX() + "," + min.getBlockZ() + " and ending at " + max.getBlockX()+","+max.getBlockZ());
 		Locations.bulkRemoveGenerators(min.getWorld(), min.getBlockX(), 0, min.getBlockZ(), max.getBlockX(), min.getWorld().getMaxHeight(), max.getBlockZ(), false);
 
+	}
+	
+	@EventHandler(priority = EventPriority.HIGH)
+	public void onStackEvent(BlockStackEvent e)
+	{
+		if (Locations.exists(e.getBlock().getLocation()))
+			e.setCancelled(true);
 	}
 	
 	/*

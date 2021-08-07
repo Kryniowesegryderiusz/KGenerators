@@ -66,6 +66,7 @@ public class Place {
     	Locations.add(gLocation);
     	PlacedGeneratorsFile.saveGeneratorToFile(location, player, generator.getId());
     	if (!pGenerator.isNone()) pGenerator.addGeneratorToPlayer(generator);
+    	if (player != null) Main.getSettings().getPlaceSound().play(player);
     	
     	if (player != null)
     		Logger.info(player.getName() + " placed " + generator.getId() + " in " + gLocation.toStringLocation());

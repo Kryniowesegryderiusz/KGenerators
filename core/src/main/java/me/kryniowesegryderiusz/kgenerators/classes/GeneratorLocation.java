@@ -1,14 +1,20 @@
 package me.kryniowesegryderiusz.kgenerators.classes;
 
 import org.bukkit.Location;
+import org.bukkit.Material;
 import org.bukkit.entity.Player;
+import org.bukkit.inventory.ItemStack;
 
 import lombok.Getter;
+import me.kryniowesegryderiusz.kgenerators.Logger;
 import me.kryniowesegryderiusz.kgenerators.Main;
 import me.kryniowesegryderiusz.kgenerators.enums.GeneratorType;
+import me.kryniowesegryderiusz.kgenerators.files.PlacedGeneratorsFile;
 import me.kryniowesegryderiusz.kgenerators.handlers.Remove;
 import me.kryniowesegryderiusz.kgenerators.managers.Generators;
+import me.kryniowesegryderiusz.kgenerators.managers.Locations;
 import me.kryniowesegryderiusz.kgenerators.managers.Schedules;
+import me.kryniowesegryderiusz.kgenerators.xseries.XUtils;
 
 public class GeneratorLocation {
 	@Getter
@@ -58,12 +64,40 @@ public class GeneratorLocation {
 	}
 	
 	/**
+	 * Changes this generatorLocation to another generator
+	 * @param Generator generator
+	 */
+	public void changeTo(Generator generator)
+	{
+		Logger.info("Generator " + this.generatorId +  " placed in " + this.toStringLocation() + " was transformed to " + generator.getId());
+		Schedules.remove(this);
+			
+		this.generatorId = generator.getId();
+		if (this.getGenerator().getType() == GeneratorType.SINGLE)
+		{
+			Main.getBlocksUtils().setBlock(this.location, new ItemStack(Material.AIR));
+		}
+		else
+		{
+			Main.getBlocksUtils().setBlock(this.location, this.getGenerator().getGeneratorBlock());
+			Main.getBlocksUtils().setBlock(this.location.clone().add(0,1,0), new ItemStack(Material.AIR));
+		}
+		
+		PlacedGeneratorsFile.saveGeneratorToFile(this);
+		
+		this.regenNow();
+	}
+	
+	/**
 	 * Returns whether this generatorLocation is corrupted.
 	 * More precisely if there isnt any scheduled regeneration referred to it and there is nothing in place of that generator.
 	 * @return
 	 */
 	public boolean isBroken()
 	{
+		if (!Locations.exists(this.location))
+			return false;
+		
 		if (!Schedules.getSchedules().containsKey(this))
 		{
 			if (this.getGenerator().getType() == GeneratorType.SINGLE && Main.getBlocksUtils().isAir(this.location.getBlock()))

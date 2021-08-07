@@ -48,6 +48,25 @@ actions:
     item: ANY
     sneak: false
 
+#Here you can choose which sounds should be played on each action.
+#ALWAYS use names from https://hub.spigotmc.org/javadocs/bukkit/org/bukkit/Sound.html
+sounds:
+  place:
+    #Type sound name or "NONE" to disable sound
+    sound: BLOCK_ANVIL_LAND
+    #Volume sohuld be a number between 0.0 and 10.0 (1.0 is normal)
+    volume: 0.2
+    #Volume sohuld be a number between 0.0 and 2.0 (0.0 is normal)
+    pitch: 0.0
+  pick-up:
+    sound: ENTITY_BAT_TAKEOFF
+    volume: 0.3
+    pitch: 0.0
+  upgrade:
+    sound: ENTITY_PLAYER_LEVELUP
+    volume: 0.3
+    pitch: 0.0
+
 #These settings are related to performance and its not recommended to set them too low
 #Values are presented in ticks (20 ticks = 1 second)
 #Changed values need server restart to affect plugin functioning

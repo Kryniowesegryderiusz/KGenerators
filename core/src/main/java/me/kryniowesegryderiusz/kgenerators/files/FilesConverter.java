@@ -399,6 +399,30 @@ public class FilesConverter {
 			addToFile(file, "pick-up-to-eq: true");
 			Logger.info("FilesConverter: Added pick-up-to-eq settings to config file");
 		}
+		
+		if (!config.contains("sounds"))
+		{
+			addToFile(file, "");
+			addToFile(file, "#Here you can choose which sounds should be played on each action.");
+			addToFile(file, "#ALWAYS use names from https://hub.spigotmc.org/javadocs/bukkit/org/bukkit/Sound.html");
+			addToFile(file, "sounds:");
+			addToFile(file, "  place:");
+			addToFile(file, "    #Type sound name or \"NONE\" to disable sound");
+			addToFile(file, "    sound: BLOCK_ANVIL_LAND");
+			addToFile(file, "    #Volume sohuld be a number between 0.0 and 10.0 (1.0 is normal)");
+			addToFile(file, "    volume: 0.2");
+			addToFile(file, "    #Volume sohuld be a number between 0.0 and 2.0 (0.0 is normal)");
+			addToFile(file, "    pitch: 0.0");
+			addToFile(file, "  pick-up:");
+			addToFile(file, "    sound: ENTITY_BAT_TAKEOFF");
+			addToFile(file, "    volume: 0.3");
+			addToFile(file, "    pitch: 0.0");
+			addToFile(file, "  upgrade:");
+			addToFile(file, "    sound: ENTITY_PLAYER_LEVELUP");
+			addToFile(file, "    volume: 0.3");
+			addToFile(file, "    pitch: 0.0");
+			Logger.info("FilesConverter: Added sounds settings to config file");
+		}
 	}
 	
 	static void addToFile(File file, String string)

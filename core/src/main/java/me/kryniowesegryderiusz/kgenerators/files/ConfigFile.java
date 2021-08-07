@@ -12,6 +12,7 @@ import me.kryniowesegryderiusz.kgenerators.Logger;
 import me.kryniowesegryderiusz.kgenerators.Main;
 import me.kryniowesegryderiusz.kgenerators.Settings;
 import me.kryniowesegryderiusz.kgenerators.classes.GeneratorAction;
+import me.kryniowesegryderiusz.kgenerators.classes.Sound;
 import me.kryniowesegryderiusz.kgenerators.utils.Config;
 import me.kryniowesegryderiusz.kgenerators.utils.ConfigManager;
 import me.kryniowesegryderiusz.kgenerators.xseries.XUtils;
@@ -85,6 +86,20 @@ public class ConfigFile {
 		{
 			settings.getDisabledWorlds().addAll((ArrayList<String>) config.getList("disabled-worlds"));
 		}
+		
+		if (config.contains("disabled-worlds") )
+		{
+			settings.getDisabledWorlds().addAll((ArrayList<String>) config.getList("disabled-worlds"));
+		}
+		
+		if (config.contains("sounds.place"))
+			settings.setPlaceSound(new Sound(config, "sounds.place"));
+		
+		if (config.contains("sounds.pick-up"))
+			settings.setPickupSound(new Sound(config, "sounds.pick-up"));
+		
+		if (config.contains("sounds.upgrade"))
+			settings.setUpgradeSound(new Sound(config, "sounds.upgrade"));
 		
 		Main.setSettings(settings);
 	}

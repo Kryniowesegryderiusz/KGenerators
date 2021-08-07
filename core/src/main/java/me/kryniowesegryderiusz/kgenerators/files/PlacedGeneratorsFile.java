@@ -6,6 +6,7 @@ import java.util.Map.Entry;
 
 import org.bukkit.Bukkit;
 import org.bukkit.Location;
+import org.bukkit.OfflinePlayer;
 import org.bukkit.World;
 import org.bukkit.configuration.ConfigurationSection;
 import org.bukkit.configuration.InvalidConfigurationException;
@@ -14,6 +15,7 @@ import org.bukkit.entity.Player;
 import me.kryniowesegryderiusz.kgenerators.Logger;
 import me.kryniowesegryderiusz.kgenerators.Main;
 import me.kryniowesegryderiusz.kgenerators.classes.Generator;
+import me.kryniowesegryderiusz.kgenerators.classes.GeneratorLocation;
 import me.kryniowesegryderiusz.kgenerators.classes.GeneratorPlayer;
 import me.kryniowesegryderiusz.kgenerators.managers.Generators;
 import me.kryniowesegryderiusz.kgenerators.managers.Locations;
@@ -131,17 +133,22 @@ public class PlacedGeneratorsFile {
         });
 	}
 	
-	public static void saveGeneratorToFile(Location location, Player player, String generatorID)
+	public static void saveGeneratorToFile(Location location, OfflinePlayer offlinePlayer, String generatorID)
 	{	
 		String sLocation = Locations.locationToString(location);
 		file.set(sLocation+".generatorID", generatorID);
-		if (player != null) file.set(sLocation+".owner", player.getName());
+		if (offlinePlayer != null) file.set(sLocation+".owner", offlinePlayer.getName());
 		
 		try {
 			file.saveConfig();
 		} catch (IOException e) {
 			Logger.error(e);
 		}
+	}
+	
+	public static void saveGeneratorToFile(GeneratorLocation gl)
+	{
+		saveGeneratorToFile(gl.getLocation(), gl.getOwner().getOfflinePlayer(), gl.getGeneratorId());
 	}
 	
 	public static void removeGeneratorFromFile(Location location)

@@ -182,13 +182,29 @@ public class Commands implements CommandExecutor {
 								
 								ItemStack item = Generators.get(generatorID).getGeneratorItem();
 								
+								int amount = 1;
+								
+								if (args.length >= 4)
+								{
+									try {
+										amount = Integer.valueOf(args[3]);
+										item.setAmount(amount);
+									} catch (NumberFormatException e) {
+										Lang.sendMessage(sender, Message.COMMANDS_GIVE_USAGE);
+										return false;
+									}
+								}
+								
 								player.getInventory().addItem(item);
 								
 								Lang.addReplecable("<generator>", item.getItemMeta().getDisplayName());
 								Lang.addReplecable("<player>", player.getDisplayName());
+								Lang.addReplecable("<amount>", amount);
+								Lang.addReplecable(label, generatorID);
 								Lang.sendMessage(sender, Message.COMMANDS_GIVE_GENERATOR_GIVEN);
 								
 								Lang.addReplecable("<generator>", item.getItemMeta().getDisplayName());
+								Lang.addReplecable("<amount>", amount);
 								Lang.sendMessage(player, Message.COMMANDS_GIVE_GENERATOR_RECIEVED);
 							}
 						}
@@ -259,13 +275,15 @@ public class Commands implements CommandExecutor {
 											newItems.setAmount(items.getAmount());
 											p.setItemInHand(newItems);
 											
-											Lang.addReplecable("<cost>", String.valueOf(cost));
+											Lang.addReplecable("<cost>", upgrade.getCostFormatted());
 											Lang.addReplecable("<number>", String.valueOf(items.getAmount()));
 											Lang.sendMessage(p, Message.VAULT_ECONOMY_GENERATOR_UPGRADED);
+											
+											Main.getSettings().getUpgradeSound().play(p);
 										}
 										else
 										{
-											Lang.addReplecable("<cost>", String.valueOf(cost));
+											Lang.addReplecable("<cost>", upgrade.getCostFormatted());
 											Lang.sendMessage(p, Message.VAULT_ECONOMY_NOT_ENOUGH_MONEY);
 										}
 									}

@@ -1,9 +1,12 @@
 package me.kryniowesegryderiusz.kgenerators;
 
 import java.io.IOException;
+import java.text.DecimalFormat;
+import java.text.NumberFormat;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.LinkedHashMap;
+import java.util.Locale;
 import java.util.Map;
 import java.util.Map.Entry;
 import java.util.regex.Matcher;
@@ -261,6 +264,10 @@ public class Lang {
     		}
     	}
 		return commands;
+    }
+    
+    public static void addReplecable(String key, int value) {
+    	replecables.put(key, String.valueOf(value));
     }
     
     public static void addReplecable(String key, String value) {

@@ -10,7 +10,9 @@ import org.bukkit.inventory.ItemStack;
 import lombok.Getter;
 import lombok.Setter;
 import me.kryniowesegryderiusz.kgenerators.classes.GeneratorAction;
+import me.kryniowesegryderiusz.kgenerators.classes.Sound;
 import me.kryniowesegryderiusz.kgenerators.enums.Action;
+import me.kryniowesegryderiusz.kgenerators.xseries.XSound;
 
 public class Settings {
 	
@@ -50,6 +52,15 @@ public class Settings {
 	
 	@Setter @Getter
 	private HashMap<Action, GeneratorAction> guis = new HashMap<Action, GeneratorAction>();
+	
+	@Setter @Getter
+	private Sound placeSound = new Sound(XSound.BLOCK_ANVIL_LAND);
+	
+	@Setter @Getter
+	private Sound pickupSound = new Sound(XSound.ENTITY_BAT_TAKEOFF);
+	
+	@Setter @Getter
+	private Sound upgradeSound = new Sound(XSound.ENTITY_PLAYER_LEVELUP);
 	
 	
 	@Setter @Getter

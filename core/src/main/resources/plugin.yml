@@ -9,4 +9,4 @@ loadbefore: [SuperiorSkyblock2]
 api-version: 1.13
 commands:
   kgenerators:
-    aliases: ["kgen"]
+    aliases: ["kgen", "gen"]

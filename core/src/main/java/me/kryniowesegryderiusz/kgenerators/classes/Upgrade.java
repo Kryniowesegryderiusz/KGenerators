@@ -1,6 +1,7 @@
 package me.kryniowesegryderiusz.kgenerators.classes;
 
 import lombok.Getter;
+import me.kryniowesegryderiusz.kgenerators.handlers.Vault;
 import me.kryniowesegryderiusz.kgenerators.managers.Generators;
 
 public class Upgrade {
@@ -22,5 +23,10 @@ public class Upgrade {
 	public Generator getNextGenerator()
 	{
 		return Generators.get(this.nextGeneratorId);
+	}
+	
+	public String getCostFormatted()
+	{
+		return Vault.formatMoney(this.cost);
 	}
 }

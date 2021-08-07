@@ -9,6 +9,7 @@ public enum Message implements IMessage {
 	GENERATORS_ANY_OWNER_NONE("generators.any.owner-none", "&cNone"),
 	GENERATORS_ANY_DISABLED_WORLD("generators.any.disabled", "&cGenerators are disabled in this world!"),
 	GENERATORS_ANY_REPAIRED("generators.any.repaired", "&aGenerator succesfully repaired!"),
+	GENERATORS_ANY_NO_LONGER_THERE("generators.any.no-longer-there", "&cGenerator is no longer there!"),
 	
 	GENERATORS_DIGGING_CANT_HERE("generators.digging.cant-here", "&cYou can't dig generated blocks here!"),
 	GENERATORS_DIGGING_ONLY_GEN("generators.digging.only-gen", "&cYou can only dig generated blocks here!"),
@@ -38,8 +39,8 @@ public enum Message implements IMessage {
 	GENERATOR_MENU_CANT_OPEN_HERE("generators.menus.cant-open-here", "&cYou cant open this menu here!"),
 	
 	VAULT_ECONOMY_NOT_AVAILABLE("economy.no-economy-avaible", "&cThere is no economy system avaible!"),
-	VAULT_ECONOMY_NOT_ENOUGH_MONEY("economy.not-enough-money", "&cYou dont have enough money! You need &6<cost>$&c!"),
-	VAULT_ECONOMY_GENERATOR_UPGRADED("economy.done", "&aYou upgraded &e<number> &agenerators for &e<cost>$&a!"),
+	VAULT_ECONOMY_NOT_ENOUGH_MONEY("economy.not-enough-money", "&cYou dont have enough money! You need &6<cost>&c!"),
+	VAULT_ECONOMY_GENERATOR_UPGRADED("economy.done", "&aYou upgraded &e<number> &agenerators for &e<cost>&a!"),
 	
 	HOOKS_EXPLODE_PICKAXE_CANNOT_USE_ON_DOUBLE("hooks.explode-pickaxe.cannot-use-on-double", "&cYou cannot use explosion pickaxe on type double generator!"),
 	
@@ -61,9 +62,9 @@ public enum Message implements IMessage {
 	COMMANDS_MENU_NO_PERMISSION_OTHERS("commands.menu.no-permission-others", "&cYou dont have permission &8(&7<permission>&8)&c to open menu for other players!"),
 	COMMANDS_MENU_HELP("commands.menu.help", "Opens menu"),
 	
-	COMMANDS_GIVE_GENERATOR_GIVEN("commands.give.generator-given", "&aGenerator <generator> &awas given to &e<player>"),
-	COMMANDS_GIVE_GENERATOR_RECIEVED("commands.give.generator-recieved", "&aGenerator <generator> &arecieved!"),
-	COMMANDS_GIVE_USAGE("commands.give.usage", "&cUsage: &e/kgenerators give <player> <generator>"),
+	COMMANDS_GIVE_GENERATOR_GIVEN("commands.give.generator-given", "&e<amount>x &a<generator> &awas given to &e<player>"),
+	COMMANDS_GIVE_GENERATOR_RECIEVED("commands.give.generator-recieved", "&aYou recieved &e<amount>x &a<generator>&a!"),
+	COMMANDS_GIVE_USAGE("commands.give.usage", "&cUsage: &e/kgenerators give <player> <generator> [amount]"),
 	COMMANDS_GIVE_NO_PERMISSION("commands.give.no-permission", "&cYou dont have permission &8(&7<permission>&8)&c to give generators"),
 	COMMANDS_GIVE_HELP("commands.give.help", "Give generator to player"),
 	

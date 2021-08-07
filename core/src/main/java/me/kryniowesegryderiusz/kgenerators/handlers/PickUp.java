@@ -2,6 +2,8 @@ package me.kryniowesegryderiusz.kgenerators.handlers;
 
 import org.bukkit.entity.Player;
 
+import com.iridium.iridiumcore.dependencies.xseries.XSound;
+
 import me.kryniowesegryderiusz.kgenerators.Lang;
 import me.kryniowesegryderiusz.kgenerators.Logger;
 import me.kryniowesegryderiusz.kgenerators.Main;
@@ -12,6 +14,7 @@ import me.kryniowesegryderiusz.kgenerators.classes.Generator;
 import me.kryniowesegryderiusz.kgenerators.classes.GeneratorLocation;
 import me.kryniowesegryderiusz.kgenerators.hooks.BentoBoxHook;
 import me.kryniowesegryderiusz.kgenerators.hooks.SuperiorSkyblock2Hook;
+import me.kryniowesegryderiusz.kgenerators.managers.Locations;
 import me.kryniowesegryderiusz.kgenerators.managers.Players;
 
 public class PickUp {
@@ -23,6 +26,12 @@ public class PickUp {
 	public static void pickup(Player p, GeneratorLocation gLocation) {
 		
 		Generator generator = gLocation.getGenerator();
+		
+		if (!Locations.exists(gLocation.getLocation()))
+		{
+			Lang.sendMessage(p, Message.GENERATORS_ANY_NO_LONGER_THERE);
+			return;
+		}
 		
     	if (!p.hasPermission("kgenerators.pickup."+generator.getId()))
     	{
@@ -48,6 +57,8 @@ public class PickUp {
 		Logger.info(p.getName() + " picked up " + gLocation.toString());
 		Lang.addReplecable("<generator>", generator.getGeneratorItem().getItemMeta().getDisplayName());
 		Lang.sendMessage(p, Message.GENERATORS_PICK_UP_SUCCESFULL);
+		
+		Main.getSettings().getPickupSound().play(p);
 		return;
 	}
 }

@@ -9,6 +9,7 @@ messages:
       owner-none: '&cNikt'
       disabled: '&cGeneratory są wyłączone na tym świecie!'
       repaired: '&aGenerator naprawiony!'
+      no-longer-there: '&cW tym miejscu nie istnieje już generator!'
     digging:
       cant-here: '&cNie możesz tutaj kopać bloków z generatora!'
       only-gen: '&cW tym miejscu możesz kopać tylko wygenerowane bloki!'
@@ -38,8 +39,8 @@ messages:
       cant-open-here: '&cNie możesz tutaj używać tego menu!!'
   economy:
     no-economy-avaible: '&cEkonomia nie jest dostępna na serwerze!'
-    not-enough-money: '&cNie masz wystarczająco dużo pieniędzy! Potrzebujesz &6<cost>$&c!'
-    done: '&aUlepszono &e<number> &ageneratorów za &e<cost>$&a!'
+    not-enough-money: '&cNie masz wystarczająco dużo pieniędzy! Potrzebujesz &6<cost>&c!'
+    done: '&aUlepszono &e<number> &ageneratorów za &e<cost>&a!'
   commands:
     any:
       wrong: '&cNie ma takiej komendy! Wpisz /kgenerators, by wyświetlić pomoc'
@@ -54,9 +55,9 @@ messages:
       no-permission: '&cNie masz uprawnienia &8(&7<permission>&8)&c, żeby wyświetlić listę generatorów'
       help: Wyświetla listę generatorów
     give:
-      generator-given: '&aGenerator <generator>&a został przyznany &e<player>'
-      generator-recieved: '&aOtrzymano generator <generator>!'
-      usage: '&cUżycie &e/kgenerators give <player> <generator>'
+      generator-given: '&aDałeś <amount>x <generator>&a graczowi &e<player>'
+      generator-recieved: '&aOtrzymano <amount>x <generator>&a!'
+      usage: '&cUżycie &e/kgenerators give <gracz> <generator> [ilość]'
       no-permission: '&cNie masz uprawnienia &8(&7<permission>&8)&c, żeby dawać generatory'
       help: Przyznaje generator graczowi
     getall:
