@@ -7,18 +7,24 @@ import net.md_5.bungee.api.ChatColor;
 
 public class ChatUtils_1_16 implements ChatUtils {
 	
-	private static final Pattern pattern = Pattern.compile("(?<!\\\\)(#[a-fA-F0-9]{6})");
-
 	public String colorize(String message) {
-    	message = ChatColor.translateAlternateColorCodes('&', message);
-    	
-        Matcher matcher = pattern.matcher(message);
-
+		
+        Matcher matcher = Pattern.compile("#[A-Fa-f0-9]{6}").matcher(message);
+        int hexAmount = 0;
         while (matcher.find()) {
-            String color = message.substring(matcher.start(), matcher.end());
-            message = message.replace(color, "" + ChatColor.of(color));
+            matcher.region(matcher.end() - 1, message.length());
+            hexAmount++;
+        }
+        int startIndex = 0;
+        for (int hexIndex = 0; hexIndex < hexAmount; hexIndex++) {
+            int msgIndex = message.indexOf("#", startIndex);
+            String hex = message.substring(msgIndex, msgIndex + 7);
+            startIndex = msgIndex + 1;
+            message = message.replace(hex, ChatColor.of(hex) + "");
         }
     	
+    	message = ChatColor.translateAlternateColorCodes('&', message);
+        
 		return message;
 	}
 }
