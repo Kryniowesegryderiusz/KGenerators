@@ -9,9 +9,9 @@ import org.bukkit.event.inventory.InventoryClickEvent;
 import org.bukkit.inventory.Inventory;
 import org.bukkit.inventory.ItemStack;
 
-import me.kryniowesegryderiusz.kgenerators.Lang;
 import me.kryniowesegryderiusz.kgenerators.enums.MenuInventoryType;
 import me.kryniowesegryderiusz.kgenerators.enums.MenuItemType;
+import me.kryniowesegryderiusz.kgenerators.lang.Lang;
 import me.kryniowesegryderiusz.kgenerators.classes.Generator;
 import me.kryniowesegryderiusz.kgenerators.classes.MenuItem;
 import me.kryniowesegryderiusz.kgenerators.managers.Generators;
@@ -24,15 +24,16 @@ public class UpgradeMenu {
 		ArrayList<MenuItemType> exludedEnumMenuItems = new ArrayList<MenuItemType>();
 		exludedEnumMenuItems.add(MenuItemType.UPGRADE_MENU_INGREDIENT);
 		exludedEnumMenuItems.add(MenuItemType.UPGRADE_MENU_RESULT);
+		exludedEnumMenuItems.add(MenuItemType.UPGRADE_MENU_MARKER);
 		
 		Generator previousGenerator = Generators.get(Upgrades.getPreviousGeneratorId(generator.getId()));
 		
-		Inventory menu = Lang.getMenuInventory(MenuInventoryType.UPGRADE).getInv(MenuInventoryType.UPGRADE, player, exludedEnumMenuItems, "<cost>", String.valueOf(previousGenerator.getUpgrade().getCost()));
+		Inventory menu = Lang.getMenuInventoryStorage().get(MenuInventoryType.UPGRADE).getInv(MenuInventoryType.UPGRADE, player, exludedEnumMenuItems);
 		
 		/*
 		 * Ingredient item
 		 */
-		MenuItem ingredientItem = Lang.getMenuItem(MenuItemType.UPGRADE_MENU_INGREDIENT);
+		MenuItem ingredientItem = Lang.getMenuItemStorage().get(MenuItemType.UPGRADE_MENU_INGREDIENT);
 		
 		ingredientItem.setItemStack(previousGenerator.getGeneratorItem());
 		
@@ -49,7 +50,7 @@ public class UpgradeMenu {
 		 * Result Item
 		 */
 				
-		MenuItem resultItem = Lang.getMenuItem(MenuItemType.UPGRADE_MENU_RESULT);
+		MenuItem resultItem = Lang.getMenuItemStorage().get(MenuItemType.UPGRADE_MENU_RESULT);
 		
 		if (resultItem.getItemType().contains("<generator>"))
 			resultItem.setItemStack(generator.getGeneratorItem());
@@ -60,12 +61,29 @@ public class UpgradeMenu {
 		for (int i : resultItem.getSlots())
 			menu.setItem(i, readyItem);
 		
+		/*
+		 * Marker item
+		 */
+		
+		MenuItem markerItem = Lang.getMenuItemStorage().get(MenuItemType.UPGRADE_MENU_MARKER);
+		
+		markerItem.replaceLore("<costs>", previousGenerator.getUpgrade().getCostsFormattedGUI());
+		
+		readyItem = markerItem.build();
+		
+		for (int i : markerItem.getSlots())
+			menu.setItem(i, readyItem);
+		
+		/*
+		 * End
+		 */
+		
 		return menu;
 	}
 	
 	public static void onClick(Player p, int slot)
 	{
-		if (Lang.getMenuItem(MenuItemType.UPGRADE_MENU_BACK).getSlots().contains(slot) && Lang.getMenuItem(MenuItemType.UPGRADE_MENU_BACK).isEnabled())
+		if (Lang.getMenuItemStorage().get(MenuItemType.UPGRADE_MENU_BACK).getSlots().contains(slot) && Lang.getMenuItemStorage().get(MenuItemType.UPGRADE_MENU_BACK).isEnabled())
 		{
 			Menus.openMainMenu(p, Menus.getMenuPlayer(p).getGenerator());
 		}

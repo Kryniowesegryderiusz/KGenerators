@@ -4,10 +4,11 @@ import lombok.Getter;
 import me.kryniowesegryderiusz.kgenerators.api.interfaces.IMessage;
 
 public enum Message implements IMessage {
-	Prefix("prefix", "&8[&6KGenerators&8] "),
+	PREFIX("prefix", "&8[&6KGenerators&8] "),
 	
 	GENERATORS_ANY_OWNER_NONE("generators.any.owner-none", "&cNone"),
 	GENERATORS_ANY_DISABLED_WORLD("generators.any.disabled", "&cGenerators are disabled in this world!"),
+	GENERATORS_ANY_DISABLED_WORLD_SPECIFIC("generators.any.disabled-specific", "&c<generator> are disabled in this world!"),
 	GENERATORS_ANY_REPAIRED("generators.any.repaired", "&aGenerator succesfully repaired!"),
 	GENERATORS_ANY_NO_LONGER_THERE("generators.any.no-longer-there", "&cGenerator is no longer there!"),
 	
@@ -40,9 +41,17 @@ public enum Message implements IMessage {
 	
 	VAULT_ECONOMY_NOT_AVAILABLE("economy.no-economy-avaible", "&cThere is no economy system avaible!"),
 	VAULT_ECONOMY_NOT_ENOUGH_MONEY("economy.not-enough-money", "&cYou dont have enough money! You need &6<cost>&c!"),
-	VAULT_ECONOMY_GENERATOR_UPGRADED("economy.done", "&aYou upgraded &e<number> &agenerators for &e<cost>&a!"),
+	
+	UPGRADES_UPGRADED("upgrades.upgraded", "&aYou've upgraded &e<number> &agenerators for &e<costs>&a!"),
+	UPGRADES_COST_NOT_FULFILLED("upgrades.gui-upgraded", "&cYou dont have &4<cost>&c!"),
+	UPGRADES_COSTS_SEPARATOR("upgrades.separator", "&7, &e"),
+	UPGRADES__NO_NEXT_LEVEL("upgrades.no-next-level", "&cThis is maximum level of that generator!"),
+	UPGRADES__NO_PERMISSION("upgrades.no-permission", "&cYou dont have permission &8(&7<permission>&8)&c to upgrade generator!"),
+	UPGRADES_NOT_A_GENERATOR("upgardes.not-a-generator", "&cYou dont have generator in hand!"),
 	
 	HOOKS_EXPLODE_PICKAXE_CANNOT_USE_ON_DOUBLE("hooks.explode-pickaxe.cannot-use-on-double", "&cYou cannot use explosion pickaxe on type double generator!"),
+	
+	DATABASE_ERROR("database.error", "&cDatabase error occured, please contact with administration!"),
 	
 	COMMANDS_ANY_WRONG("commands.any.wrong", "&cWrong command! Type /kgenerators for help"),
 	COMMANDS_ANY_NO_PERMISSION("commands.any.no-permission", "&cYou dont have permission &8(&7<permission>&8)&c to use KGenerators commands"),
@@ -50,6 +59,7 @@ public enum Message implements IMessage {
 	COMMANDS_ANY_PLAYER_DOESNT_EXIST("commands.any.player-doesnt-exist", "&cPlayer doesnt exist"),
 	COMMANDS_ANY_GENERATOR_DOESNT_EXIST("commands.any.generator-doesnt-exist", "&cThat generator doesn't exist"),
 	COMMANDS_ANY_MENU_DOESNT_EXIST("commands.any.menu-doesnt-exist", "&cThat menu doesn't exist"),
+	COMMANDS_ANY_ONLY_CONSOLE("commands.any.console-only", "&cThis command can be executed only from console!"),
 	
 	COMMANDS_LIST_HEADER("commands.list.header", "&aGenerators:"),
 	COMMANDS_LIST_LIST("commands.list.list", "&8- <generator> &8(&7ID: <generatorID>&8)"),
@@ -97,9 +107,6 @@ public enum Message implements IMessage {
 	COMMANDS_TIME_LEFT_FORMAT_DAY("commands.timeleft.format.days", "d"),
 	COMMANDS_TIME_LEFT_FORMAT_NONE("commands.timeleft.format.none", "None"),
 	
-	COMMANDS_UPGRADE_NO_NEXT_LEVEL("commands.upgrade.no-next-level", "&cThis is maximum level of that generator!"),
-	COMMANDS_UPGRADE_NO_PERMISSION("commands.upgrade.no-permission", "&cYou dont have permission &8(&7<permission>&8)&c to upgrade generator!"),
-	COMMANDS_UPGRADE_NOT_A_GENERATOR("commands.upgrade.no-a-generator", "&cYou dont have generator in hand!"),
 	COMMANDS_UPGRADE_HELP("commands.upgrade.help", "Upgrade generator"),
 	
 	COMMANDS_RELOAD_DONE("commands.reload.done", "&aPlugin reloaded! Check console or log.txt in plugin''s directory for possible errors!"),
@@ -122,5 +129,10 @@ public enum Message implements IMessage {
 	Message(String key, String message) {
 		this.key = key;
 		this.message = message;
+	}
+
+	@Override
+	public Enum<?> getEnum() {
+		return this;
 	}
 }

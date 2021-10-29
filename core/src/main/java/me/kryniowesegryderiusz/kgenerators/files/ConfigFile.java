@@ -8,10 +8,12 @@ import org.bukkit.configuration.InvalidConfigurationException;
 import org.bukkit.inventory.ItemStack;
 
 import me.kryniowesegryderiusz.kgenerators.enums.Action;
+import me.kryniowesegryderiusz.kgenerators.enums.DatabaseType;
 import me.kryniowesegryderiusz.kgenerators.Logger;
 import me.kryniowesegryderiusz.kgenerators.Main;
 import me.kryniowesegryderiusz.kgenerators.Settings;
 import me.kryniowesegryderiusz.kgenerators.classes.GeneratorAction;
+import me.kryniowesegryderiusz.kgenerators.classes.SQLConfig;
 import me.kryniowesegryderiusz.kgenerators.classes.Sound;
 import me.kryniowesegryderiusz.kgenerators.utils.Config;
 import me.kryniowesegryderiusz.kgenerators.utils.ConfigManager;
@@ -100,6 +102,11 @@ public class ConfigFile {
 		
 		if (config.contains("sounds.upgrade"))
 			settings.setUpgradeSound(new Sound(config, "sounds.upgrade"));
+		
+		if (config.contains("database.dbtype"))
+			settings.setDbType(DatabaseType.Functions.getTypeByString(config.getString("database.dbtype")));
+		
+		settings.setSqlConfig(new SQLConfig(config));
 		
 		Main.setSettings(settings);
 	}

@@ -5,10 +5,13 @@ import javax.annotation.Nullable;
 import org.bukkit.Location;
 import org.bukkit.entity.Player;
 
+import me.kryniowesegryderiusz.kgenerators.Logger;
 import me.kryniowesegryderiusz.kgenerators.Main;
 import me.kryniowesegryderiusz.kgenerators.Settings;
+import me.kryniowesegryderiusz.kgenerators.api.interfaces.IUpgradeCost;
 import me.kryniowesegryderiusz.kgenerators.classes.GeneratorLocation;
 import me.kryniowesegryderiusz.kgenerators.classes.Upgrade;
+import me.kryniowesegryderiusz.kgenerators.files.UpgradesFile;
 import me.kryniowesegryderiusz.kgenerators.handlers.Place;
 import me.kryniowesegryderiusz.kgenerators.handlers.Remove;
 import me.kryniowesegryderiusz.kgenerators.managers.Generators;
@@ -123,6 +126,19 @@ public class KGeneratorsAPI
 	public static void regenerateSchedule(Location location)
 	{
 		Schedules.schedule(Locations.get(location));
+	}
+	
+	/**
+	 * Registers and loads new upgrade cost. It should implement IUpgradeCost interface 
+	 * Ex. {@link me.kryniowesegryderiusz.kgenerators.classes.UpgradeCostMoney} 
+	 * @param class beeing registered
+	 * @since 6.0.0
+	 */
+	public static <T extends IUpgradeCost> void registerUpgradeCost(Class<T> c)
+	{
+		Upgrades.registerUpgradeCost(c);
+		UpgradesFile.load();
+		Logger.info("Upgrades: Registered and loaded new UpgradeCost " + c.getName());
 	}
 	
 	/**

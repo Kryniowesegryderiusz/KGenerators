@@ -9,9 +9,9 @@ import org.bukkit.entity.Player;
 
 import lombok.Getter;
 import me.kryniowesegryderiusz.kgenerators.enums.Message;
+import me.kryniowesegryderiusz.kgenerators.lang.Lang;
 import me.kryniowesegryderiusz.kgenerators.managers.Generators;
 import me.kryniowesegryderiusz.kgenerators.managers.Limits;
-import me.kryniowesegryderiusz.kgenerators.Lang;
 import me.kryniowesegryderiusz.kgenerators.Main;
 
 public class GeneratorPlayer {
@@ -48,7 +48,7 @@ public class GeneratorPlayer {
 		if (!isNone)
 			return this.nick;
 		else
-			return Lang.getMessage(Message.GENERATORS_ANY_OWNER_NONE, false, false);
+			return Lang.getMessageStorage().get(Message.GENERATORS_ANY_OWNER_NONE, false);
 	}
 	
 	/*

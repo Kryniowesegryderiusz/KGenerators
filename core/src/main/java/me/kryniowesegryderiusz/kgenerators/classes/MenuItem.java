@@ -89,6 +89,11 @@ public class MenuItem implements Cloneable {
 		}
 	}
 	
+	public void addLore(StringContent stringContent)
+	{
+		this.addLore(stringContent.getLines());
+	}
+	
 	public void addLore(ArrayList<String> lore)
 	{
 		for (String s : lore)
@@ -113,16 +118,16 @@ public class MenuItem implements Cloneable {
 		}
 	}
 	
-	public void replaceLore(String key, ArrayList<String> array)
+	public void replaceLore(String key, StringContent stringContent)
 	{
 		ArrayList<String> newDesc = new ArrayList<String>();
 		for (String s : this.lore)
 		{
 			if (s.contains(key))
 			{
-				if (array != null)
+				if (stringContent != null)
 				{
-					for (String as : array)
+					for (String as : stringContent.getLines())
 					{
 						newDesc.add(Main.getChatUtils().colorize(as));
 					}

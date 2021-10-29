@@ -8,6 +8,7 @@ import org.bukkit.configuration.InvalidConfigurationException;
 import me.kryniowesegryderiusz.kgenerators.Logger;
 import me.kryniowesegryderiusz.kgenerators.Main;
 import me.kryniowesegryderiusz.kgenerators.classes.Upgrade;
+import me.kryniowesegryderiusz.kgenerators.exceptions.CannnotLoadUpgradeException;
 import me.kryniowesegryderiusz.kgenerators.managers.Upgrades;
 import me.kryniowesegryderiusz.kgenerators.utils.Config;
 import me.kryniowesegryderiusz.kgenerators.utils.ConfigManager;
@@ -37,38 +38,12 @@ public class UpgradesFile {
     		
     		if (!generatorId.equals("example_generator_id_level_1"))
     		{
-				boolean error = false;
-				
-				String nextGeneratorId = "";
-				if (config.contains(generatorId+".next-level"))
-				{
-					nextGeneratorId = config.getString(generatorId+".next-level");
-				}
-				else
-				{
-					Logger.error("Upgrades file: " + generatorId + " doesnt have next-level generator set!");
-					error = true;
-				}
-				
-				Double cost = 0.0;
-				if (config.contains(generatorId+".cost"))
-				{
-					cost = config.getDouble(generatorId+".cost");
-				}
-				else
-				{
-					Logger.error("Upgrades file: " + generatorId + " doesnt have cost set!");
-					error = true;
-				}
-				
-				if (error)
-				{
-					Logger.error("Upgrades file: Couldnt load " + generatorId + " upgrade!");
-				}
-				else
-				{
-					Upgrades.addUpgrade(generatorId, new Upgrade(generatorId, nextGeneratorId, cost));
+				try {
+					Upgrades.addUpgrade(generatorId, new Upgrade(generatorId, config));
 					amount++;
+				} catch (CannnotLoadUpgradeException e) {
+					Logger.error("Upgrades file: Couldnt load " + generatorId + " upgrade!");
+					Logger.error(e.getMessage());
 				}
     		}
     	}

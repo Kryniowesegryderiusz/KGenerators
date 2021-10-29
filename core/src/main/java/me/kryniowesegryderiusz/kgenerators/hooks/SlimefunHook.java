@@ -11,8 +11,8 @@ import org.bukkit.event.Listener;
 import io.github.thebusybiscuit.slimefun4.api.events.AndroidMineEvent;
 import io.github.thebusybiscuit.slimefun4.api.events.ExplosiveToolBreakBlocksEvent;
 import me.kryniowesegryderiusz.kgenerators.enums.Message;
+import me.kryniowesegryderiusz.kgenerators.lang.Lang;
 import me.kryniowesegryderiusz.kgenerators.enums.GeneratorType;
-import me.kryniowesegryderiusz.kgenerators.Lang;
 import me.kryniowesegryderiusz.kgenerators.classes.GeneratorLocation;
 import me.kryniowesegryderiusz.kgenerators.managers.Locations;
 
@@ -51,7 +51,7 @@ public class SlimefunHook implements Listener {
 				cancel = true;
 		}
 		if (cancel)
-			Lang.sendMessage(e.getPlayer(), Message.HOOKS_EXPLODE_PICKAXE_CANNOT_USE_ON_DOUBLE);
+			Lang.getMessageStorage().send(e.getPlayer(), Message.HOOKS_EXPLODE_PICKAXE_CANNOT_USE_ON_DOUBLE);
 		e.setCancelled(cancel);
 	}
 	

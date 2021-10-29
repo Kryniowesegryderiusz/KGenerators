@@ -26,6 +26,12 @@ public class GeneratorLocation {
 	@Getter
 	Location hologramLocation;
 	
+	/**
+	 * 
+	 * @param generatorId
+	 * @param location
+	 * @param owner
+	 */
 	public GeneratorLocation(String generatorId, Location location, GeneratorPlayer owner)
 	{
 		this.generatorId = generatorId;
@@ -83,7 +89,7 @@ public class GeneratorLocation {
 			Main.getBlocksUtils().setBlock(this.location.clone().add(0,1,0), new ItemStack(Material.AIR));
 		}
 		
-		PlacedGeneratorsFile.saveGeneratorToFile(this);
+		Main.getDb().savePlacedGenerator(this);
 		
 		this.regenNow();
 	}

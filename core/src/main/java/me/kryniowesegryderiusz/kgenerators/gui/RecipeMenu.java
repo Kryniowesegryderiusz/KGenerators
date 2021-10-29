@@ -10,11 +10,11 @@ import org.bukkit.inventory.Inventory;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.ShapedRecipe;
 
-import me.kryniowesegryderiusz.kgenerators.Lang;
 import me.kryniowesegryderiusz.kgenerators.Logger;
 import me.kryniowesegryderiusz.kgenerators.Main;
 import me.kryniowesegryderiusz.kgenerators.enums.MenuInventoryType;
 import me.kryniowesegryderiusz.kgenerators.enums.MenuItemType;
+import me.kryniowesegryderiusz.kgenerators.lang.Lang;
 import me.kryniowesegryderiusz.kgenerators.managers.Recipes;
 import me.kryniowesegryderiusz.kgenerators.classes.Generator;
 import me.kryniowesegryderiusz.kgenerators.classes.MenuItem;
@@ -28,13 +28,13 @@ public class RecipeMenu {
 		exludedEnumMenuItems.add(MenuItemType.RECIPE_MENU_INGREDIENS);
 		exludedEnumMenuItems.add(MenuItemType.RECIPE_MENU_RESULT);
 		
-		Inventory menu = Lang.getMenuInventory(MenuInventoryType.RECIPE).getInv(MenuInventoryType.RECIPE, player, exludedEnumMenuItems);
+		Inventory menu = Lang.getMenuInventoryStorage().get(MenuInventoryType.RECIPE).getInv(MenuInventoryType.RECIPE, player, exludedEnumMenuItems);
 		
 		/*
 		 * Ingredients
 		 */
 		
-		MenuItem ingredientsItem = Lang.getMenuItem(MenuItemType.RECIPE_MENU_INGREDIENS);
+		MenuItem ingredientsItem = Lang.getMenuItemStorage().get(MenuItemType.RECIPE_MENU_INGREDIENS);
 		ArrayList<Integer> slotList = ingredientsItem.getSlots();
 		int lastId = -1;
 		
@@ -54,7 +54,7 @@ public class RecipeMenu {
 				if (recipeMenuItem.getItemType().contains("<block>"))
 					recipeMenuItem.setItemStack(item);
 				
-				recipeMenuItem.replace("<block_name>", Lang.getItemTypeName(item));
+				recipeMenuItem.replace("<block_name>", Lang.getCustomNamesStorage().getItemTypeName(item));
 				
 				lastId++;
 				ItemStack readyItem = recipeMenuItem.build();
@@ -71,7 +71,7 @@ public class RecipeMenu {
 		 * Result Item
 		 */
 		
-		MenuItem resultItem = Lang.getMenuItem(MenuItemType.RECIPE_MENU_RESULT);
+		MenuItem resultItem = Lang.getMenuItemStorage().get(MenuItemType.RECIPE_MENU_RESULT);
 		
 		resultItem.setItemStack(generator.getGeneratorItem());
 		
@@ -89,7 +89,7 @@ public class RecipeMenu {
 	
 	public static void onClick(Player p, int slot)
 	{
-		if (Lang.getMenuItem(MenuItemType.RECIPE_MENU_BACK).getSlots().contains(slot) && Lang.getMenuItem(MenuItemType.RECIPE_MENU_BACK).isEnabled())
+		if (Lang.getMenuItemStorage().get(MenuItemType.RECIPE_MENU_BACK).getSlots().contains(slot) && Lang.getMenuItemStorage().get(MenuItemType.RECIPE_MENU_BACK).isEnabled())
 		{
 			Menus.openMainMenu(p, Menus.getMenuPlayer(p).getGenerator());
 		}

@@ -18,14 +18,19 @@ import java.nio.file.Paths;
 import java.nio.file.StandardCopyOption;
 import java.text.SimpleDateFormat;
 import java.util.Date;
+import java.util.Iterator;
 import java.util.List;
+import java.util.Map;
 
 import org.bukkit.command.CommandSender;
 import org.bukkit.plugin.Plugin;
 
+import me.kryniowesegryderiusz.kgenerators.api.Addon;
 import me.kryniowesegryderiusz.kgenerators.enums.LogType;
 import me.kryniowesegryderiusz.kgenerators.enums.Message;
 import me.kryniowesegryderiusz.kgenerators.files.FilesFunctions;
+import me.kryniowesegryderiusz.kgenerators.lang.Lang;
+import me.kryniowesegryderiusz.kgenerators.managers.Addons;
 
 public class Logger {
 	
@@ -56,7 +61,6 @@ public class Logger {
 			if(logType.equals(LogType.ERROR)) Main.getInstance().getLogger().warning(message);
 			else Main.getInstance().getLogger().info(message);
 		}
-		
 		logToFile(message, logFile);
 	}
 	
@@ -78,6 +82,11 @@ public class Logger {
 	public static void debug(Object object)
 	{
 		log(object, LogType.DEBUG);	
+	}
+	
+	public static void textToConsole(String message)
+	{
+		Main.getInstance().getLogger().info(message);
 	}
 	
 	private static String exceptionStacktraceToString(Exception e)
@@ -150,9 +159,24 @@ public class Logger {
 					@Override
 					public void run() {
 						String fileString = "";
+						
+					    Iterator<Map.Entry<Object, Object>> iterator = System.getProperties().entrySet().iterator();
+					    while (iterator.hasNext()) {
+					      Map.Entry<Object, Object> e = iterator.next();
+					      if (e.getKey().toString().contains("java.version"))
+					    	  fileString += "Java version: " + e.getValue().toString() + "\n";
+					      else if (e.getKey().toString().contains("user.country"))
+					    	  fileString += "User country: " + e.getValue().toString() + "\n";
+					      else if (e.getKey().toString().contains("os.name"))
+					    	  fileString += "System: " + e.getValue().toString() + "\n";
+					    } 
+					    
+					    fileString += "\n";
+					    
 						fileString += "Server version: " + Main.getInstance().getServer().getVersion() + "\n";
 						fileString += "Plugin version: " + Main.getInstance().getDescription().getVersion() + "\n";
 						fileString += "Enabled dependencies: " + Main.dependencies.toString() + "\n";
+						fileString += "Registered addons: " + Addons.getAddons().toString() + "\n";
 						
 						fileString += "Enabled plugins: ";
 						for (Plugin plugin : Main.getInstance().getServer().getPluginManager().getPlugins())
@@ -168,17 +192,28 @@ public class Logger {
 							fileString += getLinesFromFile(generatorsFile) + "\n";
 							fileString += getLinesFromFile(upgradesFile) + "\n";
 							fileString += getLinesFromFile(limitsFile) + "\n";
-							fileString += getLinesFromFile(recipesFile);
+							fileString += getLinesFromFile(recipesFile) + "\n";
+							
+							for (Addon a : Addons.getAddons())
+							{
+								if (a.getConfigs() != null)
+								{
+									for (String f : a.getConfigs())
+									{
+										fileString += getLinesFromFile(f) + "\n";
+									}
+								}
+							}
 							
 							String url = postHaste(sender, fileString, false);
 							if (url != null)
 							{
-								Lang.addReplecable("<url>", url);
-								Lang.sendMessage(sender, Message.COMMANDS_DEBUG_DONE);
+								Lang.getMessageStorage().send(sender, Message.COMMANDS_DEBUG_DONE,
+										"<url>", url);
 							}
 							
 						} catch (IOException e) {
-							Lang.sendMessage(sender, Message.COMMANDS_DEBUG_ERROR);
+							Lang.getMessageStorage().send(sender, Message.COMMANDS_DEBUG_ERROR);
 							Logger.error(e);
 						}
 					}
@@ -187,7 +222,7 @@ public class Logger {
 	
 	private static String getLinesFromFile(String file) throws IOException
 	{
-		String fileStrings = file + "\n";
+		String fileStrings = "########################################\n########## " + file + " ##########\n########################################\n\n";
 		List<String> lines = Files.readAllLines(Paths.get(Main.getInstance().getDataFolder().getPath(), file), Charset.defaultCharset());
 		for (String l : lines)
 		{
@@ -220,7 +255,7 @@ public class Logger {
 			BufferedReader reader = new BufferedReader(new InputStreamReader(conn.getInputStream()));
 			response = reader.readLine();
 		} catch (IOException e) {
-			Lang.sendMessage(sender, Message.COMMANDS_DEBUG_ERROR);
+			Lang.getMessageStorage().send(sender, Message.COMMANDS_DEBUG_ERROR);
 			Logger.error(e);
 		}
 		

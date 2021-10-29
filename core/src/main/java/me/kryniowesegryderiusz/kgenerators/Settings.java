@@ -10,8 +10,10 @@ import org.bukkit.inventory.ItemStack;
 import lombok.Getter;
 import lombok.Setter;
 import me.kryniowesegryderiusz.kgenerators.classes.GeneratorAction;
+import me.kryniowesegryderiusz.kgenerators.classes.SQLConfig;
 import me.kryniowesegryderiusz.kgenerators.classes.Sound;
 import me.kryniowesegryderiusz.kgenerators.enums.Action;
+import me.kryniowesegryderiusz.kgenerators.enums.DatabaseType;
 import me.kryniowesegryderiusz.kgenerators.xseries.XSound;
 
 public class Settings {
@@ -65,6 +67,11 @@ public class Settings {
 	
 	@Setter @Getter
 	private boolean limits = false;
+	
+	@Setter @Getter
+	private DatabaseType dbType = DatabaseType.SQLITE;
+	@Setter @Getter
+	private SQLConfig sqlConfig;
 	
 	public Settings()
 	{

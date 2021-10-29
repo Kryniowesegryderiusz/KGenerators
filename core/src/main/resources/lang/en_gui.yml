@@ -1,12 +1,42 @@
 generator:
   name: §9<generator_name>
   slots: 45
+  time-left:
+    enabled: true
+    item: CLOCK
+    name: §aTime left for regeneration
+    lore:
+    - §a<time>
+    slots: '21'
+    glow: false
+  upgrade-maxed:
+    enabled: true
+    item: EXPERIENCE_BOTTLE
+    name: §cMaximum generator level
+    lore:
+    - §6This generator doesnt have
+    - §6any further upgrades!
+    - §aYou've maxed it!
+    slots: '31'
+    glow: false
   filler:
     enabled: true
     item: GRAY_STAINED_GLASS_PANE
     name: §r
     lore: []
     slots: 0,1,2,3,4,5,6,7,8,9,17,18,26,27,35,36,37,38,39,40,41,42,43,44
+    glow: false
+  upgrade:
+    enabled: true
+    item: EXPERIENCE_BOTTLE
+    name: §cUpgrade generator
+    lore:
+    - §6Click here to upgrade this generator!
+    - ''
+    - '§6Next stage: §e<next_generator>'
+    - '§6Costs:'
+    - <costs>
+    slots: '31'
     glow: false
   quit:
     enabled: true
@@ -33,14 +63,6 @@ generator:
     - §e<owner>
     slots: '22'
     glow: false
-  time-left:
-    enabled: true
-    item: CLOCK
-    name: §aTime left for regeneration
-    lore:
-    - §a<time>
-    slots: '21'
-    glow: false
   pick-up:
     enabled: true
     item: BARRIER
@@ -49,40 +71,18 @@ generator:
     - §eClick here to pick up generator
     slots: '23'
     glow: false
-  upgrade:
-    enabled: true
-    item: EXPERIENCE_BOTTLE
-    name: §cUpgrade generator
-    lore:
-    - §6Click here to upgrade this generator!
-    - ''
-    - '§6Next stage: §e<next_generator>'
-    - '§6Cost: §e<cost>'
-    slots: '31'
-    glow: false
-  upgrade-maxed:
-    enabled: true
-    item: EXPERIENCE_BOTTLE
-    name: §cMaximum generator level
-    lore:
-    - §6This generator doesnt have 
-    - §6any further upgrades!
-    - §6You've maxed it!
-    slots: '31'
-    glow: false
 main:
   name: §9Generators
   slots: 45
+  limits:
+    enabled: true
+    item: PLAYER_HEAD
+    name: §aLimits
+    lore:
+    - §eClick here to check limits
+    slots: '8'
+    glow: false
   page:
-    previous:
-      enabled: true
-      item: ARROW
-      name: §cPrevious page
-      lore:
-      - §6Click to back
-      - §6to previous page
-      slots: '38'
-      glow: false
     next:
       enabled: true
       item: ARROW
@@ -91,6 +91,15 @@ main:
       - §6Click to go
       - §6to next page
       slots: '42'
+      glow: false
+    previous:
+      enabled: true
+      item: ARROW
+      name: §cPrevious page
+      lore:
+      - §6Click to back
+      - §6to previous page
+      slots: '38'
       glow: false
   generator:
     enabled: true
@@ -116,23 +125,17 @@ main:
     lore: []
     slots: 0,1,2,3,4,5,6,7,8,36,37,38,39,40,41,42,43,44
     glow: false
-  limits:
-    enabled: true
-    item: PLAYER_HEAD
-    name: §aLimits
-    lore:
-    - §eClick here to check limits
-    slots: '8'
-    glow: false
 chances:
   name: §9Blocks chances
   slots: 45
-  filler:
+  back:
     enabled: true
-    item: GRAY_STAINED_GLASS_PANE
-    name: §r
-    lore: []
-    slots: 0,1,2,3,4,5,6,7,8,36,37,38,39,40,41,42,43,44
+    item: ARROW
+    name: §cBack
+    lore:
+    - §6Get back to
+    - §cprevious page
+    slots: '40'
     glow: false
   block:
     enabled: true
@@ -141,48 +144,6 @@ chances:
     lore:
     - '§6Chance: §e<chance>%'
     slots: 9,10,11,12,13,14,15,16,17,18,19,20,21,22,23,24,25,26
-    glow: false
-  back:
-    enabled: true
-    item: ARROW
-    name: §cBack
-    lore:
-    - §6Get back to
-    - §cprevious page
-    slots: '40'
-    glow: false
-recipe:
-  name: §9Recipe
-  slots: 45
-  back:
-    enabled: true
-    item: ARROW
-    name: §cBack
-    lore:
-    - §6Get back to
-    - §cprevious page
-    slots: '40'
-    glow: false
-  marker:
-    enabled: true
-    item: CRAFTING_TABLE
-    name: §aCrafting
-    lore: []
-    slots: 14,23,32
-    glow: false
-  ingredients:
-    enabled: true
-    item: <block>
-    name: §a<block_name>
-    lore: []
-    slots: 10,11,12,19,20,21,28,29,30
-    glow: false
-  result:
-    enabled: true
-    item: <generator>
-    name: §a<generator_name>
-    lore: []
-    slots: '25'
     glow: false
   filler:
     enabled: true
@@ -194,6 +155,13 @@ recipe:
 limits:
   name: §9Limits
   slots: 45
+  filler:
+    enabled: true
+    item: GRAY_STAINED_GLASS_PANE
+    name: §r
+    lore: []
+    slots: 0,1,2,3,4,5,6,7,8,36,37,38,39,40,41,42,43,44
+    glow: false
   limit:
     enabled: true
     item: <limit_display_item>
@@ -214,6 +182,9 @@ limits:
     - §cprevious page
     slots: '40'
     glow: false
+recipe:
+  name: §9Recipe
+  slots: 45
   filler:
     enabled: true
     item: GRAY_STAINED_GLASS_PANE
@@ -221,26 +192,26 @@ limits:
     lore: []
     slots: 0,1,2,3,4,5,6,7,8,36,37,38,39,40,41,42,43,44
     glow: false
-upgrade:
-  name: §9Upgrade
-  slots: 45
+  ingredients:
+    enabled: true
+    item: <block>
+    name: §a<block_name>
+    lore: []
+    slots: 10,11,12,19,20,21,28,29,30
+    glow: false
   marker:
     enabled: true
-    item: EXPERIENCE_BOTTLE
-    name: §aUpgrade
-    lore:
-    - §6To upgrade get
-    - §6generator and type
-    - §e/kgenerators upgrade
-    - '§6Cost: §e<cost>$'
-    slots: 13,22,31
+    item: CRAFTING_TABLE
+    name: §aCrafting
+    lore: []
+    slots: 14,23,32
     glow: false
-  ingredient:
+  result:
     enabled: true
     item: <generator>
     name: §a<generator_name>
     lore: []
-    slots: '20'
+    slots: '25'
     glow: false
   back:
     enabled: true
@@ -251,6 +222,9 @@ upgrade:
     - §cprevious page
     slots: '40'
     glow: false
+upgrade:
+  name: §9Upgrade
+  slots: 45
   filler:
     enabled: true
     item: GRAY_STAINED_GLASS_PANE
@@ -258,12 +232,42 @@ upgrade:
     lore: []
     slots: 0,1,2,3,4,5,6,7,8,36,37,38,39,40,41,42,43,44
     glow: false
+  ingredient:
+    enabled: true
+    item: <generator>
+    name: §a<generator_name>
+    lore: []
+    slots: '20'
+    glow: false
+  marker:
+    enabled: true
+    item: EXPERIENCE_BOTTLE
+    name: §aUpgrade
+    lore:
+    - §6To upgrade get
+    - §6generator and type
+    - §e/kgenerators upgrade
+    - §6or use generator menu
+    - ''
+    - '§6Costs:'
+    - <costs>
+    slots: 13,22,31
+    glow: false
   result:
     enabled: true
     item: <generator>
     name: §a<generator_name>
     lore: []
     slots: '24'
+    glow: false
+  back:
+    enabled: true
+    item: ARROW
+    name: §cBack
+    lore:
+    - §6Get back to
+    - §cprevious page
+    slots: '40'
     glow: false
 additional-lines:
   limits:
@@ -280,6 +284,8 @@ additional-lines:
   - '&6Right click:'
   - '&echeck how to'
   - '&eget from upgrade'
+  upgrade-cost:
+  - '&8- &7<cost>'
   recipe:
   - ''
   - '&6Right click:'

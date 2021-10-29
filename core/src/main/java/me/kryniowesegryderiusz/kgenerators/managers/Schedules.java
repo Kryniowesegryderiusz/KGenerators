@@ -11,11 +11,11 @@ import org.bukkit.Location;
 import lombok.Getter;
 import me.kryniowesegryderiusz.kgenerators.enums.Dependency;
 import me.kryniowesegryderiusz.kgenerators.enums.Message;
-import me.kryniowesegryderiusz.kgenerators.Lang;
 import me.kryniowesegryderiusz.kgenerators.Main;
 import me.kryniowesegryderiusz.kgenerators.classes.Generator;
 import me.kryniowesegryderiusz.kgenerators.classes.GeneratorLocation;
 import me.kryniowesegryderiusz.kgenerators.handlers.GenerateBlock;
+import me.kryniowesegryderiusz.kgenerators.lang.Lang;
 
 public class Schedules {
 	
@@ -38,40 +38,35 @@ public class Schedules {
 		ArrayList<GeneratorLocation> toRemove = new ArrayList<GeneratorLocation>();
 		for (Entry<GeneratorLocation, Integer> e : schedules.entrySet())
 		{
-			int ticks = e.getValue();
-			ticks-=freq;
-			if (ticks <= 0)
+			e.setValue(e.getValue()-freq);
+			if (e.getValue() <= 0)
 			{
 				GenerateBlock.generate(e.getKey());
 				toRemove.add(e.getKey());
-			}
-			else
-			{
-				e.setValue(ticks);
 			}
 		}
 		
 		for (GeneratorLocation l : toRemove)
 		{
-			remove(l);
+			if(schedules.get(l) <= 0)
+				remove(l);
 		}
 	}
 
-	public static void schedule(GeneratorLocation gLocation, boolean place) {
+	public static void schedule(GeneratorLocation gLocation, boolean createHologram) {
 		
 		GenerateBlock.generatePlaceholder(gLocation);
 		
-		if (!place && Main.dependencies.contains(Dependency.HOLOGRAPHIC_DISPLAYS) && gLocation.getGenerator().isHologram())
+		if (createHologram && Main.dependencies.contains(Dependency.HOLOGRAPHIC_DISPLAYS) && gLocation.getGenerator().isHologram())
 		{
 			Holograms.createHologram(gLocation);
 		}
 		
 		schedules.put(gLocation, gLocation.getGenerator().getDelay());
-		
 	}
 	
 	public static void schedule(GeneratorLocation gLocation) {
-		schedule(gLocation, false);
+		schedule(gLocation, true);
 	}
 	
 	public static void scheduleNow(GeneratorLocation gLocation) {
@@ -125,7 +120,7 @@ public class Schedules {
 				int amount = Math.floorDiv(delay, ticks);
 				delay -= ticks*amount;
 				if (!s.equals("")) s += " ";
-				s += String.valueOf(amount) + Lang.getMessage(e.getValue(), false, false);
+				s += String.valueOf(amount) + Lang.getMessageStorage().get(e.getValue(), false);
 			}
 		}
 		if (!s.equals("")) s += " ";
@@ -140,7 +135,7 @@ public class Schedules {
 			s += String.valueOf(d);
 		}
 		
-		s += Lang.getMessage(Message.COMMANDS_TIME_LEFT_FORMAT_SEC, false, false);
+		s += Lang.getMessageStorage().get(Message.COMMANDS_TIME_LEFT_FORMAT_SEC, false);
 		
 		return s;
 	}

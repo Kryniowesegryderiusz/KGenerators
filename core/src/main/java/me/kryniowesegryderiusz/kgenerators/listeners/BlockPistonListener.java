@@ -62,7 +62,9 @@ public class BlockPistonListener implements Listener {
 			if (bGenerator != null) {
 				if (bGenerator.getType() == GeneratorType.DOUBLE && bGenerator.isAllowPistonPush())
 				{
-					if ((bGenerator.getPlaceholder() == null || !bGenerator.getPlaceholder().equals(Main.getBlocksUtils().getItemStackByBlock(block))) && !Limits.isOnlyOwnerUse(bGenerator)) {
+					if ((bGenerator.getPlaceholder() == null || !bGenerator.getPlaceholder().equals(Main.getBlocksUtils().getItemStackByBlock(block))) && !Limits.isOnlyOwnerUse(bGenerator)) 
+					{
+						System.out.println("Rescheduled");
 						Schedules.schedule(bgLocation);
 					}
 					else

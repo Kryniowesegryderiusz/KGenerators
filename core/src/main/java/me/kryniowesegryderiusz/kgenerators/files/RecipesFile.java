@@ -64,29 +64,9 @@ public class RecipesFile {
 		    		ConfigurationSection ingredientsSection = file.getConfigurationSection(generatorID+".ingredients");
 		            for (String ingredientsString : ingredientsSection.getKeys(false)) {
 		                char ingredientsChar = ingredientsString.charAt(0);
-		                ItemStack item = null;
-		                if (file.contains(generatorID + ".ingredients." + ingredientsString + ".item")) {
-		                  item = XUtils.parseItemStack(file.getString(generatorID + ".ingredients." + ingredientsString + ".item"), "Recipes file", false);
-		                  ItemMeta meta = null;
-		                  if (item.getItemMeta() != null) {
-		                    meta = item.getItemMeta();
-		                  } else {
-		                    meta = Main.getInstance().getServer().getItemFactory().getItemMeta(item.getType());
-		                  } 
-		                  if (file.contains(generatorID + ".ingredients." + ingredientsString + ".name"))
-		                    meta.setDisplayName(file.getString(generatorID + ".ingredients." + ingredientsString + ".name")); 
-		                  if (file.contains(generatorID + ".ingredients." + ingredientsString + ".lore")) {
-		                    ArrayList<String> lore = new ArrayList<>();
-		                    for (String s : (ArrayList<String>)file.getList(generatorID + ".ingredients." + ingredientsString + ".lore")) {
-		                      if (s != null)
-		                        lore.add(Main.getChatUtils().colorize(s)); 
-		                    } 
-		                    meta.setLore(lore);
-		                  } 
-		                  item.setItemMeta(meta);
-		                } else {
-		                  item = XUtils.parseItemStack(file.getString(generatorID + ".ingredients." + ingredientsString), "Recipes file", false);
-		                } 
+		                
+		                ItemStack item = FilesFunctions.loadItemStack(file, generatorID + ".ingredients." + ingredientsString, false);
+
 		                shapedRecipe = Main.getRecipesLoader().setIngredient(shapedRecipe, ingredientsChar, item);
 		                recipe.addIngredient(ingredientsChar, item);
 		              } 

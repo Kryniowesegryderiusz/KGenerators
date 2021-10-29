@@ -7,10 +7,10 @@ import org.bukkit.inventory.ItemStack;
 
 import lombok.Getter;
 import lombok.Setter;
-import me.kryniowesegryderiusz.kgenerators.Lang;
 import me.kryniowesegryderiusz.kgenerators.enums.Dependency;
 import me.kryniowesegryderiusz.kgenerators.enums.Message;
 import me.kryniowesegryderiusz.kgenerators.hooks.BentoBoxHook;
+import me.kryniowesegryderiusz.kgenerators.lang.Lang;
 
 public class Limit {
 	
@@ -46,10 +46,10 @@ public class Limit {
 			return true;
 		else
 		{
-			Lang.addReplecable("<number>", String.valueOf(this.placeLimit));
-			Lang.addReplecable("<generator>", gloc.getGenerator().getGeneratorItem().getItemMeta().getDisplayName());
-			Lang.addReplecable("<limit>", this.name);
-			Lang.sendMessage(gp.getOnlinePlayer(), Message.GENERATORS_LIMITS_CANT_MORE);
+			Lang.getMessageStorage().send(gp.getOnlinePlayer(), Message.GENERATORS_LIMITS_CANT_MORE,
+					"<number>", String.valueOf(this.placeLimit),
+					"<generator>", gloc.getGenerator().getGeneratorItem().getItemMeta().getDisplayName(),
+					"<limit>", this.name);
 			return false;
 		}
 	}
@@ -101,8 +101,8 @@ public class Limit {
 					
 		if (gp != gLocation.getOwner())
 		{
-			Lang.addReplecable("<owner>", gLocation.getOwner().getName());
-			Lang.sendMessage(player, message);
+			Lang.getMessageStorage().send(player, message,
+					"<owner>", gLocation.getOwner().getName());
 			return false;
 		}
 		

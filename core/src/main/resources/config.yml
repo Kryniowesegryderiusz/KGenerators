@@ -6,7 +6,19 @@
 #If you want to add your own language contact us on discord
 lang: en
 
-#By default generator will generate block only on air. Here you can add blocks, which will be replaced by generated block.
+#Database settings
+database:
+  #Possible options: SQLITE, MYSQL, YAML (not recommended for big servers)
+  #You can convert data from one database to another! More info here: https://github.com/Kryniowesegryderiusz/KGenerators/wiki/Converting-databases 
+  dbtype: SQLITE
+  #Settings for MYSQL
+  host: hostname
+  port: 3306
+  database: database
+  username: username
+  password: password
+  
+#By default generator will generate block only on air, otherwise generator will drop. Here you can add blocks, which will be replaced by generated block.
 can-generate-instead:
   - WATER
   - LAVA
@@ -54,9 +66,9 @@ sounds:
   place:
     #Type sound name or "NONE" to disable sound
     sound: BLOCK_ANVIL_LAND
-    #Volume sohuld be a number between 0.0 and 10.0 (1.0 is normal)
+    #Volume should be a number between 0.0 and 10.0 (1.0 is normal)
     volume: 0.2
-    #Volume sohuld be a number between 0.0 and 2.0 (0.0 is normal)
+    #Volume should be a number between 0.0 and 2.0 (0.0 is normal)
     pitch: 0.0
   pick-up:
     sound: ENTITY_BAT_TAKEOFF

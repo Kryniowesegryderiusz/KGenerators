@@ -42,6 +42,9 @@ example_generator:
   #Should hologram be displayed above generator?
   #Requires HolographicDisplays installed
   hologram: true
+  #List of worlds, where thesis generator wont be enabled
+  disabled-worlds:
+  - test_world
 
 #Below you can find pre-configured generators. You can freely edit/remove them and add new ones ^^
 

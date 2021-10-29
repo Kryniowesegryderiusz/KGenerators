@@ -9,10 +9,12 @@ import org.bukkit.inventory.Inventory;
 import org.bukkit.inventory.ItemStack;
 
 import lombok.Getter;
-import me.kryniowesegryderiusz.kgenerators.Lang;
 import me.kryniowesegryderiusz.kgenerators.Main;
+import me.kryniowesegryderiusz.kgenerators.api.interfaces.IMenuInventoryType;
+import me.kryniowesegryderiusz.kgenerators.api.interfaces.IMenuItemType;
 import me.kryniowesegryderiusz.kgenerators.enums.MenuInventoryType;
 import me.kryniowesegryderiusz.kgenerators.enums.MenuItemType;
+import me.kryniowesegryderiusz.kgenerators.lang.Lang;
 import me.kryniowesegryderiusz.kgenerators.utils.Config;
 
 public class MenuInventory {
@@ -36,7 +38,7 @@ public class MenuInventory {
 	 * @param replecables String, by String "key", "value"
 	 * @return
 	 */
-	public Inventory getInv(MenuInventoryType menuInventory, Player player, ArrayList<MenuItemType> exludedEnumMenuItems, String... replecables)
+	public <T extends Enum<T> & IMenuInventoryType, T2 extends Enum<T2> & IMenuItemType> Inventory getInv(T menuInventory, Player player, ArrayList<T2> exludedEnumMenuItems, String... replecables)
 	{
 		ArrayList<String> rep = new ArrayList<>(Arrays.asList(replecables));
 		
@@ -49,11 +51,12 @@ public class MenuInventory {
 		
 		Inventory menu = Bukkit.createInventory(player, this.slots, newName);
 		
-		for(MenuItemType enumMenuItem : MenuItemType.values())
+		for(Enum<?> en : Lang.getMenuItemStorage().getAllEnums())
 		{
+			T2 enumMenuItem = (T2) en;
 			if (enumMenuItem.getMenuInventory() == menuInventory &&  !exludedEnumMenuItems.contains(enumMenuItem))
 			{
-				MenuItem menuItem = Lang.getMenuItem(enumMenuItem);
+				MenuItem menuItem = Lang.getMenuItemStorage().get(enumMenuItem);
 				if (menuItem.isEnabled())
 				{
 					for(int i = 0; i < rep.size(); i=i+2)
@@ -74,13 +77,18 @@ public class MenuInventory {
 		return menu;
 	}
 	
-	public Inventory getInv(MenuInventoryType menuInventory, Player player, String... replecables)
+	public <T extends Enum<T> & IMenuInventoryType> Inventory getInv(T menuInventory, Player player, String... replecables)
 	{
 		return getInv(menuInventory, player, null, replecables);
 	}
 	
-	public void load(MenuInventoryType menu, Config config) {
-		String path = menu.getKey();
+	public <T extends Enum<T> & IMenuInventoryType> void load(T en, Config config) {
+		String path = en.getKey();
+		this.load(path, config);
+	}
+	
+	public void load (String path, Config config)
+	{
 		if (config.contains(path))
 		{
 			if (config.contains(path+".name")) this.name = Main.getChatUtils().colorize(config.getString(path+".name"));

@@ -41,10 +41,18 @@ messages:
   economy:
     no-economy-avaible: '&cThere is no economy system avaible!'
     not-enough-money: '&cYou dont have enough money! You need &6<cost>&c!'
-    done: '&aYou upgraded &e<number> &agenerators for &e<cost>&a!'
+  upgrades:
+    upgraded: '&aYou''ve upgraded &e<number> &agenerators for &e<costs>&a!'
+    gui-upgraded: '&cYou dont have &4<cost>&c!'
+    no-next-level: '&cThis is maximum level of that generator!'
+    no-permission: '&cYou dont have permission &8(&7<permission>&8)&c to upgrade generator!'
+    not-a-generator: '&cYou dont have generator in hand!'
+    separator: '&7, &e'
   hooks:
     explode-pickaxe:
       cannot-use-on-double: '&cYou cannot use explosion pickaxe on type double generator!'
+  database:
+    error: '&cDatabase error occured, please contact with administration!'
   commands:
     any:
       wrong: '&cWrong command! Type /kgenerators for help'
@@ -54,6 +62,7 @@ messages:
       player-doesnt-exist: '&cPlayer doesnt exist'
       generator-doesnt-exist: '&cThat generator doesn''t exist'
       menu-doesnt-exist: '&cThat menu doesn''t exist'
+      console-only: '&cThis command can be executed only from console!'
     list:
       header: '&aGenerators:'
       list: '&8- <generator> &8(&7ID: <generatorID>&8)'
@@ -106,10 +115,6 @@ messages:
         days: d
         none: None
     upgrade:
-      no-next-level: '&cThis is maximum level of that generator!'
-      no-permission: '&cYou dont have permission &8(&7<permission>&8)&c to upgrade
-        generator!'
-      no-a-generator: '&cYou dont have generator in hand!'
       help: Upgrade generator
     reload:
       done: '&aPlugin reloaded! Check console or log.txt in plugin''''s directory
@@ -124,3 +129,9 @@ messages:
     help:
       label: '&6&lKGenerators &aCommands help:'
       format: '&e/kgenerators <subcommand> &7<help>'
+holograms:
+  remaining-time:
+  - ''
+  - '&6Time left:'
+  - '&e<time>'
+  - ''

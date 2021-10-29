@@ -31,6 +31,8 @@ public class SuperiorSkyblock2Hook implements Listener {
 	static IslandPrivilege KGENERATORS_PICKUP_FLAG;
 	static IslandPrivilege KGENERATORS_USE_FLAG;
 	static IslandPrivilege KGENERATORS_OPEN_MENU_FLAG;
+	
+	static boolean initialised = false;
 
 	
 	public static void setup()
@@ -80,13 +82,14 @@ public class SuperiorSkyblock2Hook implements Listener {
         IslandPrivilege.register("KGENERATORS_OPEN_MENU_FLAG");
         KGENERATORS_OPEN_MENU_FLAG = IslandPrivilege.getByName("KGENERATORS_OPEN_MENU_FLAG");
         
+        initialised = true;
         Logger.info("Dependencies: SuperiorSkyblock2 additional privilages set up");
         
     }
 
 	public static boolean isAllowed(Player p, Type type)
 	{
-		if (!Main.dependencies.contains(Dependency.SUPERIOR_SKYBLOCK_2) || p.hasPermission("kgenerators.bypass.superiorskyblock2"))	
+		if (!initialised || !Main.dependencies.contains(Dependency.SUPERIOR_SKYBLOCK_2) || p.hasPermission("kgenerators.bypass.superiorskyblock2"))	
 			return true;
 		
 		Island island = SuperiorSkyblockAPI.getIslandAt(p.getLocation());

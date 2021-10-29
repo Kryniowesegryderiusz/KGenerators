@@ -11,13 +11,12 @@ import me.kryniowesegryderiusz.kgenerators.enums.GeneratorType;
 import me.kryniowesegryderiusz.kgenerators.enums.MenuInventoryType;
 import me.kryniowesegryderiusz.kgenerators.enums.MenuItemType;
 import me.kryniowesegryderiusz.kgenerators.enums.Message;
-import me.kryniowesegryderiusz.kgenerators.Lang;
 import me.kryniowesegryderiusz.kgenerators.Main;
 import me.kryniowesegryderiusz.kgenerators.classes.GeneratorLocation;
 import me.kryniowesegryderiusz.kgenerators.classes.MenuItem;
 import me.kryniowesegryderiusz.kgenerators.classes.Upgrade;
 import me.kryniowesegryderiusz.kgenerators.handlers.PickUp;
-import me.kryniowesegryderiusz.kgenerators.handlers.UpgradeHandler;
+import me.kryniowesegryderiusz.kgenerators.lang.Lang;
 import me.kryniowesegryderiusz.kgenerators.managers.Schedules;
 import me.kryniowesegryderiusz.kgenerators.managers.Upgrades;
 
@@ -31,9 +30,9 @@ public class GeneratorMenu {
 		exludedEnumMenuItems.add(MenuItemType.GENERATOR_MENU_UPGRADE_MAXED);
 				
 		String time = Schedules.timeLeftFormatted(gLocation);
-		if (time.equals("")) time = Lang.getMessage(Message.COMMANDS_TIME_LEFT_FORMAT_NONE, false, false);
+		if (time.equals("")) time = Lang.getMessageStorage().get(Message.COMMANDS_TIME_LEFT_FORMAT_NONE, false);
 			
-		Inventory menu = Lang.getMenuInventory(MenuInventoryType.GENERATOR)
+		Inventory menu = Lang.getMenuInventoryStorage().get(MenuInventoryType.GENERATOR)
 				.getInv(MenuInventoryType.GENERATOR, player, exludedEnumMenuItems, 
 						"<owner>", gLocation.getOwner().getName(), 
 						"<time>", time, 
@@ -41,32 +40,35 @@ public class GeneratorMenu {
 		
 		if (gLocation.isBroken())
 		{
-			for (int i : Lang.getMenuItem(MenuItemType.GENERATOR_MENU_RESET).getSlots())
+			for (int i : Lang.getMenuItemStorage().get(MenuItemType.GENERATOR_MENU_RESET).getSlots())
 			{
-				menu.setItem(i, Lang.getMenuItem(MenuItemType.GENERATOR_MENU_RESET).build());
+				menu.setItem(i, Lang.getMenuItemStorage().get(MenuItemType.GENERATOR_MENU_RESET).build());
 			}
 		}
 		
-		if (Main.dependencies.contains(Dependency.VAULT_ECONOMY))
+		Upgrade upgrade = gLocation.getGenerator().getUpgrade();
+		if (upgrade != null)
 		{
-			Upgrade upgrade = gLocation.getGenerator().getUpgrade();
-			if (upgrade != null)
+			MenuItem mi = Lang.getMenuItemStorage().get(MenuItemType.GENERATOR_MENU_UPGRADE);
+			if (mi.isEnabled())
 			{
-				MenuItem mi = Lang.getMenuItem(MenuItemType.GENERATOR_MENU_UPGRADE);
 				mi.replace("<next_generator>", upgrade.getNextGenerator().getGeneratorItemName());
-				mi.replace("<cost>", upgrade.getCostFormatted());
+				mi.replaceLore("<costs>", upgrade.getCostsFormattedGUI());
 				ItemStack is = mi.build();
 				
-				for (int i : Lang.getMenuItem(MenuItemType.GENERATOR_MENU_UPGRADE).getSlots())
+				for (int i : Lang.getMenuItemStorage().get(MenuItemType.GENERATOR_MENU_UPGRADE).getSlots())
 				{
 					menu.setItem(i, is);
 				}
 			}
-			else if (!Upgrades.getPreviousGeneratorId(gLocation.getGeneratorId()).isEmpty())
+		}
+		else if (!Upgrades.getPreviousGeneratorId(gLocation.getGeneratorId()).isEmpty())
+		{
+			if (Lang.getMenuItemStorage().get(MenuItemType.GENERATOR_MENU_UPGRADE_MAXED).isEnabled())
 			{
-				for (int i : Lang.getMenuItem(MenuItemType.GENERATOR_MENU_UPGRADE_MAXED).getSlots())
+				for (int i : Lang.getMenuItemStorage().get(MenuItemType.GENERATOR_MENU_UPGRADE_MAXED).getSlots())
 				{
-					menu.setItem(i, Lang.getMenuItem(MenuItemType.GENERATOR_MENU_UPGRADE_MAXED).build());
+					menu.setItem(i, Lang.getMenuItemStorage().get(MenuItemType.GENERATOR_MENU_UPGRADE_MAXED).build());
 				}
 			}
 		}
@@ -81,16 +83,16 @@ public class GeneratorMenu {
 	
 	public static void onClick(Player p, int slot)
 	{	
-		if (Lang.getMenuItem(MenuItemType.GENERATOR_MENU_PICK_UP).getSlots().contains(slot) && Lang.getMenuItem(MenuItemType.GENERATOR_MENU_PICK_UP).isEnabled())
+		if (Lang.getMenuItemStorage().get(MenuItemType.GENERATOR_MENU_PICK_UP).getSlots().contains(slot) && Lang.getMenuItemStorage().get(MenuItemType.GENERATOR_MENU_PICK_UP).isEnabled())
 		{
 			PickUp.pickup(p, Menus.getMenuPlayer(p).getGLocation());
 			Menus.closeInv(p);
 		}
-		else if (Lang.getMenuItem(MenuItemType.GENERATOR_MENU_QUIT).getSlots().contains(slot) && Lang.getMenuItem(MenuItemType.GENERATOR_MENU_QUIT).isEnabled())
+		else if (Lang.getMenuItemStorage().get(MenuItemType.GENERATOR_MENU_QUIT).getSlots().contains(slot) && Lang.getMenuItemStorage().get(MenuItemType.GENERATOR_MENU_QUIT).isEnabled())
 		{
 			Menus.closeInv(p);
 		}
-		else if (Lang.getMenuItem(MenuItemType.GENERATOR_MENU_RESET).getSlots().contains(slot) && Lang.getMenuItem(MenuItemType.GENERATOR_MENU_RESET).isEnabled())
+		else if (Lang.getMenuItemStorage().get(MenuItemType.GENERATOR_MENU_RESET).getSlots().contains(slot) && Lang.getMenuItemStorage().get(MenuItemType.GENERATOR_MENU_RESET).isEnabled())
 		{
 			GeneratorLocation gl = Menus.getMenuPlayer(p).getGLocation();
 			if (gl.isBroken())
@@ -98,14 +100,14 @@ public class GeneratorMenu {
 				if (gl.getGenerator().getType() == GeneratorType.DOUBLE)
 					Main.getBlocksUtils().setBlock(gl.getLocation(), gl.getGenerator().getGeneratorBlock());
 				Schedules.schedule(gl);
-				Lang.sendMessage(p, Message.GENERATORS_ANY_REPAIRED);
+				Lang.getMessageStorage().send(p, Message.GENERATORS_ANY_REPAIRED);
 				Menus.closeInv(p);
 			}
 		}
 		else if (Menus.getMenuPlayer(p).getGLocation().getGenerator().getUpgrade() != null && Main.dependencies.contains(Dependency.VAULT_ECONOMY)
-				&& Lang.getMenuItem(MenuItemType.GENERATOR_MENU_UPGRADE).getSlots().contains(slot) && Lang.getMenuItem(MenuItemType.GENERATOR_MENU_UPGRADE).isEnabled())
+				&& Lang.getMenuItemStorage().get(MenuItemType.GENERATOR_MENU_UPGRADE).getSlots().contains(slot) && Lang.getMenuItemStorage().get(MenuItemType.GENERATOR_MENU_UPGRADE).isEnabled())
 		{
-			UpgradeHandler.handleBlockUpgrade(p, Menus.getMenuPlayer(p).getGLocation());
+			Menus.getMenuPlayer(p).getGLocation().getGenerator().getUpgrade().blockUpgrade(Menus.getMenuPlayer(p).getGLocation(), p);
 			Menus.closeInv(p);
 		}
 	}

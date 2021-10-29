@@ -128,6 +128,11 @@ public class GeneratorsFile {
 	    			generator.setHologram(config.getBoolean(generatorID+".hologram"));
 	    		}
 	    		
+	    		if (config.contains(generatorID+".disabled-worlds") )
+	    		{
+	    			generator.getDisabledWorlds().addAll((ArrayList<String>) config.getList(generatorID+".disabled-worlds"));
+	    		}
+	    		
 	    		String doubledGeneratorId = Generators.exactGeneratorItemExists(generatorID, generator.getGeneratorItem());
 	    		if (doubledGeneratorId != null)
 	    			{

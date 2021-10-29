@@ -1,8 +1,10 @@
 package me.kryniowesegryderiusz.kgenerators.classes;
 
+import java.util.ArrayList;
 import java.util.LinkedHashMap;
 import java.util.Map.Entry;
 
+import org.bukkit.World;
 import org.bukkit.inventory.ItemStack;
 
 import lombok.Getter;
@@ -41,6 +43,9 @@ public class Generator {
 	private boolean hologram = false;
     
     private double fullChance = 0.0;
+    
+    @Getter
+	private ArrayList<String> disabledWorlds = new ArrayList<String>();
 	  
 	public Generator(String id, ItemStack generatorBlock, ItemStack generatorItem, int delay, GeneratorType type, LinkedHashMap<ItemStack, Double> chances) {
 		this.id = id;
@@ -94,5 +99,10 @@ public class Generator {
 	public Upgrade getUpgrade()
 	{
 		return Upgrades.getUpgrade(id);
+	}
+	
+	public boolean isWorldDisabled(World w)
+	{
+		return this.disabledWorlds.contains(w.getName());
 	}
 }

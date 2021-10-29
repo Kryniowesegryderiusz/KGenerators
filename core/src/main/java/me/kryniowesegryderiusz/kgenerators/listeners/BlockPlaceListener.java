@@ -9,10 +9,10 @@ import org.bukkit.event.block.BlockPlaceEvent;
 import org.bukkit.inventory.ItemStack;
 
 import me.kryniowesegryderiusz.kgenerators.enums.GeneratorType;
-import me.kryniowesegryderiusz.kgenerators.Lang;
 import me.kryniowesegryderiusz.kgenerators.enums.Message;
 import me.kryniowesegryderiusz.kgenerators.classes.Generator;
 import me.kryniowesegryderiusz.kgenerators.handlers.Place;
+import me.kryniowesegryderiusz.kgenerators.lang.Lang;
 import me.kryniowesegryderiusz.kgenerators.managers.Generators;
 import me.kryniowesegryderiusz.kgenerators.managers.Locations;
 
@@ -56,7 +56,7 @@ public class BlockPlaceListener implements Listener {
 			return false;
 		}
 
-		Lang.sendMessage(p, Message.GENERATORS_PLACE_CANT_PLACE_BLOCK);
+		Lang.getMessageStorage().send(p, Message.GENERATORS_PLACE_CANT_PLACE_BLOCK);
 		return true;
 	}
 }

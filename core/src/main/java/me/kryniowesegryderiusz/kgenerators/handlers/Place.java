@@ -5,7 +5,6 @@ import javax.annotation.Nullable;
 import org.bukkit.Location;
 import org.bukkit.entity.Player;
 
-import me.kryniowesegryderiusz.kgenerators.Lang;
 import me.kryniowesegryderiusz.kgenerators.Logger;
 import me.kryniowesegryderiusz.kgenerators.Main;
 import me.kryniowesegryderiusz.kgenerators.enums.Message;
@@ -14,6 +13,7 @@ import me.kryniowesegryderiusz.kgenerators.classes.Generator;
 import me.kryniowesegryderiusz.kgenerators.classes.GeneratorLocation;
 import me.kryniowesegryderiusz.kgenerators.classes.GeneratorPlayer;
 import me.kryniowesegryderiusz.kgenerators.files.PlacedGeneratorsFile;
+import me.kryniowesegryderiusz.kgenerators.lang.Lang;
 import me.kryniowesegryderiusz.kgenerators.managers.Locations;
 import me.kryniowesegryderiusz.kgenerators.managers.Players;
 import me.kryniowesegryderiusz.kgenerators.managers.Schedules;
@@ -35,14 +35,19 @@ public class Place {
     	
     	if (Main.getSettings().isWorldDisabled(location.getWorld()))
     	{
-    		Lang.sendMessage(player, Message.GENERATORS_ANY_DISABLED_WORLD);
+    		Lang.getMessageStorage().send(player, Message.GENERATORS_ANY_DISABLED_WORLD);
+    		return false;
+    	}
+    	if (generator.isWorldDisabled(location.getWorld()))
+    	{
+    		Lang.getMessageStorage().send(player, Message.GENERATORS_ANY_DISABLED_WORLD_SPECIFIC, "<generator>", generator.getGeneratorItemName());
     		return false;
     	}
     	
     	if (!player.hasPermission("kgenerators.place."+generator.getId()))
     	{
-    		Lang.addReplecable("<permission>", "kgenerators.place."+generator.getId());
-    		Lang.sendMessage(player, Message.GENERATORS_PLACE_NO_PERMISSION);
+    		Lang.getMessageStorage().send(player, Message.GENERATORS_PLACE_NO_PERMISSION,
+    				"<permission>", "kgenerators.place."+generator.getId());
     		return false;
     	}
     	
@@ -53,18 +58,18 @@ public class Place {
     	
     	if (generator.getType() == GeneratorType.DOUBLE && !Main.getBlocksUtils().isAir(aLocation.getBlock()))
     	{
-    		if (player != null) Lang.sendMessage(player, Message.GENERATORS_PLACE_CANT_PLACE_DOUBLE_BELOW_BLOCK);
+    		if (player != null) Lang.getMessageStorage().send(player, Message.GENERATORS_PLACE_CANT_PLACE_DOUBLE_BELOW_BLOCK);
     		return false;
     	}
     	
     	if (generator.getType() == GeneratorType.DOUBLE && Locations.exists(aLocation))
     	{
-    		if (player != null) Lang.sendMessage(player, Message.GENERATORS_PLACE_CANT_PLACE_DOUBLE_BELOW_GENERATOR);
+    		if (player != null) Lang.getMessageStorage().send(player, Message.GENERATORS_PLACE_CANT_PLACE_DOUBLE_BELOW_GENERATOR);
     		return false;
     	}
     	
     	Locations.add(gLocation);
-    	PlacedGeneratorsFile.saveGeneratorToFile(location, player, generator.getId());
+    	Main.getDb().savePlacedGenerator(gLocation);
     	if (!pGenerator.isNone()) pGenerator.addGeneratorToPlayer(generator);
     	if (player != null) Main.getSettings().getPlaceSound().play(player);
     	

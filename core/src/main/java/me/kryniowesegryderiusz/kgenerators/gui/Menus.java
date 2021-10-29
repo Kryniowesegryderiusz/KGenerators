@@ -13,13 +13,14 @@ import me.kryniowesegryderiusz.kgenerators.enums.Dependency;
 import me.kryniowesegryderiusz.kgenerators.enums.MenuInventoryType;
 import me.kryniowesegryderiusz.kgenerators.enums.MenuItemType;
 import me.kryniowesegryderiusz.kgenerators.enums.Message;
-import me.kryniowesegryderiusz.kgenerators.Lang;
 import me.kryniowesegryderiusz.kgenerators.Main;
+import me.kryniowesegryderiusz.kgenerators.api.interfaces.IMenuInventoryType;
 import me.kryniowesegryderiusz.kgenerators.classes.Generator;
 import me.kryniowesegryderiusz.kgenerators.classes.GeneratorLocation;
 import me.kryniowesegryderiusz.kgenerators.classes.MenuPlayer;
 import me.kryniowesegryderiusz.kgenerators.hooks.BentoBoxHook;
 import me.kryniowesegryderiusz.kgenerators.hooks.SuperiorSkyblock2Hook;
+import me.kryniowesegryderiusz.kgenerators.lang.Lang;
 import me.kryniowesegryderiusz.kgenerators.managers.Generators;
 
 public class Menus implements Listener {
@@ -71,7 +72,7 @@ public class Menus implements Listener {
 	{
 		if (!BentoBoxHook.isAllowed(p, BentoBoxHook.Type.OPEN_MENU_FLAG) || !SuperiorSkyblock2Hook.isAllowed(p, SuperiorSkyblock2Hook.Type.OPEN_MENU_FLAG))
 		{
-			Lang.sendMessage(p, Message.GENERATOR_MENU_CANT_OPEN_HERE);
+			Lang.getMessageStorage().send(p, Message.GENERATOR_MENU_CANT_OPEN_HERE);
 			return;
 		}
 		
@@ -98,7 +99,7 @@ public class Menus implements Listener {
 		{
 			if (e.getValue() == g)
 			{
-				openMainMenu(p, (int) Math.floor(nr/Lang.getMenuItem(MenuItemType.MAIN_MENU_GENERATOR).getSlots().size()));
+				openMainMenu(p, (int) Math.floor(nr/Lang.getMenuItemStorage().get(MenuItemType.MAIN_MENU_GENERATOR).getSlots().size()));
 			}
 			nr ++;
 		}
@@ -139,21 +140,21 @@ public class Menus implements Listener {
 		p.openInventory(menu);
 	}
 	
-	public static boolean isVieving(Player p, MenuInventoryType enumMenuInventory)
+	public static <T extends Enum<T> & IMenuInventoryType> boolean isVieving(Player p, T enumMenuInventory)
 	{
 		if (guis.containsKey(p) && guis.get(p).getMenuInventory() == enumMenuInventory)
 			return true;
 		return false;
 	}
 	
-	public static MenuInventoryType getVieving(Player p)
+	public static <T extends Enum<T> & IMenuInventoryType> T getVieving(Player p)
 	{
 		if (guis.containsKey(p))
-			return guis.get(p).getMenuInventory();
+			return (T) guis.get(p).getMenuInventory();
 		return null;
 	}
 	
-	public static Player isSomeoneVieving(MenuInventoryType enumMenuInventory, GeneratorLocation gLocation)
+	public static <T extends Enum<T> & IMenuInventoryType> Player isSomeoneVieving(T enumMenuInventory, GeneratorLocation gLocation)
 	{
 		for (Entry<Player, MenuPlayer> e : guis.entrySet())
 		{

@@ -27,6 +27,8 @@ example_generator:
       name: "Magic stone"
       lore:
       - "&cThats Magic Stone"
+      enchants:
+        FORTUNE: 1
 
 #Below you can find pre-configured recipes. You can freely edit/remove them and add new ones ^^
       

@@ -66,4 +66,4 @@ ore_generators_owner_limits:
   generators:
   - stone_generator_level_1
   only-owner-pickup: true
-  only-owner-storage: true
+  only-owner-use: true

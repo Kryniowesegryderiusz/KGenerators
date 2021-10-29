@@ -4,9 +4,9 @@ import java.io.File;
 import java.io.IOException;
 import org.bukkit.configuration.InvalidConfigurationException;
 
-import me.kryniowesegryderiusz.kgenerators.Lang;
 import me.kryniowesegryderiusz.kgenerators.Logger;
 import me.kryniowesegryderiusz.kgenerators.Main;
+import me.kryniowesegryderiusz.kgenerators.lang.Lang;
 import me.kryniowesegryderiusz.kgenerators.utils.Config;
 import me.kryniowesegryderiusz.kgenerators.utils.ConfigManager;
 
@@ -65,7 +65,7 @@ public class LangFiles {
 		}
     	
     	try {
-			Lang.loadMessages(config, configGui, configCustomNames);
+			Lang.setup(config, configGui, configCustomNames);
 		} catch (IOException e) {
 			Logger.error(e);
 		}

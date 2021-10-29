@@ -43,21 +43,22 @@ generator:
   upgrade:
     enabled: true
     item: EXPERIENCE_BOTTLE
-    name: §cUpgrade generator
+    name: §cUlepsz generator
     lore:
-    - §6Click here to upgrade this generator!
+    - §6Kliknij, żeby ulepszyć generator!
     - ''
-    - '§6Next stage: §e<next_generator>'
-    - '§6Cost: §e<cost>'
+    - '§6Następny: §e<next_generator>'
+    - ''
+    - '§6Koszty:'
+    - '<costs>'
     slots: '31'
     glow: false
   upgrade-maxed:
     enabled: true
     item: EXPERIENCE_BOTTLE
-    name: §cMaximum generator level
+    name: §cMaksymalny poziom generatora
     lore:
-    - §6This generator doesnt have any further upgrades!
-    - §6You've maxed it!
+    - §6Nie ma więcej ulepszeń!
     slots: '31'
     glow: false
 main:

@@ -14,7 +14,7 @@ public class Config extends YamlConfiguration{
         super();
         this.file = file;
     }
-    File getFile(){
+    public File getFile(){
         return this.file;
     }
     void setFile(File file){

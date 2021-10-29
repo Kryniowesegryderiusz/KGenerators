@@ -10,6 +10,7 @@ import org.bukkit.command.TabCompleter;
 import org.bukkit.entity.Player;
 
 import me.kryniowesegryderiusz.kgenerators.classes.Generator;
+import me.kryniowesegryderiusz.kgenerators.lang.Lang;
 import me.kryniowesegryderiusz.kgenerators.managers.Generators;
 
 public class CommandTabCompleter implements TabCompleter {
@@ -37,7 +38,7 @@ public class CommandTabCompleter implements TabCompleter {
 		
 		if (args.length == 1)
 		{
-			ArrayList<String> help = Lang.getCommands(sender);
+			ArrayList<String> help = Lang.getMessageStorage().getCommands(sender);
 			if (isBlank(args[0]))
 				c = help;
 			else

@@ -76,7 +76,7 @@ public class GeneratorAction {
 	public boolean requirementsMet(Interaction gotInteraction, Player p)
 	{
 		if (gotInteraction != this.interaction) return false;
-		else if (item != null && p.getInventory().getItemInMainHand().getType() != item.getType()) return false;
+		else if (item != null && p.getItemInHand().getType() != item.getType()) return false;
 		else if (this.sneak != p.isSneaking()) return false;
 		else return true;
 	}

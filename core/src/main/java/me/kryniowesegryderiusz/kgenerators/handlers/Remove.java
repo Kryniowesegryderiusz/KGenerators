@@ -24,7 +24,7 @@ public class Remove {
 		
 		Locations.remove(location);
 		Schedules.remove(gLocation);
-		PlacedGeneratorsFile.removeGeneratorFromFile(location);
+		Main.getDb().removePlacedGenerator(location);
 		gLocation.getOwner().removeGeneratorFromPlayer(gLocation.getGenerator());
 		
 		if (drop) {

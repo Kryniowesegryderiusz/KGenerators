@@ -22,6 +22,10 @@ public class PreBlockGenerationEvent extends Event implements Cancellable {
     public HandlerList getHandlers() {
         return HANDLERS;
     }
+	
+    public static HandlerList getHandlerList() {
+        return HANDLERS;
+    }
 
 	@Override
 	public boolean isCancelled() {

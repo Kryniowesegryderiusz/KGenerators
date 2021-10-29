@@ -64,19 +64,20 @@ public class GenerateBlock {
 		  
 		  if (!generator.getChances().containsKey(diggableBlockItemStack)) {
 			  if (diggableBlock.getType().equals(pistonHead.getType())) {
-				  Schedules.schedule(gLocation);
+				  Schedules.schedule(gLocation, false);
 			  }
 			  else
 			  {
 				  Main.getBlocksUtils().setBlock(diggableBlockLocation, drawedBlock);
+				  
+				  if (Main.dependencies.contains(Dependency.SUPERIOR_SKYBLOCK_2)) {
+					  SuperiorSkyblock2Hook.handleBlockPlace(diggableBlock);
+				  }
+				  
+				  Main.getInstance().getServer().getPluginManager().callEvent(new PostBlockGenerationEvent(gLocation));
+
 			  }
 		  }
-		  
-		  if (Main.dependencies.contains(Dependency.SUPERIOR_SKYBLOCK_2)) {
-			  SuperiorSkyblock2Hook.handleBlockPlace(diggableBlock);
-		  }
-		  
-		Main.getInstance().getServer().getPluginManager().callEvent(new PostBlockGenerationEvent(gLocation));
 	}
 	
 	public static void generatePlaceholder (GeneratorLocation gLocation) {

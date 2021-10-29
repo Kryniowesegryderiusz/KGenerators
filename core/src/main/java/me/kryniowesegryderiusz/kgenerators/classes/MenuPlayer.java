@@ -3,6 +3,7 @@ package me.kryniowesegryderiusz.kgenerators.classes;
 import org.bukkit.entity.Player;
 import org.bukkit.inventory.Inventory;
 import lombok.Getter;
+import me.kryniowesegryderiusz.kgenerators.api.interfaces.IMenuInventoryType;
 import me.kryniowesegryderiusz.kgenerators.enums.MenuInventoryType;
 import me.kryniowesegryderiusz.kgenerators.gui.GeneratorMenu;
 
@@ -13,7 +14,7 @@ public class MenuPlayer {
 	@Getter
 	Inventory inventory;
 	@Getter
-	MenuInventoryType menuInventory;
+	Object menuInventory;
 	
 	/*
 	 * Additional info
@@ -31,7 +32,7 @@ public class MenuPlayer {
 	 * @param menuInventory
 	 * @param inventory
 	 */
-	public MenuPlayer(Player player, MenuInventoryType menuInventory, Inventory inventory)
+	public <T extends Enum<T> & IMenuInventoryType> MenuPlayer(Player player, T menuInventory, Inventory inventory)
 	{
 		this.player = player;
 		this.menuInventory = menuInventory;
@@ -44,7 +45,7 @@ public class MenuPlayer {
 	 * @param menuInventory
 	 * @param generator
 	 */
-	public MenuPlayer(Player player, MenuInventoryType menuInventory, Inventory inventory, Generator generator)
+	public <T extends Enum<T> & IMenuInventoryType> MenuPlayer(Player player, T menuInventory, Inventory inventory, Generator generator)
 	{
 		this.player = player;
 		this.menuInventory = menuInventory;
@@ -59,7 +60,7 @@ public class MenuPlayer {
 	 * @param inventory
 	 * @param page
 	 */
-	public MenuPlayer(Player player, MenuInventoryType menuInventory, Inventory inventory, int page)
+	public <T extends Enum<T> & IMenuInventoryType> MenuPlayer(Player player, T menuInventory, Inventory inventory, int page)
 	{
 		this.player = player;
 		this.menuInventory = menuInventory;
@@ -74,7 +75,7 @@ public class MenuPlayer {
 	 * @param inventory
 	 * @param gLocation
 	 */
-	public MenuPlayer(Player player, MenuInventoryType menuInventory, Inventory inventory, GeneratorLocation gLocation)
+	public <T extends Enum<T> & IMenuInventoryType> MenuPlayer(Player player, T menuInventory, Inventory inventory, GeneratorLocation gLocation)
 	{
 		this.player = player;
 		this.menuInventory = menuInventory;

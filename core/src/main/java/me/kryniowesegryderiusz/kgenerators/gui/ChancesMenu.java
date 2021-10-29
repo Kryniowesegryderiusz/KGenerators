@@ -4,17 +4,14 @@ import java.util.ArrayList;
 import java.util.Map.Entry;
 
 import org.bukkit.entity.Player;
-import org.bukkit.event.EventHandler;
-import org.bukkit.event.Listener;
-import org.bukkit.event.inventory.InventoryClickEvent;
 import org.bukkit.inventory.Inventory;
 import org.bukkit.inventory.ItemStack;
 
 import me.kryniowesegryderiusz.kgenerators.enums.MenuInventoryType;
 import me.kryniowesegryderiusz.kgenerators.enums.MenuItemType;
+import me.kryniowesegryderiusz.kgenerators.lang.Lang;
 import me.kryniowesegryderiusz.kgenerators.classes.Generator;
 import me.kryniowesegryderiusz.kgenerators.classes.MenuItem;
-import me.kryniowesegryderiusz.kgenerators.Lang;
 import me.kryniowesegryderiusz.kgenerators.Logger;
 
 public class ChancesMenu {
@@ -24,9 +21,9 @@ public class ChancesMenu {
 		ArrayList<MenuItemType> exludedEnumMenuItems = new ArrayList<MenuItemType>();
 		exludedEnumMenuItems.add(MenuItemType.CHANCES_MENU_CHANCE);
 		
-		Inventory menu = Lang.getMenuInventory(MenuInventoryType.CHANCES).getInv(MenuInventoryType.CHANCES, player, exludedEnumMenuItems);
+		Inventory menu = Lang.getMenuInventoryStorage().get(MenuInventoryType.CHANCES).getInv(MenuInventoryType.CHANCES, player, exludedEnumMenuItems);
 
-		MenuItem generatorMenuItem = Lang.getMenuItem(MenuItemType.CHANCES_MENU_CHANCE);
+		MenuItem generatorMenuItem = Lang.getMenuItemStorage().get(MenuItemType.CHANCES_MENU_CHANCE);
 		
 		ArrayList<Integer> slotList = generatorMenuItem.getSlots();
 		int lastId = -1;
@@ -37,7 +34,7 @@ public class ChancesMenu {
 			if (chanceMenuItem.getItemType().contains("<block>"))
 				chanceMenuItem.setItemStack(item);
 
-			chanceMenuItem.replace("<block_name>", Lang.getItemTypeName(item));
+			chanceMenuItem.replace("<block_name>", Lang.getCustomNamesStorage().getItemTypeName(item));
 			chanceMenuItem.replace("<chance>", String.valueOf(generator.getChancePercent(item)));
 			
 			lastId++;
@@ -56,7 +53,7 @@ public class ChancesMenu {
 	
 	public static void onClick(Player p, int slot)
 	{		
-		if (Lang.getMenuItem(MenuItemType.CHANCES_MENU_BACK).getSlots().contains(slot) && Lang.getMenuItem(MenuItemType.CHANCES_MENU_BACK).isEnabled())
+		if (Lang.getMenuItemStorage().get(MenuItemType.CHANCES_MENU_BACK).getSlots().contains(slot) && Lang.getMenuItemStorage().get(MenuItemType.CHANCES_MENU_BACK).isEnabled())
 		{
 			Menus.openMainMenu(p, Menus.getMenuPlayer(p).getGenerator());
 		}

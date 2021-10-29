@@ -12,7 +12,7 @@ public enum MenuItemType implements IMenuItemType
 	GENERATOR_MENU_PICK_UP(MenuInventoryType.GENERATOR,"pick-up", new MenuItem("BARRIER", "&aPick up", false, "23", "&eClick here to pick up generator")),
 	GENERATOR_MENU_QUIT(MenuInventoryType.GENERATOR,"quit", new  MenuItem("ARROW", "&cQuit", false, "40", "&6Quit menu")),
 	GENERATOR_MENU_RESET(MenuInventoryType.GENERATOR,"reset", new  MenuItem("MUSIC_DISC_11", "&cReset generator", false, "13", "&6This generator seems to be currupted!", "&6Click here to repair him")),
-	GENERATOR_MENU_UPGRADE(MenuInventoryType.GENERATOR,"upgrade", new  MenuItem("EXPERIENCE_BOTTLE", "&cUpgrade generator", false, "31", "&6Click here to upgrade this generator!","" , "&6Next stage: &e<next_generator>", "&6Cost: &e<cost>")),
+	GENERATOR_MENU_UPGRADE(MenuInventoryType.GENERATOR,"upgrade", new  MenuItem("EXPERIENCE_BOTTLE", "&cUpgrade generator", false, "31", "&6Click here to upgrade this generator!", "", "&6Next stage: &e<next_generator>", "&6Costs:" ,"<costs>")),
 	GENERATOR_MENU_UPGRADE_MAXED(MenuInventoryType.GENERATOR,"upgrade-maxed", new  MenuItem("EXPERIENCE_BOTTLE", "&cMaximum generator level", false, "31", "&6This generator doesnt have", "&6any further upgrades!","&aYou've maxed it!")),
 	
 	MAIN_MENU_FILLER(MenuInventoryType.MAIN, "filler", new MenuItem("GRAY_STAINED_GLASS_PANE", "&r", false, "0,1,2,3,4,5,6,7,8,36,37,38,39,40,41,42,43,44")),
@@ -35,7 +35,7 @@ public enum MenuItemType implements IMenuItemType
 	UPGRADE_MENU_FILLER(MenuInventoryType.UPGRADE, "filler", new MenuItem("GRAY_STAINED_GLASS_PANE", "&r", false, "0,1,2,3,4,5,6,7,8,36,37,38,39,40,41,42,43,44")),
 	UPGRADE_MENU_INGREDIENT(MenuInventoryType.UPGRADE,"ingredient", new MenuItem("<generator>", "&a<generator_name>", false, "20")),
 	UPGRADE_MENU_RESULT(MenuInventoryType.UPGRADE,"result", new MenuItem("<generator>", "&a<generator_name>", false, "24")),
-	UPGRADE_MENU_MARKER(MenuInventoryType.UPGRADE,"marker", new MenuItem("EXPERIENCE_BOTTLE", "&aUpgrade", false, "13,22,31", "&6To upgrade get", "&6generator and type", "&e/kgenerators upgrade", "&6Cost: &e<cost>$")),
+	UPGRADE_MENU_MARKER(MenuInventoryType.UPGRADE,"marker", new MenuItem("EXPERIENCE_BOTTLE", "&aUpgrade", false, "13,22,31", "&6To upgrade get", "&6generator and type", "&e/kgenerators upgrade", "&6or use generator menu", "", "&6Costs:", "<costs>")),
 	UPGRADE_MENU_BACK(MenuInventoryType.UPGRADE,"back", new  MenuItem("ARROW", "&cBack", false, "40", "&6Get back to", "&cprevious page")),
 	
 	LIMITS_MENU_FILLER(MenuInventoryType.LIMITS, "filler", new MenuItem("GRAY_STAINED_GLASS_PANE", "&r", false, "0,1,2,3,4,5,6,7,8,36,37,38,39,40,41,42,43,44")),

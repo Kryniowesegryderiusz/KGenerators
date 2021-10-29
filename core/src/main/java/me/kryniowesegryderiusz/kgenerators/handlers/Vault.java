@@ -37,6 +37,11 @@ public class Vault {
     	else return false;
     }
     
+    public static void giveMoney(Player player, double amount)
+    {
+    	econ.depositPlayer(player, amount);
+    }
+    
     public static boolean setupPermissions() {
     	if (Main.getInstance().getServer().getPluginManager().getPlugin("Vault") == null) {
             return false;
@@ -55,6 +60,11 @@ public class Vault {
     public static String formatMoney(double money)
     {
     	return econ.format(money);
+    }
+    
+    public static double getBalance(Player p)
+    {
+    	return econ.getBalance(p);
     }
 
 }

@@ -8,7 +8,6 @@ import org.bukkit.event.Listener;
 import org.bukkit.event.block.BlockBreakEvent;
 import org.bukkit.inventory.ItemStack;
 
-import me.kryniowesegryderiusz.kgenerators.Lang;
 import me.kryniowesegryderiusz.kgenerators.Main;
 import me.kryniowesegryderiusz.kgenerators.enums.GeneratorType;
 import me.kryniowesegryderiusz.kgenerators.enums.Dependency;
@@ -20,6 +19,7 @@ import me.kryniowesegryderiusz.kgenerators.classes.GeneratorLocation;
 import me.kryniowesegryderiusz.kgenerators.handlers.ActionHandler;
 import me.kryniowesegryderiusz.kgenerators.hooks.BentoBoxHook;
 import me.kryniowesegryderiusz.kgenerators.hooks.SuperiorSkyblock2Hook;
+import me.kryniowesegryderiusz.kgenerators.lang.Lang;
 import me.kryniowesegryderiusz.kgenerators.managers.Locations;
 import me.kryniowesegryderiusz.kgenerators.managers.Players;
 import me.kryniowesegryderiusz.kgenerators.managers.Schedules;
@@ -108,7 +108,7 @@ public class BlockBreakListener implements Listener {
 		
 		if (Main.dependencies.contains(Dependency.WORLD_GUARD) && !player.hasPermission("kgenerators.bypass.worldguard") && Main.getWorldGuardUtils().worldGuardFlagCheck(location, player, WGFlag.ONLY_GEN_BREAK))
 		{
-			Lang.sendMessage(player, Message.GENERATORS_DIGGING_ONLY_GEN);
+			Lang.getMessageStorage().send(player, Message.GENERATORS_DIGGING_ONLY_GEN);
 			e.setCancelled(true);
 			return;
 		}
@@ -119,9 +119,9 @@ public class BlockBreakListener implements Listener {
 		String permission = "kgenerators.mine." + generator.getId();
 		if (!player.hasPermission(permission))
 		{
-			Lang.addReplecable("<permission>", permission);
-			Lang.addReplecable("<generator>", generator.getGeneratorItem().getItemMeta().getDisplayName());
-			Lang.sendMessage(player, Message.GENERATORS_DIGGING_NO_PERMISSION);
+			Lang.getMessageStorage().send(player, Message.GENERATORS_DIGGING_NO_PERMISSION,
+					"<permission>", permission,
+					"<generator>", generator.getGeneratorItem().getItemMeta().getDisplayName());
 			return false;
 		}
 		return true;
@@ -135,7 +135,7 @@ public class BlockBreakListener implements Listener {
 	{
 		if (!BentoBoxHook.isAllowed(player, BentoBoxHook.Type.USE_FLAG) || !SuperiorSkyblock2Hook.isAllowed(player, SuperiorSkyblock2Hook.Type.USE_FLAG))
 		{
-			Lang.sendMessage(player, Message.GENERATORS_DIGGING_CANT_HERE);
+			Lang.getMessageStorage().send(player, Message.GENERATORS_DIGGING_CANT_HERE);
 			return false;
 		}
 		return true;
