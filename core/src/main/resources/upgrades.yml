@@ -11,6 +11,8 @@ example_generator_id_level_1:
   next-level: example_generator_id_level_2
   #Upgrade cost in currency
   cost: 500
+  #Upgrade cost in exp
+  exp: 100
 
 #Below you can find pre-configured upgrades. You can freely edit/remove them and add new ones ^^
 
