@@ -55,14 +55,23 @@ public class Schedules {
 
 	public static void schedule(GeneratorLocation gLocation, boolean createHologram) {
 		
-		GenerateBlock.generatePlaceholder(gLocation);
-		
-		if (createHologram && Main.dependencies.contains(Dependency.HOLOGRAPHIC_DISPLAYS) && gLocation.getGenerator().isHologram())
+		if (gLocation.getGenerator().getDelay() <= 0)
 		{
-			Holograms.createHologram(gLocation);
+			Bukkit.getScheduler().runTask(Main.getInstance(), () -> {
+				scheduleNow(gLocation);
+			});
 		}
-		
-		schedules.put(gLocation, gLocation.getGenerator().getDelay());
+		else
+		{
+			GenerateBlock.generatePlaceholder(gLocation);
+			
+			if (createHologram && Main.dependencies.contains(Dependency.HOLOGRAPHIC_DISPLAYS) && gLocation.getGenerator().isHologram())
+			{
+				Holograms.createHologram(gLocation);
+			}
+			
+			schedules.put(gLocation, gLocation.getGenerator().getDelay());
+		}
 	}
 	
 	public static void schedule(GeneratorLocation gLocation) {

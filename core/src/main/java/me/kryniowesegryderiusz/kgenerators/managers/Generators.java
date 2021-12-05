@@ -10,6 +10,7 @@ import javax.annotation.Nullable;
 import org.bukkit.inventory.ItemStack;
 
 import me.kryniowesegryderiusz.kgenerators.enums.GeneratorType;
+import me.kryniowesegryderiusz.kgenerators.xseries.XMaterial;
 import me.kryniowesegryderiusz.kgenerators.classes.Generator;
 
 public class Generators {
@@ -38,7 +39,7 @@ public class Generators {
 	{
 		for(Entry<String, Generator> entry : getEntrySet())
 		{
-			if (entry.getValue().getGeneratorItem().getItemMeta().equals(item.getItemMeta())) return entry.getValue();
+			if (entry.getValue().getGeneratorItem().getItemMeta().equals(item.getItemMeta()) && XMaterial.matchXMaterial(entry.getValue().getGeneratorItem()) == XMaterial.matchXMaterial(item)) return entry.getValue();
 		}
 		return null;
 	}

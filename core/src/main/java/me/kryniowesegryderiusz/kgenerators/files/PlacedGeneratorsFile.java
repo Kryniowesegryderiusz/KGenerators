@@ -135,10 +135,6 @@ public class PlacedGeneratorsFile implements IDatabase {
 	public void savePlacedGenerator(GeneratorLocation gl)
 	{
 		String sLocation = Locations.locationToString(gl.getLocation());
-		System.out.println(gl);
-		System.out.println(sLocation);
-		System.out.println(gl.getGeneratorId());
-		System.out.println(file);
 		file.set(sLocation+".generatorID", gl.getGeneratorId());
 		if (gl.getOwner().getOfflinePlayer() != null) file.set(sLocation+".owner", gl.getOwner().getOfflinePlayer().getName());
 		

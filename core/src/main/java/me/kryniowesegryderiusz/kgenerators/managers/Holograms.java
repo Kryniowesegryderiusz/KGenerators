@@ -31,8 +31,6 @@ public class Holograms {
 	
 	static void everyFreq()
 	{
-		System.out.println("------------------- FREQ -------------------");
-		
 		if(!Main.dependencies.contains(Dependency.HOLOGRAPHIC_DISPLAYS)) return;
 		
 		int line = -1;
@@ -68,12 +66,7 @@ public class Holograms {
 		{
 			hologram.removeLine(line);
 			hologram.insertTextLine(line, Lang.getHologramTextStorage().get(HologramText.REMAINING_TIME).getLines().get(line).replaceAll("<time>", time));
-		}
-		
-		System.out.println("updateHologram");
-		System.out.println(time);
-		System.out.println(hologram.toString());
-		
+		}		
 	}
 	
 	static void removeHologram(GeneratorLocation gLocation)
