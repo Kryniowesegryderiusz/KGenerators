@@ -21,6 +21,7 @@ import me.kryniowesegryderiusz.kgenerators.Logger;
 import me.kryniowesegryderiusz.kgenerators.Main;
 import me.kryniowesegryderiusz.kgenerators.utils.Config;
 import me.kryniowesegryderiusz.kgenerators.xseries.XEnchantment;
+import me.kryniowesegryderiusz.kgenerators.xseries.XMaterial;
 import me.kryniowesegryderiusz.kgenerators.xseries.XUtils;
 
 public class FilesFunctions {
@@ -138,6 +139,16 @@ public class FilesFunctions {
 	            		Logger.error(config.getName()+"#"+path+": Cannot load enchantment! " + enchantString + " doesnt exist!");
 	            }
             }
+            
+            if (XMaterial.matchXMaterial(item) == XMaterial.PLAYER_HEAD || XMaterial.matchXMaterial(item) == XMaterial.PLAYER_WALL_HEAD)
+            {
+            	if(config.contains(path+".custom-head-value"))
+            	{
+            		String value = config.getString(path+".custom-head-value");
+            		
+            	}
+            }
+            
 		}
 		else
 			item = XUtils.parseItemStack(config.getString(path), config.getName()+"#"+path, isBlockCheck);

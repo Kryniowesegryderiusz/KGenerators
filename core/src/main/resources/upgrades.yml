@@ -13,7 +13,8 @@ example_generator_id_level_1:
   cost: 500
   #Upgrade cost in exp
   exp: 100
-
+  #Upgrade cost in exp levels
+  exp-levels: 5
 #Below you can find pre-configured upgrades. You can freely edit/remove them and add new ones ^^
 
 stone_generator_level_1:

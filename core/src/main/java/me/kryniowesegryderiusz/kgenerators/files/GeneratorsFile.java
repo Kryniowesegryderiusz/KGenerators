@@ -14,6 +14,7 @@ import org.bukkit.inventory.meta.ItemMeta;
 
 import me.kryniowesegryderiusz.kgenerators.Logger;
 import me.kryniowesegryderiusz.kgenerators.Main;
+import me.kryniowesegryderiusz.kgenerators.classes.Actions;
 import me.kryniowesegryderiusz.kgenerators.classes.Generator;
 import me.kryniowesegryderiusz.kgenerators.enums.GeneratorType;
 import me.kryniowesegryderiusz.kgenerators.managers.Generators;
@@ -131,6 +132,12 @@ public class GeneratorsFile {
 	    		if (config.contains(generatorID+".disabled-worlds") )
 	    		{
 	    			generator.getDisabledWorlds().addAll((ArrayList<String>) config.getList(generatorID+".disabled-worlds"));
+	    		}
+	    		
+	    		if (config.contains(generatorID+".actions"))
+	    		{
+	    			generator.setActions(new Actions());
+	    			generator.getActions().load(config, generatorID);
 	    		}
 	    		
 	    		String doubledGeneratorId = Generators.exactGeneratorItemExists(generatorID, generator.getGeneratorItem());

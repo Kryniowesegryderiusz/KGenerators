@@ -26,18 +26,19 @@ public class GeneratorAction {
 		this.action = action;
 		
 		path += ".";
+		
 		if (config.contains(path+"mode"))
 		{
 			this.interaction = Interaction.Functions.getModeByString(config.getString(path+"mode"));
 			if (action != Action.PICKUP && this.interaction == Interaction.BREAK)
 			{
-				Logger.error("Settings: You cannot set BREAK action to " + action.toString() + "! Using NONE!");
+				Logger.error(config.getFile().getName() + " " + path + ": You cannot set BREAK action to " + action.toString() + "! Using NONE!");
 				this.interaction = Interaction.NONE;
 			}
 		}
 		else
 		{
-			Logger.warn("Settings: Action mode for " + action.toString() + " is not set! Using NONE!");
+			Logger.warn(config.getFile().getName() + " " + path + ": Action mode for " + action.toString() + " is not set! Using NONE!");
 			this.interaction = Interaction.NONE;
 		}
 		
@@ -50,7 +51,7 @@ public class GeneratorAction {
 		}
 		else
 		{
-			Logger.warn("Settings: Action item for " + action.toString() + " is not set! Using ANY!");
+			Logger.warn(config.getFile().getName() + " " + path + ": Action item for " + action.toString() + " is not set! Using ANY!");
 		}
 		
 		
@@ -60,7 +61,7 @@ public class GeneratorAction {
 		}
 		else
 		{
-			Logger.warn("Settings: Sneak requirement for " + action.toString() + " is not set! Using FALSE!");
+			Logger.warn(config.getFile().getName() + " " + path + ": Sneak requirement for " + action.toString() + " is not set! Using FALSE!");
 		}
 		
 	}

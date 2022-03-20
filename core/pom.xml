@@ -7,7 +7,7 @@
   <parent>
     <groupId>me.kryniowesegryderiusz</groupId>
     <artifactId>kgenerators-parent</artifactId>
-    <version>6.1.0</version>
+    <version>6.2.0</version>
   </parent>
 
 	<repositories>
@@ -60,6 +60,15 @@
 		    <version>7.1.15</version>
 		    <scope>system</scope>
 		    <systemPath>${project.basedir}/dependencies/JetsMinions-7.1.15.jar</systemPath>
+		</dependency>
+		
+		<!--  Minions-Miner-0.0.9  -->
+        <dependency>
+		    <groupId>com.thecrappiest</groupId>
+		    <artifactId>minions-miner</artifactId>
+		    <version>0.0.9</version>
+		    <scope>system</scope>
+		    <systemPath>${project.basedir}/dependencies/Minions-Miner-0.0.9.jar</systemPath>
 		</dependency>
 		
 		<dependency>

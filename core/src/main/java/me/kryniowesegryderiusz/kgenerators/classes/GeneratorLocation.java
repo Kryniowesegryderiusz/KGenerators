@@ -9,20 +9,20 @@ import lombok.Getter;
 import me.kryniowesegryderiusz.kgenerators.Logger;
 import me.kryniowesegryderiusz.kgenerators.Main;
 import me.kryniowesegryderiusz.kgenerators.enums.GeneratorType;
-import me.kryniowesegryderiusz.kgenerators.files.PlacedGeneratorsFile;
 import me.kryniowesegryderiusz.kgenerators.handlers.Remove;
 import me.kryniowesegryderiusz.kgenerators.managers.Generators;
 import me.kryniowesegryderiusz.kgenerators.managers.Locations;
 import me.kryniowesegryderiusz.kgenerators.managers.Schedules;
-import me.kryniowesegryderiusz.kgenerators.xseries.XUtils;
 
 public class GeneratorLocation {
 	@Getter
 	String generatorId;
 	@Getter
 	GeneratorPlayer owner;
+	
 	@Getter
 	Location location;
+	
 	@Getter
 	Location hologramLocation;
 	

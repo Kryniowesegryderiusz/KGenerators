@@ -44,6 +44,9 @@ public class Generator {
     
     private double fullChance = 0.0;
     
+    @Getter @Setter
+    private Actions actions = null;
+    
     @Getter
 	private ArrayList<String> disabledWorlds = new ArrayList<String>();
 	  
@@ -79,6 +82,12 @@ public class Generator {
 		double fullchance = this.fullChance;
 		double percent = (chance/fullchance) * 100;
 		return percent;
+	}
+	
+	public String getChancePercentFormatted(ItemStack item)
+	{
+		double percent = this.getChancePercent(item);
+		return String.format("%.2f", percent);
 	}
 	
 	public boolean isGeneratingImmediately() {

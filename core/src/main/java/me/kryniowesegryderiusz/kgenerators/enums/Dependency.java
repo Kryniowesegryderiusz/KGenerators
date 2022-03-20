@@ -11,4 +11,5 @@ public enum Dependency
 	VAULT_PERMISSIONS,
 	SLIMEFUN,
 	IRIDIUM_SKYBLOCK,
+	MINIONS,
 }

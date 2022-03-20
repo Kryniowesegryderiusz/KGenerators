@@ -35,7 +35,7 @@ public class ChancesMenu {
 				chanceMenuItem.setItemStack(item);
 
 			chanceMenuItem.replace("<block_name>", Lang.getCustomNamesStorage().getItemTypeName(item));
-			chanceMenuItem.replace("<chance>", String.valueOf(generator.getChancePercent(item)));
+			chanceMenuItem.replace("<chance>", generator.getChancePercentFormatted(item));
 			
 			lastId++;
 			

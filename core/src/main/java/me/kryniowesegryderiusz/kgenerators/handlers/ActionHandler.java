@@ -1,6 +1,7 @@
 package me.kryniowesegryderiusz.kgenerators.handlers;
 
 import java.util.Map.Entry;
+import java.util.Set;
 
 import org.bukkit.entity.Player;
 
@@ -25,7 +26,12 @@ public class ActionHandler {
 	 */
 	public static boolean handler(Interaction usedActionType, GeneratorLocation gLocation, Player player)
 	{		
-		for (Entry<Action, GeneratorAction> e : Main.getSettings().getActions().entrySet())
+		Set<Entry<Action, GeneratorAction>> entryset = Main.getSettings().getActions().getEntrySet();
+		
+		if (gLocation.getGenerator().getActions() != null)
+			entryset = gLocation.getGenerator().getActions().getEntrySet();
+		
+		for (Entry<Action, GeneratorAction> e : entryset)
 		{
 			if (e.getValue().requirementsMet(usedActionType, player))
 			{

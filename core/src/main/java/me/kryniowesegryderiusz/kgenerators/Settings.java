@@ -9,6 +9,7 @@ import org.bukkit.inventory.ItemStack;
 
 import lombok.Getter;
 import lombok.Setter;
+import me.kryniowesegryderiusz.kgenerators.classes.Actions;
 import me.kryniowesegryderiusz.kgenerators.classes.GeneratorAction;
 import me.kryniowesegryderiusz.kgenerators.classes.SQLConfig;
 import me.kryniowesegryderiusz.kgenerators.classes.Sound;
@@ -28,7 +29,7 @@ public class Settings {
 	private boolean actionbarMessages = true;
 	
 	@Getter
-	private LinkedHashMap<Action, GeneratorAction> actions = new LinkedHashMap<Action, GeneratorAction>();
+	private Actions actions = new Actions();
 	
 	@Setter @Getter
 	private boolean pickUpSneak = true;
@@ -76,16 +77,6 @@ public class Settings {
 	public Settings()
 	{
 		
-	}
-	
-	public void addGeneratorAction(Action action, GeneratorAction gaction)
-	{
-		actions.put(action, gaction);
-	}
-	
-	public GeneratorAction getAction(Action action)
-	{
-		return actions.get(action);
 	}
 	
 	public boolean isWorldDisabled(World world)

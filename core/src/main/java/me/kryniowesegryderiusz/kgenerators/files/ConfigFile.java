@@ -63,9 +63,7 @@ public class ConfigFile {
 			settings.setActionbarMessages(config.getBoolean("generators-actionbar-messages"));
 		}
 		
-		settings.addGeneratorAction(Action.PICKUP, new GeneratorAction(Action.PICKUP, config, "actions.pick-up"));
-		settings.addGeneratorAction(Action.OPENGUI, new GeneratorAction(Action.OPENGUI, config, "actions.open-gui"));
-		settings.addGeneratorAction(Action.TIMELEFT, new GeneratorAction(Action.TIMELEFT, config, "actions.time-left-check"));
+		settings.getActions().load(config, "");
 		
 		if (config.contains("explosion-handler"))
 		{

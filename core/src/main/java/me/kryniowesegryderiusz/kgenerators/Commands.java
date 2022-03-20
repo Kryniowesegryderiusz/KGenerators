@@ -124,7 +124,7 @@ public class Commands implements CommandExecutor {
 				case "actions":
 					if (sender.hasPermission("kgenerators.actions") || sender instanceof ConsoleCommandSender){
 						Lang.getMessageStorage().send(sender, Message.COMMANDS_ACTIONS_HEADER);
-						for (Entry<Action, GeneratorAction> e : Main.getSettings().getActions().entrySet())
+						for (Entry<Action, GeneratorAction> e : Main.getSettings().getActions().getEntrySet())
 						{
 							if (e.getValue().getInteraction() != Interaction.NONE)
 							{

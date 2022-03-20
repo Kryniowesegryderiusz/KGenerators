@@ -107,7 +107,7 @@ public class Upgrade {
 			if (!uc.checkRequirements(p, amount))
 			{
 				Lang.getMessageStorage().send(p, Message.UPGRADES_COST_NOT_FULFILLED,
-						"<cost>", uc.getCostFormatted());
+						"<cost>", uc.getCostFormatted(amount));
 				return false;
 			}
 		}
@@ -119,18 +119,18 @@ public class Upgrade {
 		
 		Main.getSettings().getUpgradeSound().play(p);
 		Lang.getMessageStorage().send(p, Message.UPGRADES_UPGRADED,
-				"<costs>", this.getCostsFormatted(),
+				"<costs>", this.getCostsFormatted(amount),
 				"<number>", String.valueOf(amount));
 		
 		return true;
 	}
 	
-	public String getCostsFormatted()
+	public String getCostsFormatted(int amount)
 	{
 		String s = "";
 		for (int i = 0; i < this.upgradeCosts.size(); i++)
 		{
-			s = s + this.upgradeCosts.get(i).getCostFormatted();
+			s = s + this.upgradeCosts.get(i).getCostFormatted(amount);
 			if (i != this.upgradeCosts.size()-1)
 				s = s + Lang.getMessageStorage().get(Message.UPGRADES_COSTS_SEPARATOR, false);
 		}
@@ -142,7 +142,7 @@ public class Upgrade {
 		ArrayList<String> costs = new ArrayList<String>();
 		for (IUpgradeCost uc : this.upgradeCosts)
 		{
-			costs.addAll(Lang.getMenuItemAdditionalLinesStorage().get(MenuItemAdditionalLines.UPGRADE_COST).replace("<cost>", uc.getCostFormatted()).getLines());
+			costs.addAll(Lang.getMenuItemAdditionalLinesStorage().get(MenuItemAdditionalLines.UPGRADE_COST).replace("<cost>", uc.getCostFormatted(1)).getLines());
 		}
 		return new StringContent(costs);
 	}

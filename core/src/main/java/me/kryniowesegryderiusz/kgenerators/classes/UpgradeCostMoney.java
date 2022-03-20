@@ -40,7 +40,7 @@ public class UpgradeCostMoney implements IUpgradeCost  {
 	}
 
 	@Override
-	public String getCostFormatted() {
-		return Vault.formatMoney(this.cost);
+	public String getCostFormatted(int amount) {
+		return Vault.formatMoney(this.cost*amount);
 	}
 }

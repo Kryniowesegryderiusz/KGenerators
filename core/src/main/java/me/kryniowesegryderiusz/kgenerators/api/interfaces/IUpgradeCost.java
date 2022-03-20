@@ -36,6 +36,6 @@ public interface IUpgradeCost {
 	 * Gets lang formatted string for display reasons
 	 * @return string with formatted cost
 	 */
-	public String getCostFormatted();
+	public String getCostFormatted(int amount);
 
 }

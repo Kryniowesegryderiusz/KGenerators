@@ -172,9 +172,9 @@ public class FilesConverter {
 			
 			if (config.contains("settings.pick-up.sneak")) sneak = config.getBoolean("settings.pick-up.sneak");
 			else sneak = true;
-			settings.addGeneratorAction(Action.PICKUP, new GeneratorAction(Action.PICKUP, interaction, item, sneak));
-			settings.addGeneratorAction(Action.OPENGUI, new GeneratorAction(Action.OPENGUI, Interaction.NONE, null, false));
-			settings.addGeneratorAction(Action.TIMELEFT, new GeneratorAction(Action.TIMELEFT, Interaction.NONE, null, false));
+			settings.getActions().addGeneratorAction(Action.PICKUP, new GeneratorAction(Action.PICKUP, interaction, item, sneak));
+			settings.getActions().addGeneratorAction(Action.OPENGUI, new GeneratorAction(Action.OPENGUI, Interaction.NONE, null, false));
+			settings.getActions().addGeneratorAction(Action.TIMELEFT, new GeneratorAction(Action.TIMELEFT, Interaction.NONE, null, false));
 			
 			/*
 			 * Converting generators definitions
@@ -341,28 +341,28 @@ public class FilesConverter {
 			add(file, "actions:");
 			add(file, "  #Action, which will be used for picking up generators");
 			add(file, "  pick-up:");
-			add(file, "    mode: " + settings.getAction(Action.PICKUP).getInteraction().toString());
-			if (settings.getAction(Action.PICKUP).getItem() != null)
-				add(file, "    item: " + settings.getAction(Action.PICKUP).getItem().getType().toString());
+			add(file, "    mode: " + settings.getActions().getGeneratorAction(Action.PICKUP).getInteraction().toString());
+			if (settings.getActions().getGeneratorAction(Action.PICKUP).getItem() != null)
+				add(file, "    item: " + settings.getActions().getGeneratorAction(Action.PICKUP).getItem().getType().toString());
 			else
 				add(file, "    item: ANY");
-			add(file, "    sneak: " + String.valueOf(settings.getAction(Action.PICKUP).isSneak()));
+			add(file, "    sneak: " + String.valueOf(settings.getActions().getGeneratorAction(Action.PICKUP).isSneak()));
 			add(file, "  #Action, which will be used for opening generator gui");
 			add(file, "  open-gui:");
-			add(file, "    mode: " + settings.getAction(Action.OPENGUI).getInteraction().toString());
-			if (settings.getAction(Action.PICKUP).getItem() != null)
-				add(file, "    item: " + settings.getAction(Action.OPENGUI).getItem().getType().toString());
+			add(file, "    mode: " + settings.getActions().getGeneratorAction(Action.OPENGUI).getInteraction().toString());
+			if (settings.getActions().getGeneratorAction(Action.PICKUP).getItem() != null)
+				add(file, "    item: " + settings.getActions().getGeneratorAction(Action.OPENGUI).getItem().getType().toString());
 			else
 				add(file, "    item: ANY");
-			add(file, "    sneak: " + String.valueOf(settings.getAction(Action.OPENGUI).isSneak()));
+			add(file, "    sneak: " + String.valueOf(settings.getActions().getGeneratorAction(Action.OPENGUI).isSneak()));
 			add(file, "  #Action, which will be used for checking how much time left before regeneration");
 			add(file, "  time-left-check:");
-			add(file, "    mode: " + settings.getAction(Action.TIMELEFT).getInteraction().toString());
-			if (settings.getAction(Action.TIMELEFT).getItem() != null)
-				add(file, "    item: " + settings.getAction(Action.PICKUP).getItem().getType().toString());
+			add(file, "    mode: " + settings.getActions().getGeneratorAction(Action.TIMELEFT).getInteraction().toString());
+			if (settings.getActions().getGeneratorAction(Action.TIMELEFT).getItem() != null)
+				add(file, "    item: " + settings.getActions().getGeneratorAction(Action.PICKUP).getItem().getType().toString());
 			else
 				add(file, "    item: ANY");
-			add(file, "    sneak: " + String.valueOf(settings.getAction(Action.TIMELEFT).isSneak()));
+			add(file, "    sneak: " + String.valueOf(settings.getActions().getGeneratorAction(Action.TIMELEFT).isSneak()));
 			Logger.info("FilesConverter: Added actions settings to config file");
 		}
 		

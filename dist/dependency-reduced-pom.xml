@@ -3,7 +3,7 @@
   <parent>
     <artifactId>kgenerators-parent</artifactId>
     <groupId>me.kryniowesegryderiusz</groupId>
-    <version>6.1.0</version>
+    <version>6.2.0</version>
   </parent>
   <modelVersion>4.0.0</modelVersion>
   <groupId>me.kryniowesegryderiusz</groupId>
@@ -28,6 +28,9 @@
                   <include>me.kryniowesegryderiusz:kgenerators-*</include>
                 </includes>
               </artifactSet>
+              <archive>
+                <manifest>me.kryniowesegryderiusz.promans.desktop.Main</manifest>
+              </archive>
             </configuration>
           </execution>
         </executions>

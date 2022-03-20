@@ -16,7 +16,7 @@ example_generator:
   lore:
   - '&6This is example generator!'
   - '&6Its not loaded!'
-  #Delay between generations (in ticks: 20 = 1s))
+  #Delay between generations (in ticks: 20 = 1s)) You can set -1 or 0 to regen immediately
   delay: 40 #2s
   #Type of generator.
   #Possible types:
@@ -45,6 +45,20 @@ example_generator:
   #List of worlds, where this generator wont be enabled
   disabled-worlds:
   - test_world
+  #You can also specify actions per generator. If not set, global config.yml settings will be used.
+  actions:
+    pick-up:
+      mode: BREAK
+      item: ANY
+      sneak: true
+    open-gui:
+      mode: RIGHT_CLICK
+      item: ANY
+      sneak: true
+    time-left-check:
+      mode: RIGHT_CLICK
+      item: ANY
+      sneak: false
 
 #Below you can find pre-configured generators. You can freely edit/remove them and add new ones ^^
 

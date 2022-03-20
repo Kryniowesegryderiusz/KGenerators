@@ -48,6 +48,25 @@ public class SuperiorSkyblock2Hook implements Listener {
 		  }
 	}
 	
+	/**
+	 *  Due to dependency tree problem you can this to force enable dependency after registering Privileges:
+	 *  IslandPrivilege.register("KGENERATORS_PICKUP_FLAG");
+     *  IslandPrivilege.register("KGENERATORS_USE_FLAG");
+     *  IslandPrivilege.register("KGENERATORS_OPEN_MENU_FLAG");
+	 */
+	public static void forceHook()
+	{
+		if (IslandPrivilege.getByName("KGENERATORS_PICKUP_FLAG") != null
+				|| IslandPrivilege.getByName("KGENERATORS_USE_FLAG") != null
+				|| IslandPrivilege.getByName("KGENERATORS_OPEN_MENU_FLAG") != null)
+		{
+			initialised = true;
+			Logger.info("Dependencies: SuperiorSkyblock2: Something force hooked flags!");
+		}
+		else
+			Logger.error("Dependencies: SuperiorSkyblock2: Something tried to force hook flags, despite them not beeing initialised!");
+	}
+	
 	@EventHandler
 	public void onDeleteEvent (IslandDisbandEvent e)
 	{
@@ -72,16 +91,9 @@ public class SuperiorSkyblock2Hook implements Listener {
 	
     @EventHandler
     public void onPluginInit(PluginInitializeEvent e){
-    	
         IslandPrivilege.register("KGENERATORS_PICKUP_FLAG");
-        KGENERATORS_PICKUP_FLAG = IslandPrivilege.getByName("KGENERATORS_PICKUP_FLAG");
-        
         IslandPrivilege.register("KGENERATORS_USE_FLAG");
-        KGENERATORS_USE_FLAG = IslandPrivilege.getByName("KGENERATORS_USE_FLAG");
-        
         IslandPrivilege.register("KGENERATORS_OPEN_MENU_FLAG");
-        KGENERATORS_OPEN_MENU_FLAG = IslandPrivilege.getByName("KGENERATORS_OPEN_MENU_FLAG");
-        
         initialised = true;
         Logger.info("Dependencies: SuperiorSkyblock2 additional privilages set up");
         
@@ -97,11 +109,11 @@ public class SuperiorSkyblock2Hook implements Listener {
 		if (island != null) {
 			IslandPrivilege flag = null;
 			if (type == Type.PICKUP_FLAG)
-				flag = KGENERATORS_PICKUP_FLAG;
+				flag = IslandPrivilege.getByName("KGENERATORS_PICKUP_FLAG");
 			else if (type == Type.USE_FLAG)
-				flag = KGENERATORS_USE_FLAG;
+				flag = IslandPrivilege.getByName("KGENERATORS_USE_FLAG");
 			else if (type == Type.OPEN_MENU_FLAG)
-				flag = KGENERATORS_OPEN_MENU_FLAG;
+				flag = IslandPrivilege.getByName("KGENERATORS_OPEN_MENU_FLAG");
 			
 			if (!island.hasPermission(p, flag))
 				return false;
