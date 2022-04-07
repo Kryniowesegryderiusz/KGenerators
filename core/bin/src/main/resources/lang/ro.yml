@@ -1,0 +1,128 @@
+#Translated to Romanian by iGabrielG
+messages:
+  prefix: '&8[&6KGenerators&8] '
+  generators:
+    digging:
+      only-gen: '&cPoți sparge doar blocuri generate !'
+      no-permission: '&cNu aveți permisiunea &8(&7<permission>&8)&c de a mina !
+        <generator>&c!'
+    crafting:
+      cant-use: '&cNu poți crafta nimic din generator !'
+      no-permission: '&cNu aveți permisiunea &8(&7<permission>&8)&c de a crafta
+        <generator>&c!'
+    timeleft:
+      output: '&aAcest generator se va regenera în &e<time>'
+    pick-up:
+      successful: '&e<generator> &aprimit'
+      cant-here: '&cNu aveți permisiunea de a lua generatorul aici !'
+    place:
+      cant-here: '&cNu aveți permisiunea de a pune generatorul aici !'
+      cant-place-block: '&cNu aveți permisiunea de a pune blocuri în locul 
+      generatorului !'
+      cant-place-double-below-block: '&cNu aveți permisiunea de a pune generatorul 
+      sub un block !'
+      cant-place-double-below-generator: '&cNu aveți permisiunea de a suprapune 
+      generatoarele !'
+    per-player-generator:
+      owner-none: '&cNimic'
+      cant-place-more: '&cNu aveți permisiunea de a pune mai mult de &6<number> &cgeneratoare !'
+      cant-place-more-type: 'cNu aveți permisiunea de a pune mai mult de &6<number> &cgeneratoare !'
+      cant-pick-up: '&cNu aveți permisiunea de a lua generatorul lui &6<owner>&c!'
+      cant-use: '&cNu aveți permisiunea de a folosi generatorul lui &6<owner>&c!'
+    protection:
+      cant-change-generator-item: '&cNu aveți permisiunea de a modifica conținutul generatorului !'
+    menus:
+      cant-open-already-viewed: '&cNu aveți permisiunea de a deschide meniul ! Cineva î-l folosește deja !'
+      cant-open-not-owner: '&cNu aveți permisiunea de a deschide meniul ! Doar proprietarii 
+      generatorului au permisiunea !'
+  economy:
+    no-economy-avaible: '&cNu este nici-un sistem economic disponibil !'
+    not-enough-money: '&cNu aveți destui bani ! Aveți nevoie de &6<cost>$&c!'
+    done: '&aAți upgradat &e<number> &ageneratoarele pentru prețul de &e<cost>$&a!'
+  commands:
+    any:
+      wrong: '&cComandă grețită ! Scrieți comanda /kgenerators pentru ajutor !'
+      no-permission: '&cNu aveți permisiunea &8(&7<permission>&8)&c de a folosi comenzile 
+      pentru generatoare !'
+      player-not-online: '&cJucătorul nu este online !'
+      player-doesnt-exist: '&cJucătorul nu există !'
+      generator-doesnt-exist: '&cAcest generator nu există !'
+      menu-doesnt-exist: '&cAcest meniu nu există !'
+    list:
+      header: '&aGeneratoare:'
+      list: '&8- <generator> &8(&7ID: <generatorID>&8)'
+      no-permission: '&cNu aveți permisiunea &8(&7<permission>&8)&cde a vedea generatoarele !'
+      help: Vedeți toate generatoarele
+    give:
+      generator-given: '&aGeneratorul <generator> &ai-a fost oferit la &e<player>'
+      generator-recieved: '&aGenerator <generator> &aprimit !'
+      usage: '&cFolosește: &e/kgenerators give <player> <generator>'
+      no-permission: '&cNu aveți permisiunea &8(&7<permission>&8)&cde a oferii generatoare !'
+      help: Oferă generator la jucător
+    getall:
+      recieved: '&aGeneratoare primite'
+      no-permission: '&cNu aveți permisiunea &8(&7<permission>&8)&cde a lua toate generatoarele !'
+      help: Primește toate generatoarele
+    check:
+      header: '&aJucătorul &e<player> &aa plasat:'
+      list: '&8- &e<number> <generator>'
+      no-permission-own: '&cNu aveți permisiunea &8(&7<permission>&8)&c de a verifica altele !'
+      help: Verifică generatoarele și limitele jucătorilor
+    limits:
+      header: '&aJucătorul &e<player> &aare limitele:'
+      specific: '&8- <generator>&a: &e<limit>'
+      overall: '&8- &aToate limitele: &e<limit>'
+      None: Niciunul
+    actions:
+      no-permission: '&cNu aveți permisiunea &8(&7<permission>&8)&cde a verifica acțiunile !'
+      help: Verificați actiunile posibile
+      header: '&aAcțiuni posibile pentru generator:'
+      list: '&6<action> &8- &e<sneak><mode><item>'
+      sneak: 'streacoară-te și '
+      break: sparge blocul
+      left-click: Click stânga
+      right-click: Click dreapta
+      item: ' cu <itemname>'
+      pick-up: Ridică
+      gui: Deschide GUI
+      time-left: Timp rămas
+    timeleft:
+      no-generator: '&cNu vă uitați la generator în timp ce se regenerează !'
+      no-permission: '&cNu aveți permisiunea &8(&7<permission>&8)&cde a verifica timpul rămas 
+      pentru regenerarea generatorului !'
+      help: Verificați timpul pentru regenerarea generatorului
+      format:
+        seconds: s
+        minutes: m
+        hours: h
+        days: d
+        none: Nimic
+    menu:
+      no-permission: '&cNu aveți permisiunea &8(&7<permission>&8)&c de a deschide meniul !'
+      help: Deschide meniul
+      opened-others: '&aMeniu&e<generator> <menu> deschis &apentru &e<player>&'
+      no-permission-others: '&cNu aveți permisiunea &8(&7<permission>&8)&cde adeschide meiul 
+      pentru alți jucători !'
+    upgrade:
+      no-next-level: '&cAcesta este nivelul maxim pentru generator !'
+      no-permission: '&cNu aveți permisiunea &8(&7<permission>&8)&cde a da upgrade la generator !'
+      no-a-generator: '&cNu aveți generatorul în mână !'
+      help: Upgrade generator
+    reload:
+      done: '&aPlugin reâncărcat! Verificați consola sau log.txt în documentul pluginului 
+      pentru erori !'
+      no-permission: '&cNu aveți permisiunea &8(&7<permission>&8)&cde a reâncărca pluginul !'
+      help: Plugin reâncărcat
+    debug:
+      done: '&aURL-ul tău pentru debug este: &e<url>'
+      error: '&cA apărut o eroare, în timp ce s-a dat debug !'
+      no-permission: '&cNu aveți permisiunea &8(&7<permission>&8)&cde a plasa debug'
+    help:
+      label: '&4&lGenerator DaciiGaming &fComanda help:'
+      format: '&e/kgenerators <subcommand> &7<help>'
+holograms:
+  remaining-time:
+  - ''
+  - '&6Timp rămas:'
+  - '&e<time>'
+  - ''

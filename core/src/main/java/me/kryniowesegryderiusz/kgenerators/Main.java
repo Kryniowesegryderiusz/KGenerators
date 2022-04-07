@@ -3,6 +3,7 @@ package me.kryniowesegryderiusz.kgenerators;
 
 import java.sql.SQLException;
 import java.util.ArrayList;
+import java.util.Map;
 import java.util.Map.Entry;
 
 import org.bukkit.Bukkit;
@@ -259,19 +260,19 @@ public class Main extends JavaPlugin {
 	    		}
 	    	}
 	    	
-	    	if (Bukkit.getPluginManager().isPluginEnabled("HolographicDisplays"))
-	    	{
-	    		Logger.info("Dependencies: Detected plugin HolographicDisplays. Hooked into it.");
-	   			dependencies.add(Dependency.HOLOGRAPHIC_DISPLAYS);
-	    	}
-	    	else
-	    	{
-	    		for (Entry<String, Generator> e : Generators.getEntrySet())
-	    		{
-	    			if (e.getValue().isHologram())
-	    				Logger.warn("Generators file: Generator " + e.getKey() + " has enabled holograms, but HolographicDisplays was not found! Holograms wouldnt work!");
-	    		}
-	    	}
-    	});
+	        if (Bukkit.getPluginManager().isPluginEnabled("HolographicDisplays")) {
+	        	Logger.info("Dependencies: Detected plugin HolographicDisplays. Hooked into it.");
+	        	dependencies.add(Dependency.HOLOGRAPHIC_DISPLAYS);
+	        } else if (Bukkit.getPluginManager().isPluginEnabled("DecentHolograms")) {
+	        	Logger.info("Dependencies: Detected plugin DecentHolograms. Hooked into it.");
+	        	dependencies.add(Dependency.DECENT_HOLOGRAMS);
+	        } else {
+	        	for (Map.Entry<String, Generator> e : Generators.getEntrySet()) {
+					if ((e.getValue()).isHologram())
+						Logger.warn("Generators file: Generator " + e.getKey() + " has enabled holograms, but hologram provider was not found! Holograms wouldnt work!"); 
+				} 
+	        }
+	    	
+        });
 	}
 }

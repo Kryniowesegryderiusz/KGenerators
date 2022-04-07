@@ -1,0 +1,291 @@
+generator:
+  name: §9<generator_name>
+  slots: 45
+  time-left:
+    enabled: true
+    item: CLOCK
+    name: §aThời gian tái tạo
+    lore:
+    - §a<time>
+    slots: '21'
+    glow: false
+  upgrade-maxed:
+    enabled: true
+    item: EXPERIENCE_BOTTLE
+    name: §cCấp độ tối đa
+    lore:
+    - §6Máy khai thác này đã
+    - §6đạt cấp độ tối đa!
+    - §aBạn đang dùng cấp độ cao nhất!
+    slots: '31'
+    glow: false
+  filler:
+    enabled: true
+    item: GRAY_STAINED_GLASS_PANE
+    name: §r
+    lore: []
+    slots: 0,1,2,3,4,5,6,7,8,9,17,18,26,27,35,36,37,38,39,40,41,42,43,44
+    glow: false
+  upgrade:
+    enabled: true
+    item: EXPERIENCE_BOTTLE
+    name: §cNâng cấp máy quặng
+    lore:
+    - §6Nhấn vào để nâng cấp!
+    - ''
+    - '§6Cấp tiếp theo: §e<next_generator>'
+    - '§6Giá:'
+    - <costs>
+    slots: '31'
+    glow: false
+  quit:
+    enabled: true
+    item: ARROW
+    name: §cThoát
+    lore:
+    - §6Thoát menu
+    slots: '40'
+    glow: false
+  reset:
+    enabled: true
+    item: MUSIC_DISC_11
+    name: §cSửa máy
+    lore:
+    - §6Máy quặng có vẻ đang bị hỏng!
+    - §6Nhấn để sửa chữa
+    slots: '13'
+    glow: false
+  owner:
+    enabled: true
+    item: BOOK
+    name: §aChủ máy
+    lore:
+    - §e<owner>
+    slots: '22'
+    glow: false
+  pick-up:
+    enabled: true
+    item: BARRIER
+    name: §aNhặt máy
+    lore:
+    - §eNhấn vào đây để lấy máy quặng
+    slots: '23'
+    glow: false
+main:
+  name: §9Generators
+  slots: 45
+  limits:
+    enabled: true
+    item: PLAYER_HEAD
+    name: §aGiới hạn
+    lore:
+    - §eNhấn vào đây để kiểm tra giới hạn
+    slots: '8'
+    glow: false
+  page:
+    next:
+      enabled: true
+      item: ARROW
+      name: §cTrang tiếp thep
+      lore:
+      - §6Nhấn để chuyển
+      - §6sang trang tiếp theo
+      slots: '42'
+      glow: false
+    previous:
+      enabled: true
+      item: ARROW
+      name: §cTrang trước
+      lore:
+      - §6Nhấn để chuyển
+      - §6về trang trước
+      slots: '38'
+      glow: false
+  generator:
+    enabled: true
+    item: <generator>
+    name: §a<generator_name>
+    lore:
+    - '§6Chuột trái:'
+    - §eKiếm tra tỉ lệ quặng
+    slots: 9,10,11,12,13,14,15,16,17,18,19,20,21,22,23,24,25,26,27,28,29,30,31,32,33,34,35
+    glow: false
+  quit:
+    enabled: true
+    item: BARRIER
+    name: §cThoát
+    lore:
+    - §6Thoát menu
+    slots: '40'
+    glow: false
+  filler:
+    enabled: true
+    item: GRAY_STAINED_GLASS_PANE
+    name: §r
+    lore: []
+    slots: 0,1,2,3,4,5,6,7,8,36,37,38,39,40,41,42,43,44
+    glow: false
+chances:
+  name: §9Tỉ lệ quặng
+  slots: 45
+  back:
+    enabled: true
+    item: ARROW
+    name: §cTrở lại
+    lore:
+    - §6Trở lại trang
+    - §6trước
+    slots: '40'
+    glow: false
+  block:
+    enabled: true
+    item: <block>
+    name: §a<block_name>
+    lore:
+    - '§6Tỉ lệ: §e<chance>%'
+    slots: 9,10,11,12,13,14,15,16,17,18,19,20,21,22,23,24,25,26
+    glow: false
+  filler:
+    enabled: true
+    item: GRAY_STAINED_GLASS_PANE
+    name: §r
+    lore: []
+    slots: 0,1,2,3,4,5,6,7,8,36,37,38,39,40,41,42,43,44
+    glow: false
+limits:
+  name: §9Limits
+  slots: 45
+  filler:
+    enabled: true
+    item: GRAY_STAINED_GLASS_PANE
+    name: §r
+    lore: []
+    slots: 0,1,2,3,4,5,6,7,8,36,37,38,39,40,41,42,43,44
+    glow: false
+  limit:
+    enabled: true
+    item: <limit_display_item>
+    name: §a<limit_name>
+    lore:
+    - §6Bạn đã đặt §e<amount>§6/§e<limit>§6 của
+    - <generators_list>
+    - <is_only_owner_use>
+    - <is_only_owner_pick_up>
+    slots: 9,10,11,12,13,14,15,16,17,18,19,20,21,22,23,24,25,26
+    glow: false
+  back:
+    enabled: true
+    item: ARROW
+    name: §cTrở lại
+    lore:
+    - §6Trở lại trang
+    - §6trước
+    slots: '40'
+    glow: false
+recipe:
+  name: §9Công thức
+  slots: 45
+  filler:
+    enabled: true
+    item: GRAY_STAINED_GLASS_PANE
+    name: §r
+    lore: []
+    slots: 0,1,2,3,4,5,6,7,8,36,37,38,39,40,41,42,43,44
+    glow: false
+  ingredients:
+    enabled: true
+    item: <block>
+    name: §a<block_name>
+    lore: []
+    slots: 10,11,12,19,20,21,28,29,30
+    glow: false
+  marker:
+    enabled: true
+    item: CRAFTING_TABLE
+    name: §aChế tạo
+    lore: []
+    slots: 14,23,32
+    glow: false
+  result:
+    enabled: true
+    item: <generator>
+    name: §a<generator_name>
+    lore: []
+    slots: '25'
+    glow: false
+  back:
+    enabled: true
+    item: ARROW
+    name: §cTrở lại
+    lore:
+    - §6Trở lại trang
+    - §6trước
+    slots: '40'
+    glow: false
+upgrade:
+  name: §9Upgrade
+  slots: 45
+  filler:
+    enabled: true
+    item: GRAY_STAINED_GLASS_PANE
+    name: §r
+    lore: []
+    slots: 0,1,2,3,4,5,6,7,8,36,37,38,39,40,41,42,43,44
+    glow: false
+  ingredient:
+    enabled: true
+    item: <generator>
+    name: §a<generator_name>
+    lore: []
+    slots: '20'
+    glow: false
+  marker:
+    enabled: true
+    item: EXPERIENCE_BOTTLE
+    name: §aNâng cấp
+    lore:
+    - §6Để nâng cấp máy quặng
+    - §6và gõ /kgenerators upgrade
+    - §eđể dùng menu nâng cấp
+    - ''
+    - '§6Giá:'
+    - <costs>
+    slots: 13,22,31
+    glow: false
+  result:
+    enabled: true
+    item: <generator>
+    name: §a<generator_name>
+    lore: []
+    slots: '24'
+    glow: false
+  back:
+    enabled: true
+    item: ARROW
+    name: §cTrở lại
+    lore:
+    - §6Trở lại trang
+    - §6trước
+    slots: '40'
+    glow: false
+additional-lines:
+  limits:
+    only-owner-pick-up:
+    - '&cChỉ chủ máy có thể nhặt nó.'
+    all-generators:
+    - '&eTất cả máy quặng'
+    generator-list:
+    - '&8- &e<generator_name>'
+    only-owner-use:
+    - '&cChỉ chủ máy có thể nhặt nó.'
+  upgrade:
+  - ''
+  - '&6Chuột phải:'
+  - '&eKiểm tra cách'
+  - '&enâng cấp'
+  upgrade-cost:
+  - '&8- &7<cost>'
+  recipe:
+  - ''
+  - '&6Chuột phải:'
+  - '&eKiểm tra công thức'

@@ -1,11 +1,12 @@
 package me.kryniowesegryderiusz.kgenerators.api.interfaces;
 
-import me.kryniowesegryderiusz.kgenerators.classes.GeneratorLocation;
+import java.util.ArrayList;
+import org.bukkit.Location;
 
 public interface IHologramProvider {
-	
-	public void createGeneratorHologram(GeneratorLocation gLocation);
-	
-	public void removeHologram(GeneratorLocation gLocation);
-
+  void createHologram(Location paramLocation, ArrayList<String> paramArrayList);
+  
+  void updateHologramLine(Location paramLocation, int paramInt, String paramString);
+  
+  void removeHologram(Location paramLocation);
 }

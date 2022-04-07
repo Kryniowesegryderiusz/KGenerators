@@ -1,0 +1,69 @@
+#KGenerators made by Kryniowesegryderiusz (Krynio_ on spigot)
+#https://www.spigotmc.org/resources/79246/
+#Need help? Join KGenerators discord: https://discord.gg/BZRjhpP4Ab
+
+#Player have to fullfill all limits requirements affecting generator
+#More info here: https://github.com/Kryniowesegryderiusz/KGenerators/wiki/Limits
+
+#Change this to true to enable limits
+enabled: false
+
+#EXAMPLE UPGRADE IS ONLY AN EXAMPLE AND ITS NOT LOADED!
+#Limit id
+example_limit_group:
+  #Name of that group (display purposes)
+  name: "Example limit"
+  #Display item of that group (display purposes)
+  item: STONE
+  #List of generators affected in this limit group. Could be one.
+  #So in this example below people'll be able to place only 10 stone generators, no matter, which level they have
+  generators:
+  - example_generator_id_level_1
+  - example_generator_id_level_2
+  #Default number of placed generators of that type per player
+  #Set to -1 to disable that limit
+  #Can be overwritten by permission: kgenerators.placelimit.<limit_id>.<limit>
+  place-limit: 10
+  #Should only owner be able to pick up generator?
+  only-owner-pickup: true
+  #Should only owner be able to break blocks of that generator?
+  #Disables also piston-push event
+  #Doesnt work for third-party plugins ex. breaking blocks hoppers
+  only-owner-use: false
+
+#Below you can find pre-configured limits. You can freely edit/remove them and add new ones ^^
+
+#This limits players to have max 50 generators at all
+#It affeccts all generators
+global_limits:
+  name: "Global limit"
+  item: PLAYER_HEAD
+  place-limit: 50
+
+#This limits players to have max 20 stone generators at all, no matter, which level they have
+#Additionally only owner can pick up them
+stone_generators_limits:
+  name: "Stone generators limit"
+  item: STONE
+  generators:
+  - stone_generator_level_1
+  - stone_generator_level_2
+  place-limit: 20
+  only-owner-pickup: true
+
+#This limits players to have max 10 stone_generator_level_1 and sets it's item to generator's item
+stone_generator_level_1_limits:
+  name: "Stone generator level 1 limit"
+  item: stone_generator_level_1
+  generators:
+  - stone_generator_level_1
+  place-limit: 10
+
+#This limits ores generators to be used only by owners
+ore_generators_owner_limits:
+  name: "Stone generator level 1 limit"
+  item: stone_generator_level_1
+  generators:
+  - stone_generator_level_1
+  only-owner-pickup: true
+  only-owner-use: true

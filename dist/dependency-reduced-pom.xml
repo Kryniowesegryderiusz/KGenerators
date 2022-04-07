@@ -3,10 +3,9 @@
   <parent>
     <artifactId>kgenerators-parent</artifactId>
     <groupId>me.kryniowesegryderiusz</groupId>
-    <version>6.2.0</version>
+    <version>6.3.1</version>
   </parent>
   <modelVersion>4.0.0</modelVersion>
-  <groupId>me.kryniowesegryderiusz</groupId>
   <artifactId>kgenerators-dist</artifactId>
   <version>${project.parent.version}</version>
   <build>

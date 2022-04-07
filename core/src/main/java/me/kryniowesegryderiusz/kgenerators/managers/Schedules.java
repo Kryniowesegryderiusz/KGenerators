@@ -65,7 +65,7 @@ public class Schedules {
 		{
 			GenerateBlock.generatePlaceholder(gLocation);
 			
-			if (createHologram && Main.dependencies.contains(Dependency.HOLOGRAPHIC_DISPLAYS) && gLocation.getGenerator().isHologram())
+			if (createHologram && gLocation.getGenerator().isHologram())
 			{
 				Holograms.createHologram(gLocation);
 			}

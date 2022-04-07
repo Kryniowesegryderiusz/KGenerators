@@ -1,0 +1,292 @@
+generator:
+  name: §9<generator_name>
+  slots: 45
+  time-left:
+    enabled: true
+    item: CLOCK
+    name: §aTime left for regeneration
+    lore:
+    - §a<time>
+    slots: '21'
+    glow: false
+  upgrade-maxed:
+    enabled: true
+    item: EXPERIENCE_BOTTLE
+    name: §cMaximum generator level
+    lore:
+    - §6This generator doesnt have
+    - §6any further upgrades!
+    - §aYou've maxed it!
+    slots: '31'
+    glow: false
+  filler:
+    enabled: true
+    item: GRAY_STAINED_GLASS_PANE
+    name: §r
+    lore: []
+    slots: 0,1,2,3,4,5,6,7,8,9,17,18,26,27,35,36,37,38,39,40,41,42,43,44
+    glow: false
+  upgrade:
+    enabled: true
+    item: EXPERIENCE_BOTTLE
+    name: §cUpgrade generator
+    lore:
+    - §6Click here to upgrade this generator!
+    - ''
+    - '§6Next stage: §e<next_generator>'
+    - '§6Costs:'
+    - <costs>
+    slots: '31'
+    glow: false
+  quit:
+    enabled: true
+    item: ARROW
+    name: §cQuit
+    lore:
+    - §6Quit menu
+    slots: '40'
+    glow: false
+  reset:
+    enabled: true
+    item: MUSIC_DISC_11
+    name: §cReset generator
+    lore:
+    - §6This generator seems to be currupted!
+    - §6Click here to repair him
+    slots: '13'
+    glow: false
+  owner:
+    enabled: true
+    item: BOOK
+    name: §aGenerator owner
+    lore:
+    - §e<owner>
+    slots: '22'
+    glow: false
+  pick-up:
+    enabled: true
+    item: BARRIER
+    name: §aPick up
+    lore:
+    - §eClick here to pick up generator
+    slots: '23'
+    glow: false
+main:
+  name: §9Generators
+  slots: 45
+  limits:
+    enabled: true
+    item: PLAYER_HEAD
+    name: §aLimits
+    lore:
+    - §eClick here to check limits
+    slots: '8'
+    glow: false
+  page:
+    next:
+      enabled: true
+      item: ARROW
+      name: §cNext page
+      lore:
+      - §6Click to go
+      - §6to next page
+      slots: '42'
+      glow: false
+    previous:
+      enabled: true
+      item: ARROW
+      name: §cPrevious page
+      lore:
+      - §6Click to back
+      - §6to previous page
+      slots: '38'
+      glow: false
+  generator:
+    enabled: true
+    item: <generator>
+    name: §a<generator_name>
+    lore:
+    - '§6Left click:'
+    - §eCheck generator chances
+    slots: 9,10,11,12,13,14,15,16,17,18,19,20,21,22,23,24,25,26,27,28,29,30,31,32,33,34,35
+    glow: false
+  quit:
+    enabled: true
+    item: BARRIER
+    name: §cQuit
+    lore:
+    - §6Quit menu
+    slots: '40'
+    glow: false
+  filler:
+    enabled: true
+    item: GRAY_STAINED_GLASS_PANE
+    name: §r
+    lore: []
+    slots: 0,1,2,3,4,5,6,7,8,36,37,38,39,40,41,42,43,44
+    glow: false
+chances:
+  name: §9Blocks chances
+  slots: 45
+  back:
+    enabled: true
+    item: ARROW
+    name: §cBack
+    lore:
+    - §6Get back to
+    - §cprevious page
+    slots: '40'
+    glow: false
+  block:
+    enabled: true
+    item: <block>
+    name: §a<block_name>
+    lore:
+    - '§6Chance: §e<chance>%'
+    slots: 9,10,11,12,13,14,15,16,17,18,19,20,21,22,23,24,25,26
+    glow: false
+  filler:
+    enabled: true
+    item: GRAY_STAINED_GLASS_PANE
+    name: §r
+    lore: []
+    slots: 0,1,2,3,4,5,6,7,8,36,37,38,39,40,41,42,43,44
+    glow: false
+limits:
+  name: §9Limits
+  slots: 45
+  filler:
+    enabled: true
+    item: GRAY_STAINED_GLASS_PANE
+    name: §r
+    lore: []
+    slots: 0,1,2,3,4,5,6,7,8,36,37,38,39,40,41,42,43,44
+    glow: false
+  limit:
+    enabled: true
+    item: <limit_display_item>
+    name: §a<limit_name>
+    lore:
+    - §6You've placed §e<amount>§6/§e<limit>§6 of
+    - <generators_list>
+    - <is_only_owner_use>
+    - <is_only_owner_pick_up>
+    slots: 9,10,11,12,13,14,15,16,17,18,19,20,21,22,23,24,25,26
+    glow: false
+  back:
+    enabled: true
+    item: ARROW
+    name: §cBack
+    lore:
+    - §6Get back to
+    - §cprevious page
+    slots: '40'
+    glow: false
+recipe:
+  name: §9Recipe
+  slots: 45
+  filler:
+    enabled: true
+    item: GRAY_STAINED_GLASS_PANE
+    name: §r
+    lore: []
+    slots: 0,1,2,3,4,5,6,7,8,36,37,38,39,40,41,42,43,44
+    glow: false
+  ingredients:
+    enabled: true
+    item: <block>
+    name: §a<block_name>
+    lore: []
+    slots: 10,11,12,19,20,21,28,29,30
+    glow: false
+  marker:
+    enabled: true
+    item: CRAFTING_TABLE
+    name: §aCrafting
+    lore: []
+    slots: 14,23,32
+    glow: false
+  result:
+    enabled: true
+    item: <generator>
+    name: §a<generator_name>
+    lore: []
+    slots: '25'
+    glow: false
+  back:
+    enabled: true
+    item: ARROW
+    name: §cBack
+    lore:
+    - §6Get back to
+    - §cprevious page
+    slots: '40'
+    glow: false
+upgrade:
+  name: §9Upgrade
+  slots: 45
+  filler:
+    enabled: true
+    item: GRAY_STAINED_GLASS_PANE
+    name: §r
+    lore: []
+    slots: 0,1,2,3,4,5,6,7,8,36,37,38,39,40,41,42,43,44
+    glow: false
+  ingredient:
+    enabled: true
+    item: <generator>
+    name: §a<generator_name>
+    lore: []
+    slots: '20'
+    glow: false
+  marker:
+    enabled: true
+    item: EXPERIENCE_BOTTLE
+    name: §aUpgrade
+    lore:
+    - §6To upgrade get
+    - §6generator and type
+    - §e/kgenerators upgrade
+    - §6or use generator menu
+    - ''
+    - '§6Costs:'
+    - <costs>
+    slots: 13,22,31
+    glow: false
+  result:
+    enabled: true
+    item: <generator>
+    name: §a<generator_name>
+    lore: []
+    slots: '24'
+    glow: false
+  back:
+    enabled: true
+    item: ARROW
+    name: §cBack
+    lore:
+    - §6Get back to
+    - §cprevious page
+    slots: '40'
+    glow: false
+additional-lines:
+  limits:
+    only-owner-pick-up:
+    - '&cOnly owners could pick up them.'
+    all-generators:
+    - '&eall generators'
+    generator-list:
+    - '&8- &e<generator_name>'
+    only-owner-use:
+    - '&cOnly owners could use them.'
+  upgrade:
+  - ''
+  - '&6Right click:'
+  - '&echeck how to'
+  - '&eget from upgrade'
+  upgrade-cost:
+  - '&8- &7<cost>'
+  recipe:
+  - ''
+  - '&6Right click:'
+  - '&echeck the recipe'

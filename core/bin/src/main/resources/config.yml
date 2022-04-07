@@ -1,0 +1,93 @@
+#KGenerators made by Kryniowesegryderiusz (Krynio_ on spigot)
+#https://www.spigotmc.org/resources/79246/
+#Need help? Join KGenerators discord: https://discord.gg/BZRjhpP4Ab
+
+#Choose lang file. Default possibilities are en, pl, ro, vi
+#If you want to add your own language contact us on discord
+lang: en
+
+#Database settings
+database:
+  #Possible options: SQLITE, MYSQL, YAML (not recommended for big servers)
+  #You can convert data from one database to another! More info here: https://github.com/Kryniowesegryderiusz/KGenerators/wiki/Converting-databases 
+  dbtype: SQLITE
+  #Settings for MYSQL
+  host: hostname
+  port: 3306
+  database: database
+  username: username
+  password: password
+  
+#By default generator will generate block only on air, otherwise generator will drop. Here you can add blocks, which will be replaced by generated block.
+can-generate-instead:
+  - WATER
+  - LAVA
+
+#List of worlds, where generators wont be enabled:
+disabled-worlds:
+- test_world
+
+#Should generators be picked up directly to equipment?
+pick-up-to-eq: true
+
+#Should "generators" lang section be sent by actionbar instad of chat?
+generators-actionbar-messages: true
+
+#How explosions should be handled, if there is generator inside explode area?
+#0 - cancel explosion
+#1 - drop generator
+#2 - remove generator
+explosion-handler: 0
+
+#This configuration section is for configuring actions needed for particular features
+#Possible modes: BREAK (avaible only for pick-up), LEFT_CLICK, RIGHT_CLICK, NONE (ex. because of gui usage)
+#Item could be "ANY"
+#Sneak indicates if shift pressed is required
+actions:
+  #Action, which will be used for picking up generators
+  pick-up:
+    mode: BREAK
+    item: ANY
+    sneak: true
+  #Action, which will be used for opening generator gui
+  open-gui:
+    mode: RIGHT_CLICK
+    item: ANY
+    sneak: true
+  #Action, which will be used for checking how much time left before regeneration
+  time-left-check:
+    mode: RIGHT_CLICK
+    item: ANY
+    sneak: false
+
+#Here you can choose which sounds should be played on each action.
+#ALWAYS use names from https://hub.spigotmc.org/javadocs/bukkit/org/bukkit/Sound.html
+sounds:
+  place:
+    #Type sound name or "NONE" to disable sound
+    sound: BLOCK_ANVIL_LAND
+    #Volume should be a number between 0.0 and 10.0 (1.0 is normal)
+    volume: 0.2
+    #Volume should be a number between 0.0 and 2.0 (0.0 is normal)
+    pitch: 0.0
+  pick-up:
+    sound: ENTITY_BAT_TAKEOFF
+    volume: 0.3
+    pitch: 0.0
+  upgrade:
+    sound: ENTITY_PLAYER_LEVELUP
+    volume: 0.3
+    pitch: 0.0
+
+#These settings are related to performance and its not recommended to set them too low
+#Values are presented in ticks (20 ticks = 1 second)
+#Changed values need server restart to affect plugin functioning
+intervals:
+  #How often should generators check if they should regenerate?
+  #All generator delays should be a multiple of this number
+  generation-check: 10
+  #How often should holograms be updated?
+  hologram-update: 20
+  #How often should generators guis be updated?
+  #Set -1 to not update GUI
+  gui-update: 20

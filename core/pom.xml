@@ -1,13 +1,12 @@
 <project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 https://maven.apache.org/xsd/maven-4.0.0.xsd">
   <modelVersion>4.0.0</modelVersion>
-  <groupId>me.kryniowesegryderiusz</groupId>
   <artifactId>kgenerators-core</artifactId>
   <version>${project.parent.version}</version>
   <packaging>jar</packaging>
   <parent>
     <groupId>me.kryniowesegryderiusz</groupId>
     <artifactId>kgenerators-parent</artifactId>
-    <version>6.2.0</version>
+    <version>6.3.1</version>
   </parent>
 
 	<repositories>
@@ -59,7 +58,7 @@
 		    <artifactId>jetsminions</artifactId>
 		    <version>7.1.15</version>
 		    <scope>system</scope>
-		    <systemPath>${project.basedir}/dependencies/JetsMinions-7.1.15.jar</systemPath>
+		    <systemPath>${project.basedir}/dependencies/JetsMinions-7.5.1.jar</systemPath>
 		</dependency>
 		
 		<!--  Minions-Miner-0.0.9  -->
@@ -68,7 +67,7 @@
 		    <artifactId>minions-miner</artifactId>
 		    <version>0.0.9</version>
 		    <scope>system</scope>
-		    <systemPath>${project.basedir}/dependencies/Minions-Miner-0.0.9.jar</systemPath>
+		    <systemPath>${project.basedir}/dependencies/Minions-Miner-0.1.1.jar</systemPath>
 		</dependency>
 		
 		<dependency>
@@ -115,8 +114,15 @@
 		    <artifactId>iridiumskyblock</artifactId>
 		    <version>3.0.7</version>
 		    <scope>system</scope>
-		    <systemPath>${project.basedir}/dependencies/IridiumSkyblock-3.0.7.jar</systemPath>
+		    <systemPath>${project.basedir}/dependencies/IridiumSkyblock-3.2.8.jar</systemPath>
 		</dependency>
+		
+		    <dependency>
+        <groupId>com.github.decentsoftware-eu</groupId>
+        <artifactId>decentholograms</artifactId>
+        <version>2.3.1</version>
+        <scope>provided</scope>
+    </dependency>
 	</dependencies>
 
    <build>
