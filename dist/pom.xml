@@ -1,5 +1,6 @@
 <project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 https://maven.apache.org/xsd/maven-4.0.0.xsd">
   <modelVersion>4.0.0</modelVersion>
+  <groupId>me.kryniowesegryderiusz</groupId>
   <artifactId>kgenerators-dist</artifactId>
   <version>${project.parent.version}</version>
   <packaging>jar</packaging>
@@ -10,34 +11,29 @@
   </parent>
      <build>
        <directory>../target</directory>
-       <finalName>KGenerators-${kgenerators_version}-#${BUILD_NUMBER}</finalName>
-		<plugins>
-			<plugin>
-				<groupId>org.apache.maven.plugins</groupId>
-				<artifactId>maven-assembly-plugin</artifactId>
-				<configuration>
-					<finalName>KGenerators-${kgenerators_version}-#${BUILD_NUMBER}</finalName>
-					<appendAssemblyId>false</appendAssemblyId>
-				</configuration>
-				<version>3.2.0</version>
-				<executions>
-					<execution>
-						<id>package-all</id>
-						<phase>package</phase>
-						<goals>
-							<goal>single</goal>
-						</goals>
-						<configuration>
-							<appendAssemblyId>false</appendAssemblyId>
-							<descriptors>
-								<descriptor>src/main/assembly/all-jar.xml</descriptor>
-							</descriptors>
-						</configuration>
-					</execution>
-				</executions>
-			</plugin>
-		</plugins>
-
+       <finalName>KGenerators-${kgenerators_version}-b${BUILD_NUMBER}</finalName>
+       <plugins>
+           <plugin>
+               <groupId>org.apache.maven.plugins</groupId>
+               <artifactId>maven-shade-plugin</artifactId>
+               <version>3.1.1</version>
+               <executions>
+                   <execution>
+                       <phase>package</phase>
+                       <goals>
+                           <goal>shade</goal>
+                       </goals>
+                       <configuration>
+                           <artifactSet>
+                               <includes>
+                                   <include>me.kryniowesegryderiusz:kgenerators-*</include>
+                               </includes>
+                           </artifactSet>
+                       </configuration>
+                   </execution>
+               </executions>
+           </plugin>
+       </plugins>
    </build>
    <dependencies>
        <dependency>
