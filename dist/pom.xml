@@ -11,7 +11,7 @@
   </parent>
      <build>
        <directory>../target</directory>
-       <finalName>KGenerators-${kgenerators_version}-b${BUILD_NUMBER}</finalName>
+       <finalName>KGenerators-${kgenerators_version}-b${env.BUILD_NUMBER}</finalName>
        <plugins>
            <plugin>
                <groupId>org.apache.maven.plugins</groupId>
