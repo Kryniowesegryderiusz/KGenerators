@@ -10,13 +10,13 @@
   </parent>
      <build>
        <directory>../target</directory>
-       <finalName>KGenerators-${kgenerators_version}-#${build_number}</finalName>
+       <finalName>KGenerators-${kgenerators_version}-#${BUILD_NUMBER}</finalName>
 		<plugins>
 			<plugin>
 				<groupId>org.apache.maven.plugins</groupId>
 				<artifactId>maven-assembly-plugin</artifactId>
 				<configuration>
-					<finalName>KGenerators-${kgenerators_version}-#${build_number}</finalName>
+					<finalName>KGenerators-${kgenerators_version}-#${BUILD_NUMBER}</finalName>
 					<appendAssemblyId>false</appendAssemblyId>
 				</configuration>
 				<version>3.2.0</version>
