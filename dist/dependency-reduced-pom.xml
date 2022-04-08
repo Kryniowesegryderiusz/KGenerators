@@ -7,7 +7,7 @@
   </parent>
   <modelVersion>4.0.0</modelVersion>
   <artifactId>kgenerators-dist</artifactId>
-  <version>${project.parent.version}</version>
+  <version>${kgenerators_version}</version>
   <build>
     <directory>../target</directory>
     <finalName>KGenerators-${project.version}</finalName>
@@ -27,9 +27,6 @@
                   <include>me.kryniowesegryderiusz:kgenerators-*</include>
                 </includes>
               </artifactSet>
-              <archive>
-                <manifest>me.kryniowesegryderiusz.promans.desktop.Main</manifest>
-              </archive>
             </configuration>
           </execution>
         </executions>

@@ -9,6 +9,8 @@
 
    	<properties>
         <author>Kryniowesegryderiusz (Krynio_ on spigot)</author>
+     	<build_number>Unknown</build_number>
+		<kgenerators_version>6.3.1</kgenerators_version>
     </properties>
 	
    <modules>

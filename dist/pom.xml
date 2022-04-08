@@ -10,35 +10,34 @@
   </parent>
      <build>
        <directory>../target</directory>
-       <finalName>KGenerators-${project.version}</finalName>
-       <plugins>
-           <plugin>
-               <groupId>org.apache.maven.plugins</groupId>
-               <artifactId>maven-shade-plugin</artifactId>
-               <version>3.1.1</version>
-               <executions>
-                   <execution>
-                       <phase>package</phase>
-                       <goals>
-                           <goal>shade</goal>
-                       </goals>
-                       <configuration>
-                           <artifactSet>
-                               <includes>
-                                   <include>me.kryniowesegryderiusz:kgenerators-*</include>
-                               </includes>
-                           </artifactSet>
-                           <archive>
-			                    <manifest>
-			                        <!-- <addClasspath>true</addClasspath> -->
-			                        me.kryniowesegryderiusz.promans.desktop.Main
-			                    </manifest>
-			                </archive>
-                       </configuration>
-                   </execution>
-               </executions>
-           </plugin>
-       </plugins>
+       <finalName>KGenerators-${kgenerators_version}</finalName>
+		<plugins>
+			<plugin>
+				<groupId>org.apache.maven.plugins</groupId>
+				<artifactId>maven-assembly-plugin</artifactId>
+				<configuration>
+					<finalName>Citizens-${CITIZENS_VERSION}-b${BUILD_NUMBER}</finalName>
+					<appendAssemblyId>false</appendAssemblyId>
+				</configuration>
+				<version>3.2.0</version>
+				<executions>
+					<execution>
+						<id>package-all</id>
+						<phase>package</phase>
+						<goals>
+							<goal>single</goal>
+						</goals>
+						<configuration>
+							<appendAssemblyId>false</appendAssemblyId>
+							<descriptors>
+								<descriptor>src/main/assembly/all-jar.xml</descriptor>
+							</descriptors>
+						</configuration>
+					</execution>
+				</executions>
+			</plugin>
+		</plugins>
+
    </build>
    <dependencies>
        <dependency>
