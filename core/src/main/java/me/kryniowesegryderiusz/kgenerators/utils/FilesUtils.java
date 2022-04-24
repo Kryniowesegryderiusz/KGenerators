@@ -160,7 +160,7 @@ public class FilesUtils {
 			    }
 			    
 			    if (config.containsKey("amount"))
-			    	item.setAmount((int) config.get("amount"));
+			    	item.setAmount(Integer.valueOf((String) config.get("amount")));
 			    
 			    /*
 			    if (XMaterial.matchXMaterial(item) == XMaterial.PLAYER_HEAD || XMaterial.matchXMaterial(item) == XMaterial.PLAYER_WALL_HEAD)
