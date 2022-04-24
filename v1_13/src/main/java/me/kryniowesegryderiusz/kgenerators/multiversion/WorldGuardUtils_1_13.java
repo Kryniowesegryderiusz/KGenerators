@@ -72,10 +72,13 @@ public class WorldGuardUtils_1_13 implements WorldGuardUtils {
 				}
 				
 			}
+		} catch(IllegalStateException e) { 
+			Logger.error("WorldGuard: An error occured, while adding WorldGuard flags!");
+			Logger.error("WorldGuard: Are you using PlugMan? ;)");
 		} catch (NoClassDefFoundError e) {
 			Logger.error("WorldGuard: An error occured, while adding WorldGuard flags!");
 			Logger.error("WorldGuard: WorldGuard is installed, but didnt load properly!");
-			//e.printStackTrace();
+			Logger.error(e);
 		}
 	}
 
