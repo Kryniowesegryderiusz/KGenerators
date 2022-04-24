@@ -7,6 +7,12 @@
     <artifactId>kgenerators-parent</artifactId>
     <version>7.PRE</version>
   </parent>
+  
+  <properties>
+    <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
+    <project.reporting.outputEncoding>UTF-8</project.reporting.outputEncoding>
+</properties>
+  
 
 	<repositories>
 	    <!-- This adds the Spigot Maven repository to the build -->
