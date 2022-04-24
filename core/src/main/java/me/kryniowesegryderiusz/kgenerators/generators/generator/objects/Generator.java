@@ -85,8 +85,8 @@ public class Generator {
 		if (glow)
 			this.generatorItem.addUnsafeEnchantment(Enchantment.LOOT_BONUS_BLOCKS, 1);
 		
-		if (config.contains(generatorID+".generating"))
-		    for (Map<?, ?> generatedObjectConfig : (List<Map<?, ?>>) config.getMapList(generatorID+".generating")) {
+		if (config.contains(generatorID+".generates"))
+		    for (Map<?, ?> generatedObjectConfig : (List<Map<?, ?>>) config.getMapList(generatorID+".generates")) {
 	
 		    	AbstractGeneratedObject ago = generatorsManager.getGeneratedObjectsManager().getNewObject((String) generatedObjectConfig.get("type"));
 		    	if (ago != null && ago.load(generatedObjectConfig))
