@@ -70,9 +70,8 @@ public class WorldGuardUtils_1_13 implements WorldGuardUtils {
 			            Logger.error("WorldGuard: Flag overriding not possible! Types dont match!");
 			        }
 				}
-				
 			}
-		} catch(IllegalStateException e) { 
+		} catch (IllegalStateException e) { 
 			Logger.error("WorldGuard: An error occured, while adding WorldGuard flags!");
 			Logger.error("WorldGuard: Are you using PlugMan? ;)");
 		} catch (NoClassDefFoundError e) {

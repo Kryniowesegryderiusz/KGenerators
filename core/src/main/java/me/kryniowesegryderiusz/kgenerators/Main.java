@@ -63,7 +63,6 @@ public class Main extends JavaPlugin {
 			/* Configs loader */
 			generators = new GeneratorsManager();
 			
-			FilesConverter.convert();
 			settings = new Settings();
 			FilesConverter.updateConfig(settings);
 			

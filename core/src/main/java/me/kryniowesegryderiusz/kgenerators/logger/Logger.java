@@ -49,7 +49,7 @@ public class Logger {
 		{
 			message += (String) object;
 			if (logType != LogType.DEBUG)
-				if(logType == LogType.ERROR) Main.getInstance().getLogger().warning(message);
+				if(logType == LogType.ERROR || logType == LogType.WARNING) Main.getInstance().getLogger().warning(message);
 				else Main.getInstance().getLogger().info(message);
 		}
 		else if (object instanceof Exception)
@@ -61,7 +61,7 @@ public class Logger {
 		{
 			message += object.toString();
 			if (logType != LogType.DEBUG)
-				if(logType.equals(LogType.ERROR)) Main.getInstance().getLogger().warning(message);
+				if(logType == LogType.ERROR || logType == LogType.WARNING) Main.getInstance().getLogger().warning(message);
 				else Main.getInstance().getLogger().info(message);
 		}
 		logToFile(message, logFile);
@@ -74,7 +74,7 @@ public class Logger {
 	
 	public static void warn(Object object)
 	{
-		log(object, LogType.WARNINGS);	
+		log(object, LogType.WARNING);	
 	}
 	
 	public static void info(Object object)

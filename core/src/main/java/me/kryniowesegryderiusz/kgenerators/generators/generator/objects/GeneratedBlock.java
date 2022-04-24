@@ -57,5 +57,4 @@ public class GeneratedBlock extends AbstractGeneratedObject {
 	protected String toStringSpecific() {
 		return "Material: " + this.xMaterial.name();
 	}
-
 }

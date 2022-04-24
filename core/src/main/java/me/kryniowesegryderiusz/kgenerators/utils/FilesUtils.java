@@ -25,7 +25,6 @@ public class FilesUtils {
     
 	public static void mkdir(String dir)
 	{
-		
 		File mainFolder = new File(Main.getInstance().getDataFolder()+"");
 		if (!mainFolder.exists())
 			mainFolder.mkdir();
@@ -37,10 +36,10 @@ public class FilesUtils {
 		
 		try {
 			if(!file.mkdir()){
-				Logger.error("FilesFunctions: Directory for " + dir + "wasnt created!");
+				Logger.error("FilesUtils: Directory for " + dir + "wasnt created!");
 			}
 		} catch (Exception e) {
-			Logger.error("FilesFunctions: Can not create directory for "+dir);
+			Logger.error("FilesUtils: Can not create directory for "+dir);
 			Logger.error(e);
 		}
 	}
@@ -67,7 +66,7 @@ public class FilesUtils {
 		  
 		  Files.write(file.toPath(), newContent, StandardCharsets.UTF_8);
 	  } catch (IOException e) {
-	     Logger.error("FilesFunctions: Cannot replace text in " + file.getPath());
+	     Logger.error("FilesUtils: Cannot replace text in " + file.getPath());
 	     Logger.error(e);
 	  }
 	}
@@ -78,7 +77,7 @@ public class FilesUtils {
 		    writer.write(string);
 		    writer.newLine();
 		} catch (IOException e) {
-		    Logger.error("FilesFunctions: Cannot add text to " + file.getPath());
+		    Logger.error("FilesUtils: Cannot add text to " + file.getPath());
 		    Logger.error(e);
 		}
 	}
@@ -93,10 +92,6 @@ public class FilesUtils {
 	public static ItemStack loadItemStack(Config config, String path, boolean isBlockCheck)
 	{
 		if (config.contains(path+".material") || config.contains(path+".item") || config.contains(path+".type")) {
-			System.out.println("-----------------------");
-			System.out.println(config.getFile().getPath()+"#"+path);
-			System.out.println(config.getMapList(path));
-			System.out.println("-----------------------");
 			return loadItemStack(config.getMapList(path).get(0), config.getName()+"#"+path, isBlockCheck);
 		} else
 			return XUtils.parseItemStack(config.getString(path), config.getFile().getPath()+"#"+path, isBlockCheck);
@@ -173,7 +168,7 @@ public class FilesUtils {
 			    }
 			    */
 		} catch (Exception e) {
-			Logger.error("Cannot parse ItemStack for: " + place);
+			Logger.error("FilesUtils: Cannot parse ItemStack for: " + place);
 			Logger.error(e);
 		}
 		return item;

@@ -22,276 +22,6 @@ import me.kryniowesegryderiusz.kgenerators.xseries.XUtils;
 
 public class FilesConverter {
 	
-	@SuppressWarnings("unchecked")
-	public static void convert()
-	{
-		File configFile = new File(Main.getInstance().getDataFolder(), "config.yml");
-		Config config;
-		
-		if (configFile.exists()){
-			try {
-	    		config = ConfigManager.getConfig("config.yml", (String) null, false, false);
-				config.loadConfig();
-			} catch (IOException | InvalidConfigurationException e) {
-				Logger.error("FilesConverter: Cant load config. Disabling plugin.");
-				Logger.error(e);
-				Main.getInstance().getServer().getPluginManager().disablePlugin(Main.getInstance());
-				return;
-			}
-			
-			if (!config.contains("generators"))
-				return;
-
-			Logger.warn("FilesConverter: FilesConverter: Recognised KGenerators v3 filesystem");
-			Logger.warn("FilesConverter: FilesConverter: Converting to KGenerators v4 filesystem");
-
-			
-			/*
-			 * Converting placed generators
-			 */
-			
-			File placedGeneratorsFile = new File(Main.getInstance().getDataFolder(), "generators.yml");
-			Config placedGeneratorsConfig;
-			Config newPlacedGeneratorsConfig;
-			
-			if (placedGeneratorsFile.exists()){
-				try {
-					placedGeneratorsConfig = ConfigManager.getConfig("generators.yml", (String) null, false, false);
-					placedGeneratorsConfig.loadConfig();
-				} catch (IOException | InvalidConfigurationException e) {
-					Logger.error("FilesConverter: Cant load generators.yml. Disabling plugin.");
-					Logger.error(e);
-					Main.getInstance().getServer().getPluginManager().disablePlugin(Main.getInstance());
-					return;
-				}
-				
-				if (placedGeneratorsConfig.contains("placedGenerators"))
-				{
-					try {
-						newPlacedGeneratorsConfig = ConfigManager.getConfig("placed.yml", "/data", false, true);
-						newPlacedGeneratorsConfig.loadConfig();
-					} catch (IOException | InvalidConfigurationException e) {
-						Logger.error("FilesConverter: Cant load data/generators.yml. Disabling plugin.");
-						Logger.error(e);
-						Main.getInstance().getServer().getPluginManager().disablePlugin(Main.getInstance());
-						return;
-					}
-					
-					int amount = 0;
-					ConfigurationSection mainSection = placedGeneratorsConfig.getConfigurationSection("placedGenerators");
-		        	for(String generatorLocationString: mainSection.getKeys(false))
-		        	{
-		        		if (placedGeneratorsConfig.contains("placedGenerators."+generatorLocationString+".generatorID"))
-		        		{
-		        			String generatorId = placedGeneratorsConfig.getString("placedGenerators."+generatorLocationString+".generatorID");
-		        			String owner = "";
-		        			if (placedGeneratorsConfig.contains("placedGenerators."+generatorLocationString+".owner"))
-			        		{
-			        			owner = placedGeneratorsConfig.getString("placedGenerators."+generatorLocationString+".owner");
-			        		}
-		        			newPlacedGeneratorsConfig.set(generatorLocationString+".generatorID", generatorId);
-		        			if (!owner.equals("")) newPlacedGeneratorsConfig.set(generatorLocationString+".owner", owner);
-		        			amount++;
-		        		}
-		        		else
-		        		{
-		        			Logger.error("FilesConverter: Couldnt load " + generatorLocationString + "! That generator would be lost!");
-		        		}
-		        	}
-		        	
-		        	try {
-		        		newPlacedGeneratorsConfig.saveConfig();
-					} catch (IOException e) {
-						Logger.error("FilesConverter: Cant save data/generators.yml. Disabling plugin.");
-						Logger.error(e);
-						Main.getInstance().getServer().getPluginManager().disablePlugin(Main.getInstance());
-						return;
-					}
-		        	
-		        	placedGeneratorsFile.delete();
-		        	Logger.info("FilesConverter: Converted " + String.valueOf(amount) + " placed generators to new filesystem!");
-				}
-			}
-			
-			/*
-			 * Converting settings
-			 */
-			
-			Settings settings = new Settings();
-			
-			if (config.contains("settings.lang")) settings.setLang(config.getString("settings.lang"));
-			
-			if (config.contains("settings.can-generate-instead")) {
-				ArrayList<String> tempListString = new ArrayList<String>();
-				ArrayList<ItemStack> generatingWhitelist = new ArrayList<ItemStack>();
-				tempListString = (ArrayList<String>) config.getList("settings.can-generate-instead");
-				
-				for (String s : tempListString) {
-					ItemStack m = XUtils.parseItemStack(s, "FilesConverter Config file", true);
-					generatingWhitelist.add(m);
-				}
-				settings.setGeneratingWhitelist(generatingWhitelist);
-			}
-			
-			if (config.contains("settings.generators-actionbar-messages"))
-			{
-				settings.setActionbarMessages(config.getBoolean("settings.generators-actionbar-messages"));
-			}
-			
-			if (config.contains("settings.explosion-handler"))
-			{
-				settings.setExplosionHandler((short) config.getInt("settings.explosion-handler"));
-			}
-			
-			InteractionType interaction;
-			ItemStack item;
-			boolean sneak;
-			
-			if (config.contains("settings.pick-up.mode"))
-			{
-				if (config.getString("settings.pick-up.mode").equals("BREAK")) interaction = InteractionType.BREAK;
-				else if (config.getString("settings.pick-up.mode").equals("RIGHT_CLICK")) interaction = InteractionType.RIGHT_CLICK;
-				else interaction = InteractionType.LEFT_CLICK;
-			}
-			else
-			{
-				interaction = InteractionType.LEFT_CLICK;
-			}
-			
-			if (config.contains("settings.pick-up.item"))
-			{
-				if (config.getString("settings.pick-up.item").toLowerCase().equals("any")) item = null;
-				else item = (XUtils.parseItemStack(config.getString("settings.pick-up.item"), "FilesConverter Config file", false));
-			}
-			else
-			{
-				item = null;
-			}
-			
-			if (config.contains("settings.pick-up.sneak")) sneak = config.getBoolean("settings.pick-up.sneak");
-			else sneak = true;
-			settings.getActions().addGeneratorAction(ActionType.PICKUP, new GeneratorAction(ActionType.PICKUP, interaction, item, sneak));
-			settings.getActions().addGeneratorAction(ActionType.OPENGUI, new GeneratorAction(ActionType.OPENGUI, InteractionType.NONE, null, false));
-			settings.getActions().addGeneratorAction(ActionType.TIMELEFT, new GeneratorAction(ActionType.TIMELEFT, InteractionType.NONE, null, false));
-			
-			/*
-			 * Converting generators definitions
-			 */
-			
-			File newGeneratorsFile = new File(Main.getInstance().getDataFolder(), "generators.yml");
-			
-			if (!newGeneratorsFile.exists())
-			{
-				try {
-					newGeneratorsFile.createNewFile();
-				} catch (IOException e1) {
-					Logger.error("FilesConverter: Cant create new generators file. Disabling plugin.");
-					Logger.error(e1);
-					Main.getInstance().getServer().getPluginManager().disablePlugin(Main.getInstance());
-					return;
-				}
-			}
-			
-			add(newGeneratorsFile, "#KGenerators made by Kryniowesegryderiusz (Krynio_ on spigot)");
-			add(newGeneratorsFile, "#https://www.spigotmc.org/resources/79246/");
-			add(newGeneratorsFile, "#Need help? Join KGenerators discord: https://discord.gg/BZRjhpP4Ab");
-			add(newGeneratorsFile, "");
-			add(newGeneratorsFile, "#Check why a lot of settings are optional and how does it work: https://github.com/Kryniowesegryderiusz/KGenerators/wiki/Configuration-disclaimer");
-			add(newGeneratorsFile, "");
-			add(newGeneratorsFile, "#!!! WARNING !!! This file was autoupdated from KGenerators v3 to Kgenerators v4!");
-			add(newGeneratorsFile, "#There are probably new generators functions that you will like to use");
-			add(newGeneratorsFile, "#Check them at: https://github.com/Kryniowesegryderiusz/KGenerators/blob/main/core/src/main/resources/generators.yml");
-			add(newGeneratorsFile, "");
-			
-			try {
-				boolean now = false;
-				ArrayList<String> allLines = (ArrayList<String>) Files.readAllLines(configFile.toPath());
-				for (String l : allLines)
-				{
-					if(now)
-					{
-						if (l.length() >= 2)
-							add(newGeneratorsFile, l.substring(2));
-						else
-							add(newGeneratorsFile, l);
-					}
-					if (l.startsWith("generators:")) now = true;
-				}
-			} catch (IOException e) {
-				Logger.error("FilesConverter: Cant load old config lines. Disabling plugin.");
-				Logger.error(e);
-				Main.getInstance().getServer().getPluginManager().disablePlugin(Main.getInstance());
-				return;
-			}
-			
-			/*
-			 * Converting recipes
-			 */
-			
-			File oldRecipesFile = new File(Main.getInstance().getDataFolder(), "recipes.yml");
-			File newRecipesFile = new File(Main.getInstance().getDataFolder(), "recipestemp.yml");
-			
-			if (!newRecipesFile.exists())
-			{
-				try {
-					newRecipesFile.createNewFile();
-				} catch (IOException e1) {
-					Logger.error("FilesConverter: Cant create temp recipes file. Disabling plugin.");
-					Logger.error(e1);
-					Main.getInstance().getServer().getPluginManager().disablePlugin(Main.getInstance());
-					return;
-				}
-			}
-			
-			add(newRecipesFile, "#KGenerators made by Kryniowesegryderiusz (Krynio_ on spigot)");
-			add(newRecipesFile, "#https://www.spigotmc.org/resources/79246/");
-			add(newRecipesFile, "#Need help? Join KGenerators discord: https://discord.gg/BZRjhpP4Ab");
-			add(newRecipesFile, "");
-			add(newRecipesFile, "#!!! WARNING !!! This file was autoupdated from KGenerators v3 to Kgenerators v4!");
-			add(newRecipesFile, "");
-			
-			try {
-				boolean now = false;
-				ArrayList<String> allLines = (ArrayList<String>) Files.readAllLines(oldRecipesFile.toPath());
-				for (String l : allLines)
-				{
-					if(now)
-					{
-						if (l.length() >= 2)
-							add(newRecipesFile, l.substring(2));
-						else
-							add(newRecipesFile, l);
-					}
-					if (l.startsWith("recipes:")) now = true;
-				}
-			} catch (IOException e) {
-				Logger.error("FilesConverter: Cant load old recipe lines. Disabling plugin.");
-				Logger.error(e);
-				Main.getInstance().getServer().getPluginManager().disablePlugin(Main.getInstance());
-				return;
-			}
-			try {
-				Files.delete(oldRecipesFile.toPath());
-				Files.copy(newRecipesFile.toPath(), oldRecipesFile.toPath());
-				Files.delete(newRecipesFile.toPath());
-			} catch (IOException e) {
-				Logger.error("FilesConverter: Cant finish new recipe file. Disabling plugin.");
-				Logger.error(e);
-				Main.getInstance().getServer().getPluginManager().disablePlugin(Main.getInstance());
-				return;
-			}
-			
-			/*
-			 * End
-			 */
-			
-			configFile.delete();
-			updateConfig(settings);
-			
-			Logger.warn("FilesConverter: All files have been converted to v4 filesystem correctly!");
-		}
-	}
-	
 	public static void updateConfig(Settings settings)
 	{
 		File file = new File(Main.getInstance().getDataFolder(), "config.yml");
@@ -317,6 +47,24 @@ public class FilesConverter {
 			Logger.info("FilesConverter: Added lang settings to config file");
 		}
 		
+		if (!config.contains("database"))
+		{
+			add(file, "#Database settings");
+			add(file, "database:");
+			add(file, "  #Possible options: SQLITE, MYSQL, YAML (not recommended for big servers)");
+			add(file, "  #You can convert data from one database to another! More info here: https://github.com/Kryniowesegryderiusz/KGenerators/wiki/Converting-databases ");
+			add(file, "  dbtype: YAML");
+			add(file, "  #Settings for MYSQL");
+			add(file, "  host: hostname");
+			add(file, "  port: 3306");
+			add(file, "  database: database");
+			add(file, "  username: username");
+			add(file, "  password: password");
+			Logger.info("FilesConverter: Added database settings to config file");
+			settings.setDbType(DatabaseType.YAML);
+			Logger.warn("FilesConverter: Changed database type from default to YAML");
+		}
+		
 		if (!config.contains("can-generate-instead"))
 		{
 			add(file, "");
@@ -327,6 +75,42 @@ public class FilesConverter {
 				add(file, "  - " + i.getType().toString());
 			}
 			Logger.info("FilesConverter: Added can-generate-instead settings to config file");
+		}
+		
+		if (!config.contains("disabled-worlds"))
+		{
+			add(file, "");
+			add(file, "#List of worlds, where generators will not be enabled:");
+			add(file, "disabled-worlds:");
+			add(file, "- test_world");
+			Logger.info("FilesConverter: Added disabled-worlds settings to config file");
+		}
+		
+		if (!config.contains("pick-up-to-eq"))
+		{
+			add(file, "");
+			add(file, "#Should generators be picked up directly to equipment?");
+			add(file, "pick-up-to-eq: true");
+			Logger.info("FilesConverter: Added pick-up-to-eq settings to config file");
+		}
+		
+		if (!config.contains("generators-actionbar-messages"))
+		{
+			add(file, "");
+			add(file, "#Should \"generators\" lang section be sent by actionbar instad of chat?");
+			add(file, "generators-actionbar-messages: true");
+			Logger.info("FilesConverter: Added generators-actionbar-messages settings to config file");
+		}
+		
+		if (!config.contains("explosion-handler"))
+		{
+			add(file, "");
+			add(file, "#How explosions should be handled, if there is generator inside explode area?");
+			add(file, "#0 - cancel explosion");
+			add(file, "#1 - drop generator");
+			add(file, "#2 - remove generator");
+			add(file, "explosion-handler: 0");
+			Logger.info("FilesConverter: Added explosion-handler settings to config file");
 		}
 		
 		if (!config.contains("actions"))
@@ -364,41 +148,6 @@ public class FilesConverter {
 			Logger.info("FilesConverter: Added actions settings to config file");
 		}
 		
-		if (!config.contains("intervals"))
-		{
-			add(file, "");
-			add(file, "#These settings are related to performance and its not recommended to set them too low");
-			add(file, "#Values are presented in ticks (20 ticks = 1 second)");
-			add(file, "#Changed values need server restart to affect plugin functioning");
-			add(file, "intervals:");
-			add(file, "  #How often should generators check if they should regenerate?");
-			add(file, "  #All generator delays should be a multiple of this number");
-			add(file, "  generation-check: 10");
-			add(file, "  #How often should holograms be updated?");
-			add(file, "  hologram-update: 20");
-			add(file, "  #How often should generators guis be updated?");
-			add(file, "  #Set -1 to not update GUI");
-			add(file, "  gui-update: 20");
-			Logger.info("FilesConverter: Added intervals settings to config file");
-		}
-		
-		if (!config.contains("disabled-worlds"))
-		{
-			add(file, "");
-			add(file, "#List of worlds, where generators will not be enabled:");
-			add(file, "disabled-worlds:");
-			add(file, "- test_world");
-			Logger.info("FilesConverter: Added disabled-worlds settings to config file");
-		}
-			
-		if (!config.contains("pick-up-to-eq"))
-		{
-			add(file, "");
-			add(file, "#Should generators be picked up directly to equipment?");
-			add(file, "pick-up-to-eq: true");
-			Logger.info("FilesConverter: Added pick-up-to-eq settings to config file");
-		}
-		
 		if (!config.contains("sounds"))
 		{
 			add(file, "");
@@ -423,22 +172,22 @@ public class FilesConverter {
 			Logger.info("FilesConverter: Added sounds settings to config file");
 		}
 		
-		if (!config.contains("database"))
+		if (!config.contains("intervals"))
 		{
-			add(file, "#Database settings");
-			add(file, "database:");
-			add(file, "  #Possible options: SQLITE, MYSQL, YAML (not recommended for big servers)");
-			add(file, "  #You can convert data from one database to another! More info here: https://github.com/Kryniowesegryderiusz/KGenerators/wiki/Converting-databases ");
-			add(file, "  dbtype: YAML");
-			add(file, "  #Settings for MYSQL");
-			add(file, "  host: hostname");
-			add(file, "  port: 3306");
-			add(file, "  database: database");
-			add(file, "  username: username");
-			add(file, "  password: password");
-			Logger.info("FilesConverter: Added database settings to config file");
-			settings.setDbType(DatabaseType.YAML);
-			Logger.warn("FilesConverter: Changed database type from default to YAML");
+			add(file, "");
+			add(file, "#These settings are related to performance and its not recommended to set them too low");
+			add(file, "#Values are presented in ticks (20 ticks = 1 second)");
+			add(file, "#Changed values need server restart to affect plugin functioning");
+			add(file, "intervals:");
+			add(file, "  #How often should generators check if they should regenerate?");
+			add(file, "  #All generator delays should be a multiple of this number");
+			add(file, "  generation-check: 10");
+			add(file, "  #How often should holograms be updated?");
+			add(file, "  hologram-update: 20");
+			add(file, "  #How often should generators guis be updated?");
+			add(file, "  #Set -1 to not update GUI");
+			add(file, "  gui-update: 20");
+			Logger.info("FilesConverter: Added intervals settings to config file");
 		}
 	}
 	

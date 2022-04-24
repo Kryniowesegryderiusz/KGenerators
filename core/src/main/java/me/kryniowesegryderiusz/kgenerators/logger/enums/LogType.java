@@ -5,7 +5,7 @@ public enum LogType
 	INFO(""),
 	ERROR("!!! ERROR !!! "),
 	DEBUG("[Debug] "),
-	WARNINGS("!!! WARNING !!! "),
+	WARNING("!!! WARNING !!! "),
 ;
 	String header;
 	
