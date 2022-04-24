@@ -1,17 +1,17 @@
 <project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 https://maven.apache.org/xsd/maven-4.0.0.xsd">
-  <modelVersion>4.0.0</modelVersion>
-  <artifactId>kgenerators-core</artifactId>
-  <packaging>jar</packaging>
-  <parent>
-    <groupId>me.kryniowesegryderiusz</groupId>
-    <artifactId>kgenerators-parent</artifactId>
-    <version>7.PRE</version>
-  </parent>
+	<modelVersion>4.0.0</modelVersion>
+	<artifactId>kgenerators-core</artifactId>
+	<packaging>jar</packaging>
+	<parent>
+		<groupId>me.kryniowesegryderiusz</groupId>
+		<artifactId>kgenerators-parent</artifactId>
+    	<version>7.PRE</version>
+	</parent>
   
-  <properties>
-    <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
-    <project.reporting.outputEncoding>UTF-8</project.reporting.outputEncoding>
-</properties>
+	<properties>
+    	<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
+		<project.reporting.outputEncoding>UTF-8</project.reporting.outputEncoding>
+	</properties>
   
 
 	<repositories>
@@ -21,18 +21,17 @@
 	        <url>https://hub.spigotmc.org/nexus/content/repositories/snapshots/</url>
 	    </repository>
 	    
-	  	  <!-- SuperiorSkyblockAPI -->
-	  	  <repository>
-	           <id>jitpack.io</id>
-	           <url>https://jitpack.io</url>
-	       </repository>
+		<!-- SuperiorSkyblockAPI -->
+		<repository>
+			<id>jitpack.io</id>
+			<url>https://jitpack.io</url>
+		</repository>
 	       
-	        <!-- HolographicDisplays -->
-	       <repository>
-		    <id>codemc-repo</id>
-		    <url>https://repo.codemc.io/repository/maven-public/</url>
-			</repository>
-	       
+		<!-- HolographicDisplays -->
+		<repository>
+			<id>codemc-repo</id>
+			<url>https://repo.codemc.io/repository/maven-public/</url>
+		</repository>    
 	</repositories>
 	
 	<dependencies>
@@ -122,24 +121,21 @@
 		    <systemPath>${project.basedir}/dependencies/IridiumSkyblock-3.2.8.jar</systemPath>
 		</dependency>
 		
-		    <dependency>
-        <groupId>com.github.decentsoftware-eu</groupId>
-        <artifactId>decentholograms</artifactId>
-        <version>2.3.1</version>
-        <scope>provided</scope>
-    </dependency>
+		<dependency>
+			<groupId>com.github.decentsoftware-eu</groupId>
+       		<artifactId>decentholograms</artifactId>
+        	<version>2.3.1</version>
+        	<scope>provided</scope>
+		</dependency>
     
-	
-	<!--  ItemsAdder  -->
-	<dependency>
-	    <groupId>com.github.LoneDev6</groupId>
-	    <artifactId>api-itemsadder</artifactId>
-	    <version>3.0.0</version>
-	    <scope>provided</scope>
-	</dependency>
-    
+		<!--  ItemsAdder  -->
+		<dependency>
+	    	<groupId>com.github.LoneDev6</groupId>
+	    	<artifactId>api-itemsadder</artifactId>
+	    	<version>3.0.0</version>
+   			<scope>provided</scope>
+		</dependency>
 	</dependencies>
-	
 
    <build>
   		<resources>
