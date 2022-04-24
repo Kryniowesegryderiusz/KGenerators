@@ -9,9 +9,8 @@ import org.bukkit.command.CommandSender;
 import org.bukkit.command.TabCompleter;
 import org.bukkit.entity.Player;
 
-import me.kryniowesegryderiusz.kgenerators.classes.Generator;
+import me.kryniowesegryderiusz.kgenerators.generators.generator.objects.Generator;
 import me.kryniowesegryderiusz.kgenerators.lang.Lang;
-import me.kryniowesegryderiusz.kgenerators.managers.Generators;
 
 public class CommandTabCompleter implements TabCompleter {
 
@@ -79,14 +78,14 @@ public class CommandTabCompleter implements TabCompleter {
 		ArrayList<String> generators = new ArrayList<String>();
 		if (isBlank(arg))
 		{
-			for (Generator g : Generators.getAll())
+			for (Generator g : Main.getGenerators().getAll())
 			{
 				generators.add(g.getId());
 			}
 		}
 		else
 		{
-			for (Generator g : Generators.getAll())
+			for (Generator g : Main.getGenerators().getAll())
 			{
 				if (g.getId().contains(arg))
 					generators.add(g.getId());

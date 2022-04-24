@@ -2,7 +2,9 @@ package me.kryniowesegryderiusz.kgenerators.multiversion;
 
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.ShapedRecipe;
-import me.kryniowesegryderiusz.kgenerators.classes.Generator;
+
+import me.kryniowesegryderiusz.kgenerators.generators.generator.objects.Generator;
+import me.kryniowesegryderiusz.kgenerators.multiversion.interfaces.RecipesLoader;
 
 public class RecipesLoader_1_8 implements RecipesLoader {
 	

@@ -23,12 +23,12 @@ example_generator:
     B: ores_generator
     #"C" is other custom configured item
     C:
-      item: STONE
+      material: STONE
       name: "Magic stone"
       lore:
       - "&cThats Magic Stone"
       enchants:
-        FORTUNE: 1
+        - FORTUNE:1
 
 #Below you can find pre-configured recipes. You can freely edit/remove them and add new ones ^^
       

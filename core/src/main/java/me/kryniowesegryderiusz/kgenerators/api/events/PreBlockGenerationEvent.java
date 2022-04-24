@@ -5,7 +5,7 @@ import org.bukkit.event.Event;
 import org.bukkit.event.HandlerList;
 
 import lombok.Getter;
-import me.kryniowesegryderiusz.kgenerators.classes.GeneratorLocation;
+import me.kryniowesegryderiusz.kgenerators.generators.locations.objects.GeneratorLocation;
 
 public class PreBlockGenerationEvent extends Event implements Cancellable {
 

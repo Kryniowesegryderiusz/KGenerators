@@ -2,8 +2,8 @@ package me.kryniowesegryderiusz.kgenerators.api.interfaces;
 
 import org.bukkit.entity.Player;
 
-import me.kryniowesegryderiusz.kgenerators.exceptions.CannnotLoadUpgradeException;
-import me.kryniowesegryderiusz.kgenerators.utils.Config;
+import me.kryniowesegryderiusz.kgenerators.api.exceptions.CannnotLoadUpgradeException;
+import me.kryniowesegryderiusz.kgenerators.utils.immutable.Config;
 
 public interface IUpgradeCost {
 	

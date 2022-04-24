@@ -14,31 +14,14 @@ import org.bukkit.entity.Player;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.Recipe;
 
-import me.kryniowesegryderiusz.kgenerators.enums.Action;
-import me.kryniowesegryderiusz.kgenerators.enums.DatabaseType;
-import me.kryniowesegryderiusz.kgenerators.enums.Dependency;
-import me.kryniowesegryderiusz.kgenerators.enums.Interaction;
-import me.kryniowesegryderiusz.kgenerators.api.events.ReloadEvent;
-import me.kryniowesegryderiusz.kgenerators.classes.Generator;
-import me.kryniowesegryderiusz.kgenerators.classes.GeneratorAction;
-import me.kryniowesegryderiusz.kgenerators.classes.PlayerLimits;
-import me.kryniowesegryderiusz.kgenerators.classes.Upgrade;
-import me.kryniowesegryderiusz.kgenerators.enums.Message;
-import me.kryniowesegryderiusz.kgenerators.files.GeneratorsFile;
-import me.kryniowesegryderiusz.kgenerators.files.LangFiles;
-import me.kryniowesegryderiusz.kgenerators.files.LimitsFile;
-import me.kryniowesegryderiusz.kgenerators.files.PlacedGeneratorsFile;
-import me.kryniowesegryderiusz.kgenerators.files.UpgradesFile;
-import me.kryniowesegryderiusz.kgenerators.gui.Menus;
-import me.kryniowesegryderiusz.kgenerators.files.ConfigFile;
-import me.kryniowesegryderiusz.kgenerators.handlers.DatabasesHandler;
-import me.kryniowesegryderiusz.kgenerators.handlers.Vault;
+import me.kryniowesegryderiusz.kgenerators.data.enums.DatabaseType;
+import me.kryniowesegryderiusz.kgenerators.generators.generator.objects.Generator;
+import me.kryniowesegryderiusz.kgenerators.generators.generator.objects.GeneratorAction;
+import me.kryniowesegryderiusz.kgenerators.generators.locations.handlers.enums.ActionType;
+import me.kryniowesegryderiusz.kgenerators.generators.locations.handlers.enums.InteractionType;
 import me.kryniowesegryderiusz.kgenerators.lang.Lang;
-import me.kryniowesegryderiusz.kgenerators.managers.Generators;
-import me.kryniowesegryderiusz.kgenerators.managers.Locations;
-import me.kryniowesegryderiusz.kgenerators.managers.Players;
-import me.kryniowesegryderiusz.kgenerators.managers.Schedules;
-import me.kryniowesegryderiusz.kgenerators.managers.Upgrades;
+import me.kryniowesegryderiusz.kgenerators.lang.enums.Message;
+import me.kryniowesegryderiusz.kgenerators.logger.Logger;
 
 public class Commands implements CommandExecutor {
 
@@ -55,15 +38,8 @@ public class Commands implements CommandExecutor {
 			switch(args[0].toLowerCase()){
 				case "reload":
 					if (sender.hasPermission("kgenerators.reload") || sender instanceof ConsoleCommandSender){
-						Logger.info("Reload: KGenerators reload started");
-						ConfigFile.globalSettingsLoader();
-				    	GeneratorsFile.load();
-				    	Players.reload();
-				    	UpgradesFile.load();
-				    	LimitsFile.load();
-				    	LangFiles.loadLang();
+						Main.getInstance().reload();
 						Lang.getMessageStorage().send(sender, Message.COMMANDS_RELOAD_DONE);
-						Main.getInstance().getServer().getPluginManager().callEvent(new ReloadEvent());
 					}
 					else
 					{
@@ -74,7 +50,7 @@ public class Commands implements CommandExecutor {
 					if (sender instanceof Player){
 						if (sender.hasPermission("kgenerators.getall")){
 							Player player = (Player) sender;
-					        for (HashMap.Entry<String, Generator> generatorhmap : Generators.getEntrySet()) {
+					        for (HashMap.Entry<String, Generator> generatorhmap : Main.getGenerators().getEntrySet()) {
 					        	Generator generator = generatorhmap.getValue();
 					        	player.getInventory().addItem(generator.getGeneratorItem());
 					        }
@@ -93,7 +69,7 @@ public class Commands implements CommandExecutor {
 				case "list":
 						if (sender.hasPermission("kgenerators.list") || sender instanceof ConsoleCommandSender){
 							Lang.getMessageStorage().send(sender, Message.COMMANDS_LIST_HEADER);
-					        for (Entry<String, Generator> e : Generators.getEntrySet()) {
+					        for (Entry<String, Generator> e : Main.getGenerators().getEntrySet()) {
 					        	Lang.getMessageStorage().send(sender, Message.COMMANDS_LIST_LIST, false, false, 
 					        			"<generator>", e.getValue().getGeneratorItem().getItemMeta().getDisplayName(),
 					        			"<generatorID>", e.getKey());
@@ -109,7 +85,7 @@ public class Commands implements CommandExecutor {
 					if (sender.hasPermission("kgenerators.limits") || sender instanceof ConsoleCommandSender){
 						if (sender instanceof Player){
 							Player player = (Player) sender;
-							Menus.openLimitsMenu(player);
+							Main.getMenus().openLimitsMenu(player);
 						}
 						else
 						{
@@ -124,25 +100,25 @@ public class Commands implements CommandExecutor {
 				case "actions":
 					if (sender.hasPermission("kgenerators.actions") || sender instanceof ConsoleCommandSender){
 						Lang.getMessageStorage().send(sender, Message.COMMANDS_ACTIONS_HEADER);
-						for (Entry<Action, GeneratorAction> e : Main.getSettings().getActions().getEntrySet())
+						for (Entry<ActionType, GeneratorAction> e : Main.getSettings().getActions().getEntrySet())
 						{
-							if (e.getValue().getInteraction() != Interaction.NONE)
+							if (e.getValue().getInteraction() != InteractionType.NONE)
 							{
 								String action = "";
 								String mode = "";
 								String sneak = "";
 								String item = "";
 								
-								if (e.getKey() == Action.PICKUP) action = Lang.getMessageStorage().get(Message.COMMANDS_ACTIONS_PICK_UP, false);
-								else if (e.getKey() == Action.OPENGUI) action = Lang.getMessageStorage().get(Message.COMMANDS_ACTIONS_OPEN_GUI, false);
-								else if (e.getKey() == Action.TIMELEFT) action = Lang.getMessageStorage().get(Message.COMMANDS_ACTIONS_TIME_LEFT, false);
+								if (e.getKey() == ActionType.PICKUP) action = Lang.getMessageStorage().get(Message.COMMANDS_ACTIONS_PICK_UP, false);
+								else if (e.getKey() == ActionType.OPENGUI) action = Lang.getMessageStorage().get(Message.COMMANDS_ACTIONS_OPEN_GUI, false);
+								else if (e.getKey() == ActionType.TIMELEFT) action = Lang.getMessageStorage().get(Message.COMMANDS_ACTIONS_TIME_LEFT, false);
 							
 								if (e.getValue().isSneak())
 									sneak = Lang.getMessageStorage().get(Message.COMMANDS_ACTIONS_SNEAK, false);
 								
-								if (e.getValue().getInteraction() == Interaction.BREAK) mode = Lang.getMessageStorage().get(Message.COMMANDS_ACTIONS_BREAK, false);
-								else if (e.getValue().getInteraction() == Interaction.LEFT_CLICK) mode = Lang.getMessageStorage().get(Message.COMMANDS_ACTIONS_LEFT_CLICK, false);
-								else if (e.getValue().getInteraction() == Interaction.RIGHT_CLICK) mode = Lang.getMessageStorage().get(Message.COMMANDS_ACTIONS_RIGHT_CLICK, false);
+								if (e.getValue().getInteraction() == InteractionType.BREAK) mode = Lang.getMessageStorage().get(Message.COMMANDS_ACTIONS_BREAK, false);
+								else if (e.getValue().getInteraction() == InteractionType.LEFT_CLICK) mode = Lang.getMessageStorage().get(Message.COMMANDS_ACTIONS_LEFT_CLICK, false);
+								else if (e.getValue().getInteraction() == InteractionType.RIGHT_CLICK) mode = Lang.getMessageStorage().get(Message.COMMANDS_ACTIONS_RIGHT_CLICK, false);
 								
 								if (e.getValue().getItem() != null)
 								{
@@ -169,12 +145,12 @@ public class Commands implements CommandExecutor {
 							else
 							{
 								String generatorID = args[2];
-								if (!Generators.exists(generatorID)){
+								if (!Main.getGenerators().exists(generatorID)){
 									Lang.getMessageStorage().send(sender, Message.COMMANDS_ANY_GENERATOR_DOESNT_EXIST);
 									break;
 								}
 								
-								ItemStack item = Generators.get(generatorID).getGeneratorItem();
+								ItemStack item = Main.getGenerators().get(generatorID).getGeneratorItem();
 								
 								int amount = 1;
 								
@@ -229,10 +205,10 @@ public class Commands implements CommandExecutor {
 						if (sender.hasPermission("kgenerators.timeleft")){
 							Location l = null;
 							if (p.getTargetBlockExact(5) != null) l = p.getTargetBlockExact(5).getLocation();
-							if (l != null && Locations.get(l) != null && Schedules.timeLeft(Locations.get(l)) >= 0)
+							if (l != null && Main.getLocations().get(l) != null && Main.getSchedules().timeLeft(Main.getLocations().get(l)) >= 0)
 							{
 								Lang.getMessageStorage().send(sender, Message.GENERATORS_TIME_LEFT_OUTPUT,
-										"<time>", Schedules.timeLeftFormatted(Locations.get(l)));
+										"<time>", Main.getSchedules().timeLeftFormatted(Main.getLocations().get(l)));
 							}
 							else
 								Lang.getMessageStorage().send(sender, Message.COMMANDS_TIME_LEFT_NO_GENERATOR);
@@ -252,9 +228,9 @@ public class Commands implements CommandExecutor {
 					if (sender instanceof Player){
 						Player p = (Player) sender;
 
-						if (Upgrades.getUpgrade(p.getItemInHand()) != null)
+						if (Main.getUpgrades().getUpgrade(p.getItemInHand()) != null)
 						{
-							Upgrades.getUpgrade(p.getItemInHand()).handUpgrade(p);
+							Main.getUpgrades().getUpgrade(p.getItemInHand()).handUpgrade(p);
 						}
 						else
 						{
@@ -272,7 +248,7 @@ public class Commands implements CommandExecutor {
 						if (args.length == 1)
 						{
 							if (sender instanceof Player)
-								Menus.openMainMenu((Player) sender);
+								Main.getMenus().openMainMenu((Player) sender);
 							else
 								System.out.println("[KGenerators] Use that command as player!");
 						}
@@ -285,36 +261,36 @@ public class Commands implements CommandExecutor {
 							{
 								if (args.length == 2)
 								{
-									Menus.openMainMenu(player);
+									Main.getMenus().openMainMenu(player);
 								}
 								else if (!args[2].toLowerCase().equals("chances") && !args[2].toLowerCase().equals("recipe") && !args[2].toLowerCase().equals("upgrade"))
 								{
 									Lang.getMessageStorage().send(sender, Message.COMMANDS_ANY_MENU_DOESNT_EXIST);
 								}
-								else if (args.length < 4 || Generators.get(args[3]) == null)
+								else if (args.length < 4 || Main.getGenerators().get(args[3]) == null)
 								{
 									Lang.getMessageStorage().send(sender, Message.COMMANDS_ANY_GENERATOR_DOESNT_EXIST);
 								}
 								else
 								{
-									Generator generator = Generators.get(args[3]);
+									Generator generator = Main.getGenerators().get(args[3]);
 									
 									if (args[2].toLowerCase().contains("chances"))
 									{
-										Menus.openChancesMenu(player, generator);
+										Main.getMenus().openChancesMenu(player, generator);
 									}
 									else if (args[2].toLowerCase().contains("recipe"))
 									{
 										List<Recipe> recipe = Main.getInstance().getServer().getRecipesFor(generator.getGeneratorItem());
 										if (!recipe.isEmpty() && recipe.get(0).getResult().equals(generator.getGeneratorItem()))
-											Menus.openRecipeMenu(player, generator);
+											Main.getMenus().openRecipeMenu(player, generator);
 										else
 											Lang.getMessageStorage().send(sender, Message.COMMANDS_ANY_MENU_DOESNT_EXIST);
 									} 
 									else if (args[2].toLowerCase().contains("upgrade"))
 									{
-										if (Upgrades.couldBeObtained(args[2]))
-											Menus.openUpgradeMenu(player, generator);
+										if (Main.getUpgrades().couldBeObtained(args[2]))
+											Main.getMenus().openUpgradeMenu(player, generator);
 										else
 											Lang.getMessageStorage().send(sender, Message.COMMANDS_ANY_MENU_DOESNT_EXIST);
 									}
@@ -347,7 +323,7 @@ public class Commands implements CommandExecutor {
 							
 							if (newDbType != Main.getSettings().getDbType())
 							{
-								DatabasesHandler.changeTo(newDbType);
+								Main.getDatabases().changeTo(newDbType);
 							}
 							else
 								Logger.textToConsole("You already have this database type!");

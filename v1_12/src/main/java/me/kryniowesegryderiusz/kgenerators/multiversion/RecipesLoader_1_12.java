@@ -6,8 +6,9 @@ import org.bukkit.NamespacedKey;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.ShapedRecipe;
 import me.kryniowesegryderiusz.kgenerators.Main;
-import me.kryniowesegryderiusz.kgenerators.classes.Generator;
-import me.kryniowesegryderiusz.kgenerators.classes.Recipe;
+import me.kryniowesegryderiusz.kgenerators.generators.generator.objects.Generator;
+import me.kryniowesegryderiusz.kgenerators.generators.recipes.objects.Recipe;
+import me.kryniowesegryderiusz.kgenerators.multiversion.interfaces.RecipesLoader;
 
 public class RecipesLoader_1_12 implements RecipesLoader {
 	

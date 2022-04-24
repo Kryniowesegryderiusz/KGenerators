@@ -11,9 +11,10 @@ import com.sk89q.worldguard.protection.flags.StateFlag;
 import com.sk89q.worldguard.protection.flags.registry.FlagConflictException;
 import com.sk89q.worldguard.protection.flags.registry.FlagRegistry;
 
-import me.kryniowesegryderiusz.kgenerators.Logger;
 import me.kryniowesegryderiusz.kgenerators.Main;
-import me.kryniowesegryderiusz.kgenerators.enums.WGFlag;
+import me.kryniowesegryderiusz.kgenerators.dependencies.enums.WGFlag;
+import me.kryniowesegryderiusz.kgenerators.logger.Logger;
+import me.kryniowesegryderiusz.kgenerators.multiversion.interfaces.WorldGuardUtils;
 
 public class WorldGuardUtils_1_8 implements WorldGuardUtils {
 	

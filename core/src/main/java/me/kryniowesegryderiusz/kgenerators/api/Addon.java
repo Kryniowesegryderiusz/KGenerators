@@ -5,14 +5,11 @@ import java.util.ArrayList;
 import org.bukkit.plugin.Plugin;
 
 import lombok.Getter;
-import me.kryniowesegryderiusz.kgenerators.Logger;
-import me.kryniowesegryderiusz.kgenerators.api.interfaces.IMessage;
-import me.kryniowesegryderiusz.kgenerators.lang.Lang;
-import me.kryniowesegryderiusz.kgenerators.managers.Addons;
+import me.kryniowesegryderiusz.kgenerators.Addons;
+import me.kryniowesegryderiusz.kgenerators.logger.Logger;
 
 /**
  * Create new instance of this class to register new addon in KGenerators
- * @author user
  */
 public class Addon {
 	

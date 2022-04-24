@@ -2,6 +2,7 @@ package me.kryniowesegryderiusz.kgenerators.multiversion;
 
 import org.bukkit.entity.Player;
 
+import me.kryniowesegryderiusz.kgenerators.multiversion.interfaces.ActionBar;
 import net.md_5.bungee.api.ChatMessageType;
 import net.md_5.bungee.api.chat.TextComponent;
 

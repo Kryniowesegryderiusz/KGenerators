@@ -21,8 +21,18 @@
  */
 package me.kryniowesegryderiusz.kgenerators.xseries;
 
-import com.google.common.base.Enums;
-import com.google.common.base.Strings;
+import java.util.Collections;
+import java.util.EnumSet;
+import java.util.HashMap;
+import java.util.Locale;
+import java.util.Map;
+import java.util.Objects;
+import java.util.Optional;
+import java.util.Set;
+
+import javax.annotation.Nonnull;
+import javax.annotation.Nullable;
+
 import org.apache.commons.lang.StringUtils;
 import org.apache.commons.lang.Validate;
 import org.apache.commons.lang.WordUtils;
@@ -35,9 +45,8 @@ import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.meta.EnchantmentStorageMeta;
 import org.bukkit.inventory.meta.ItemMeta;
 
-import javax.annotation.Nonnull;
-import javax.annotation.Nullable;
-import java.util.*;
+import com.google.common.base.Enums;
+import com.google.common.base.Strings;
 
 /**
  * Enchantment support with multiple aliases.

@@ -8,11 +8,9 @@ import org.bukkit.event.block.Action;
 import org.bukkit.event.player.PlayerInteractEvent;
 import org.bukkit.inventory.EquipmentSlot;
 
-import me.kryniowesegryderiusz.kgenerators.enums.Interaction;
-import me.kryniowesegryderiusz.kgenerators.classes.GeneratorLocation;
-import me.kryniowesegryderiusz.kgenerators.handlers.ActionHandler;
-import me.kryniowesegryderiusz.kgenerators.managers.Locations;
-import me.kryniowesegryderiusz.kgenerators.multiversion.MultiVersion;
+import me.kryniowesegryderiusz.kgenerators.Main;
+import me.kryniowesegryderiusz.kgenerators.generators.locations.handlers.enums.InteractionType;
+import me.kryniowesegryderiusz.kgenerators.generators.locations.objects.GeneratorLocation;
 
 public class PlayerInteractListener implements Listener {
 	
@@ -20,7 +18,7 @@ public class PlayerInteractListener implements Listener {
 	@EventHandler(priority = EventPriority.HIGH)
 	public void playerInteract(PlayerInteractEvent e)
 	{
-		if(MultiVersion.isHigher(9) && e.getHand() != EquipmentSlot.HAND) return;
+		if(Main.getMultiVersion().isHigher(9) && e.getHand() != EquipmentSlot.HAND) return;
 		
 		if (e.isCancelled() || e.getClickedBlock() == null) return;
 		
@@ -29,12 +27,12 @@ public class PlayerInteractListener implements Listener {
 				
 		GeneratorLocation gLocation = null;
 		
-		if (Locations.exists(upperLocation)) gLocation = Locations.get(upperLocation);
-		if (Locations.exists(location)) gLocation = Locations.get(location);
+		if (Main.getLocations().exists(upperLocation)) gLocation = Main.getLocations().get(upperLocation);
+		if (Main.getLocations().exists(location)) gLocation = Main.getLocations().get(location);
 		
 		if (gLocation == null) return;
 		
-		if (e.getAction() == Action.LEFT_CLICK_BLOCK) e.setCancelled(ActionHandler.handler(Interaction.LEFT_CLICK, gLocation, e.getPlayer()));
-		else if (e.getAction() == Action.RIGHT_CLICK_BLOCK) e.setCancelled(ActionHandler.handler(Interaction.RIGHT_CLICK, gLocation, e.getPlayer()));
+		if (e.getAction() == Action.LEFT_CLICK_BLOCK) e.setCancelled(gLocation.handleAction(InteractionType.LEFT_CLICK, e.getPlayer()));
+		else if (e.getAction() == Action.RIGHT_CLICK_BLOCK) e.setCancelled(gLocation.handleAction(InteractionType.RIGHT_CLICK, e.getPlayer()));
 	}
 }

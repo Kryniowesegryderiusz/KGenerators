@@ -1,12 +1,11 @@
 <project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 https://maven.apache.org/xsd/maven-4.0.0.xsd">
   <modelVersion>4.0.0</modelVersion>
   <artifactId>kgenerators-v1_16</artifactId>
-  <version>${project.parent.version}</version>
   <packaging>jar</packaging>
   <parent>
     <groupId>me.kryniowesegryderiusz</groupId>
     <artifactId>kgenerators-parent</artifactId>
-    <version>6.3.1</version>
+    <version>7.PRE</version>
   </parent>
 
 	<repositories>

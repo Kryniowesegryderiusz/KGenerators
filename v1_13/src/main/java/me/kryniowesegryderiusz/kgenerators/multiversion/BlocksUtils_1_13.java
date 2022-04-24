@@ -6,6 +6,7 @@ import org.bukkit.block.Block;
 import org.bukkit.inventory.ItemStack;
 
 import me.kryniowesegryderiusz.kgenerators.Main;
+import me.kryniowesegryderiusz.kgenerators.multiversion.interfaces.BlocksUtils;
 import me.kryniowesegryderiusz.kgenerators.xseries.XMaterial;
 
 public class BlocksUtils_1_13 implements BlocksUtils {

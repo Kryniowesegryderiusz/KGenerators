@@ -5,15 +5,15 @@ import java.util.Optional;
 
 import org.bukkit.inventory.ItemStack;
 
-import me.kryniowesegryderiusz.kgenerators.Logger;
-import me.kryniowesegryderiusz.kgenerators.managers.Generators;
+import me.kryniowesegryderiusz.kgenerators.Main;
+import me.kryniowesegryderiusz.kgenerators.logger.Logger;
 
 public abstract class XUtils {
 	
     public static ItemStack parseItemStack(String s, String place, boolean isBlockCheck) {
     	
-    	if (Generators.exists(s))
-    		return Generators.get(s).getGeneratorItem().clone();
+    	if (Main.getGenerators() != null && Main.getGenerators().exists(s))
+    		return Main.getGenerators().get(s).getGeneratorItem().clone();
     	
     	Optional<XMaterial> oxm = XMaterial.matchXMaterial(s);
 		try {
@@ -30,5 +30,4 @@ public abstract class XUtils {
 		}
 		return XMaterial.STONE.parseItem();
     }
-
 }

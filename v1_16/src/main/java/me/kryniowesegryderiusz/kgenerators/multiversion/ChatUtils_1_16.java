@@ -3,6 +3,7 @@ package me.kryniowesegryderiusz.kgenerators.multiversion;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
+import me.kryniowesegryderiusz.kgenerators.multiversion.interfaces.ChatUtils;
 import net.md_5.bungee.api.ChatColor;
 
 public class ChatUtils_1_16 implements ChatUtils {

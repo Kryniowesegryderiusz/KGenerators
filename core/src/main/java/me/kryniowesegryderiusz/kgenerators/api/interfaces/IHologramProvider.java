@@ -1,6 +1,7 @@
 package me.kryniowesegryderiusz.kgenerators.api.interfaces;
 
 import java.util.ArrayList;
+
 import org.bukkit.Location;
 
 public interface IHologramProvider {

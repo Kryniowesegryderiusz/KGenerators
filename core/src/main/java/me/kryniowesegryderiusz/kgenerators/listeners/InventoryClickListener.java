@@ -7,21 +7,18 @@ import org.bukkit.event.Listener;
 import org.bukkit.event.inventory.InventoryClickEvent;
 import org.bukkit.event.inventory.InventoryType;
 
-import me.kryniowesegryderiusz.kgenerators.enums.MenuInventoryType;
-import me.kryniowesegryderiusz.kgenerators.enums.Message;
-import me.kryniowesegryderiusz.kgenerators.gui.ChancesMenu;
-import me.kryniowesegryderiusz.kgenerators.gui.GeneratorMenu;
-import me.kryniowesegryderiusz.kgenerators.gui.LimitsMenu;
-import me.kryniowesegryderiusz.kgenerators.gui.MainMenu;
-import me.kryniowesegryderiusz.kgenerators.gui.Menus;
-import me.kryniowesegryderiusz.kgenerators.gui.RecipeMenu;
-import me.kryniowesegryderiusz.kgenerators.gui.UpgradeMenu;
-import me.kryniowesegryderiusz.kgenerators.lang.Lang;
-import me.kryniowesegryderiusz.kgenerators.Logger;
 import me.kryniowesegryderiusz.kgenerators.Main;
 import me.kryniowesegryderiusz.kgenerators.api.events.CustomMenuClickEvent;
-import me.kryniowesegryderiusz.kgenerators.managers.Generators;
-import me.kryniowesegryderiusz.kgenerators.multiversion.MultiVersion;
+import me.kryniowesegryderiusz.kgenerators.gui.menus.ChancesMenu;
+import me.kryniowesegryderiusz.kgenerators.gui.menus.GeneratorMenu;
+import me.kryniowesegryderiusz.kgenerators.gui.menus.LimitsMenu;
+import me.kryniowesegryderiusz.kgenerators.gui.menus.MainMenu;
+import me.kryniowesegryderiusz.kgenerators.gui.menus.RecipeMenu;
+import me.kryniowesegryderiusz.kgenerators.gui.menus.UpgradeMenu;
+import me.kryniowesegryderiusz.kgenerators.lang.Lang;
+import me.kryniowesegryderiusz.kgenerators.lang.enums.MenuInventoryType;
+import me.kryniowesegryderiusz.kgenerators.lang.enums.Message;
+import me.kryniowesegryderiusz.kgenerators.logger.Logger;
 
 public class InventoryClickListener implements Listener {
 	
@@ -37,8 +34,8 @@ public class InventoryClickListener implements Listener {
 		/*
 		 * Grindstone and anvil change generator item protection
 		 */
-		 if (((MultiVersion.isHigher(13) && e.getInventory() != null && e.getInventory().getType() == InventoryType.GRINDSTONE) || (e.getInventory() != null && e.getInventory().getType() == InventoryType.ANVIL)) 
-				 && e.getCurrentItem() != null && Generators.get(e.getCurrentItem()) != null ) 
+		 if (((Main.getMultiVersion().isHigher(13) && e.getInventory() != null && e.getInventory().getType() == InventoryType.GRINDSTONE) || (e.getInventory() != null && e.getInventory().getType() == InventoryType.ANVIL)) 
+				 && e.getCurrentItem() != null && Main.getGenerators().get(e.getCurrentItem()) != null ) 
 		 {
 			 
 			 Lang.getMessageStorage().send(e.getWhoClicked(), Message.GENERATOR_PROTECTION_CANT_CHANGE_GENERATOR_ITEM);
@@ -55,9 +52,9 @@ public class InventoryClickListener implements Listener {
 		  * Menus
 		  */
 		 
-		 if (Menus.getVieving(p) != null)
+		 if (Main.getMenus().getVieving(p) != null)
 		 {
-			 Enum<?> m = Menus.getVieving(p);
+			 Enum<?> m = Main.getMenus().getVieving(p);
 			 
 			 try {
 				 if (m == MenuInventoryType.GENERATOR)
@@ -79,7 +76,7 @@ public class InventoryClickListener implements Listener {
 				Lang.getMessageStorage().send(p, Message.COMMANDS_MENU_ERROR);
 				Logger.error("An error occured while using menus!");
 				Logger.error(ex);
-				Menus.closeInv(p);
+				Main.getMenus().closeInv(p);
 			}
 			e.setCancelled(true);
 		 }

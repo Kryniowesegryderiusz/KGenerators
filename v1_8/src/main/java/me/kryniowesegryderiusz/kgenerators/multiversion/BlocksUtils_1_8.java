@@ -8,7 +8,7 @@ import org.bukkit.inventory.ItemStack;
 import org.bukkit.material.MaterialData;
 
 import me.kryniowesegryderiusz.kgenerators.Main;
-import me.kryniowesegryderiusz.kgenerators.multiversion.BlocksUtils;
+import me.kryniowesegryderiusz.kgenerators.multiversion.interfaces.BlocksUtils;
 import me.kryniowesegryderiusz.kgenerators.xseries.XMaterial;
 
 public class BlocksUtils_1_8 implements BlocksUtils {

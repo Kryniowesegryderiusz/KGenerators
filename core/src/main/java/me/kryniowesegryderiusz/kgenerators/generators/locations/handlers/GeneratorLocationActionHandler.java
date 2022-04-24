@@ -1,0 +1,53 @@
+package me.kryniowesegryderiusz.kgenerators.generators.locations.handlers;
+
+import java.util.Map.Entry;
+import java.util.Set;
+
+import org.bukkit.entity.Player;
+
+import me.kryniowesegryderiusz.kgenerators.Main;
+import me.kryniowesegryderiusz.kgenerators.generators.generator.objects.GeneratorAction;
+import me.kryniowesegryderiusz.kgenerators.generators.locations.handlers.enums.ActionType;
+import me.kryniowesegryderiusz.kgenerators.generators.locations.handlers.enums.InteractionType;
+import me.kryniowesegryderiusz.kgenerators.generators.locations.objects.GeneratorLocation;
+import me.kryniowesegryderiusz.kgenerators.lang.Lang;
+import me.kryniowesegryderiusz.kgenerators.lang.enums.Message;
+
+public class GeneratorLocationActionHandler {
+	
+	/**
+	 * @return true if event should be cancelled
+	 */
+	public boolean handle(GeneratorLocation gLocation, InteractionType usedActionType, Player player)
+	{		
+		Set<Entry<ActionType, GeneratorAction>> entryset = Main.getSettings().getActions().getEntrySet();
+		
+		if (gLocation.getGenerator().getActions() != null)
+			entryset = gLocation.getGenerator().getActions().getEntrySet();
+		
+		for (Entry<ActionType, GeneratorAction> e : entryset)
+		{
+			if (e.getValue().requirementsMet(usedActionType, player))
+			{
+				ActionType action = e.getKey();
+				switch (action)
+				{
+					case PICKUP:
+						gLocation.pickUpGenerator(player);
+						return true;
+					case OPENGUI:
+						Main.getMenus().openGeneratorMenu(player, gLocation);
+						break;
+					case TIMELEFT:
+						if (Main.getSchedules().timeLeft(gLocation) > 0)
+						{
+							Lang.getMessageStorage().send(player, Message.GENERATORS_TIME_LEFT_OUTPUT,
+									"<time>", Main.getSchedules().timeLeftFormatted(gLocation));
+						}
+						break;
+				}
+			}
+		}
+		return false;
+	}
+}

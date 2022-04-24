@@ -9,10 +9,9 @@ import org.bukkit.event.inventory.CraftItemEvent;
 import org.bukkit.inventory.ItemStack;
 
 import me.kryniowesegryderiusz.kgenerators.Main;
-import me.kryniowesegryderiusz.kgenerators.enums.Message;
+import me.kryniowesegryderiusz.kgenerators.generators.generator.objects.Generator;
 import me.kryniowesegryderiusz.kgenerators.lang.Lang;
-import me.kryniowesegryderiusz.kgenerators.classes.Generator;
-import me.kryniowesegryderiusz.kgenerators.managers.Generators;
+import me.kryniowesegryderiusz.kgenerators.lang.enums.Message;
 
 public class CraftItemListener implements Listener {
 	
@@ -24,7 +23,7 @@ public class CraftItemListener implements Listener {
 		
 		Player p = (Player) e.getWhoClicked();
 		
-		for(Entry<String, Generator> entry : Generators.getEntrySet()) {
+		for(Entry<String, Generator> entry : Main.getGenerators().getEntrySet()) {
 			
 			String gName = entry.getKey();
 			Generator g = entry.getValue();
@@ -33,7 +32,7 @@ public class CraftItemListener implements Listener {
 			/* Check if not using generator for crafting */
 			ItemStack[] items = e.getInventory().getMatrix();
 			for (ItemStack i : items) {
-				if (i != null && i.equals(item) && Generators.exactGeneratorItemExists(gName, item) == null) {
+				if (i != null && i.equals(item) && Main.getGenerators().exactGeneratorItemExists(gName, item) == null) {
 					Lang.getMessageStorage().send(p, Message.GENERATORS_CRAFTING_CANT_USE);
 					e.setCancelled(true);
 					closeInv(p);

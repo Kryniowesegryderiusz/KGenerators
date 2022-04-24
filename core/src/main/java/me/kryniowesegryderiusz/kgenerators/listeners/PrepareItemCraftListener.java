@@ -8,10 +8,9 @@ import org.bukkit.event.Listener;
 import org.bukkit.event.inventory.PrepareItemCraftEvent;
 import org.bukkit.inventory.ItemStack;
 
-import me.kryniowesegryderiusz.kgenerators.classes.Generator;
-import me.kryniowesegryderiusz.kgenerators.classes.Recipe;
-import me.kryniowesegryderiusz.kgenerators.managers.Generators;
-import me.kryniowesegryderiusz.kgenerators.managers.Recipes;
+import me.kryniowesegryderiusz.kgenerators.Main;
+import me.kryniowesegryderiusz.kgenerators.generators.generator.objects.Generator;
+import me.kryniowesegryderiusz.kgenerators.generators.recipes.objects.Recipe;
 
 public class PrepareItemCraftListener implements Listener {
 	
@@ -21,10 +20,10 @@ public class PrepareItemCraftListener implements Listener {
 		if (e.getRecipe() == null)
 			return;
 		
-		Generator generator = Generators.get(e.getRecipe().getResult());
+		Generator generator = Main.getGenerators().get(e.getRecipe().getResult());
 		if (generator != null)
 		{
-			Recipe recipe = Recipes.get(generator);
+			Recipe recipe = Main.getRecipes().get(generator);
 			if (recipe != null)
 			{
 				ArrayList<ItemStack> recipeItems = recipe.getRecipe();

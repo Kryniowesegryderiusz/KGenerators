@@ -15,10 +15,10 @@ import com.sk89q.worldguard.protection.flags.registry.FlagRegistry;
 import com.sk89q.worldguard.protection.managers.RegionManager;
 import com.sk89q.worldguard.protection.regions.RegionContainer;
 
-import me.kryniowesegryderiusz.kgenerators.Logger;
-import me.kryniowesegryderiusz.kgenerators.enums.WGFlag;
-import me.kryniowesegryderiusz.kgenerators.classes.GeneratorLocation;
-import me.kryniowesegryderiusz.kgenerators.multiversion.WorldGuardUtils;
+import me.kryniowesegryderiusz.kgenerators.dependencies.enums.WGFlag;
+import me.kryniowesegryderiusz.kgenerators.generators.locations.objects.GeneratorLocation;
+import me.kryniowesegryderiusz.kgenerators.logger.Logger;
+import me.kryniowesegryderiusz.kgenerators.multiversion.interfaces.WorldGuardUtils;
 
 public class WorldGuardUtils_1_13 implements WorldGuardUtils {
 	

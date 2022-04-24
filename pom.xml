@@ -2,7 +2,7 @@
 	<modelVersion>4.0.0</modelVersion>
 	<groupId>me.kryniowesegryderiusz</groupId>
 	<artifactId>kgenerators-parent</artifactId>
-	<version>6.3.1</version>
+	<version>7.PRE</version>
 	<packaging>pom</packaging>
 	<name>KGenerators</name>
 	<description>Your own custom single/double generators</description>
@@ -10,7 +10,6 @@
    	<properties>
         <author>Kryniowesegryderiusz (Krynio_ on spigot)</author>
      	<BUILD_NUMBER>Unknown</BUILD_NUMBER>
-		<kgenerators_version>6.3.1</kgenerators_version>
     </properties>
 	
    <modules>

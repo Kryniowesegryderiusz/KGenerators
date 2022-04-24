@@ -5,7 +5,8 @@ import java.lang.reflect.Constructor;
 import org.bukkit.Bukkit;
 import org.bukkit.entity.Player;
 
-import me.kryniowesegryderiusz.kgenerators.Logger;
+import me.kryniowesegryderiusz.kgenerators.logger.Logger;
+import me.kryniowesegryderiusz.kgenerators.multiversion.interfaces.ActionBar;
 
 public class ActionBar_1_8 implements ActionBar {
 	  public void sendActionBar(Player player, String msg) {
