@@ -7,6 +7,10 @@
     <artifactId>kgenerators-parent</artifactId>
     <version>7.PRE</version>
   </parent>
+    <properties>
+    <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
+    <project.reporting.outputEncoding>UTF-8</project.reporting.outputEncoding>
+</properties>
      <build>
        <directory>../target</directory>
        <finalName>KGenerators-${project.parent.version}-b${env.BUILD_NUMBER}</finalName>
