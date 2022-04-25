@@ -8,7 +8,7 @@ import org.bukkit.event.inventory.InventoryClickEvent;
 import org.bukkit.event.inventory.InventoryType;
 
 import me.kryniowesegryderiusz.kgenerators.Main;
-import me.kryniowesegryderiusz.kgenerators.api.events.CustomMenuClickEvent;
+import me.kryniowesegryderiusz.kgenerators.addons.events.CustomMenuClickEvent;
 import me.kryniowesegryderiusz.kgenerators.gui.menus.ChancesMenu;
 import me.kryniowesegryderiusz.kgenerators.gui.menus.GeneratorMenu;
 import me.kryniowesegryderiusz.kgenerators.gui.menus.LimitsMenu;

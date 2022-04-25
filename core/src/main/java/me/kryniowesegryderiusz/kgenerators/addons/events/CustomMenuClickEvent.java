@@ -1,4 +1,4 @@
-package me.kryniowesegryderiusz.kgenerators.api.events;
+package me.kryniowesegryderiusz.kgenerators.addons.events;
 
 import org.bukkit.entity.Player;
 import org.bukkit.event.Event;
