@@ -2,23 +2,17 @@ package me.kryniowesegryderiusz.kgenerators.utils;
 
 import java.io.File;
 import java.io.IOException;
-import java.nio.file.Files;
-import java.util.ArrayList;
 
-import org.bukkit.configuration.ConfigurationSection;
 import org.bukkit.configuration.InvalidConfigurationException;
 import org.bukkit.inventory.ItemStack;
 
 import me.kryniowesegryderiusz.kgenerators.Main;
 import me.kryniowesegryderiusz.kgenerators.data.enums.DatabaseType;
-import me.kryniowesegryderiusz.kgenerators.generators.generator.objects.GeneratorAction;
 import me.kryniowesegryderiusz.kgenerators.generators.locations.handlers.enums.ActionType;
-import me.kryniowesegryderiusz.kgenerators.generators.locations.handlers.enums.InteractionType;
 import me.kryniowesegryderiusz.kgenerators.logger.Logger;
 import me.kryniowesegryderiusz.kgenerators.settings.Settings;
 import me.kryniowesegryderiusz.kgenerators.utils.immutable.Config;
 import me.kryniowesegryderiusz.kgenerators.utils.immutable.ConfigManager;
-import me.kryniowesegryderiusz.kgenerators.xseries.XUtils;
 
 public class FilesConverter {
 	

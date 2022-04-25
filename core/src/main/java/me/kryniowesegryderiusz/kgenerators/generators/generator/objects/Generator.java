@@ -200,4 +200,8 @@ public class Generator {
 	{
 		return Main.getSettings().isWorldDisabled(w) || this.disabledWorlds.contains(w.getName());
 	}
+	
+	public boolean isPlaceholder (ItemStack item) {
+		return this.placeholder != null && this.placeholder.equals(item);
+	}
 }

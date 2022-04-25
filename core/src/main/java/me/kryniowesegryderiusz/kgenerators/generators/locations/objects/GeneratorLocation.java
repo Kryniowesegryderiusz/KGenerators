@@ -108,7 +108,7 @@ public class GeneratorLocation {
 	 */
 	public boolean isBroken()
 	{
-		if (!Main.getLocations().exists(this.location))
+		if (!Main.getLocations().stillExists(this))
 			return false;
 		
 		if (!Main.getSchedules().isScheduled(this))

@@ -80,7 +80,7 @@ public class SuperiorSkyblock2Hook implements Listener {
 	@EventHandler(priority = EventPriority.HIGH)
 	public void onStackEvent(BlockStackEvent e)
 	{
-		if (Main.getLocations().exists(e.getBlock().getLocation()))
+		if (Main.getLocations().get(e.getBlock().getLocation()) != null)
 			e.setCancelled(true);
 	}
 	

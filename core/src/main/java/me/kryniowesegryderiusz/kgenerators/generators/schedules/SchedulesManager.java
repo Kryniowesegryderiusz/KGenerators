@@ -20,7 +20,6 @@ import me.kryniowesegryderiusz.kgenerators.lang.enums.Message;
 import me.kryniowesegryderiusz.kgenerators.logger.Logger;
 import me.kryniowesegryderiusz.kgenerators.utils.immutable.Config;
 import me.kryniowesegryderiusz.kgenerators.utils.immutable.ConfigManager;
-import me.kryniowesegryderiusz.kgenerators.xseries.XMaterial;
 
 public class SchedulesManager {
 	
@@ -35,19 +34,16 @@ public class SchedulesManager {
 		    public void run() {
 				int freq = Main.getSettings().getGenerationCheckFrequency();
 				ArrayList<GeneratorLocation> toRemove = new ArrayList<GeneratorLocation>();
-				for (Entry<GeneratorLocation, Integer> e : schedules.entrySet())
-				{
+				for (Entry<GeneratorLocation, Integer> e : schedules.entrySet()) {
 					e.setValue(e.getValue()-freq);
-					if (e.getValue() <= 0)
-					{
-						if (Main.getLocations().exists(e.getKey().getLocation()))
+					if (e.getValue() <= 0) {
+						if (Main.getLocations().stillExists(e.getKey()))
 							e.getKey().regenerateGenerator();
 						toRemove.add(e.getKey());
 					}
 				}
 				
-				for (GeneratorLocation l : toRemove)
-				{
+				for (GeneratorLocation l : toRemove) {
 					if(schedules.get(l) <= 0)
 						remove(l);
 				}
@@ -81,8 +77,7 @@ public class SchedulesManager {
         Bukkit.getScheduler().runTask(Main.getInstance(), () -> {
         	ConfigurationSection mainSection = file.getConfigurationSection("");
 			int amount = 0;
-        	for(String generatorLocationString: mainSection.getKeys(false))
-        	{
+        	for(String generatorLocationString: mainSection.getKeys(false)) {
         		Location location = Main.getLocations().stringToLocation(generatorLocationString);
         		GeneratorLocation gLocation = Main.getLocations().get(location);
         		this.insert(gLocation, file.getInt(generatorLocationString + ".delay"));
@@ -97,23 +92,17 @@ public class SchedulesManager {
 	public void schedule(GeneratorLocation gLocation, boolean place) {
 		
 		if ((place && gLocation.getGenerator().isGenerateImmediatelyAfterPlace()) 
-				|| gLocation.getGenerator().getDelay() <= 0)
-		{
+				|| gLocation.getGenerator().getDelay() <= 0) {
 			Bukkit.getScheduler().runTask(Main.getInstance(), () -> {
-				this.generatePlaceholder(gLocation);
 				gLocation.regenerateGenerator();
 			});
-		}
-		else
-		{
+		} else {
 			Bukkit.getScheduler().runTask(Main.getInstance(), () -> {
 				this.generatePlaceholder(gLocation);
 			});
 			
 			if (gLocation.getGenerator().isHologram())
-			{
 				Main.getHolograms().createHologram(gLocation);
-			}
 			
 			schedules.put(gLocation, gLocation.getGenerator().getDelay());
 		}
@@ -121,9 +110,8 @@ public class SchedulesManager {
 	
 	private void generatePlaceholder(GeneratorLocation gLocation) {	
 		ItemStack placeholder = gLocation.getGenerator().getPlaceholder();
-		if (placeholder == null)
-			placeholder = XMaterial.AIR.parseItem();
-		  Main.getMultiVersion().getBlocksUtils().setBlock(gLocation.getGeneratedBlockLocation(), placeholder);
+		if (placeholder != null)
+			Main.getMultiVersion().getBlocksUtils().setBlock(gLocation.getGeneratedBlockLocation(), placeholder);
 	}
 	
 	/**
@@ -134,12 +122,11 @@ public class SchedulesManager {
 	{
 		if (schedules.containsKey(gLocation))
 			return schedules.get(gLocation);
-		else
-		{
+		else {
 			Location aLocation = gLocation.getLocation().clone().add(0,1,0);
 			GeneratorLocation agLocation;
 			
-			if (!Main.getLocations().exists(aLocation))
+			if (Main.getLocations().get(aLocation) == null)
 				return -1;
 			else
 				agLocation = Main.getLocations().get(aLocation);
@@ -152,8 +139,7 @@ public class SchedulesManager {
 			
 	}
 	
-	public String timeLeftFormatted(GeneratorLocation gLocation, boolean removeMs)
-	{
+	public String timeLeftFormatted(GeneratorLocation gLocation, boolean removeMs) {
 		LinkedHashMap<Integer, Message> times = new LinkedHashMap<Integer, Message>();
 		times.put(20*60*60*24, Message.COMMANDS_TIME_LEFT_FORMAT_DAY);
 		times.put(20*60*60, Message.COMMANDS_TIME_LEFT_FORMAT_HOUR);
@@ -165,10 +151,8 @@ public class SchedulesManager {
 		
 		String s = "";
 		
-		for (Entry<Integer, Message> e : times.entrySet())
-		{
-			if (delay >= e.getKey())
-			{
+		for (Entry<Integer, Message> e : times.entrySet()) {
+			if (delay >= e.getKey()) {
 				int ticks = e.getKey();
 				int amount = Math.floorDiv(delay, ticks);
 				delay -= ticks*amount;
@@ -177,13 +161,11 @@ public class SchedulesManager {
 			}
 		}
 		if (!s.equals("")) s += " ";
-		if (removeMs || gLocation.getGenerator().isSecondMultiple())
-		{
+		if (removeMs || gLocation.getGenerator().isSecondMultiple()) {
 			int d = ((int) delay/20);
 			s += String.valueOf(d);
 		}
-		else
-		{
+		else {
 			double d = ((double) delay/20);
 			s += String.valueOf(d);
 		}
@@ -210,8 +192,7 @@ public class SchedulesManager {
 		return schedules.containsKey(gLocation);
 	}
 	
-	public void saveToFile()
-	{
+	public void saveToFile() {
 		Config file;
 
 		try {
@@ -222,8 +203,7 @@ public class SchedulesManager {
 			return;
 		}
 			
-		for(Entry<GeneratorLocation, Integer> e : this.schedules.entrySet())
-		{
+		for(Entry<GeneratorLocation, Integer> e : this.schedules.entrySet()) {
 			file.set(Main.getLocations().locationToString(e.getKey().getLocation()) + ".delay", e.getValue());
 		}
 		

@@ -15,7 +15,7 @@ public class GeneratorLocationPlaceHandler {
 	
 	/**
 	 * Handle place of generator and saves it if successful
-	 * @param GeneratorLocation
+	 * @param GeneratorLocation not being in Manager nor Database yet
 	 * @param Player - player placing generator
 	 * @return whether placing was successful
 	 */
@@ -47,7 +47,7 @@ public class GeneratorLocationPlaceHandler {
     		return false;
     	}
     	
-    	if (generator.getType() == GeneratorType.DOUBLE && Main.getLocations().exists(gLocation.getGeneratedBlockLocation()))
+    	if (generator.getType() == GeneratorType.DOUBLE && Main.getLocations().get(gLocation.getGeneratedBlockLocation()) != null)
     	{
     		if (player != null) Lang.getMessageStorage().send(player, Message.GENERATORS_PLACE_CANT_PLACE_DOUBLE_BELOW_GENERATOR);
     		return false;

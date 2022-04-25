@@ -21,7 +21,7 @@ public class BlockPlaceListener implements Listener {
 		
 		Player player = e.getPlayer();
 		
-		if (Main.getLocations().exists(e.getBlock().getLocation()))
+		if (Main.getLocations().get(e.getBlock().getLocation()) != null)
 		{
 			Lang.getMessageStorage().send(player, Message.GENERATORS_PLACE_CANT_PLACE_BLOCK);
 			e.setCancelled(true);

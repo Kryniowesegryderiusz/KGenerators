@@ -28,7 +28,7 @@ public class GeneratorLocationRegenerateHandler {
 			return;
 		}
 		
-		if (!Main.getLocations().exists(gLocation.getLocation())
+		if (!Main.getLocations().stillExists(gLocation)
 				&& !Main.getMultiVersion().getBlocksUtils().isAir(generatingLocationBlock) 
 				&& !Main.getMultiVersion().getBlocksUtils().isOnWhitelist(generatingLocationBlock)
 				&& !gLocation.isBlockPossibleToMine(generatingLocation)) {

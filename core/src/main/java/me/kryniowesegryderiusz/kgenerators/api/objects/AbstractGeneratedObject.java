@@ -64,19 +64,6 @@ public abstract class AbstractGeneratedObject {
 	}
 	
 	/**
-	 * Compares GeneratedObjects that have same type;
-	 * @return true if its same object in different instances
-	 */
-	protected abstract boolean compareSameType(AbstractGeneratedObject generatedObject);
-	
-	/**
-	 * Loads values specific for GeneratorObject
-	 * @param generatedObjectConfig
-	 * @return true if loading was successful
-	 */
-	protected abstract boolean loadTypeSpecific(Map<?, ?> generatedObjectConfig);
-	
-	/**
 	 * Regenerates generator
 	 * @param GeneratorLocation
 	 */
@@ -93,4 +80,17 @@ public abstract class AbstractGeneratedObject {
 	 * @return
 	 */
 	protected abstract String toStringSpecific();
+	
+	/**
+	 * Compares GeneratedObjects that have same type;
+	 * @return true if its same object in different instances
+	 */
+	protected abstract boolean compareSameType(AbstractGeneratedObject generatedObject);
+	
+	/**
+	 * Loads values specific for GeneratorObject
+	 * @param generatedObjectConfig
+	 * @return true if loading was successful
+	 */
+	protected abstract boolean loadTypeSpecific(Map<?, ?> generatedObjectConfig);
 }

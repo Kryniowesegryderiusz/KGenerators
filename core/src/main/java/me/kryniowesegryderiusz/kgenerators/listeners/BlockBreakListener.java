@@ -23,16 +23,17 @@ public class BlockBreakListener implements Listener {
 		
 		if (gLoc == null) return;
 
-		e.setCancelled(true);
-		
-		if (gLoc.handleAction(InteractionType.BREAK, p)) return;
+		if (gLoc.handleAction(InteractionType.BREAK, p)) {
+			e.setCancelled(true);
+			return;
+		}
 		
 		if (gLoc.getGeneratedBlockLocation().equals(e.getBlock().getLocation())
-				&& !Main.getSchedules().isScheduled(gLoc)
+				&& !gLoc.getGenerator().isPlaceholder(Main.getMultiVersion().getBlocksUtils().getItemStackByBlock(e.getBlock())) //Cant use !isScheduled, because ItemsAdder fires BlockBreakEvent twice
 				&& gLoc.isPermittedToMine(p)
 				&& Main.getPlayers().getPlayer(p).canUse(gLoc)) {
-			e.setCancelled(false);
 			gLoc.scheduleGeneratorRegeneration();
-		}
+		} else
+			e.setCancelled(true);
 	}
 }

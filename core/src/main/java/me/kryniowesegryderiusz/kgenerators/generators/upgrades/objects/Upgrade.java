@@ -33,10 +33,8 @@ public class Upgrade {
 	 * @param generatorId aka path
 	 * @throws CannnotLoadUpgradeException
 	 */
-	public Upgrade(UpgradesManager upgradesManager, Config config, String generatorId) throws CannnotLoadUpgradeException
-	{
-		if (!generatorId.equals("example_generator_id_level_1"))
-		{
+	public Upgrade(UpgradesManager upgradesManager, Config config, String generatorId) throws CannnotLoadUpgradeException {
+		if (!generatorId.equals("example_generator_id_level_1")) {
 			this.generatorId = generatorId;
 			
 			if (config.contains(generatorId+".next-level"))
@@ -44,8 +42,7 @@ public class Upgrade {
 			else
 				throw(new CannnotLoadUpgradeException("Next-level generator is not set!"));
 			
-			for (IUpgradeCost upgradeCost : upgradesManager.getUpgradesCostsManager().getUpgradeCosts())
-			{
+			for (IUpgradeCost upgradeCost : upgradesManager.getUpgradesCostsManager().getUpgradeCosts()) {
 				if (upgradeCost.load(config, generatorId))
 					upgradeCosts.add(upgradeCost);
 			}
@@ -61,47 +58,39 @@ public class Upgrade {
 		}
 	}
 	
-	public Generator getNextGenerator()
-	{
+	public Generator getNextGenerator() {
 		return Main.getGenerators().get(this.nextGeneratorId);
 	}
 	
-	public Generator getPreviousGenerator()
-	{
+	public Generator getPreviousGenerator() {
 		String previousGeneratorId = Main.getUpgrades().getPreviousGeneratorId(this.generatorId);
 		if (!previousGeneratorId.isEmpty())
 			return Main.getGenerators().get(previousGeneratorId);
 		return null;	
 	}
 	
-	public void blockUpgrade(GeneratorLocation gl, Player p)
-	{
-		if (!Main.getLocations().exists(gl.getLocation()))
-		{
+	public void blockUpgrade(GeneratorLocation gl, Player p) {
+		if (!Main.getLocations().stillExists(gl)) {
 			Lang.getMessageStorage().send(p, Message.GENERATORS_ANY_NO_LONGER_THERE);
 			return;
 		}
 		
-		if (this.upgrade(p, 1))
-		{
+		if (this.upgrade(p, 1)) {
 			gl.changeTo(getNextGenerator());
 		}
 		
 	}
 	
-	public void handUpgrade(Player p)
-	{
+	public void handUpgrade(Player p) {
 		ItemStack item = p.getItemInHand();
 		Generator generator = Main.getGenerators().get(item);
-		if (generator == null)
-		{
+		if (generator == null) {
 			Lang.getMessageStorage().send(p, Message.UPGRADES_NOT_A_GENERATOR);
 			return;
 		}
 
 		
-		if (this.upgrade(p, item.getAmount()))
-		{
+		if (this.upgrade(p, item.getAmount())) {
 			ItemStack newItem = this.getNextGenerator().getGeneratorItem();
 			newItem.setAmount(item.getAmount());
 			p.setItemInHand(newItem);
@@ -109,28 +98,23 @@ public class Upgrade {
 
 	}
 	
-	private boolean upgrade(Player p, int amount)
-	{
+	private boolean upgrade(Player p, int amount) {
 		
-		if (!p.hasPermission("kgenerators.upgrade"))
-		{
+		if (!p.hasPermission("kgenerators.upgrade")) {
 			Lang.getMessageStorage().send(p, Message.UPGRADES__NO_PERMISSION,
 					"<permission>", "kgenerators.upgrade");
 			return false;
 		}
 		
-		for (IUpgradeCost uc : upgradeCosts)
-		{
-			if (!uc.checkRequirements(p, amount))
-			{
+		for (IUpgradeCost uc : upgradeCosts) {
+			if (!uc.checkRequirements(p, amount)) {
 				Lang.getMessageStorage().send(p, Message.UPGRADES_COST_NOT_FULFILLED,
 						"<cost>", uc.getCostFormatted(amount));
 				return false;
 			}
 		}
 		
-		for (IUpgradeCost uc : upgradeCosts)
-		{
+		for (IUpgradeCost uc : upgradeCosts) {
 			uc.takeRequirements(p, amount);
 		}
 		
@@ -142,11 +126,9 @@ public class Upgrade {
 		return true;
 	}
 	
-	public String getCostsFormatted(int amount)
-	{
+	public String getCostsFormatted(int amount) {
 		String s = "";
-		for (int i = 0; i < this.upgradeCosts.size(); i++)
-		{
+		for (int i = 0; i < this.upgradeCosts.size(); i++) {
 			s = s + this.upgradeCosts.get(i).getCostFormatted(amount);
 			if (i != this.upgradeCosts.size()-1)
 				s = s + Lang.getMessageStorage().get(Message.UPGRADES_COSTS_SEPARATOR, false);
@@ -154,11 +136,9 @@ public class Upgrade {
 		return s;
 	}
 	
-	public StringContent getCostsFormattedGUI()
-	{
+	public StringContent getCostsFormattedGUI() {
 		ArrayList<String> costs = new ArrayList<String>();
-		for (IUpgradeCost uc : this.upgradeCosts)
-		{
+		for (IUpgradeCost uc : this.upgradeCosts) {
 			costs.addAll(Lang.getMenuItemAdditionalLinesStorage().get(MenuItemAdditionalLines.UPGRADE_COST).replace("<cost>", uc.getCostFormatted(1)).getLines());
 		}
 		return new StringContent(costs);

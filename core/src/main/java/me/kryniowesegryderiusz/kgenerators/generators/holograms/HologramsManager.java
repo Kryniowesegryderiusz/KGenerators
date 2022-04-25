@@ -38,7 +38,7 @@ public class HologramsManager {
 						return; 
 					ArrayList<GeneratorLocation> toRemove = new ArrayList<>();
 					for (GeneratorLocation gLocation : holograms) {
-						if (Main.getLocations().exists(gLocation.getLocation()) && Main.getSchedules().timeLeft(gLocation) > 0) {
+						if (Main.getLocations().stillExists(gLocation) && Main.getSchedules().timeLeft(gLocation) > 0) {
 							int lineNo = 0;
 							for (String s : Lang.getHologramTextStorage().get(HologramText.REMAINING_TIME).getLines()) {
 								if (s.contains("<time>")) {

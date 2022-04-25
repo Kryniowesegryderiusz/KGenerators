@@ -24,28 +24,24 @@ public class GeneratorLocationPickUpHandler {
 		
 		Generator generator = gLocation.getGenerator();
 		
-		if (!Main.getLocations().exists(gLocation.getLocation()))
-		{
+		if (!Main.getLocations().stillExists(gLocation)) {
 			Lang.getMessageStorage().send(p, Message.GENERATORS_ANY_NO_LONGER_THERE);
 			return;
 		}
 		
-    	if (!p.hasPermission("kgenerators.pickup."+generator.getId()))
-    	{
+    	if (!p.hasPermission("kgenerators.pickup."+generator.getId())) {
     		Lang.getMessageStorage().send(p, Message.GENERATORS_PICK_UP_NO_PERMISSION,
     				"<permission>", "kgenerators.pickup."+generator.getId());
     		return;
     	}
 		
-		if (!Main.getPlayers().getPlayer(p).canPickUp(gLocation))
-		{
+		if (!Main.getPlayers().getPlayer(p).canPickUp(gLocation)) {
 			return;
 		}
 		
 		if ((Main.getDependencies().isEnabled(Dependency.WORLD_GUARD) && !p.hasPermission("kgenerators.bypass.worldguard") && !Main.getMultiVersion().getWorldGuardUtils().worldGuardFlagCheck(gLocation.getLocation(), p, WGFlag.PICK_UP))
 				|| !BentoBoxHook.isAllowed(p, BentoBoxHook.Type.PICKUP_FLAG, gLocation.getLocation()) 
-				|| !SuperiorSkyblock2Hook.isAllowed(p, SuperiorSkyblock2Hook.Type.PICKUP_FLAG, gLocation.getLocation()))
-		{
+				|| !SuperiorSkyblock2Hook.isAllowed(p, SuperiorSkyblock2Hook.Type.PICKUP_FLAG, gLocation.getLocation())) {
 			Lang.getMessageStorage().send(p, Message.GENERATORS_PICK_UP_CANT_HERE);
 			return;
 		}

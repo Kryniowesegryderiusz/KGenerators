@@ -27,8 +27,8 @@ public class PlayerInteractListener implements Listener {
 				
 		GeneratorLocation gLocation = null;
 		
-		if (Main.getLocations().exists(upperLocation)) gLocation = Main.getLocations().get(upperLocation);
-		if (Main.getLocations().exists(location)) gLocation = Main.getLocations().get(location);
+		if (Main.getLocations().get(upperLocation) != null) gLocation = Main.getLocations().get(upperLocation);
+		if (Main.getLocations().get(location) != null) gLocation = Main.getLocations().get(location);
 		
 		if (gLocation == null) return;
 		
