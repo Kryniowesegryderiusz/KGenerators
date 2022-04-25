@@ -1,11 +1,11 @@
-package me.kryniowesegryderiusz.kgenerators.api;
+package me.kryniowesegryderiusz.kgenerators.addons.objects;
 
 import java.util.ArrayList;
 
 import org.bukkit.plugin.Plugin;
 
 import lombok.Getter;
-import me.kryniowesegryderiusz.kgenerators.Addons;
+import me.kryniowesegryderiusz.kgenerators.addons.Addons;
 import me.kryniowesegryderiusz.kgenerators.logger.Logger;
 
 /**
@@ -13,21 +13,18 @@ import me.kryniowesegryderiusz.kgenerators.logger.Logger;
  */
 public class Addon {
 	
-	String name;
-	String version;
-	@Getter
-	ArrayList<String> configs;
+	private String name;
+	private String version;
+	@Getter ArrayList<String> configs;
 	
-	public Addon(Plugin plugin)
-	{
+	public Addon(Plugin plugin) {
 		this.name = plugin.getName();
 		this.version = plugin.getDescription().getVersion();
 		Addons.register(this);
 		Logger.info("Addons manager: Registered " + this.toString() + " addon");
 	}
 	
-	public Addon(Plugin plugin, ArrayList<String> configs)
-	{
+	public Addon(Plugin plugin, ArrayList<String> configs) {
 		this.name = plugin.getName();
 		this.version = plugin.getDescription().getVersion();
 		this.configs = configs;

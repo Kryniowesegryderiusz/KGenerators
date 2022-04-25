@@ -135,9 +135,9 @@ public class Main extends JavaPlugin {
     public void reload() {
     	Logger.info("Reload: KGenerators reload started");
     	settings = new Settings();
-    	generators = new GeneratorsManager();
+    	generators.reload();
     	players.reload();
-    	upgrades = new UpgradesManager();
+    	upgrades.reload();
     	limits = new LimitsManager();
     	Lang.loadFromFiles();
     	this.getServer().getPluginManager().callEvent(new ReloadEvent());

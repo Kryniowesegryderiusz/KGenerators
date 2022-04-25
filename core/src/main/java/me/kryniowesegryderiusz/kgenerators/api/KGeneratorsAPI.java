@@ -5,24 +5,31 @@ import javax.annotation.Nullable;
 import org.bukkit.Location;
 
 import me.kryniowesegryderiusz.kgenerators.Main;
+import me.kryniowesegryderiusz.kgenerators.api.interfaces.IGeneratorLocation;
 import me.kryniowesegryderiusz.kgenerators.api.interfaces.IUpgradeCost;
-import me.kryniowesegryderiusz.kgenerators.generators.locations.objects.GeneratorLocation;
-import me.kryniowesegryderiusz.kgenerators.generators.upgrades.objects.Upgrade;
-import me.kryniowesegryderiusz.kgenerators.logger.Logger;
-import me.kryniowesegryderiusz.kgenerators.settings.Settings;
+import me.kryniowesegryderiusz.kgenerators.api.objects.AbstractGeneratedObject;
 
+/**
+ * API version v7.PRE
+ * If you lack API functions and need to get access of other parts of KGenerators feel free to contact me!
+ * @author Kryniowesegryderiusz
+ */
 public class KGeneratorsAPI
 {
 	public KGeneratorsAPI() {}
 	
 	/**
-	 * Get GeneratorLocation by location.
+	 * Get IGeneratorLocation by location.
 	 * It gives access to all generator-related methods
 	 * 
+	 * Note that it could be upper block of double generator!
+	 * 
+	 * See {@link me.kryniowesegryderiusz.kgenerators.api.interfaces.IGeneratorLocation} for more information
+	 * 
 	 * @param location Location
-	 * @return GeneratorLocation or null if doesn't exist
+	 * @return IGeneratorLocation or null if doesn't exist
 	 */
-	public static @Nullable GeneratorLocation getGeneratorLocation(Location location)
+	public static @Nullable IGeneratorLocation getGeneratorLocation(Location location)
 	{
 		return Main.getLocations().get(location);
 	}
@@ -30,34 +37,24 @@ public class KGeneratorsAPI
 	/**
 	 * Registers and loads new upgrade cost. It should implement IUpgradeCost interface 
 	 * Ex. {@link me.kryniowesegryderiusz.kgenerators.generators.upgrades.objects.UpgradeCostMoney} 
-	 * @param class beeing registered
+	 * @param class being registered
 	 * @since 6.0.0
 	 */
 	public static <T extends IUpgradeCost> void registerUpgradeCost(Class<T> c)
 	{
 		Main.getUpgrades().getUpgradesCostsManager().registerUpgradeCost(c);
 		Main.getUpgrades().reload();
-		Logger.info("Upgrades: Registered and loaded new UpgradeCost " + c.getName());
 	}
 	
 	/**
-	 * Get upgrade by generatorId
-	 * 
-	 * @return Upgrade or null if generator doesnt have one
+	 * Registers and loads new generated object. It should extend AbstractGeneratedObject class
+	 * Ex. {@link me.kryniowesegryderiusz.kgenerators.generators.generator.objects.GeneratedBlock} 
+	 * @param class being registered
+	 * @since 6.0.0
 	 */
-	public static Upgrade getUpgrade(String generatorId)
+	public static <T extends AbstractGeneratedObject> void registerGeneratedObjec(Class<T> c)
 	{
-		return Main.getUpgrades().getUpgrade(generatorId);
+		Main.getGenerators().getGeneratedObjectsManager().registerGeneratedObject(c);
+		Main.getGenerators().reload();
 	}
-	
-	/**
-	 * Get global settings
-	 * 
-	 * @return Settings interface
-	 */
-	public static Settings getGlobalSettings()
-	{
-		return Main.getSettings();
-	}
-	
 }

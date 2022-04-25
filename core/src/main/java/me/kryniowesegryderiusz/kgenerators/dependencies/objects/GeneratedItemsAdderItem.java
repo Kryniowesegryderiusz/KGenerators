@@ -6,8 +6,8 @@ import org.bukkit.inventory.ItemStack;
 
 import dev.lone.itemsadder.api.CustomStack;
 import lombok.Getter;
+import me.kryniowesegryderiusz.kgenerators.api.interfaces.IGeneratorLocation;
 import me.kryniowesegryderiusz.kgenerators.api.objects.AbstractGeneratedObject;
-import me.kryniowesegryderiusz.kgenerators.generators.locations.objects.GeneratorLocation;
 import me.kryniowesegryderiusz.kgenerators.logger.Logger;
 import me.kryniowesegryderiusz.kgenerators.xseries.XMaterial;
 
@@ -37,7 +37,7 @@ public class GeneratedItemsAdderItem extends AbstractGeneratedObject {
 	}
 
 	@Override
-	public void regenerate(GeneratorLocation generatorLocation) {
+	public void regenerate(IGeneratorLocation generatorLocation) {
 		CustomStack customStack = this.getCustomStack();
 		if (customStack != null) {
 			customStack.drop(generatorLocation.getGeneratedBlockLocation());

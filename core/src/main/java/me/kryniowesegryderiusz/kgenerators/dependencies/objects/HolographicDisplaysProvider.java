@@ -9,7 +9,7 @@ import com.gmail.filoghost.holographicdisplays.api.Hologram;
 import com.gmail.filoghost.holographicdisplays.api.HologramsAPI;
 
 import me.kryniowesegryderiusz.kgenerators.Main;
-import me.kryniowesegryderiusz.kgenerators.api.interfaces.IHologramProvider;
+import me.kryniowesegryderiusz.kgenerators.generators.holograms.interfaces.IHologramProvider;
 
 public class HolographicDisplaysProvider implements IHologramProvider {
 	public void createHologram(Location location, ArrayList<String> lines) {

@@ -1,4 +1,4 @@
-package me.kryniowesegryderiusz.kgenerators.api.interfaces;
+package me.kryniowesegryderiusz.kgenerators.generators.holograms.interfaces;
 
 import java.util.ArrayList;
 

@@ -9,6 +9,7 @@ import org.bukkit.inventory.ItemStack;
 
 import lombok.Getter;
 import me.kryniowesegryderiusz.kgenerators.Main;
+import me.kryniowesegryderiusz.kgenerators.api.interfaces.IGeneratorLocation;
 import me.kryniowesegryderiusz.kgenerators.dependencies.enums.Dependency;
 import me.kryniowesegryderiusz.kgenerators.dependencies.enums.WGFlag;
 import me.kryniowesegryderiusz.kgenerators.dependencies.hooks.BentoBoxHook;
@@ -26,7 +27,7 @@ import me.kryniowesegryderiusz.kgenerators.lang.Lang;
 import me.kryniowesegryderiusz.kgenerators.lang.enums.Message;
 import me.kryniowesegryderiusz.kgenerators.logger.Logger;
 
-public class GeneratorLocation {
+public class GeneratorLocation implements IGeneratorLocation {
 	
 	private static GeneratorLocationPickUpHandler pickUpHandler = new GeneratorLocationPickUpHandler();
 	private static GeneratorLocationPlaceHandler placeHandler = new GeneratorLocationPlaceHandler();
@@ -44,7 +45,7 @@ public class GeneratorLocation {
 	 * **Note that you probably should use GeneratorLocation#save() method**
 	 * @param Generator generator
 	 * @param Location location
-	 * @param GeneratorPlayer owner
+	 * @param GeneratorPlayer owner - nullable
 	 */
 	public GeneratorLocation(Generator generator, Location location, GeneratorPlayer owner)
 	{
@@ -64,6 +65,7 @@ public class GeneratorLocation {
 	 * Getting GeneratorLocation info
 	 */
 	
+	//api
 	public Location getGeneratedBlockLocation() {
 		if (this.getGenerator().getType() == GeneratorType.SINGLE)
 			return location;
@@ -71,10 +73,12 @@ public class GeneratorLocation {
 			return location.clone().add(0, 1, 0);
 	}
 	
+	//api
 	public boolean isBlockPossibleToMine(Location location) {
 		return this.getGeneratedBlockLocation().equals(location) && !this.getGenerator().getPlaceholder().equals(Main.getMultiVersion().getBlocksUtils().getItemStackByBlock(location.getBlock()));
 	}
 	
+	//api
 	public boolean isPermittedToMine(Player player)
 	{
 		String permission = "kgenerators.mine." + this.getGenerator().getId();
@@ -106,6 +110,7 @@ public class GeneratorLocation {
 	 * More precisely if there isnt any scheduled regeneration referred to it and there is nothing in place of that generator.
 	 * @return
 	 */
+	//api
 	public boolean isBroken()
 	{
 		if (!Main.getLocations().stillExists(this))
@@ -123,15 +128,18 @@ public class GeneratorLocation {
 	 * GeneratorLocation actions
 	 */
 	
+	//api
 	public void regenerateGenerator() {
 		regenerateHandler.handle(this);
 	}
 	
+	//api
 	public void scheduleGeneratorRegeneration()
 	{
 		Main.getSchedules().schedule(this, false);
 	}
 	
+	//api
 	public void removeGenerator(boolean drop, @Nullable Player player)
 	{
 		removeHandler.handle(this, drop, player);
@@ -172,8 +180,8 @@ public class GeneratorLocation {
 	 * Changes this generatorLocation to another generator
 	 * @param Generator generator
 	 */
-	public void changeTo(Generator generator)
-	{
+	//api
+	public void changeTo(Generator generator) {
 		Logger.info("Generator " + this.generator.getId() +  " placed in " + this.toStringLocation() + " was transformed to " + generator.getId());
 		Main.getSchedules().remove(this);
 			
@@ -207,6 +215,7 @@ public class GeneratorLocation {
 			return this.generator.getId() + " owned by no one"
 			+ " placed in " + toStringLocation();
 	}
+	
 	public String toStringLocation()
 	{
 		return "world " + this.location.getWorld().getName()

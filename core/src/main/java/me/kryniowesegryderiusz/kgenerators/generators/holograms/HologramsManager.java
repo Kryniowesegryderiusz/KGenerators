@@ -6,10 +6,10 @@ import org.bukkit.Bukkit;
 import org.bukkit.plugin.Plugin;
 
 import me.kryniowesegryderiusz.kgenerators.Main;
-import me.kryniowesegryderiusz.kgenerators.api.interfaces.IHologramProvider;
 import me.kryniowesegryderiusz.kgenerators.dependencies.enums.Dependency;
 import me.kryniowesegryderiusz.kgenerators.dependencies.objects.DecentHologramsProvider;
 import me.kryniowesegryderiusz.kgenerators.dependencies.objects.HolographicDisplaysProvider;
+import me.kryniowesegryderiusz.kgenerators.generators.holograms.interfaces.IHologramProvider;
 import me.kryniowesegryderiusz.kgenerators.generators.locations.objects.GeneratorLocation;
 import me.kryniowesegryderiusz.kgenerators.lang.Lang;
 import me.kryniowesegryderiusz.kgenerators.lang.enums.HologramText;

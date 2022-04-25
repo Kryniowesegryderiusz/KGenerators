@@ -34,19 +34,7 @@ public class GeneratorsManager {
 	
 	@Getter private GeneratedObjectsManager generatedObjectsManager;
 	
-	public GeneratorsManager() {
-		Config config;
-
-    	try {
-    		config = ConfigManager.getConfig("generators.yml", (String) null, true, false);
-			config.loadConfig();
-		} catch (IOException | InvalidConfigurationException e) {
-			Logger.error("Generators file: Cant load generators config. Disabling plugin.");
-			Logger.error(e);
-			Main.getInstance().getServer().getPluginManager().disablePlugin(Main.getInstance());
-			return;
-		}
-    	
+	public GeneratorsManager() {    	
     	this.generatedObjectsManager = new GeneratedObjectsManager();
     	this.generatedObjectsManager.registerGeneratedObject(GeneratedBlock.class);
     	this.generatedObjectsManager.registerGeneratedObject(GeneratedItem.class);
@@ -54,38 +42,24 @@ public class GeneratorsManager {
     		this.generatedObjectsManager.registerGeneratedObject(GeneratedItemsAdderBlock.class);
     		this.generatedObjectsManager.registerGeneratedObject(GeneratedItemsAdderItem.class);
     	}
-    		
-    	
-    	ConfigurationSection mainSection = config.getConfigurationSection("");
-    	for(String generatorID: mainSection.getKeys(false)){
-    		if (!generatorID.equals("example_generator"))
-    		{
-    			new Generator(this, config, generatorID);
-    		}
-    	}
-    	Logger.info("Generators file: Loaded " + this.generators.size() + " generators!");
+    	this.reload();
 	}
 	
-	public void clear()
-	{
+	public void clear() {
 		generators.clear();
 	}
 	
-	public void add(String id, Generator generator)
-	{
+	public void add(String id, Generator generator) {
 		generators.put(id, generator);
 	}
 	
 	@Nullable
-	public Generator get(String id)
-	{
-		if (!generators.containsKey(id)) return null;
+	public Generator get(String id) {
 		return generators.get(id);
 	}
 	
 	@Nullable
-	public Generator get(ItemStack item)
-	{
+	public Generator get(ItemStack item) {
 		for(Entry<String, Generator> entry : getEntrySet())
 		{
 			if (entry.getValue().getGeneratorItem().getItemMeta().equals(item.getItemMeta()) && XMaterial.matchXMaterial(entry.getValue().getGeneratorItem()) == XMaterial.matchXMaterial(item)) return entry.getValue();
@@ -93,18 +67,15 @@ public class GeneratorsManager {
 		return null;
 	}
 	
-	public Collection<Generator> getAll()
-	{
+	public Collection<Generator> getAll() {
 		return generators.values();
 	}
 	
-	public Set<Entry<String, Generator>> getEntrySet()
-	{
+	public Set<Entry<String, Generator>> getEntrySet() {
 		return generators.entrySet();
 	}
 	
-	public Set<Entry<String, Generator>> getSpecifiedEntrySet(int firstGeneratorNr, int numberOfGenerators)
-	{
+	public Set<Entry<String, Generator>> getSpecifiedEntrySet(int firstGeneratorNr, int numberOfGenerators) {
 		LinkedHashMap<String, Generator> gens = new LinkedHashMap<String, Generator>();
 		int nr = 0;
 		for (Entry<String, Generator> e : generators.entrySet())
@@ -121,8 +92,7 @@ public class GeneratorsManager {
 		return gens.entrySet();
 	}
 	
-	public boolean exists(String id)
-	{
+	public boolean exists(String id) {
 		if (generators.containsKey(id)) return true;
 		return false;
 	}
@@ -133,9 +103,7 @@ public class GeneratorsManager {
 	 * @param item
 	 * @return generatorId of doubled recipe, otherwise null
 	 */
-	public String exactGeneratorItemExists(String generatorId, ItemStack item)
-	{
-
+	public String exactGeneratorItemExists(String generatorId, ItemStack item) {
 		for (Entry<String, Generator> entry : getEntrySet()) {
 			if (entry.getValue().getGeneratorItem().equals(item)) 
 				return entry.getKey();
@@ -143,13 +111,11 @@ public class GeneratorsManager {
 		return null;
 	}
 	
-	public int getAmount()
-	{
+	public int getAmount() {
 		return generators.size();
 	}
 	
-	public int getAmount(GeneratorType type)
-	{
+	public int getAmount(GeneratorType type) {
 		int amount = 0;
 		for (Entry<String, Generator> g : getEntrySet())
 		{
@@ -159,6 +125,31 @@ public class GeneratorsManager {
 			}
 		}
 		return amount;
+	}
+	
+	public void reload() {
+		
+		Config config;
+
+    	try {
+    		config = ConfigManager.getConfig("generators.yml", (String) null, true, false);
+			config.loadConfig();
+		} catch (IOException | InvalidConfigurationException e) {
+			Logger.error("Generators file: Cant load generators config. Disabling plugin.");
+			Logger.error(e);
+			Main.getInstance().getServer().getPluginManager().disablePlugin(Main.getInstance());
+			return;
+		}
+    	
+		ConfigurationSection mainSection = config.getConfigurationSection("");
+    	for(String generatorID: mainSection.getKeys(false)){
+    		if (!generatorID.equals("example_generator"))
+    		{
+    			new Generator(this, config, generatorID);
+    		}
+    	}
+    	
+    	Logger.info("Generators file: Loaded " + this.generators.size() + " generators!");
 	}
 	
 	public class GeneratedObjectsManager {
@@ -188,7 +179,6 @@ public class GeneratorsManager {
 				Logger.error("Generators file: There isnt any possible object with type: " + type + "! GeneratedObject not loaded. Possible types: " + this.generatedObjects.keySet());
 			}
 			return null;
-		}
-		
+		}		
 	}
 }

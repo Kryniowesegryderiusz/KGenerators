@@ -4,16 +4,15 @@ import org.bukkit.event.Event;
 import org.bukkit.event.HandlerList;
 
 import lombok.Getter;
-import me.kryniowesegryderiusz.kgenerators.generators.locations.objects.GeneratorLocation;
+import me.kryniowesegryderiusz.kgenerators.api.interfaces.IGeneratorLocation;
 
 public class PostBlockGenerationEvent extends Event {
 
     private static final HandlerList HANDLERS = new HandlerList();
     
-    @Getter
-    GeneratorLocation generatorLocation;
+    @Getter IGeneratorLocation generatorLocation;
 
-    public PostBlockGenerationEvent(GeneratorLocation generatorLocation) {
+    public PostBlockGenerationEvent(IGeneratorLocation generatorLocation) {
 		this.generatorLocation = generatorLocation;
 	}
 

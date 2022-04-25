@@ -7,10 +7,10 @@ import org.bukkit.inventory.ItemStack;
 
 import lombok.Getter;
 import me.kryniowesegryderiusz.kgenerators.Main;
+import me.kryniowesegryderiusz.kgenerators.api.interfaces.IGeneratorLocation;
 import me.kryniowesegryderiusz.kgenerators.api.objects.AbstractGeneratedObject;
 import me.kryniowesegryderiusz.kgenerators.dependencies.enums.Dependency;
 import me.kryniowesegryderiusz.kgenerators.dependencies.hooks.SuperiorSkyblock2Hook;
-import me.kryniowesegryderiusz.kgenerators.generators.locations.objects.GeneratorLocation;
 import me.kryniowesegryderiusz.kgenerators.logger.Logger;
 import me.kryniowesegryderiusz.kgenerators.xseries.XMaterial;
 
@@ -42,7 +42,7 @@ public class GeneratedBlock extends AbstractGeneratedObject {
 	}
 
 	@Override
-	public void regenerate(GeneratorLocation generatorLocation) {
+	public void regenerate(IGeneratorLocation generatorLocation) {
 		  Main.getMultiVersion().getBlocksUtils().setBlock(generatorLocation.getGeneratedBlockLocation(), this.xMaterial.parseItem());
 		  if (Main.getDependencies().isEnabled(Dependency.SUPERIOR_SKYBLOCK_2))
 			  SuperiorSkyblock2Hook.handleBlockPlace(generatorLocation.getGeneratedBlockLocation().getBlock());

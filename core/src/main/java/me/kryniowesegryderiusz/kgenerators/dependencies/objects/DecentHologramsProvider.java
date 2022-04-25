@@ -6,7 +6,7 @@ import org.bukkit.Location;
 
 import eu.decentsoftware.holograms.api.DHAPI;
 import eu.decentsoftware.holograms.api.holograms.Hologram;
-import me.kryniowesegryderiusz.kgenerators.api.interfaces.IHologramProvider;
+import me.kryniowesegryderiusz.kgenerators.generators.holograms.interfaces.IHologramProvider;
 
 public class DecentHologramsProvider implements IHologramProvider {
 	public void createHologram(Location location, ArrayList<String> lines) {

@@ -5,7 +5,7 @@ import java.util.Map;
 import org.bukkit.inventory.ItemStack;
 
 import lombok.Getter;
-import me.kryniowesegryderiusz.kgenerators.generators.locations.objects.GeneratorLocation;
+import me.kryniowesegryderiusz.kgenerators.api.interfaces.IGeneratorLocation;
 import me.kryniowesegryderiusz.kgenerators.logger.Logger;
 
 public abstract class AbstractGeneratedObject {
@@ -30,7 +30,7 @@ public abstract class AbstractGeneratedObject {
 	/**
 	 * Loads GeneratorObject from config
 	 * @param generatedObjectConfig
-	 * @return true if loading was succesfull
+	 * @return true if loading was successful
 	 */
 	public boolean load(Map<?, ?> generatedObjectConfig) {
 		
@@ -50,7 +50,6 @@ public abstract class AbstractGeneratedObject {
 			Logger.error(e);
 			return false;
 		}
-		
 		return true;
 
 	}
@@ -67,7 +66,7 @@ public abstract class AbstractGeneratedObject {
 	 * Regenerates generator
 	 * @param GeneratorLocation
 	 */
-	public abstract void regenerate(GeneratorLocation generatorLocation);
+	public abstract void regenerate(IGeneratorLocation generatorLocation);
 	
 	/**
 	 * Gets item displayed in chances gui

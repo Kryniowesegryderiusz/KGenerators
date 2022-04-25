@@ -25,9 +25,9 @@ import java.util.Map;
 import org.bukkit.command.CommandSender;
 import org.bukkit.plugin.Plugin;
 
-import me.kryniowesegryderiusz.kgenerators.Addons;
 import me.kryniowesegryderiusz.kgenerators.Main;
-import me.kryniowesegryderiusz.kgenerators.api.Addon;
+import me.kryniowesegryderiusz.kgenerators.addons.Addons;
+import me.kryniowesegryderiusz.kgenerators.addons.objects.Addon;
 import me.kryniowesegryderiusz.kgenerators.lang.Lang;
 import me.kryniowesegryderiusz.kgenerators.lang.enums.Message;
 import me.kryniowesegryderiusz.kgenerators.logger.enums.LogType;

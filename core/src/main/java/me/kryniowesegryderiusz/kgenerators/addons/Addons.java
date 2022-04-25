@@ -1,9 +1,9 @@
-package me.kryniowesegryderiusz.kgenerators;
+package me.kryniowesegryderiusz.kgenerators.addons;
 
 import java.util.ArrayList;
 
 import lombok.Getter;
-import me.kryniowesegryderiusz.kgenerators.api.Addon;
+import me.kryniowesegryderiusz.kgenerators.addons.objects.Addon;
 
 public class Addons {
 	

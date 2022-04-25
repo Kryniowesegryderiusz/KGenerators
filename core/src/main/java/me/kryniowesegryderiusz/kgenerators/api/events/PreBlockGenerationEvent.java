@@ -5,16 +5,15 @@ import org.bukkit.event.Event;
 import org.bukkit.event.HandlerList;
 
 import lombok.Getter;
-import me.kryniowesegryderiusz.kgenerators.generators.locations.objects.GeneratorLocation;
+import me.kryniowesegryderiusz.kgenerators.api.interfaces.IGeneratorLocation;
 
 public class PreBlockGenerationEvent extends Event implements Cancellable {
 
     private static final HandlerList HANDLERS = new HandlerList();
     
-    @Getter
-    GeneratorLocation generatorLocation;
+    @Getter IGeneratorLocation generatorLocation;
 
-    public PreBlockGenerationEvent(GeneratorLocation generatorLocation) {
+    public PreBlockGenerationEvent(IGeneratorLocation generatorLocation) {
 		this.generatorLocation = generatorLocation;
 	}
 
@@ -29,13 +28,11 @@ public class PreBlockGenerationEvent extends Event implements Cancellable {
 
 	@Override
 	public boolean isCancelled() {
-		// TODO Auto-generated method stub
 		return false;
 	}
 
 	@Override
 	public void setCancelled(boolean cancel) {
-		// TODO Auto-generated method stub
-		
+
 	}
 }
