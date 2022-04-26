@@ -14,8 +14,8 @@ import me.kryniowesegryderiusz.kgenerators.generators.players.objects.GeneratorP
 import me.kryniowesegryderiusz.kgenerators.lang.Lang;
 import me.kryniowesegryderiusz.kgenerators.lang.enums.Message;
 import me.kryniowesegryderiusz.kgenerators.logger.Logger;
+import me.kryniowesegryderiusz.kgenerators.utils.ItemUtils;
 import me.kryniowesegryderiusz.kgenerators.utils.immutable.Config;
-import me.kryniowesegryderiusz.kgenerators.xseries.XUtils;
 
 public class Limit {
 	
@@ -42,7 +42,7 @@ public class Limit {
 		
 		ItemStack item = null;
 		if (config.contains(id+".item"))
-			this.item = XUtils.parseItemStack(config.getString(id+".item"), "Limits file", false);
+			this.item = ItemUtils.parseItemStack(config.getString(id+".item"), "Limits file", false);
 		else
 		{
 			Logger.error("Limits file: " + id + " doesnt have item set!");

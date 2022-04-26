@@ -14,8 +14,8 @@ import lombok.Setter;
 import me.kryniowesegryderiusz.kgenerators.Main;
 import me.kryniowesegryderiusz.kgenerators.lang.enums.MenuItemType;
 import me.kryniowesegryderiusz.kgenerators.lang.objects.StringContent;
+import me.kryniowesegryderiusz.kgenerators.utils.ItemUtils;
 import me.kryniowesegryderiusz.kgenerators.utils.immutable.Config;
-import me.kryniowesegryderiusz.kgenerators.xseries.XUtils;
 
 public class MenuItem implements Cloneable {
 	@Getter
@@ -148,7 +148,7 @@ public class MenuItem implements Cloneable {
 		if (itemStack != null)
 			item = itemStack;
 		else
-			item = XUtils.parseItemStack(this.itemType, "MenuItem", false);
+			item = ItemUtils.parseItemStack(this.itemType, "MenuItem", false);
 		
 		if (item.getType().equals(Material.AIR))
 			return item;

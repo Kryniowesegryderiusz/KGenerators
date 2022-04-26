@@ -110,9 +110,9 @@ public enum Message implements IMessage {
 	
 	COMMANDS_UPGRADE_HELP("commands.upgrade.help", "Upgrade generator"),
 	
-	COMMANDS_RELOAD_DONE("commands.reload.done", "&aPlugin reloaded! Check console or log.txt in plugin''s directory for possible errors!"),
+	COMMANDS_RELOAD_DONE("commands.reload.done", "&aPlugin configuration reloaded! Check console or log.txt in plugin''s directory for possible errors!"),
 	COMMANDS_RELOAD_NO_PERMISSION("commands.reload.no-permission", "&cYou dont have permission &8(&7<permission>&8)&c to reload plugin"),
-	COMMANDS_RELOAD_HELP("commands.reload.help", "Plugin reload"),
+	COMMANDS_RELOAD_HELP("commands.reload.help", "Plugin configuration reload"),
 	
 	COMMANDS_DEBUG_DONE("commands.debug.done", "&aYour debug URL is: &e<url>"),
 	COMMANDS_DEBUG_ERROR("commands.debug.error", "&cAn error occured, while making debug output!"),

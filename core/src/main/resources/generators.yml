@@ -53,10 +53,6 @@ example_generator:
     - type: items_adder_block
       chance: 10.0
       material: ruby_ore
-    #type: items_adder_item - generator will spawn ItemsAdder (external plugin) item
-    - type: items_adder_item
-      chance: 10.0
-      material: ruby
   #
   # ***        Optional generators settings below.        ***
   # *** If you dont set them default values would be used ***

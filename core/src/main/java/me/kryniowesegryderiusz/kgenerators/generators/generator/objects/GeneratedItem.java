@@ -29,7 +29,8 @@ public class GeneratedItem extends AbstractGeneratedObject {
 		if (generatedObjectConfig.containsKey("item"))
 		{
 			this.item = FilesUtils.loadItemStack((Map<?, ?>) generatedObjectConfig, "item", "Generators file: GeneratedItem", false);
-			return true;
+			if (this.item != null)
+				return true;
 		}
 		return false;
 	}

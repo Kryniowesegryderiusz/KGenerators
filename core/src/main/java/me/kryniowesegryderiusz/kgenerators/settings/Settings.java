@@ -19,10 +19,10 @@ import me.kryniowesegryderiusz.kgenerators.generators.locations.handlers.enums.A
 import me.kryniowesegryderiusz.kgenerators.logger.Logger;
 import me.kryniowesegryderiusz.kgenerators.settings.objects.Actions;
 import me.kryniowesegryderiusz.kgenerators.settings.objects.Sound;
+import me.kryniowesegryderiusz.kgenerators.utils.ItemUtils;
 import me.kryniowesegryderiusz.kgenerators.utils.immutable.Config;
 import me.kryniowesegryderiusz.kgenerators.utils.immutable.ConfigManager;
 import me.kryniowesegryderiusz.kgenerators.xseries.XSound;
-import me.kryniowesegryderiusz.kgenerators.xseries.XUtils;
 
 public class Settings {
 	
@@ -105,7 +105,7 @@ public class Settings {
 			tempListString = (ArrayList<String>) config.getList("can-generate-instead");
 			
 			for (String s : tempListString) {
-				ItemStack m = XUtils.parseItemStack(s, "Config file", true);
+				ItemStack m = ItemUtils.parseItemStack(s, "Config file", true);
 				generatingWhitelist.add(m);
 			}
 			this.setGeneratingWhitelist(generatingWhitelist);

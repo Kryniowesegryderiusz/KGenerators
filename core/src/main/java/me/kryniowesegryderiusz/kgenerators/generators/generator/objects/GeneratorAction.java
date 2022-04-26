@@ -7,8 +7,8 @@ import lombok.Getter;
 import me.kryniowesegryderiusz.kgenerators.generators.locations.handlers.enums.ActionType;
 import me.kryniowesegryderiusz.kgenerators.generators.locations.handlers.enums.InteractionType;
 import me.kryniowesegryderiusz.kgenerators.logger.Logger;
+import me.kryniowesegryderiusz.kgenerators.utils.ItemUtils;
 import me.kryniowesegryderiusz.kgenerators.utils.immutable.Config;
-import me.kryniowesegryderiusz.kgenerators.xseries.XUtils;
 
 public class GeneratorAction {
 	
@@ -43,7 +43,7 @@ public class GeneratorAction {
 			String item = (config.getString(path+"item"));
 			if (!item.toLowerCase().equals("any"))
 
-				this.item = (XUtils.parseItemStack(item, "Config file", false));
+				this.item = (ItemUtils.parseItemStack(item, "Config file", false));
 		}
 		else
 		{

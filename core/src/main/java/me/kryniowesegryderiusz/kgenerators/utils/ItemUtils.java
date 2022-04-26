@@ -1,4 +1,4 @@
-package me.kryniowesegryderiusz.kgenerators.xseries;
+package me.kryniowesegryderiusz.kgenerators.utils;
 
 import java.util.NoSuchElementException;
 import java.util.Optional;
@@ -6,14 +6,20 @@ import java.util.Optional;
 import org.bukkit.inventory.ItemStack;
 
 import me.kryniowesegryderiusz.kgenerators.Main;
+import me.kryniowesegryderiusz.kgenerators.dependencies.hooks.ItemsAdderHook;
 import me.kryniowesegryderiusz.kgenerators.logger.Logger;
+import me.kryniowesegryderiusz.kgenerators.xseries.XMaterial;
 
-public abstract class XUtils {
+public abstract class ItemUtils {
 	
     public static ItemStack parseItemStack(String s, String place, boolean isBlockCheck) {
     	
-    	if (Main.getGenerators() != null && Main.getGenerators().exists(s))
-    		return Main.getGenerators().get(s).getGeneratorItem().clone();
+    	if (s.contains(":")) {
+    		String[] splitted = s.split(":");
+        	if (splitted[0].equals("itemsadder")
+        			&& ItemsAdderHook.getItemStack(splitted[1]) != null)
+        		return ItemsAdderHook.getItemStack(splitted[1]);
+    	}
     	
     	Optional<XMaterial> oxm = XMaterial.matchXMaterial(s);
 		try {

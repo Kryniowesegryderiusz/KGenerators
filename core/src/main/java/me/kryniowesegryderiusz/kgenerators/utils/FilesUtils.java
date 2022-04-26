@@ -19,7 +19,6 @@ import me.kryniowesegryderiusz.kgenerators.Main;
 import me.kryniowesegryderiusz.kgenerators.logger.Logger;
 import me.kryniowesegryderiusz.kgenerators.utils.immutable.Config;
 import me.kryniowesegryderiusz.kgenerators.xseries.XEnchantment;
-import me.kryniowesegryderiusz.kgenerators.xseries.XUtils;
 
 public class FilesUtils {
     
@@ -94,12 +93,12 @@ public class FilesUtils {
 		if (config.contains(path+".material") || config.contains(path+".item") || config.contains(path+".type")) {
 			return loadItemStack(config.getMapList(path).get(0), config.getName()+"#"+path, isBlockCheck);
 		} else
-			return XUtils.parseItemStack(config.getString(path), config.getFile().getPath()+"#"+path, isBlockCheck);
+			return ItemUtils.parseItemStack(config.getString(path), config.getFile().getPath()+"#"+path, isBlockCheck);
 	}
 	
 	public static ItemStack loadItemStack(Map<?,?> generalConfig, String objectName, String place, boolean isBlockCheck) {
 		if (generalConfig.get("item") instanceof String)
-			return XUtils.parseItemStack((String) generalConfig.get("item"), place, false);
+			return ItemUtils.parseItemStack((String) generalConfig.get("item"), place, false);
 		else
 			return FilesUtils.loadItemStack((Map<?, ?>) generalConfig.get("item"), place, false);
 	}
@@ -111,11 +110,11 @@ public class FilesUtils {
 		try {
 
 				if (config.containsKey("item"))
-					item = XUtils.parseItemStack((String) config.get("item"), place, isBlockCheck);
+					item = ItemUtils.parseItemStack((String) config.get("item"), place, isBlockCheck);
 				else if (config.containsKey("type"))
-					item = XUtils.parseItemStack((String) config.get("type"), place, isBlockCheck);
+					item = ItemUtils.parseItemStack((String) config.get("type"), place, isBlockCheck);
 				else if (config.containsKey("material"))
-					item = XUtils.parseItemStack((String) config.get("material"), place, isBlockCheck);
+					item = ItemUtils.parseItemStack((String) config.get("material"), place, isBlockCheck);
 				
 			    ItemMeta meta = null;
 			    if (item.getItemMeta() != null) {

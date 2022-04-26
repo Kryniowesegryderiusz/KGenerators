@@ -8,6 +8,7 @@ import lombok.Getter;
 import me.kryniowesegryderiusz.kgenerators.api.events.ReloadEvent;
 import me.kryniowesegryderiusz.kgenerators.data.DatabaseManager;
 import me.kryniowesegryderiusz.kgenerators.dependencies.DependenciesManager;
+import me.kryniowesegryderiusz.kgenerators.dependencies.hooks.ItemsAdderHook;
 import me.kryniowesegryderiusz.kgenerators.generators.generator.GeneratorsManager;
 import me.kryniowesegryderiusz.kgenerators.generators.generator.enums.GeneratorType;
 import me.kryniowesegryderiusz.kgenerators.generators.holograms.HologramsManager;
@@ -50,69 +51,27 @@ public class Main extends JavaPlugin {
 	@Getter private static UpgradesManager upgrades;
 	
 	@Getter private static DatabaseManager databases;
-	@Getter private static DependenciesManager dependencies;
+	@Getter private static DependenciesManager dependencies = new DependenciesManager();
 	@Getter private static MultiVersionManager multiVersion;
 	@Getter private static MenusManager menus;
 	
     @Override
     public void onEnable() {
-    	try {
-			/* Dependencies check */
-			dependencies = new DependenciesManager();
-			
-			/* Configs loader */
-			generators = new GeneratorsManager();
-			
-			settings = new Settings();
-			FilesConverter.updateConfig(settings);
-			
-			recipes = new RecipesManager();
-			upgrades = new UpgradesManager();
-			limits = new LimitsManager();
-			
-			Lang.loadFromFiles();
-			
-			/* Database setup */
-			databases = new DatabaseManager(Main.getSettings().getDbType());
-			Logger.info("Database: Placed generators are loaded in delayed init task! Informations about them are located further in this log!");
-			Bukkit.getScheduler().runTask(Main.getInstance(), () -> {
-				databases.getDb().loadGenerators();
-			});	
-			
-			/* Other systems starter */
-			holograms = new HologramsManager();
-			schedules = new SchedulesManager();
-			menus = new MenusManager();
-			
-			/* Commands setup */
-			this.getServer().getPluginCommand("kgenerators").setExecutor(new Commands());
-			this.getServer().getPluginCommand("kgenerators").setTabCompleter(new CommandTabCompleter());
-
-			/* Listeners setup */
-			this.getServer().getPluginManager().registerEvents(new BlockBreakListener(), this);
-			this.getServer().getPluginManager().registerEvents(new BlockPlaceListener(), this);
-			this.getServer().getPluginManager().registerEvents(new CraftItemListener(), this);
-			this.getServer().getPluginManager().registerEvents(new BlockPistonListener(), this);
-			this.getServer().getPluginManager().registerEvents(new ExplosionListener(), this);
-			this.getServer().getPluginManager().registerEvents(new PlayerInteractListener(), this);
-			this.getServer().getPluginManager().registerEvents(new InventoryClickListener(), this);
-			this.getServer().getPluginManager().registerEvents(new FurnaceSmeltListener(), this);
-			
-			if (!multiVersion.isHigher(12))
-				this.getServer().getPluginManager().registerEvents(new PrepareItemCraftListener(), this);
-			
-			/* Metrix */
-			int pluginId = 7871;
-			@SuppressWarnings("unused")
-			Metrics metrics = new Metrics(this, pluginId);
-			metrics.addCustomChart(new Metrics.SingleLineChart("number_of_loaded_generators", () -> Main.getGenerators().getAmount()));
-			metrics.addCustomChart(new Metrics.SingleLineChart("number_of_single_generators", () -> Main.getGenerators().getAmount(GeneratorType.SINGLE)));
-			metrics.addCustomChart(new Metrics.SingleLineChart("number_of_double_generators", () -> Main.getGenerators().getAmount(GeneratorType.DOUBLE)));
-			metrics.addCustomChart(new Metrics.SimplePie("per_player_generators_enabled", () -> String.valueOf(Main.getSettings().isLimits()) ));
-			
-		} catch (Exception e) {
-			Logger.error(e);
-		}    	
+    	
+    	dependencies.onEnableDependenciesCheck();
+    	
+    	if (!Bukkit.getPluginManager().isPluginEnabled("ItemsAdder")) {
+    		Logger.warn("ItemsAdder is enabled, KGenerators loading postponed until IA is loaded");
+    		this.getServer().getPluginManager().registerEvents(new ItemsAdderHook().new ItemsAdderHookLoadData(), this);
+    	} else {
+    		Logger.warn("KGenerators will be loaded in post init check, check for more informations futher in this log");
+    		this.getServer().getScheduler().runTask(instance, new Runnable() {
+				@Override
+				public void run() {
+					Main.getInstance().enable();
+				}
+    		});
+    	}
     }
 
 	@Override
@@ -141,5 +100,63 @@ public class Main extends JavaPlugin {
     	limits = new LimitsManager();
     	Lang.loadFromFiles();
     	this.getServer().getPluginManager().callEvent(new ReloadEvent());
+    }
+    
+    public void enable() {
+    	try {
+			/* Dependencies check */
+			dependencies.standardDependenciesCheck();
+			
+			/* Configs loader */
+			generators = new GeneratorsManager();
+			
+			settings = new Settings();
+			FilesConverter.updateConfig(settings);
+			
+			recipes = new RecipesManager();
+			upgrades = new UpgradesManager();
+			limits = new LimitsManager();
+			
+			Lang.loadFromFiles();
+			
+			/* Database setup */
+			databases = new DatabaseManager(Main.getSettings().getDbType());
+			databases.getDb().loadGenerators();
+			
+			/* Other systems starter */
+			holograms = new HologramsManager();
+			schedules = new SchedulesManager();
+			menus = new MenusManager();
+			
+			/* Commands setup */
+			this.getServer().getPluginCommand("kgenerators").setExecutor(new Commands());
+			this.getServer().getPluginCommand("kgenerators").setTabCompleter(new CommandTabCompleter());
+
+			/* Listeners setup */
+			this.getServer().getPluginManager().registerEvents(new BlockBreakListener(), this);
+			this.getServer().getPluginManager().registerEvents(new BlockPlaceListener(), this);
+			this.getServer().getPluginManager().registerEvents(new CraftItemListener(), this);
+			this.getServer().getPluginManager().registerEvents(new BlockPistonListener(), this);
+			this.getServer().getPluginManager().registerEvents(new ExplosionListener(), this);
+			this.getServer().getPluginManager().registerEvents(new PlayerInteractListener(), this);
+			this.getServer().getPluginManager().registerEvents(new InventoryClickListener(), this);
+			this.getServer().getPluginManager().registerEvents(new FurnaceSmeltListener(), this);
+			
+			if (!multiVersion.isHigher(12))
+				this.getServer().getPluginManager().registerEvents(new PrepareItemCraftListener(), this);
+			
+			/* 
+			 * Metrix
+			 */
+			int pluginId = 7871;
+			Metrics metrics = new Metrics(this, pluginId);
+			metrics.addCustomChart(new Metrics.SingleLineChart("number_of_loaded_generators", () -> Main.getGenerators().getAmount()));
+			metrics.addCustomChart(new Metrics.SingleLineChart("number_of_single_generators", () -> Main.getGenerators().getAmount(GeneratorType.SINGLE)));
+			metrics.addCustomChart(new Metrics.SingleLineChart("number_of_double_generators", () -> Main.getGenerators().getAmount(GeneratorType.DOUBLE)));
+			metrics.addCustomChart(new Metrics.SimplePie("per_player_generators_enabled", () -> String.valueOf(Main.getSettings().isLimits()) ));
+			
+		} catch (Exception e) {
+			Logger.error(e);
+		}    	
     }
 }

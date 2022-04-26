@@ -45,11 +45,6 @@
        </dependency>
        <dependency>
            <groupId>me.kryniowesegryderiusz</groupId>
-           <artifactId>kgenerators-api</artifactId>
-           <version>${project.parent.version}</version>
-       </dependency>
-       <dependency>
-           <groupId>me.kryniowesegryderiusz</groupId>
            <artifactId>kgenerators-v1_8</artifactId>
            <version>${project.parent.version}</version>
        </dependency>

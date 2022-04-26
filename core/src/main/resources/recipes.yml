@@ -20,7 +20,7 @@ example_generator:
     #"A" used in shape is just a redstone
     A: REDSTONE
     #"B" is item of ores_generator
-    B: ores_generator
+    B: generator:ores_generator
     #"C" is other custom configured item
     C:
       material: STONE
@@ -48,5 +48,5 @@ ores_generator:
   - "CAC"
   ingredients:
     A: REDSTONE
-    B: stone_generator_level_1
+    B: generator:stone_generator_level_1
     C: COAL_BLOCK

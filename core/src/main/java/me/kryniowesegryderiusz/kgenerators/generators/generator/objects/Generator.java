@@ -22,10 +22,10 @@ import me.kryniowesegryderiusz.kgenerators.generators.generator.enums.GeneratorT
 import me.kryniowesegryderiusz.kgenerators.generators.upgrades.objects.Upgrade;
 import me.kryniowesegryderiusz.kgenerators.logger.Logger;
 import me.kryniowesegryderiusz.kgenerators.settings.objects.Actions;
+import me.kryniowesegryderiusz.kgenerators.utils.ItemUtils;
 import me.kryniowesegryderiusz.kgenerators.utils.immutable.Config;
 import me.kryniowesegryderiusz.kgenerators.utils.immutable.RandomSelector;
 import me.kryniowesegryderiusz.kgenerators.xseries.XMaterial;
-import me.kryniowesegryderiusz.kgenerators.xseries.XUtils;
 
 public class Generator {
 	
@@ -67,7 +67,7 @@ public class Generator {
 		if (config.contains(generatorID+".glow")) {
 			glow = config.getBoolean(generatorID+".glow");
 		}
-		this.generatorItem = XUtils.parseItemStack(config.getString(generatorID+".generator"), "Generators file", true);
+		this.generatorItem = ItemUtils.parseItemStack(config.getString(generatorID+".generator"), "Generators file", true);
 		ArrayList<String> loreGot = new ArrayList<String>();
 		ArrayList<String> lore = new ArrayList<String>();
 		ItemMeta meta = (ItemMeta) this.generatorItem.getItemMeta();
@@ -104,7 +104,7 @@ public class Generator {
 		 */
 		
 		if (config.contains(generatorID+".placeholder") && !config.getString(generatorID+".placeholder").isEmpty()) {
-			this.placeholder = XUtils.parseItemStack(config.getString(generatorID+".placeholder"), "Generators file", true);
+			this.placeholder = ItemUtils.parseItemStack(config.getString(generatorID+".placeholder"), "Generators file", true);
 			if (this.placeholder.equals(XMaterial.AIR.parseItem()))
 				this.placeholder = null;
 		}
