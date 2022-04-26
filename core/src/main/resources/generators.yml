@@ -49,10 +49,6 @@ example_generator:
         - "&cThats Magic Stone"
         enchants:
           - FORTUNE:1
-    #type: items_adder_block - generator will spawn ItemsAdder (external plugin) block
-    - type: items_adder_block
-      chance: 10.0
-      material: ruby_ore
   #
   # ***        Optional generators settings below.        ***
   # *** If you dont set them default values would be used ***

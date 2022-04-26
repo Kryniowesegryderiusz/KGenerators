@@ -16,7 +16,7 @@ public class GeneratedItemsAdderBlock extends AbstractGeneratedObject {
 	@Getter private String material;
 
 	public GeneratedItemsAdderBlock() {
-		super("items_adder_block");
+		super("itemsadder_block");
 	}
 
 	@Override
