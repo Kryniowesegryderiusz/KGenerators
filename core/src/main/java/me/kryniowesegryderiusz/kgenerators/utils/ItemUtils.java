@@ -16,6 +16,10 @@ public abstract class ItemUtils {
     	
     	if (s.contains(":")) {
     		String[] splitted = s.split(":");
+        	if (splitted[0].equals("generator") 
+        			&& Main.getGenerators() != null
+        			&& Main.getGenerators().exists(s))
+        		return Main.getGenerators().get(splitted[1]).getGeneratorItem().clone();
         	if (splitted[0].equals("itemsadder")
         			&& ItemsAdderHook.getItemStack(splitted[1]) != null)
         		return ItemsAdderHook.getItemStack(splitted[1]);
