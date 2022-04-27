@@ -4,10 +4,12 @@ package me.kryniowesegryderiusz.kgenerators;
 import org.bukkit.Bukkit;
 import org.bukkit.plugin.java.JavaPlugin;
 
+import dev.lone.itemsadder.api.ItemsAdder;
 import lombok.Getter;
 import me.kryniowesegryderiusz.kgenerators.api.events.ReloadEvent;
 import me.kryniowesegryderiusz.kgenerators.data.DatabaseManager;
 import me.kryniowesegryderiusz.kgenerators.dependencies.DependenciesManager;
+import me.kryniowesegryderiusz.kgenerators.dependencies.enums.Dependency;
 import me.kryniowesegryderiusz.kgenerators.dependencies.hooks.ItemsAdderHook;
 import me.kryniowesegryderiusz.kgenerators.generators.generator.GeneratorsManager;
 import me.kryniowesegryderiusz.kgenerators.generators.generator.enums.GeneratorType;
@@ -60,7 +62,7 @@ public class Main extends JavaPlugin {
     	
     	dependencies.onEnableDependenciesCheck();
     	
-    	if (!Bukkit.getPluginManager().isPluginEnabled("ItemsAdder")) {
+    	if (Bukkit.getPluginManager().getPlugin("ItemsAdder") != null && !ItemsAdder.areItemsLoaded()) {
     		Logger.warn("ItemsAdder is enabled, KGenerators loading postponed until IA is loaded");
     		this.getServer().getPluginManager().registerEvents(new ItemsAdderHook().new ItemsAdderHookLoadData(), this);
     	} else {

@@ -19,7 +19,7 @@ public abstract class ItemUtils {
     		String[] splitted = s.split(":");
         	if (splitted[0].equals("generator")
         			&& Main.getGenerators() != null
-        			&& Main.getGenerators().exists(s))
+        			&& Main.getGenerators().exists(splitted[1]))
         		return Main.getGenerators().get(splitted[1]).getGeneratorItem().clone();
         	if (splitted[0].equals("itemsadder")
         			&& ItemsAdderHook.getItemStack(splitted[1]) != null)
