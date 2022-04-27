@@ -1,6 +1,7 @@
 package me.kryniowesegryderiusz.kgenerators.generators.holograms;
 
 import java.util.ArrayList;
+import java.util.Map;
 
 import org.bukkit.Bukkit;
 import org.bukkit.plugin.Plugin;
@@ -9,6 +10,7 @@ import me.kryniowesegryderiusz.kgenerators.Main;
 import me.kryniowesegryderiusz.kgenerators.dependencies.enums.Dependency;
 import me.kryniowesegryderiusz.kgenerators.dependencies.objects.DecentHologramsProvider;
 import me.kryniowesegryderiusz.kgenerators.dependencies.objects.HolographicDisplaysProvider;
+import me.kryniowesegryderiusz.kgenerators.generators.generator.objects.Generator;
 import me.kryniowesegryderiusz.kgenerators.generators.holograms.interfaces.IHologramProvider;
 import me.kryniowesegryderiusz.kgenerators.generators.locations.objects.GeneratorLocation;
 import me.kryniowesegryderiusz.kgenerators.lang.Lang;
@@ -30,6 +32,11 @@ public class HologramsManager {
 			} else if (Main.getDependencies().isEnabled(Dependency.HOLOGRAPHIC_DISPLAYS)) {
 				hologramProvider = new HolographicDisplaysProvider();
 				Logger.info("Holograms: Enabling HolographicDisplaysProvider");
+			} else {
+	        	for (Map.Entry<String, Generator> e : Main.getGenerators().getEntrySet()) {
+					if ((e.getValue()).isHologram())
+						Logger.warn("Holograms: Generator " + e.getKey() + " has enabled holograms, but hologram provider was not found! Holograms wouldnt work!"); 
+				}
 			}
 			
 			Bukkit.getScheduler().scheduleSyncRepeatingTask(Main.getInstance(), new Runnable() {
