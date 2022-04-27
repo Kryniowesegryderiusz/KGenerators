@@ -43,7 +43,6 @@ public class PlayersManager {
 
 	public void clear() {
 		players.clear();
-		
 	}
 	
 	public void reload()

@@ -5,7 +5,7 @@ author: Kryniowesegryderiusz (Krynio_ on spigot)
 website: https://www.spigotmc.org/resources/79246/
 description: Create your custom generators
 loadbefore: [SuperiorSkyblock2]
-softdepend: [Multiverse-Core, WorldGuard, SuperiorSkyblock2, BentoBox, JetsMinions, HolographicDisplays, Vault, Slimefun, IridiumSkyblock, Minions-Revamped, DecentHolograms, ItemsAdder]
+softdepend: [Multiverse-Core, WorldGuard, SuperiorSkyblock2, BentoBox, JetsMinions, HolographicDisplays, Vault, Slimefun, IridiumSkyblock, Minions-Revamped, DecentHolograms, ItemsAdder, EcoItems]
 api-version: 1.13
 commands:
   kgenerators:

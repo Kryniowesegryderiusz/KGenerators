@@ -6,6 +6,7 @@ import java.util.Optional;
 import org.bukkit.inventory.ItemStack;
 
 import me.kryniowesegryderiusz.kgenerators.Main;
+import me.kryniowesegryderiusz.kgenerators.dependencies.hooks.EcoItemsHook;
 import me.kryniowesegryderiusz.kgenerators.dependencies.hooks.ItemsAdderHook;
 import me.kryniowesegryderiusz.kgenerators.logger.Logger;
 import me.kryniowesegryderiusz.kgenerators.xseries.XMaterial;
@@ -23,6 +24,9 @@ public abstract class ItemUtils {
         	if (splitted[0].equals("itemsadder")
         			&& ItemsAdderHook.getItemStack(splitted[1]) != null)
         		return ItemsAdderHook.getItemStack(splitted[1]);
+        	if (splitted[0].equals("ecoitems")
+        			&& EcoItemsHook.getItemStack(splitted[1]) != null)
+        		return EcoItemsHook.getItemStack(splitted[1]);
     	}
     	
     	Optional<XMaterial> oxm = XMaterial.matchXMaterial(s);

@@ -85,7 +85,7 @@
 		<dependency>
 			<groupId>org.projectlombok</groupId>
 			<artifactId>lombok</artifactId>
-			<version>1.18.16</version>
+			<version>1.18.22</version>
 			<scope>provided</scope>
 		</dependency>
 		
@@ -139,7 +139,7 @@
 		
 		<!--  EcoItems  -->
 		<dependency>
-	    	<groupId>com.github.Auxilor</groupId>
+	    	<groupId>com.willfp</groupId>
 	    	<artifactId>EcoItems</artifactId>
 	    	<version>3.46.0</version>
 		    <scope>system</scope>

@@ -20,6 +20,9 @@ public class ItemsAdderHook {
 	}
 	
 	public static ItemStack getItemStack(String material) {
+		if (!Main.getDependencies().isEnabled(Dependency.ITEMS_ADDER))
+			return null;
+		
 		CustomStack customStack = CustomStack.getInstance(material);
 		if (customStack == null)
 			return null;

@@ -66,8 +66,13 @@ public class Recipe {
 	            }
 	            
 	            recipesManager.add(generator, this);
-	        	Bukkit.addRecipe(shapedRecipe);
-	        	Logger.debug("Recipes file: Loaded recipe for "+generatorID+"! Recipe: " + this.toString());
+	            
+	            if (Bukkit.getRecipe(shapedRecipe.getKey()) != null) {
+	            	Logger.error("Recipes file: Cannot add recipe for "+generatorID+" because it already exists!");
+	            } else {
+		        	Bukkit.addRecipe(shapedRecipe);
+		        	Logger.debug("Recipes file: Loaded recipe for "+generatorID+"! Recipe: " + this.toString());
+	            }
 			}
 		}
 	}

@@ -29,6 +29,11 @@ public class DependenciesManager {
     	/*
     	 * Delayed checks
     	 */
+		
+    	if (Bukkit.getPluginManager().getPlugin("EcoItems") != null) {
+    		Logger.info("Dependencies: Detected plugin EcoItems. Hooking into it.");
+    		dependencies.add(Dependency.ECO_ITEMS);
+    	}
         	
     	if (Bukkit.getPluginManager().getPlugin("ItemsAdder") != null) {
     		Logger.info("Dependencies: Detected plugin ItemsAdder. Hooking into it.");

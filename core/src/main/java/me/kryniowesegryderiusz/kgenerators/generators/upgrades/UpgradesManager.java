@@ -58,11 +58,6 @@ public class UpgradesManager {
 		return getUpgrade(g.getId());
 	}
 	
-	public void clear()
-	{
-		upgrades.clear();
-	}
-	
 	/**
 	 * Checks if generator could be obtained by upgrade
 	 * @param generatorId
@@ -89,6 +84,9 @@ public class UpgradesManager {
 	}
 	
 	public void reload() {
+		
+		upgrades.clear();
+		
 		Config config;
 
     	try {

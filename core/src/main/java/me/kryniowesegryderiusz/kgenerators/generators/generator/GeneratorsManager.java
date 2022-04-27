@@ -42,10 +42,6 @@ public class GeneratorsManager {
     	this.reload();
 	}
 	
-	public void clear() {
-		generators.clear();
-	}
-	
 	public void add(String id, Generator generator) {
 		generators.put(id, generator);
 	}
@@ -125,6 +121,8 @@ public class GeneratorsManager {
 	}
 	
 	public void reload() {
+		
+		generators.clear();
 		
 		Config config;
 

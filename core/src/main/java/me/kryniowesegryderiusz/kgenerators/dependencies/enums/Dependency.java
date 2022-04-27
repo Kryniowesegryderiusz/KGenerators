@@ -14,4 +14,5 @@ public enum Dependency
 	MINIONS, 
 	DECENT_HOLOGRAMS,
 	ITEMS_ADDER,
+	ECO_ITEMS,
 }
