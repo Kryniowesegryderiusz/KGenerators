@@ -35,7 +35,7 @@ public class HologramsManager {
 			} else {
 	        	for (Map.Entry<String, Generator> e : Main.getGenerators().getEntrySet()) {
 					if ((e.getValue()).isHologram())
-						Logger.warn("Holograms: Generator " + e.getKey() + " has enabled holograms, but hologram provider was not found! Holograms wouldnt work!"); 
+						Logger.warn("Holograms: Generator " + e.getKey() + " has enabled holograms, but hologram provider was not found! Holograms wont work!"); 
 				}
 			}
 			

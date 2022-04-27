@@ -32,7 +32,12 @@ public class RecipesManager {
 		}
     	
     	for(String generatorID: file.getConfigurationSection("").getKeys(false)) {
-			new Recipe(this, file, generatorID);
+			try {
+				new Recipe(this, file, generatorID);
+			} catch (Exception e) {
+				Logger.error("Recipes file: Cannot load recipe for " + generatorID + " " + e.getMessage());
+				e.printStackTrace(); 
+			}
     	}
     	
     	Logger.info("Recipes file: Loaded " + this.recipes.size() + " recipes");
