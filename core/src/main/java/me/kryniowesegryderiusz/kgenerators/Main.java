@@ -159,7 +159,38 @@ public class Main extends JavaPlugin {
 			Metrics metrics = new Metrics(this, pluginId);
 			metrics.addCustomChart(new Metrics.SingleLineChart("configured_generators", () -> Main.getGenerators().getAmount()));
 			metrics.addCustomChart(new Metrics.SingleLineChart("placed_generators", () -> Main.getLocations().getAmount()));
-			
+			metrics.addCustomChart(new Metrics.SimplePie("database_type", () -> {return Main.getSettings().getDbType().toString();}));
+			metrics.addCustomChart(new Metrics.AdvancedPie("features", new Callable<Map<String, Integer>>() {
+				@Override
+				public Map<String, Integer> call() throws Exception {
+		            Map<String, Integer> valueMap = new HashMap<>();
+		            if (Main.getLimits().hasLimits()) valueMap.put("Limits", 1);
+		            if (Main.getRecipes().hasRecipes()) valueMap.put("Recipes", 1);
+		            if (Main.getUpgrades().hasUpgrades()) valueMap.put("Upgrades", 1);
+		            return valueMap;
+				}
+			}));
+			metrics.addCustomChart(new Metrics.AdvancedPie("hooked_plugins", new Callable<Map<String, Integer>>() {
+				@Override
+				public Map<String, Integer> call() throws Exception {
+		            Map<String, Integer> valueMap = new HashMap<>();
+		            if (Main.getDependencies() != null) {
+		            	for (Dependency dep : Main.getDependencies().getDependencies()) {
+		            		valueMap.put(dep.toString(), 1);
+		            	}
+		            }
+		            return valueMap;
+				}
+			}));
+	        metrics.addCustomChart(new Metrics.DrilldownPie("complex_plugin_version", () -> {
+	            Map<String, Map<String, Integer>> map = new HashMap<>();
+	            String[] sVersion = this.getDescription().getVersion().split("-");
+	            Map<String, Integer> entry = new HashMap<>();
+	            entry.put(sVersion[1], 1);
+	            map.put(sVersion[0], entry);
+	            return map;
+	        }));
+	        
 		} catch (Exception e) {
 			Logger.error(e);
 		}    	
