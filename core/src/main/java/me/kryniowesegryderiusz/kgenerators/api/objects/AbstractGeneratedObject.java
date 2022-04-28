@@ -37,14 +37,16 @@ public abstract class AbstractGeneratedObject {
 		try {
 			if (generatedObjectConfig.get("chance") != null)
 				this.chance = (Double) generatedObjectConfig.get("chance");
-			else
-			{
+			else {
 				Logger.error("Generators file: Cant load chance for one generation! Using 0%");
 				return false;
 			}
 			
-			if (this.loadTypeSpecific(generatedObjectConfig))
-				Logger.debug("Generators file: Loaded GeneratedObject: " + this.toString());
+			if (!this.loadTypeSpecific(generatedObjectConfig))
+				return false;
+			
+			Logger.debug("Generators file: Loaded GeneratedObject: " + this.toString());
+			
 		} catch (Exception e) {
 			Logger.error("Generators file: Cant load GeneratedObject: " + this.toStringSimple());
 			Logger.error(e);
