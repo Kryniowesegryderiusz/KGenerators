@@ -34,7 +34,7 @@ public class Upgrade {
 	 * @throws CannnotLoadUpgradeException
 	 */
 	public Upgrade(UpgradesManager upgradesManager, Config config, String generatorId) throws CannnotLoadUpgradeException {
-		if (!generatorId.equals("example_generator_id_level_1")) {
+		if (!generatorId.equals("example_generator_id_level_1") && !generatorId.equals("enabled")) {
 			this.generatorId = generatorId;
 			
 			if (config.contains(generatorId+".next-level"))

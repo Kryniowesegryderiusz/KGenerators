@@ -72,10 +72,6 @@ public class Settings {
 	@Setter @Getter
 	private Sound upgradeSound = new Sound(XSound.ENTITY_PLAYER_LEVELUP);
 	
-	
-	@Setter @Getter
-	private boolean limits = false;
-	
 	@Setter @Getter
 	private DatabaseType dbType = DatabaseType.SQLITE;
 	@Setter @Getter

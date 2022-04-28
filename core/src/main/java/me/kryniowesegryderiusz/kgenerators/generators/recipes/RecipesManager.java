@@ -31,6 +31,12 @@ public class RecipesManager {
 			return;
 		}
     	
+		if (!file.contains("enabled") || file.getBoolean("enabled") != true)
+		{
+			Logger.info("Recipes file: Recipes are disabled. You can enable them in recipes.yml");
+			return;
+		}
+    	
     	for(String generatorID: file.getConfigurationSection("").getKeys(false)) {
 			try {
 				new Recipe(this, file, generatorID);
@@ -66,5 +72,9 @@ public class RecipesManager {
 			}
 			return null;
 		}
+	}
+	
+	public boolean hasRecipes() {
+		return this.recipes.size() != 0;
 	}
 }

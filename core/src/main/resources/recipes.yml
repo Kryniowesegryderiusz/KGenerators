@@ -2,9 +2,10 @@
 #https://www.spigotmc.org/resources/79246/
 #Need help? Join KGenerators discord: https://discord.gg/BZRjhpP4Ab
 
-# If you dont want to use custom recipes just comment whole file
-
 # WARNING! To add/update/remove recipe you HAVE TO RESTART SERVER!
+
+#Change this to true to enable recipes
+enabled: false
 
 #EXAMPLE RECIPE IS ONLY AN EXAMPLE AND ITS NOT LOADED!
 # Recipe for example_generator:

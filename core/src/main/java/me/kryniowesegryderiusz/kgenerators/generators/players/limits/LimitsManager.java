@@ -35,11 +35,9 @@ public class LimitsManager {
 		
 		if (!config.contains("enabled") || config.getBoolean("enabled") != true)
 		{
-			Logger.info("Limits file: Limits are disabled");
+			Logger.info("Limits file: Limits are disabled. You can enable them in limits.yml!");
 			return;
 		}
-		
-		Main.getSettings().setLimits(true);
 		
 		ConfigurationSection mainSection = config.getConfigurationSection("");
 		for(String id: mainSection.getKeys(false)){
@@ -89,6 +87,10 @@ public class LimitsManager {
 
 	public void clear() {
 		limits.clear();
+	}
+	
+	public boolean hasLimits() {
+		return this.limits.size() != 0;
 	}
 	
 }

@@ -29,7 +29,7 @@ public class MainMenu {
 		
 		Inventory menu = Lang.getMenuInventoryStorage().get(MenuInventoryType.MAIN).getInv(MenuInventoryType.MAIN, player, exludedEnumMenuItems);
 		
-		if (Main.getSettings().isLimits() && Lang.getMenuItemStorage().get(MenuItemType.MAIN_MENU_LIMITS).isEnabled())
+		if (Main.getLimits().hasLimits() && Lang.getMenuItemStorage().get(MenuItemType.MAIN_MENU_LIMITS).isEnabled())
 		{
 			for (int i : Lang.getMenuItemStorage().get(MenuItemType.MAIN_MENU_LIMITS).getSlots())
 			{
@@ -96,7 +96,7 @@ public class MainMenu {
 		{
 			Main.getMenus().closeInv(p);
 		}
-		else if (Main.getSettings().isLimits() && Lang.getMenuItemStorage().get(MenuItemType.MAIN_MENU_LIMITS).getSlots().contains(slot) && Lang.getMenuItemStorage().get(MenuItemType.MAIN_MENU_LIMITS).isEnabled())
+		else if (Main.getLimits().hasLimits() && Lang.getMenuItemStorage().get(MenuItemType.MAIN_MENU_LIMITS).getSlots().contains(slot) && Lang.getMenuItemStorage().get(MenuItemType.MAIN_MENU_LIMITS).isEnabled())
 		{
 			Main.getMenus().openLimitsMenu(p);
 		}

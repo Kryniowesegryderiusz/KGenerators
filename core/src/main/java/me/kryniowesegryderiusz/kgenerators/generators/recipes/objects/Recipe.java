@@ -37,7 +37,7 @@ public class Recipe {
 	@SuppressWarnings("unchecked")
 	public Recipe(RecipesManager recipesManager, Config file, String generatorID)
 	{
-		if (!generatorID.equals("example_generator"))
+		if (!generatorID.equals("example_generator") && !generatorID.equals("enabled"));
 		{
 			Generator generator = Main.getGenerators().get(generatorID);
 			if (generator == null){

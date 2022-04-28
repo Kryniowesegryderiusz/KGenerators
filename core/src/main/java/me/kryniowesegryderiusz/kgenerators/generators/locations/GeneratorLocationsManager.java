@@ -58,6 +58,10 @@ public class GeneratorLocationsManager {
 		return locations.entrySet();
 	}
 	
+	public int getAmount() {
+		return this.locations.size();
+	}
+	
 	/*
 	 * Bulk updates
 	 */

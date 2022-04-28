@@ -2,9 +2,6 @@
 #https://www.spigotmc.org/resources/79246/
 #Need help? Join KGenerators discord: https://discord.gg/BZRjhpP4Ab
 
-#Player have to fullfill all limits requirements affecting generator
-#More info here: https://github.com/Kryniowesegryderiusz/KGenerators/wiki/Limits
-
 #Change this to true to enable limits
 enabled: false
 

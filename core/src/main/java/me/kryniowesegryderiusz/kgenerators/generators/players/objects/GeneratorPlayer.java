@@ -123,7 +123,7 @@ public class GeneratorPlayer {
 	 */
 	public Boolean canPlace(GeneratorLocation gLoc)
 	{	
-		if (!Main.getSettings().isLimits())
+		if (!Main.getLimits().hasLimits())
 			return true;
 		
 		PlayerLimits pl = new PlayerLimits(this.getOnlinePlayer());
@@ -143,7 +143,7 @@ public class GeneratorPlayer {
 	 */
 	public Boolean canPickUp(GeneratorLocation gLoc)
 	{
-		if (!Main.getSettings().isLimits())
+		if (!Main.getLimits().hasLimits())
 			return true;
 		
 		for (Limit limit : Main.getLimits().getValues())
@@ -154,8 +154,8 @@ public class GeneratorPlayer {
 		return true;
 	}
 
-	public Boolean canUse(GeneratorLocation gLoc){
-		if (!Main.getSettings().isLimits())
+	public Boolean canUse(GeneratorLocation gLoc) {
+		if (!Main.getLimits().hasLimits())
 			return true;
 		
 		for (Limit limit : Main.getLimits().getValues())

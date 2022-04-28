@@ -4,6 +4,9 @@
 
 #Using upgrades feature requires Vault and some economy system installed!
 
+#Change this to true to enable upgrades
+enabled: false
+
 #EXAMPLE UPGRADE IS ONLY AN EXAMPLE AND ITS NOT LOADED!
 #Generator id of generator beeing upgraded
 example_generator_id_level_1:
@@ -15,6 +18,7 @@ example_generator_id_level_1:
   exp: 100
   #Upgrade cost in exp levels
   exp-levels: 5
+  
 #Below you can find pre-configured upgrades. You can freely edit/remove them and add new ones ^^
 
 stone_generator_level_1:

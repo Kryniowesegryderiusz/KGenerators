@@ -83,6 +83,10 @@ public class UpgradesManager {
 		return "";
 	}
 	
+	public boolean hasUpgrades() {
+		return this.upgrades.size() != 0;
+	}
+	
 	public void reload() {
 		
 		upgrades.clear();

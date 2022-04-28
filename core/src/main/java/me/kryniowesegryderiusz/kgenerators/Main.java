@@ -1,6 +1,11 @@
 package me.kryniowesegryderiusz.kgenerators;
 
 
+import java.util.HashMap;
+import java.util.Map;
+import java.util.concurrent.Callable;
+
+import org.bstats.charts.AdvancedPie;
 import org.bukkit.Bukkit;
 import org.bukkit.plugin.java.JavaPlugin;
 
@@ -152,10 +157,8 @@ public class Main extends JavaPlugin {
 			 */
 			int pluginId = 7871;
 			Metrics metrics = new Metrics(this, pluginId);
-			metrics.addCustomChart(new Metrics.SingleLineChart("number_of_loaded_generators", () -> Main.getGenerators().getAmount()));
-			metrics.addCustomChart(new Metrics.SingleLineChart("number_of_single_generators", () -> Main.getGenerators().getAmount(GeneratorType.SINGLE)));
-			metrics.addCustomChart(new Metrics.SingleLineChart("number_of_double_generators", () -> Main.getGenerators().getAmount(GeneratorType.DOUBLE)));
-			metrics.addCustomChart(new Metrics.SimplePie("per_player_generators_enabled", () -> String.valueOf(Main.getSettings().isLimits()) ));
+			metrics.addCustomChart(new Metrics.SingleLineChart("configured_generators", () -> Main.getGenerators().getAmount()));
+			metrics.addCustomChart(new Metrics.SingleLineChart("placed_generators", () -> Main.getLocations().getAmount()));
 			
 		} catch (Exception e) {
 			Logger.error(e);
