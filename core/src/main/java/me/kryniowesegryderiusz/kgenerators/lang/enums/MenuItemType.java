@@ -23,7 +23,7 @@ public enum MenuItemType implements IMenuItemType
 	MAIN_MENU_PAGE_NEXT(MenuInventoryType.MAIN,"page.next", new  MenuItem("ARROW", "&cNext page", false, "42", "&6Click to go", "&6to next page")),
 	
 	CHANCES_MENU_FILLER(MenuInventoryType.CHANCES, "filler", new MenuItem("GRAY_STAINED_GLASS_PANE", "&r", false, "0,1,2,3,4,5,6,7,8,36,37,38,39,40,41,42,43,44")),
-	CHANCES_MENU_GENERATED_OBJECT(MenuInventoryType.CHANCES,"generated-object", new MenuItem("<generated_object>", "&a<generated_object_name>", false, "9,10,11,12,13,14,15,16,17,18,19,20,21,22,23,24,25,26", "<generated_object_lore>", "", "&6Chance: &e<chance>%")),
+	CHANCES_MENU_GENERATED_OBJECT(MenuInventoryType.CHANCES, "generated-object", new MenuItem("<generated_object>", "&a<generated_object_name>", false, "9,10,11,12,13,14,15,16,17,18,19,20,21,22,23,24,25,26", "<generated_object_lore>", "", "&6Chance: &e<chance>%")),
 	CHANCES_MENU_BACK(MenuInventoryType.CHANCES,"back", new  MenuItem("ARROW", "&cBack", false, "40", "&6Get back to", "&cprevious page")),
 	
 	RECIPE_MENU_FILLER(MenuInventoryType.RECIPE, "filler", new MenuItem("GRAY_STAINED_GLASS_PANE", "&r", false, "0,1,2,3,4,5,6,7,8,36,37,38,39,40,41,42,43,44")),

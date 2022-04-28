@@ -40,18 +40,15 @@ public class ChancesMenu {
 
 			ItemStack agoGuiItem = ago.getGuiItem();
 			
-			if (agoGuiItem.hasItemMeta())
-			{
-				if (agoGuiItem.getItemMeta().hasDisplayName())
-					chanceMenuItem.replace("<generated_object_name>", agoGuiItem.getItemMeta().getDisplayName());
-				else
-					Lang.getCustomNamesStorage().getItemTypeName(agoGuiItem);
-				
-				if(agoGuiItem.getItemMeta().hasLore())
-					chanceMenuItem.replaceLore("<generated_object_lore>", new StringContent().addLines((ArrayList<String>) agoGuiItem.getItemMeta().getLore()));
-				else
-					chanceMenuItem.replaceLore("<generated_object_lore>", new StringContent());
-			}
+			if (agoGuiItem.hasItemMeta() && agoGuiItem.getItemMeta().hasDisplayName())
+				chanceMenuItem.replace("<generated_object_name>", agoGuiItem.getItemMeta().getDisplayName());
+			else
+				chanceMenuItem.replace("<generated_object_name>", Lang.getCustomNamesStorage().getItemTypeName(agoGuiItem));
+			
+			if(agoGuiItem.hasItemMeta() && agoGuiItem.getItemMeta().hasLore())
+				chanceMenuItem.replaceLore("<generated_object_lore>", new StringContent().addLines((ArrayList<String>) agoGuiItem.getItemMeta().getLore()));
+			else
+				chanceMenuItem.replaceLore("<generated_object_lore>", new StringContent());
 			
 			chanceMenuItem.replace("<chance>", generator.getChancePercentFormatted(ago));
 			
