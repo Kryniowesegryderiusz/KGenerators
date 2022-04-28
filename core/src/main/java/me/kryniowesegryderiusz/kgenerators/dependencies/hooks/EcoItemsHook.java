@@ -14,7 +14,7 @@ public class EcoItemsHook {
 		if (Main.getDependencies().isEnabled(Dependency.ECO_ITEMS)) {
 			EcoItem ei = EcoItems.getByID(material);
 			if (ei != null)
-				return ei.getItemStack();
+				return ei.getCustomItem().getItem();
 		}
 		return null;
 	}

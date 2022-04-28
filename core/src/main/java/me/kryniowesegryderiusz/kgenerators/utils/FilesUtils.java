@@ -97,10 +97,17 @@ public class FilesUtils {
 	}
 	
 	public static ItemStack loadItemStack(Map<?,?> generalConfig, String objectName, String place, boolean isBlockCheck) {
-		if (generalConfig.get("item") instanceof String)
-			return ItemUtils.parseItemStack((String) generalConfig.get("item"), place, false);
-		else
-			return FilesUtils.loadItemStack((Map<?, ?>) generalConfig.get("item"), place, false);
+		if (generalConfig.get("item") != null)
+			if (generalConfig.get("item") instanceof String)
+				return ItemUtils.parseItemStack((String) generalConfig.get("item"), place, false);
+			else
+				return FilesUtils.loadItemStack((Map<?, ?>) generalConfig.get("item"), place, false);
+		else if (generalConfig.get("material") != null)
+			if (generalConfig.get("material") instanceof String)
+				return ItemUtils.parseItemStack((String) generalConfig.get("material"), place, false);
+			else
+				return FilesUtils.loadItemStack((Map<?, ?>) generalConfig.get("material"), place, false);
+		else return null;
 	}
 
 	@SuppressWarnings("unchecked")

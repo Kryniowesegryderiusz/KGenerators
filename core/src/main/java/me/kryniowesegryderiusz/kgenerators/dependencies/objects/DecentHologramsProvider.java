@@ -1,26 +1,26 @@
 package me.kryniowesegryderiusz.kgenerators.dependencies.objects;
 
-import java.util.ArrayList;
-
 import org.bukkit.Location;
 
 import eu.decentsoftware.holograms.api.DHAPI;
-import eu.decentsoftware.holograms.api.holograms.Hologram;
+import me.kryniowesegryderiusz.kgenerators.Main;
 import me.kryniowesegryderiusz.kgenerators.generators.holograms.interfaces.IHologramProvider;
+import me.kryniowesegryderiusz.kgenerators.generators.locations.objects.GeneratorLocation;
 
 public class DecentHologramsProvider implements IHologramProvider {
-	public void createHologram(Location location, ArrayList<String> lines) {
-		DHAPI.createHologram(getHoloName(location), location, false, lines);
+	public void createHologram(GeneratorLocation gLocation) {
+		if (DHAPI.getHologram(getHoloName(gLocation.getHologramLocation())) == null)
+			DHAPI.createHologram(getHoloName(gLocation.getHologramLocation()), gLocation.getHologramLocation(), false, Main.getHolograms().getHologramLines(gLocation));
 	}
 	
-	public void updateHologramLine(Location location, int lineNr, String line) {
-		Hologram hologram = DHAPI.getHologram(getHoloName(location));
-		DHAPI.setHologramLine(hologram, lineNr, line);
+	public void updateHologramLine(GeneratorLocation gLocation, int lineNr, String line) {
+		this.createHologram(gLocation);
+		DHAPI.setHologramLine(DHAPI.getHologram(getHoloName(gLocation.getHologramLocation())), lineNr, line);
 	}
 	
-	public void removeHologram(Location location) {
-		if (DHAPI.getHologram(getHoloName(location)) != null)
-			DHAPI.removeHologram(getHoloName(location));
+	public void removeHologram(GeneratorLocation gLocation) {
+		if (DHAPI.getHologram(getHoloName(gLocation.getHologramLocation())) != null)
+			DHAPI.removeHologram(getHoloName(gLocation.getHologramLocation()));
 	}
 	
 	private String getHoloName(Location loc) {

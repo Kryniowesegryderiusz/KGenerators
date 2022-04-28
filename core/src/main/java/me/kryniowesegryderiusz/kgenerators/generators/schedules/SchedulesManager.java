@@ -71,8 +71,6 @@ public class SchedulesManager {
 			Main.getInstance().getServer().getPluginManager().disablePlugin(Main.getInstance());
 			return;
 		}
-		
-		Logger.info("Scheduled generators data file: Scheduled generators are loaded in delayed init task! Informations about them are located further in this log!");
     	
         Bukkit.getScheduler().runTask(Main.getInstance(), () -> {
         	ConfigurationSection mainSection = file.getConfigurationSection("");

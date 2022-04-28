@@ -95,9 +95,14 @@ public class Generator {
 		else if (config.contains(generatorID+".chances")) {
 			Logger.error("Generator " + generatorID + " has OLD generates (chances) section set, which allow only block generation!");
 			Logger.error("Check https://github.com/Kryniowesegryderiusz/KGenerators/blob/main/core/src/main/resources/generators.yml#L32 for new generators.yml look!");
+		} else {
+			Logger.error("Generators file: " + generatorID + " doesnt have generating section!");
+			error = true;
 		}
-		else
-			Logger.error("Generators file: " + generatorID + " doesnt set any generating objects set!");
+		if (this.chances.isEmpty()) {
+			Logger.error("Generators file: " + generatorID + " doesnt have any generating objects set!");
+			error = true;
+		}
 		
 		/*
 		 * Optional options

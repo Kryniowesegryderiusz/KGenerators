@@ -145,6 +145,13 @@
 		    <scope>system</scope>
 		    <systemPath>${project.basedir}/libs/EcoItems_v3.46.0.jar</systemPath>
 		</dependency>
+		<dependency>
+	    	<groupId>com.willfp</groupId>
+	    	<artifactId>eco</artifactId>
+	    	<version>3.46.0</version>
+		    <scope>system</scope>
+		    <systemPath>${project.basedir}/libs/eco-6.35.1-all.jar</systemPath>
+		</dependency>
 	</dependencies>
 
    <build>

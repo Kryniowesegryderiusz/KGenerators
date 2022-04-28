@@ -102,6 +102,11 @@ public class UpgradesManager {
 			Main.getInstance().getServer().getPluginManager().disablePlugin(Main.getInstance());
 			return;
 		}
+    	
+		if (!config.contains("enabled") || config.getBoolean("enabled") != true) {
+			Logger.info("Upgrades file: Upgrades are disabled. You can enable them in upgrades.yml");
+			return;
+		}
 
     	ConfigurationSection mainSection = config.getConfigurationSection("");
     	for(String generatorId: mainSection.getKeys(false)) {

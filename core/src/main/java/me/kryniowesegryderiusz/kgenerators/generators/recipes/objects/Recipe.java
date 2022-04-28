@@ -37,14 +37,11 @@ public class Recipe {
 	@SuppressWarnings("unchecked")
 	public Recipe(RecipesManager recipesManager, Config file, String generatorID)
 	{
-		if (!generatorID.equals("example_generator") && !generatorID.equals("enabled"));
-		{
+		if (!generatorID.equals("example_generator") && !generatorID.equals("enabled"))	{
 			Generator generator = Main.getGenerators().get(generatorID);
 			if (generator == null){
-				Logger.error("Recipes file: There isnt any "+generatorID+" generator in generators.yml! Recipe NOT LOADED!");
-			}
-			else
-			{
+				Logger.error("Recipes file: There isnt any `"+generatorID+"` generator in generators.yml! Recipe NOT LOADED!");
+			} else {
 				this.generator = generator;
 				ingredients.put(' ', new ItemStack(Material.AIR));
 				
@@ -68,7 +65,7 @@ public class Recipe {
 	            recipesManager.add(generator, this);
 	            
 	        	Bukkit.addRecipe(shapedRecipe);
-	        	Logger.debug("Recipes file: Loaded recipe for "+generatorID+"! Recipe: " + this.toString());
+	        	Logger.debug("Recipes file: Loaded recipe for `"+generatorID+"`! Recipe: " + this.toString());
 			}
 		}
 	}

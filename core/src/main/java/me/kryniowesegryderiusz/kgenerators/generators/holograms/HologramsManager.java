@@ -49,14 +49,14 @@ public class HologramsManager {
 							int lineNo = 0;
 							for (String s : Lang.getHologramTextStorage().get(HologramText.REMAINING_TIME).getLines()) {
 								if (s.contains("<time>")) {
-									hologramProvider.updateHologramLine(gLocation.getHologramLocation(), lineNo, s.replaceAll("<time>", Main.getSchedules().timeLeftFormatted(gLocation)));
+									hologramProvider.updateHologramLine(gLocation, lineNo, s.replaceAll("<time>", Main.getSchedules().timeLeftFormatted(gLocation)));
 									break;
 								} 
 								lineNo++;
 							} 
 							continue;
 						} 
-						hologramProvider.removeHologram(gLocation.getHologramLocation());
+						hologramProvider.removeHologram(gLocation);
 						toRemove.add(gLocation);
 					} 
 					holograms.removeAll(toRemove);
@@ -70,7 +70,7 @@ public class HologramsManager {
 			return; 
 		if (gLocation == null)
 			return; 
-		hologramProvider.createHologram(gLocation.getHologramLocation(), getHologramLines(gLocation));
+		hologramProvider.createHologram(gLocation);
 		if (!holograms.contains(gLocation))
 			holograms.add(gLocation); 
 	}
@@ -78,12 +78,12 @@ public class HologramsManager {
 	public void removeHologram(GeneratorLocation gLocation) {
 		if (hologramProvider == null)
 			return; 
-		hologramProvider.removeHologram(gLocation.getHologramLocation());
+		hologramProvider.removeHologram(gLocation);
 		if (holograms.contains(gLocation))
 			holograms.remove(gLocation); 
 	}
 	
-	private static ArrayList<String> getHologramLines(GeneratorLocation gLocation) {
+	public ArrayList<String> getHologramLines(GeneratorLocation gLocation) {
 		ArrayList<String> lines = new ArrayList<>();
 		String time = Main.getSchedules().timeLeftFormatted(gLocation);
 		for (String s : Lang.getHologramTextStorage().get(HologramText.REMAINING_TIME).getLines()) {
