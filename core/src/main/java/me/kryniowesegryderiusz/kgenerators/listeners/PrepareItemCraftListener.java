@@ -19,7 +19,6 @@ public class PrepareItemCraftListener implements Listener {
 	{
 		if (e.getRecipe() == null)
 			return;
-		/*
 		Generator generator = Main.getGenerators().get(e.getRecipe().getResult());
 		if (generator != null)
 		{
@@ -37,6 +36,6 @@ public class PrepareItemCraftListener implements Listener {
 					}
 				}
 			}
-		}*/
+		}
 	}
 }
