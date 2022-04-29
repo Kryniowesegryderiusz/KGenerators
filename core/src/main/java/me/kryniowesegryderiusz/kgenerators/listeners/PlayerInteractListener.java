@@ -33,6 +33,9 @@ public class PlayerInteractListener implements Listener {
 		if (gLocation == null) return;
 		
 		if (e.getAction() == Action.LEFT_CLICK_BLOCK) e.setCancelled(gLocation.handleAction(InteractionType.LEFT_CLICK, e.getPlayer()));
-		else if (e.getAction() == Action.RIGHT_CLICK_BLOCK) e.setCancelled(gLocation.handleAction(InteractionType.RIGHT_CLICK, e.getPlayer()));
+		else if (e.getAction() == Action.RIGHT_CLICK_BLOCK) {
+			gLocation.handleAction(InteractionType.RIGHT_CLICK, e.getPlayer());
+			e.setCancelled(true);
+		}
 	}
 }
