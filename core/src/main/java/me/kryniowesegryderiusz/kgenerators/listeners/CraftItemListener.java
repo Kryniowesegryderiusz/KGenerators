@@ -25,45 +25,33 @@ public class CraftItemListener implements Listener {
 		Player p = (Player) e.getWhoClicked();
 	
 		for (Generator g : Main.getGenerators().getAll()) {
-			if (Main.getRecipes().isGeneratorRecipe(g, e.getInventory().getMatrix())) {
-				
-				/*
-				 * Permission check
-				 */
-				
-				String permission = "kgenerators.craft."+g.getId();
-				if (!p.hasPermission(permission)) {
-					Lang.getMessageStorage().send(p, Message.GENERATORS_CRAFTING_NO_PERMISSION,
-							"<generator>", g.getGeneratorItem().getItemMeta().getDisplayName(),
-							"<permission>", permission);
-					e.setCancelled(true);
-					closeInv(p);
-					return;
-				}
-				
-				/*
-				 * Force recipe
-				 */
-				
-				e.setCancelled(false);
-				e.setResult(Result.ALLOW);
-				e.setCurrentItem(g.getGeneratorItem());
-			}	
-		}
-		
-		/*
-		 * Check for trying craft something with generator
-		 */
-		for (Generator g : Main.getGenerators().getAll()) {
+			
+			/*
+			 * Check for trying craft something with generator
+			 */
 			for (ItemStack i : e.getInventory().getMatrix()) {
 				if (i != null && i.isSimilar(g.getGeneratorItem()) && e.getCurrentItem() != null && Main.getGenerators().get(e.getCurrentItem()) == null) {
 					Lang.getMessageStorage().send(p, Message.GENERATORS_CRAFTING_CANT_USE);
-					e.setCancelled(true);
 					e.setResult(Result.DENY);
 					closeInv(p);
 					return;
 				}
 			}
+			
+			/*
+			 * Permission check
+			 */
+			if (Main.getRecipes().isGeneratorRecipe(g, e.getInventory().getMatrix())) {				
+				String permission = "kgenerators.craft."+g.getId();
+				if (!p.hasPermission(permission)) {
+					Lang.getMessageStorage().send(p, Message.GENERATORS_CRAFTING_NO_PERMISSION,
+							"<generator>", g.getGeneratorItem().getItemMeta().getDisplayName(),
+							"<permission>", permission);
+					e.setResult(Result.DENY);
+					closeInv(p);
+					return;
+				}
+			}	
 		}
 	}
 	

@@ -1,7 +1,5 @@
 package me.kryniowesegryderiusz.kgenerators.listeners;
 
-import java.util.ArrayList;
-
 import org.bukkit.Material;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.EventPriority;
@@ -18,24 +16,7 @@ public class PrepareItemCraftListener implements Listener {
 	
 	@EventHandler(priority=EventPriority.MONITOR)
 	public void onPrepareItemCraftEvent(PrepareItemCraftEvent  e)
-	{		
-		/*
-		 * Force generator Recipe
-		 */
-		if (e.getInventory().getContents().length < 10) return;		
-		for (Generator g : Main.getGenerators().getAll()) {
-			if (Main.getRecipes().get(g) != null) {
-				ArrayList<ItemStack> recipesItems = new ArrayList<>();
-				for (int i = 1; i < 10; i++) {
-					recipesItems.add(e.getInventory().getContents()[i]);
-				}
-				if (Main.getRecipes().isGeneratorRecipe(g, recipesItems)) {
-					e.getInventory().setResult(g.getGeneratorItem());
-					break;
-				}
-			}
-		}
-		
+	{				
 		/*
 		 * PreCheck for trying craft something with generator
 		 */
