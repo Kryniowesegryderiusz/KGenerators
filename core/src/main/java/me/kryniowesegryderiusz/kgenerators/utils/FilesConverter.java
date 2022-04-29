@@ -88,6 +88,14 @@ public class FilesConverter {
 			Logger.info("FilesConverter: Added pick-up-to-eq settings to config file");
 		}
 		
+		if (!config.contains("drop-to-eq"))
+		{
+			add(file, "");
+			add(file, "#Should block-related drops be added directly to inventory?");
+			add(file, "drop-to-eq: false");
+			Logger.info("FilesConverter: Added drop-to-eq settings to config file");
+		}
+		
 		if (!config.contains("generators-actionbar-messages"))
 		{
 			add(file, "");

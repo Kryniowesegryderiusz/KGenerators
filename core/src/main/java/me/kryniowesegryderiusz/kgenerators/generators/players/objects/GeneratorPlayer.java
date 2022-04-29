@@ -18,8 +18,7 @@ import me.kryniowesegryderiusz.kgenerators.lang.enums.Message;
 
 public class GeneratorPlayer {
 	
-	@Getter
-	private boolean isNone = false;
+	@Getter private boolean isNone = false;
 	
 	private String nick;
 	
@@ -54,7 +53,7 @@ public class GeneratorPlayer {
 	}
 	
 	/*
-	 * Per player generators
+	 * Limits
 	 */
 	
 	@Getter

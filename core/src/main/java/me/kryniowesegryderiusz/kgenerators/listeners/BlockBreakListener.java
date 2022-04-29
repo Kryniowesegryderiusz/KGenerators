@@ -5,10 +5,13 @@ import org.bukkit.event.EventHandler;
 import org.bukkit.event.EventPriority;
 import org.bukkit.event.Listener;
 import org.bukkit.event.block.BlockBreakEvent;
+import org.bukkit.inventory.ItemStack;
 
 import me.kryniowesegryderiusz.kgenerators.Main;
+import me.kryniowesegryderiusz.kgenerators.dependencies.enums.Dependency;
 import me.kryniowesegryderiusz.kgenerators.generators.locations.handlers.enums.InteractionType;
 import me.kryniowesegryderiusz.kgenerators.generators.locations.objects.GeneratorLocation;
+import me.kryniowesegryderiusz.kgenerators.utils.PlayerUtils;
 
 public class BlockBreakListener implements Listener {
 	
@@ -33,6 +36,27 @@ public class BlockBreakListener implements Listener {
 				&& gLoc.isPermittedToMine(p)
 				&& Main.getPlayers().getPlayer(p).canUse(gLoc)) {
 			gLoc.scheduleGeneratorRegeneration();
+			
+			if (Main.getSettings().isDropUpToEq()) {
+				
+	    		if (!p.hasPermission("kgenerators.droptoinventory"))
+	    			return;
+
+	    		if (Main.getDependencies().isEnabled(Dependency.ITEMS_ADDER)) {
+	    			return;
+	    		}
+	    		
+	    		e.setDropItems(false);
+	    		
+	    		int exp = e.getExpToDrop();
+	    		e.setExpToDrop(0);
+	    		p.giveExp(exp);
+	    		
+	    		for (ItemStack item : e.getBlock().getDrops(p.getItemInHand(), p)){
+	    			PlayerUtils.dropToInventory(p, gLoc.getGeneratedBlockLocation(), item);
+	    		}
+			}
+			
 		} else
 			e.setCancelled(true);
 	}

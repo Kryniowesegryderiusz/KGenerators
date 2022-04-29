@@ -23,8 +23,7 @@ public class PlayersManager {
 		if (nick == null)
 			return nullPlayer;
 		
-		if (!players.containsKey(nick))
-			players.put(nick, new GeneratorPlayer(nick));
+		players.putIfAbsent(nick, new GeneratorPlayer(nick));
 		
 		return players.get(nick);
 			

@@ -27,8 +27,11 @@ can-generate-instead:
 disabled-worlds:
 - test_world
 
-#Should generators be picked up directly to equipment?
+#Should generators be picked up directly to inventory?
 pick-up-to-eq: true
+
+#Should block-related drops be added directly to inventory?
+drop-to-eq: false
 
 #Should "generators" lang section be sent by actionbar instad of chat?
 generators-actionbar-messages: true
