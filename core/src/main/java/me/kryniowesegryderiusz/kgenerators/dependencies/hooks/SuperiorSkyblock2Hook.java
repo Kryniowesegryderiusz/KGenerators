@@ -55,14 +55,14 @@ public class SuperiorSkyblock2Hook implements Listener {
 	public static void forceHook()
 	{
 		if (IslandPrivilege.getByName("KGENERATORS_PICKUP_FLAG") != null
-				|| IslandPrivilege.getByName("KGENERATORS_USE_FLAG") != null
-				|| IslandPrivilege.getByName("KGENERATORS_OPEN_MENU_FLAG") != null)
+				&& IslandPrivilege.getByName("KGENERATORS_USE_FLAG") != null
+				&& IslandPrivilege.getByName("KGENERATORS_OPEN_MENU_FLAG") != null)
 		{
 			initialised = true;
-			Logger.info("Dependencies: SuperiorSkyblock2: Something force hooked flags!");
+			Logger.info("Dependencies: SuperiorSkyblock2: Other party plugin initialised additional privilages!");
 		}
 		else
-			Logger.error("Dependencies: SuperiorSkyblock2: Something tried to force hook flags, despite them not beeing initialised!");
+			Logger.error("Dependencies: SuperiorSkyblock2: Other party plugin tried to initialise additional privilages, but failed! IslandPrivileges are not added yet!");
 	}
 	
 	@EventHandler
