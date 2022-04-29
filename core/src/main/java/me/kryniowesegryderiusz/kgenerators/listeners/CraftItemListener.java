@@ -1,9 +1,9 @@
 package me.kryniowesegryderiusz.kgenerators.listeners;
 
-import java.util.Map.Entry;
-
 import org.bukkit.entity.Player;
+import org.bukkit.event.Event.Result;
 import org.bukkit.event.EventHandler;
+import org.bukkit.event.EventPriority;
 import org.bukkit.event.Listener;
 import org.bukkit.event.inventory.CraftItemEvent;
 import org.bukkit.inventory.ItemStack;
@@ -15,40 +15,51 @@ import me.kryniowesegryderiusz.kgenerators.lang.enums.Message;
 
 public class CraftItemListener implements Listener {
 	
-	@EventHandler
+	@EventHandler(priority=EventPriority.HIGHEST)
 	public void CraftItemEvent(final CraftItemEvent e){
+		
 		if (!(e.getWhoClicked() instanceof Player)){
 			return;
 		}
-		
+
 		Player p = (Player) e.getWhoClicked();
-		
-		for(Entry<String, Generator> entry : Main.getGenerators().getEntrySet()) {
-			
-			String gName = entry.getKey();
-			Generator g = entry.getValue();
-			ItemStack item = g.getGeneratorItem();
-			
-			/* Check if not using generator for crafting */
-			ItemStack[] items = e.getInventory().getMatrix();
-			for (ItemStack i : items) {
-				if (i != null && i.equals(item) && Main.getGenerators().exactGeneratorItemExists(gName, item) == null) {
-					Lang.getMessageStorage().send(p, Message.GENERATORS_CRAFTING_CANT_USE);
-					e.setCancelled(true);
-					closeInv(p);
-					return;
-				}
-			}
-			
-			/* Check permission for crafting */
-			ItemStack itemRecipe = e.getRecipe().getResult();
-			if (item.equals(itemRecipe)) {
-				String permission = "kgenerators.craft."+gName;
+	
+		for (Generator g : Main.getGenerators().getAll()) {
+			if (Main.getRecipes().isGeneratorRecipe(g, e.getInventory().getMatrix())) {
+				
+				/*
+				 * Permission check
+				 */
+				
+				String permission = "kgenerators.craft."+g.getId();
 				if (!p.hasPermission(permission)) {
 					Lang.getMessageStorage().send(p, Message.GENERATORS_CRAFTING_NO_PERMISSION,
 							"<generator>", g.getGeneratorItem().getItemMeta().getDisplayName(),
 							"<permission>", permission);
 					e.setCancelled(true);
+					closeInv(p);
+					return;
+				}
+				
+				/*
+				 * Force recipe
+				 */
+				
+				e.setCancelled(false);
+				e.setResult(Result.ALLOW);
+				e.setCurrentItem(g.getGeneratorItem());
+			}	
+		}
+		
+		/*
+		 * Check for trying craft something with generator
+		 */
+		for (Generator g : Main.getGenerators().getAll()) {
+			for (ItemStack i : e.getInventory().getMatrix()) {
+				if (i != null && i.isSimilar(g.getGeneratorItem()) && e.getCurrentItem() != null && Main.getGenerators().get(e.getCurrentItem()) == null) {
+					Lang.getMessageStorage().send(p, Message.GENERATORS_CRAFTING_CANT_USE);
+					e.setCancelled(true);
+					e.setResult(Result.DENY);
 					closeInv(p);
 					return;
 				}

@@ -5,7 +5,6 @@ import java.util.HashMap;
 import java.util.Map;
 import java.util.concurrent.Callable;
 
-import org.bstats.charts.AdvancedPie;
 import org.bukkit.Bukkit;
 import org.bukkit.plugin.java.JavaPlugin;
 
@@ -17,7 +16,6 @@ import me.kryniowesegryderiusz.kgenerators.dependencies.DependenciesManager;
 import me.kryniowesegryderiusz.kgenerators.dependencies.enums.Dependency;
 import me.kryniowesegryderiusz.kgenerators.dependencies.hooks.ItemsAdderHook;
 import me.kryniowesegryderiusz.kgenerators.generators.generator.GeneratorsManager;
-import me.kryniowesegryderiusz.kgenerators.generators.generator.enums.GeneratorType;
 import me.kryniowesegryderiusz.kgenerators.generators.holograms.HologramsManager;
 import me.kryniowesegryderiusz.kgenerators.generators.locations.GeneratorLocationsManager;
 import me.kryniowesegryderiusz.kgenerators.generators.players.PlayersManager;
@@ -148,9 +146,7 @@ public class Main extends JavaPlugin {
 			this.getServer().getPluginManager().registerEvents(new PlayerInteractListener(), this);
 			this.getServer().getPluginManager().registerEvents(new InventoryClickListener(), this);
 			this.getServer().getPluginManager().registerEvents(new FurnaceSmeltListener(), this);
-			
-			if (!multiVersion.isHigher(12))
-				this.getServer().getPluginManager().registerEvents(new PrepareItemCraftListener(), this);
+			this.getServer().getPluginManager().registerEvents(new PrepareItemCraftListener(), this);
 			
 			/* 
 			 * Metrix

@@ -1,9 +1,12 @@
 package me.kryniowesegryderiusz.kgenerators.generators.recipes;
 
 import java.io.IOException;
+import java.util.ArrayList;
 import java.util.HashMap;
 
+import org.bukkit.Material;
 import org.bukkit.configuration.InvalidConfigurationException;
+import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.ShapedRecipe;
 import org.bukkit.inventory.ShapelessRecipe;
 
@@ -76,5 +79,27 @@ public class RecipesManager {
 	
 	public boolean hasRecipes() {
 		return this.recipes.size() != 0;
+	}
+	
+	public boolean isGeneratorRecipe(Generator generator, ArrayList<ItemStack> items) {
+		if (this.get(generator) != null) {
+			ArrayList<ItemStack> recipeItems = this.get(generator).getRecipe();
+			for (int i  = 0; i < 9; i++) {
+				
+				ItemStack item = items.get(i);
+				if (item == null) item = new ItemStack(Material.AIR);
+				if (!item.isSimilar(recipeItems.get(i)))
+					return false;
+			}
+			return true;
+		} else return false;
+	}
+
+	public boolean isGeneratorRecipe(Generator g, ItemStack[] items) {
+		ArrayList<ItemStack> recipeItemsArray = new ArrayList<>();
+		for (ItemStack i : items) {
+			recipeItemsArray.add(i);
+		}
+		return this.isGeneratorRecipe(g, recipeItemsArray);
 	}
 }

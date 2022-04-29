@@ -65,6 +65,7 @@ public class Recipe {
 	            recipesManager.add(generator, this);
 	            
 	        	Bukkit.addRecipe(shapedRecipe);
+	        	
 	        	Logger.debug("Recipes file: Loaded recipe for `"+generatorID+"`! Recipe: " + this.toString());
 			}
 		}

@@ -1,7 +1,6 @@
 package me.kryniowesegryderiusz.kgenerators.dependencies;
 
 import java.util.ArrayList;
-import java.util.Map;
 
 import org.bukkit.Bukkit;
 
@@ -15,7 +14,6 @@ import me.kryniowesegryderiusz.kgenerators.dependencies.hooks.MinionsHook;
 import me.kryniowesegryderiusz.kgenerators.dependencies.hooks.SlimefunHook;
 import me.kryniowesegryderiusz.kgenerators.dependencies.hooks.SuperiorSkyblock2Hook;
 import me.kryniowesegryderiusz.kgenerators.dependencies.hooks.VaultHook;
-import me.kryniowesegryderiusz.kgenerators.generators.generator.objects.Generator;
 import me.kryniowesegryderiusz.kgenerators.logger.Logger;
 
 public class DependenciesManager {
