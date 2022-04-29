@@ -120,11 +120,11 @@ public class Main extends JavaPlugin {
 			settings = new Settings();
 			FilesConverter.updateConfig(settings);
 			
+			Lang.loadFromFiles();
+			
 			recipes = new RecipesManager();
 			upgrades = new UpgradesManager();
 			limits = new LimitsManager();
-			
-			Lang.loadFromFiles();
 			
 			/* Database setup */
 			databases = new DatabaseManager(Main.getSettings().getDbType());
