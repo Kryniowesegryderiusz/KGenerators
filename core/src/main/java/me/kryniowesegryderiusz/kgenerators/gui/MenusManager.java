@@ -14,7 +14,7 @@ import me.kryniowesegryderiusz.kgenerators.dependencies.hooks.BentoBoxHook;
 import me.kryniowesegryderiusz.kgenerators.dependencies.hooks.SuperiorSkyblock2Hook;
 import me.kryniowesegryderiusz.kgenerators.generators.generator.objects.Generator;
 import me.kryniowesegryderiusz.kgenerators.generators.locations.objects.GeneratorLocation;
-import me.kryniowesegryderiusz.kgenerators.gui.menus.ChancesMenu;
+import me.kryniowesegryderiusz.kgenerators.gui.menus.GeneratedObjectsMenu;
 import me.kryniowesegryderiusz.kgenerators.gui.menus.GeneratorMenu;
 import me.kryniowesegryderiusz.kgenerators.gui.menus.LimitsMenu;
 import me.kryniowesegryderiusz.kgenerators.gui.menus.MainMenu;
@@ -115,8 +115,8 @@ public class MenusManager implements Listener {
 	}
 	
 	public void openChancesMenu(Player p, Generator generator) {
-		Inventory menu = ChancesMenu.get(p, generator);
-		guis.put(p, new MenuPlayer(p, MenuInventoryType.CHANCES, menu, generator));
+		Inventory menu = GeneratedObjectsMenu.get(p, generator);
+		guis.put(p, new MenuPlayer(p, MenuInventoryType.GENERATED_OBJECTS, menu, generator));
 		p.openInventory(menu);
 	}
 	

@@ -80,7 +80,6 @@ public class Commands implements CommandExecutor {
 							Lang.getMessageStorage().send(sender, Message.COMMANDS_LIST_NO_PERMISSION, "<permission>", "kgenerators.list");
 						}
 					break;
-				case "check":
 				case "limits":
 					if (sender.hasPermission("kgenerators.limits") || sender instanceof ConsoleCommandSender){
 						if (sender instanceof Player){
@@ -243,7 +242,6 @@ public class Commands implements CommandExecutor {
 					}
 					break;
 				case "menu":
-				case "chances":
 					if (sender.hasPermission("kgenerators.menu") || sender instanceof ConsoleCommandSender){
 						if (args.length == 1)
 						{

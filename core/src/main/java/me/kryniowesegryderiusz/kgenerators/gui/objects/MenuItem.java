@@ -1,5 +1,6 @@
 package me.kryniowesegryderiusz.kgenerators.gui.objects;
 
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Arrays;
 
@@ -14,6 +15,7 @@ import lombok.Setter;
 import me.kryniowesegryderiusz.kgenerators.Main;
 import me.kryniowesegryderiusz.kgenerators.lang.enums.MenuItemType;
 import me.kryniowesegryderiusz.kgenerators.lang.objects.StringContent;
+import me.kryniowesegryderiusz.kgenerators.logger.Logger;
 import me.kryniowesegryderiusz.kgenerators.utils.ItemUtils;
 import me.kryniowesegryderiusz.kgenerators.utils.immutable.Config;
 
@@ -205,6 +207,12 @@ public class MenuItem implements Cloneable {
 			config.set(path+".lore", this.lore);
 			config.set(path+".slots", this.slots);
 			config.set(path+".glow", this.glow);
+			try {
+				config.saveConfig();
+			} catch (IOException e) {
+				Logger.error("Lang: Cant save lang file!");
+				Logger.error(e);
+			}
 		}
 	}
 	

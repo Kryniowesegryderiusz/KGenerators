@@ -172,7 +172,7 @@ upgrade:
     lore: []
     slots: '24'
     glow: false
-chances:
+generated-objects:
   name: '&9Szanse'
   slots: 45
   filler:
@@ -182,12 +182,15 @@ chances:
     lore: []
     slots: 0,1,2,3,4,5,6,7,8,36,37,38,39,40,41,42,43,44
     glow: false
-  block:
+  generated-object:
     enabled: true
-    item: <block>
-    name: '&a<block_name>'
+    item: <generated_object>
+    name: §a<generated_object_name>
     lore:
-    - '&6Szansa: &e<chance>%'
+    - <generated_object_lore>
+    - ''
+    - <generated_object_type>
+    - '§6Szansa: §e<chance>%'
     slots: 9,10,11,12,13,14,15,16,17,18,19,20,21,22,23,24,25,26
     glow: false
   back:
@@ -239,12 +242,19 @@ additional-lines:
     - '&8- &e<generator_name>'
     only-owner-use:
     - '&cTylko właściciel może użyć generatora.'
-  upgrade:
-  - ''
-  - '&6Kliknij prawym:'
-  - '&eżeby sprawdzić, jak'
-  - '&eotrzymać z ulepszenia'
-  recipe:
-  - ''
-  - '&6Kliknij prawym:'
-  - '&eżeby sprawdzić recepturę'
+  generated-object-type:
+    item:
+    - '&6Generuje: &eitem'
+    block:
+    - '&6Generuje: &eblok'
+  upgrades:
+    menu-how-to:
+      - ''
+      - '&6Kliknij prawym:'
+      - '&eżeby sprawdzić, jak'
+      - '&eotrzymać z ulepszenia'
+  recipes:
+    menu-how-to:
+      - ''
+      - '&6Kliknij prawym:'
+      - '&eżeby sprawdzić recepturę'

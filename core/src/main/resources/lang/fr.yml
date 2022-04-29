@@ -1,0 +1,144 @@
+#Translated to French by thedarkonekiller
+messages:
+  prefix: '&8[&6KGenerators&8] '
+  generators:
+    any:
+      owner-none: '&cAucun'
+      disabled: '&cLes générateurs sont désactivés dans ce monde!'
+      repaired: '&aLe générateur a été réparé avec succès!'
+      no-longer-there: '&cLe générateur n''est plus là!'
+      disabled-specific: '&c<generator> est désactivé dans ce monde!'
+    digging:
+      cant-here: '&cVous ne pouvez pas creuser les blocs générés ici!'
+      only-gen: '&cVous ne pouvez creuser que des blocs générés ici!'
+      no-permission: '&cVous n''avez pas la permission &8(&7<permission>&8)&c de miner <generator>&c!'
+    crafting:
+      cant-use: '&cVous ne pouvez rien fabriquer à partir du générateur!'
+      no-permission: '&cVous n''avez pas la permission &8(&7<permission>&8)&c de fabriquer <generator>&c!'
+    timeleft:
+      output: '&aCe générateur sera régénéré dans &e<time>'
+    pick-up:
+      successful: '&e<generator> &arécupéré'
+      cant-here: '&cVous ne pouvez pas prendre de générateur ici!'
+      no-permission: '&cVous n''avez pas la permission &8(&7<permission>&8)&c de prendre
+        ce type de générateur'
+    place:
+      cant-here: '&cVous ne pouvez pas placer le générateur ici!'
+      cant-place-block: '&cVous ne pouvez pas placer de bloc à la place du générateur'
+      cant-place-double-below-block: '&cVous ne pouvez pas placer un double générateur sous un
+        bloc!'
+      cant-place-double-below-generator: '&cVous ne pouvez pas placer un double générateur sous
+        un autre générateur!'
+      no-permission: '&cVous n''avez pas la permission &8(&7<permission>&8)&c de placer ce
+        type de générateur'
+    limits:
+      cant-place-more-type: '&cVous ne pouvez pas placer plus de &6<number> <generator> &cgénérateurs,
+        car votre limite est de &6<limit>&c!'
+      cant-pick-up: '&cVous ne pouvez pas récupérer le générateur appartenant à &6<owner>&c!'
+      cant-use: '&cVous ne pouvez pas utiliser le générateur appartenant à &6<owner>&c!'
+    protection:
+      cant-change-generator-item: '&cVous ne pouvez pas changer l''élément du générateur!'
+    menus:
+      cant-open-here: '&cVous ne pouvez pas ouvrir ce menu ici!'
+  economy:
+    no-economy-avaible: '&cIl n''y a pas de système économique disponible!'
+    not-enough-money: '&cVous n''avez pas assez d''argent ! Vous avez besoin de &6<cost>&c!'
+  upgrades:
+    upgraded: '&aVous avez mis à jour &e<number> &générateurs pour &e<costs>&a!'
+    gui-upgraded: '&cVous n''avez pas &4<cost>&c!'
+    no-next-level: '&cIl s''agit du niveau maximum de ce générateur!'
+    no-permission: '&cVous n''avez pas la permission &8(&7<permission>&8)&c pour mettre à niveau le générateur!'
+    not-a-generator: '&cVous n''avez pas de générateur en main!'
+    separator: '&7, &e'
+  hooks:
+    explode-pickaxe:
+      cannot-use-on-double: '&cVous ne pouvez pas utiliser de pioche explosive sur le type générateur double!'
+  database:
+    error: '&cUne erreur de base de données est survenue, veuillez contacter l''administrateur!'
+  commands:
+    any:
+      wrong: '&cMauvaise commande! Taper /kgenerators pour avoir de l''aide'
+      no-permission: '&cVous n''avez pas la permission &8(&7<permission>&8)&c pour utiliser
+        les commandes KGenerators'
+      player-not-online: '&cLe joueur n''est pas en ligne'
+      player-doesnt-exist: '&cLe joueur n''existe pas'
+      generator-doesnt-exist: '&cCe générateur n''existe pas'
+      menu-doesnt-exist: '&cCe menu n''existe pas'
+      console-only: '&cCette commande ne peut être exécutée qu''à partir de la console!'
+    list:
+      header: '&aGénérateurs:'
+      list: '&8- <generator> &8(&7ID: <generatorID>&8)'
+      no-permission: '&cVous n''avez pas la permission &8(&7<permission>&8)&c pour lister les générateurs'
+      help: Listet tous les générateurs
+    menu:
+      opened-others: '&aOuvrir menu &e<generator> <menu> &apour &e<player>'
+      error: '&cUne erreur s''est produite lors de l''utilisation des menus! Contacter l''administrateur!'
+      no-permission: '&cVous n''avez pas la permission &8(&7<permission>&8)&c d''ouvrir le menu!'
+      no-permission-others: '&cVous n''avez pas la permission &8(&7<permission>&8)&c d''
+        ouvrir le menu pour les autres joueurs!'
+      help: Ouvrir le menu
+    give:
+      generator-given: '&e<amount>x &a<generator> &aont été donné à &e<player>'
+      generator-recieved: '&aVous avez reçu &e<amount>x &a<generator>&a!'
+      usage: '&cUsage: &e/kgenerators give <player> <generator> [amount]'
+      no-permission: '&cVous n''avez pas la permission &8(&7<permission>&8)&c de donner des générateurs'
+      help: Donner des générateurs à un joueur
+    getall:
+      recieved: '&aGénérateurs reçus'
+      no-permission: '&cVous n''avez pas la permission &8(&7<permission>&8)&c pour obtenir tous les
+        générateurs'
+      help: Obtenez tous les générateurs
+    limits:
+      no-permission: '&cVous n''avez pas la permission &8(&7<permission>&8)&c pour ouvrir le
+        menu des limites!'
+      help: Vérifier les limites
+    actions:
+      no-permission: '&cVous n''avez pas la permission &8(&7<permission>&8)&c pour vérifier les actions!'
+      help: Vérifier les actions possibles
+      header: '&aActions possibles pour les générateurs:'
+      list: '&6<action> &8- &e<sneak><mode><item>'
+      sneak: 's''accroupir et '
+      break: briser le bloc
+      left-click: clic gauche
+      right-click: clic droit
+      item: ' avec <itemname>'
+      pick-up: Prendre
+      gui: Ouvrir l'interface graphique
+      time-left: Temps restant
+    timeleft:
+      no-generator: '&cVous ne regardez pas un générateur en attente de régénération.!'
+      no-permission: '&cVous n''avez pas la permission &8(&7<permission>&8)&c pour vérifier le temps de
+        génération restant'
+      help: Vérifier le temps restant pour la régénération
+      format:
+        seconds: s
+        minutes: m
+        hours: h
+        days: j
+        none: Aucun
+    upgrade:
+      help: Générateur de mise à niveau
+    reload:
+      done: '&aPlugin rechargé! Vérifiez la console ou log.txt dans le répertoire du plugin
+        pour les erreurs possibles!'
+      no-permission: '&cVous n''avez pas la permission &8(&7<permission>&8)&c de recharger
+        le plugin'
+      help: Rechargement du plugin
+    debug:
+      done: '&aVotre URL de débogage est: &e<url>'
+      error: '&cUne erreur s''est produite, lors de la création d''une sortie de débogage!'
+      no-permission: '&cVous n''avez pas la permission &8(&7<permission>&8)&c pour coller le débogage'
+    help:
+      label: '&aAide sur les commandes &6&lKGenerators:'
+      format: '&e/kgenerators <subcommand> &7<help>'
+  upgardes:
+    not-a-generator: '&cVous n''avez pas de générateur en main!'
+    costs:
+      exp: xp
+      exp-levels: niveaux xp
+holograms:
+  remaining-time:
+  - ''
+  - '&6Temps restant:'
+  - '&e<time>'
+  - ''

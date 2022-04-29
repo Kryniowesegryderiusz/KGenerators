@@ -173,7 +173,9 @@ public class Generator {
 	
 	public String getChancePercentFormatted(AbstractGeneratedObject ago)
 	{
-		double percent = this.getChancePercent(ago);
+		Double percent = this.getChancePercent(ago);
+		if(percent.isInfinite())
+			return "100";
 		return String.format("%.2f", percent);
 	}
 	

@@ -44,8 +44,7 @@ public class RecipesManager {
 			try {
 				new Recipe(this, file, generatorID);
 			} catch (Exception e) {
-				Logger.error("Recipes file: Cannot load recipe for " + generatorID + " " + e.getMessage());
-				e.printStackTrace(); 
+				Logger.error("Recipes file: Cannot load recipe for " + generatorID + ": " + e.getMessage());
 			}
     	}
     	

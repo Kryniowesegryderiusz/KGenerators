@@ -13,20 +13,21 @@ import me.kryniowesegryderiusz.kgenerators.generators.generator.objects.Generato
 import me.kryniowesegryderiusz.kgenerators.gui.objects.MenuItem;
 import me.kryniowesegryderiusz.kgenerators.lang.Lang;
 import me.kryniowesegryderiusz.kgenerators.lang.enums.MenuInventoryType;
+import me.kryniowesegryderiusz.kgenerators.lang.enums.MenuItemAdditionalLines;
 import me.kryniowesegryderiusz.kgenerators.lang.enums.MenuItemType;
 import me.kryniowesegryderiusz.kgenerators.lang.objects.StringContent;
 import me.kryniowesegryderiusz.kgenerators.logger.Logger;
 
-public class ChancesMenu {
+public class GeneratedObjectsMenu {
 	
 	public static Inventory get(Player player, Generator generator)
 	{
 		ArrayList<MenuItemType> exludedEnumMenuItems = new ArrayList<MenuItemType>();
-		exludedEnumMenuItems.add(MenuItemType.CHANCES_MENU_GENERATED_OBJECT);
+		exludedEnumMenuItems.add(MenuItemType.GENERATED_OBJECTS_MENU_GENERATED_OBJECT);
 		
-		Inventory menu = Lang.getMenuInventoryStorage().get(MenuInventoryType.CHANCES).getInv(MenuInventoryType.CHANCES, player, exludedEnumMenuItems);
+		Inventory menu = Lang.getMenuInventoryStorage().get(MenuInventoryType.GENERATED_OBJECTS).getInv(MenuInventoryType.GENERATED_OBJECTS, player, exludedEnumMenuItems);
 
-		MenuItem generatorMenuItem = Lang.getMenuItemStorage().get(MenuItemType.CHANCES_MENU_GENERATED_OBJECT);
+		MenuItem generatorMenuItem = Lang.getMenuItemStorage().get(MenuItemType.GENERATED_OBJECTS_MENU_GENERATED_OBJECT);
 		
 		ArrayList<Integer> slotList = generatorMenuItem.getSlots();
 		int lastId = -1;
@@ -50,6 +51,11 @@ public class ChancesMenu {
 			else
 				chanceMenuItem.replaceLore("<generated_object_lore>", new StringContent());
 			
+			if(ago.getType().equals("item"))
+				chanceMenuItem.replaceLore("<generated_object_type>", Lang.getMenuItemAdditionalLinesStorage().get(MenuItemAdditionalLines.GENERATED_OBJECT_TYPE_ITEM));
+			else if(ago.getType().equals("block") || ago.getType().equals("itemsadder_block"))
+				chanceMenuItem.replaceLore("<generated_object_type>", Lang.getMenuItemAdditionalLinesStorage().get(MenuItemAdditionalLines.GENERATED_OBJECT_TYPE_BLOCK));
+			
 			chanceMenuItem.replace("<chance>", generator.getChancePercentFormatted(ago));
 			
 			lastId++;
@@ -68,7 +74,7 @@ public class ChancesMenu {
 	
 	public static void onClick(Player p, int slot)
 	{		
-		if (Lang.getMenuItemStorage().get(MenuItemType.CHANCES_MENU_BACK).getSlots().contains(slot) && Lang.getMenuItemStorage().get(MenuItemType.CHANCES_MENU_BACK).isEnabled())
+		if (Lang.getMenuItemStorage().get(MenuItemType.GENERATED_OBJECTS_MENU_BACK).getSlots().contains(slot) && Lang.getMenuItemStorage().get(MenuItemType.GENERATED_OBJECTS_MENU_BACK).isEnabled())
 		{
 			Main.getMenus().openMainMenu(p, Main.getMenus().getMenuPlayer(p).getGenerator());
 		}

@@ -9,7 +9,7 @@ import org.bukkit.event.inventory.InventoryType;
 
 import me.kryniowesegryderiusz.kgenerators.Main;
 import me.kryniowesegryderiusz.kgenerators.addons.events.CustomMenuClickEvent;
-import me.kryniowesegryderiusz.kgenerators.gui.menus.ChancesMenu;
+import me.kryniowesegryderiusz.kgenerators.gui.menus.GeneratedObjectsMenu;
 import me.kryniowesegryderiusz.kgenerators.gui.menus.GeneratorMenu;
 import me.kryniowesegryderiusz.kgenerators.gui.menus.LimitsMenu;
 import me.kryniowesegryderiusz.kgenerators.gui.menus.MainMenu;
@@ -61,8 +61,8 @@ public class InventoryClickListener implements Listener {
 					 GeneratorMenu.onClick(p, slot);
 				 else if (m == MenuInventoryType.MAIN)
 					 MainMenu.onClick(p, slot, e.getClick());
-				 else if (m == MenuInventoryType.CHANCES)
-					 ChancesMenu.onClick(p, slot);
+				 else if (m == MenuInventoryType.GENERATED_OBJECTS)
+					 GeneratedObjectsMenu.onClick(p, slot);
 				 else if (m == MenuInventoryType.LIMITS)
 					 LimitsMenu.onClick(p, slot, e.getCurrentItem());
 				 else if (m == MenuInventoryType.RECIPE)

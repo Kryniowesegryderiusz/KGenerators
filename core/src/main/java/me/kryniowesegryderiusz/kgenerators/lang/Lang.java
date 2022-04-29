@@ -41,7 +41,7 @@ public class Lang {
 
     	FilesUtils.mkdir("lang");
 
-    	String[] langs = {"en", "pl", "ro", "vi"}; 
+    	String[] langs = {"en", "pl", "ro", "vi", "fr"}; 
     	
     	/*
     	 * Adding resource lang files
@@ -62,7 +62,7 @@ public class Lang {
     	 */
     	
     	try {
-    		config = (ConfigManager.getConfig(Main.getSettings().getLang()+".yml", "/lang", false, false));
+    		config = (ConfigManager.getConfig(Main.getSettings().getLang()+".yml", "/lang", false, true));
     		config.loadConfig();
 		} catch (IOException | InvalidConfigurationException e1) {
 			Logger.error("Lang: Cant find lang file " + Main.getSettings().getLang());
@@ -70,7 +70,7 @@ public class Lang {
 		}
     	
     	try {
-    		configGui = (ConfigManager.getConfig(Main.getSettings().getLang()+"_gui.yml", "/lang", false, false));
+    		configGui = (ConfigManager.getConfig(Main.getSettings().getLang()+"_gui.yml", "/lang", false, true));
     		configGui.loadConfig();
 		} catch (IOException | InvalidConfigurationException e1) {
 			Logger.error("Lang: Cant find gui lang file " + Main.getSettings().getLang());
@@ -78,7 +78,7 @@ public class Lang {
 		}
     	
     	try {
-    		configCustomNames = (ConfigManager.getConfig(Main.getSettings().getLang()+"_custom_names.yml", "/lang", false, false));
+    		configCustomNames = (ConfigManager.getConfig(Main.getSettings().getLang()+"_custom_names.yml", "/lang", false, true));
     		configCustomNames.loadConfig();
 		} catch (IOException | InvalidConfigurationException e1) {
 			Logger.error("Lang: Cant find custom names lang file " + Main.getSettings().getLang());

@@ -2,8 +2,8 @@
 #https://www.spigotmc.org/resources/79246/
 #Need help? Join KGenerators discord: https://discord.gg/BZRjhpP4Ab
 
-#Choose lang file. Default possibilities are en, pl, ro, vi
-#If you want to add your own language contact us on discord
+#Choose lang file. Default possibilities are en, pl, ro, vi, fr
+#If you want to add your own language contact us on Discord
 lang: en
 
 #Database settings

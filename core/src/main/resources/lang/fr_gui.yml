@@ -4,7 +4,7 @@ generator:
   time-left:
     enabled: true
     item: CLOCK
-    name: §aThời gian tái tạo
+    name: §aTemps restant pour la régénération
     lore:
     - §a<time>
     slots: '21'
@@ -12,11 +12,11 @@ generator:
   upgrade-maxed:
     enabled: true
     item: EXPERIENCE_BOTTLE
-    name: §cCấp độ tối đa
+    name: §cNiveau maximum du générateur
     lore:
-    - §6Máy khai thác này đã
-    - §6đạt cấp độ tối đa!
-    - §aBạn đang dùng cấp độ cao nhất!
+    - §6Ce générateur n'a pas
+    - §6d'autres mises à niveau !
+    - §aVous avez atteint le maximum!
     slots: '31'
     glow: false
   filler:
@@ -29,36 +29,36 @@ generator:
   upgrade:
     enabled: true
     item: EXPERIENCE_BOTTLE
-    name: §cNâng cấp máy quặng
+    name: §cAméliorer le Générateur
     lore:
-    - §6Nhấn vào để nâng cấp!
+    - §6Cliquez ici pour améliorer ce générateur!
     - ''
-    - '§6Cấp tiếp theo: §e<next_generator>'
-    - '§6Giá:'
+    - '§6Prochain Niveau: §e<next_generator>'
+    - '§6Coût:'
     - <costs>
     slots: '31'
     glow: false
   quit:
     enabled: true
     item: ARROW
-    name: §cThoát
+    name: §cQuitter
     lore:
-    - §6Thoát menu
+    - §6Quitter le menu
     slots: '40'
     glow: false
   reset:
     enabled: true
     item: MUSIC_DISC_11
-    name: §cSửa máy
+    name: §cRéinitialiser le Générateur
     lore:
-    - §6Máy quặng có vẻ đang bị hỏng!
-    - §6Nhấn để sửa chữa
+    - §6Ce générateur semble être endommagé!
+    - §6Cliquez ici pour le réparer
     slots: '13'
     glow: false
   owner:
     enabled: true
     item: BOOK
-    name: §aChủ máy
+    name: §aPropriétaire du générateur
     lore:
     - §e<owner>
     slots: '22'
@@ -66,39 +66,39 @@ generator:
   pick-up:
     enabled: true
     item: BARRIER
-    name: §aNhặt máy
+    name: §aPrendre
     lore:
-    - §eNhấn vào đây để lấy máy quặng
+    - §eCliquez ici pour prendre le générateur
     slots: '23'
     glow: false
 main:
-  name: §9Generators
+  name: §9Générateurs
   slots: 45
   limits:
     enabled: true
     item: PLAYER_HEAD
-    name: §aGiới hạn
+    name: §aLimites
     lore:
-    - §eNhấn vào đây để kiểm tra giới hạn
+    - §eCliquez ici pour consulter les limites
     slots: '8'
     glow: false
   page:
     next:
       enabled: true
       item: ARROW
-      name: §cTrang tiếp thep
+      name: §cPage suivante
       lore:
-      - §6Nhấn để chuyển
-      - §6sang trang tiếp theo
+      - §6Cliquez pour aller
+      - §6à la page suivante
       slots: '42'
       glow: false
     previous:
       enabled: true
       item: ARROW
-      name: §cTrang trước
+      name: §cPage précédente
       lore:
-      - §6Nhấn để chuyển
-      - §6về trang trước
+      - §6Cliquez pour revenir
+      - §6à la page précédente
       slots: '38'
       glow: false
   generator:
@@ -106,16 +106,16 @@ main:
     item: <generator>
     name: §a<generator_name>
     lore:
-    - '§6Chuột trái:'
-    - §eKiếm tra tỉ lệ quặng
+    - '§6Click gauche:'
+    - §eVérifier les chances du générateur
     slots: 9,10,11,12,13,14,15,16,17,18,19,20,21,22,23,24,25,26,27,28,29,30,31,32,33,34,35
     glow: false
   quit:
     enabled: true
     item: BARRIER
-    name: §cThoát
+    name: §cQuitter
     lore:
-    - §6Thoát menu
+    - §6Quitre le menu
     slots: '40'
     glow: false
   filler:
@@ -126,15 +126,15 @@ main:
     slots: 0,1,2,3,4,5,6,7,8,36,37,38,39,40,41,42,43,44
     glow: false
 generated-objects:
-  name: §9Tỉ lệ quặng
+  name: §9Chances par Blocs
   slots: 45
   back:
     enabled: true
     item: ARROW
-    name: §cTrở lại
+    name: §cRetour
     lore:
-    - §6Trở lại trang
-    - §6trước
+    - §6Revenir à la
+    - §cpage précédente
     slots: '40'
     glow: false
   generated-object:
@@ -145,7 +145,7 @@ generated-objects:
     - <generated_object_lore>
     - ''
     - <generated_object_type>
-    - '§6Tỉ lệ: §e<chance>%'
+    - '§6Chance: §e<chance>%'
     slots: 9,10,11,12,13,14,15,16,17,18,19,20,21,22,23,24,25,26
     glow: false
   filler:
@@ -156,7 +156,7 @@ generated-objects:
     slots: 0,1,2,3,4,5,6,7,8,36,37,38,39,40,41,42,43,44
     glow: false
 limits:
-  name: §9Limits
+  name: §9Limites
   slots: 45
   filler:
     enabled: true
@@ -170,7 +170,7 @@ limits:
     item: <limit_display_item>
     name: §a<limit_name>
     lore:
-    - §6Bạn đã đặt §e<amount>§6/§e<limit>§6 của
+    - §6Vous avez placé §e<amount>§6/§e<limit>§6 de
     - <generators_list>
     - <is_only_owner_use>
     - <is_only_owner_pick_up>
@@ -179,14 +179,14 @@ limits:
   back:
     enabled: true
     item: ARROW
-    name: §cTrở lại
+    name: §cRetour
     lore:
-    - §6Trở lại trang
-    - §6trước
+    - §6Revenir à la
+    - §cpage précédente
     slots: '40'
     glow: false
 recipe:
-  name: §9Công thức
+  name: §9Recette
   slots: 45
   filler:
     enabled: true
@@ -205,7 +205,7 @@ recipe:
   marker:
     enabled: true
     item: CRAFTING_TABLE
-    name: §aChế tạo
+    name: §aFabrication
     lore: []
     slots: 14,23,32
     glow: false
@@ -219,14 +219,14 @@ recipe:
   back:
     enabled: true
     item: ARROW
-    name: §cTrở lại
+    name: §cRetour
     lore:
-    - §6Trở lại trang
-    - §6trước
+    - §6Revenir à la
+    - §cpage précédente
     slots: '40'
     glow: false
 upgrade:
-  name: §9Upgrade
+  name: §9Amélioration
   slots: 45
   filler:
     enabled: true
@@ -245,13 +245,14 @@ upgrade:
   marker:
     enabled: true
     item: EXPERIENCE_BOTTLE
-    name: §aNâng cấp
+    name: §aAmélioration
     lore:
-    - §6Để nâng cấp máy quặng
-    - §6và gõ /kgenerators upgrade
-    - §eđể dùng menu nâng cấp
+    - §6Pour mettre à niveau, prenez
+    - §6le générateur dans la main et tapez
+    - §e/kgenerators upgrade
+    - §6ou utilisez le menu du générateur
     - ''
-    - '§6Giá:'
+    - '§6Coût:'
     - <costs>
     slots: 13,22,31
     glow: false
@@ -265,32 +266,37 @@ upgrade:
   back:
     enabled: true
     item: ARROW
-    name: §cTrở lại
+    name: §cRetour
     lore:
-    - §6Trở lại trang
-    - §6trước
+    - §6Revenir à la
+    - §cpage précédente
     slots: '40'
     glow: false
 additional-lines:
   limits:
     only-owner-pick-up:
-    - '&cChỉ chủ máy có thể nhặt nó.'
+    - '&cSeuls les propriétaires peuvent les récupérer.'
     all-generators:
-    - '&eTất cả máy quặng'
+    - '&etous les générateurs'
     generator-list:
     - '&8- &e<generator_name>'
     only-owner-use:
-    - '&cChỉ chủ máy có thể nhặt nó.'
+    - '&cSeuls les propriétaires peuvent les utiliser.'
   upgrades:
     menu-how-to:
     - ''
-    - '&6Chuột phải:'
-    - '&eKiểm tra cách'
-    - '&enâng cấp'
+    - '&6Clic droit:'
+    - '&evérifier comment'
+    - '&eavoir l''amélioration'
     upgrade-cost:
     - '&8- &7<cost>'
   recipes:
     menu-how-to:
     - ''
-    - '&6Chuột phải:'
-    - '&eKiểm tra công thức'
+    - '&6Clic droit:'
+    - '&evoir la recette'
+  generated-object-type:
+    item:
+    - '&6Génère: &eélément'
+    block:
+    - '&6Génère: &ebloc'

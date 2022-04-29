@@ -1,5 +1,6 @@
 package me.kryniowesegryderiusz.kgenerators.gui.objects;
 
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Arrays;
 
@@ -13,6 +14,7 @@ import me.kryniowesegryderiusz.kgenerators.Main;
 import me.kryniowesegryderiusz.kgenerators.lang.Lang;
 import me.kryniowesegryderiusz.kgenerators.lang.interfaces.IMenuInventoryType;
 import me.kryniowesegryderiusz.kgenerators.lang.interfaces.IMenuItemType;
+import me.kryniowesegryderiusz.kgenerators.logger.Logger;
 import me.kryniowesegryderiusz.kgenerators.utils.immutable.Config;
 
 public class MenuInventory {
@@ -96,6 +98,12 @@ public class MenuInventory {
 		{
 			config.set(path+".name", this.name);
 			config.set(path+".slots", this.slots);
+			try {
+				config.saveConfig();
+			} catch (IOException e) {
+				Logger.error("Lang: Cant save lang file!");
+				Logger.error(e);
+			}
 		}
 	}
 }
