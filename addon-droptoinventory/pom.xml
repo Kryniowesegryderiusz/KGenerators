@@ -5,7 +5,7 @@
 		<artifactId>kgenerators-parent</artifactId>
 		<version>7.PRE</version>
 	</parent>
-	<artifactId>kgenerators-addon-superiorskyblock2forcehook</artifactId>
+	<artifactId>kgenerators-addon-droptoinventory</artifactId>
 
 	<properties>
 		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
@@ -19,11 +19,6 @@
 	        <id>spigot-repo</id>
 	        <url>https://hub.spigotmc.org/nexus/content/repositories/snapshots/</url>
 	    </repository>
-		<!-- SuperiorSkyblockAPI -->
-		<repository>
-			<id>jitpack.io</id>
-			<url>https://jitpack.io</url>
-		</repository>
 	</repositories>
 	
 	<dependencies>
@@ -34,13 +29,6 @@
 	           <version>1.18.2-R0.1-SNAPSHOT</version>
 	           <scope>provided</scope>
 	    </dependency>
-	    
-		<!-- SuperiorSkyblockAPI -->
-		<dependency>
-			<groupId>com.github.OmerBenGera</groupId>
-			<artifactId>SuperiorSkyblockAPI</artifactId>
-			<version>b18</version> <!-- b18 now  -->
-		</dependency>
 		
 		<!--  Project Lombok -->
 		<dependency>
@@ -59,7 +47,7 @@
 	</dependencies>
 
    <build>
-       <finalName>KGeneratorsAddon-SuperiorSkyblock2ForceHook-${project.parent.version}-b${env.BUILD_NUMBER}</finalName>
+       <finalName>KGeneratorsAddon-DropToInventory-${project.parent.version}-b${env.BUILD_NUMBER}</finalName>
   		<resources>
             <resource>
                 <directory>src/main/resources</directory>

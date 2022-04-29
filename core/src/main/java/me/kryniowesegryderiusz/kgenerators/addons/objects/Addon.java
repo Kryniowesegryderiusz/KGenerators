@@ -13,12 +13,12 @@ import me.kryniowesegryderiusz.kgenerators.logger.Logger;
  */
 public class Addon {
 	
-	private String name;
-	private String version;
+	@Getter private String name;
+	@Getter private String version;
 	@Getter ArrayList<String> configs;
 	
 	public Addon(Plugin plugin) {
-		this.name = plugin.getName();
+		this.name = plugin.getDescription().getName();
 		this.version = plugin.getDescription().getVersion();
 		Addons.register(this);
 		Logger.info("Addons manager: Registered " + this.toString() + " addon");

@@ -1,0 +1,8 @@
+main: me.kryniowesegryderiusz.kgenerators.addons.droptoinventory.KGeneratorsAddonDropToInventory
+name: KGeneratorsAddon-DropToInventory
+version: "${project.version}-#${BUILD_NUMBER}"
+author: Kryniowesegryderiusz (Krynio_ on spigot)
+website: https://www.spigotmc.org/resources/79246/
+description: Addon for KGenerators
+depend: [KGenerators]
+api-version: 1.13

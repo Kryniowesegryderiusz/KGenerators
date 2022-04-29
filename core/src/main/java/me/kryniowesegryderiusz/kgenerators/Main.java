@@ -10,6 +10,8 @@ import org.bukkit.plugin.java.JavaPlugin;
 
 import dev.lone.itemsadder.api.ItemsAdder;
 import lombok.Getter;
+import me.kryniowesegryderiusz.kgenerators.addons.Addons;
+import me.kryniowesegryderiusz.kgenerators.addons.objects.Addon;
 import me.kryniowesegryderiusz.kgenerators.api.events.ReloadEvent;
 import me.kryniowesegryderiusz.kgenerators.data.DatabaseManager;
 import me.kryniowesegryderiusz.kgenerators.dependencies.DependenciesManager;
@@ -186,6 +188,16 @@ public class Main extends JavaPlugin {
 	            map.put(sVersion[0], entry);
 	            return map;
 	        }));
+			metrics.addCustomChart(new Metrics.AdvancedPie("addons", new Callable<Map<String, Integer>>() {
+				@Override
+				public Map<String, Integer> call() throws Exception {
+		            Map<String, Integer> valueMap = new HashMap<>();
+		            for (Addon a : Addons.getAddons()) {
+		            	valueMap.put(a.getName(), 1);
+		            }
+		            return valueMap;
+				}
+			}));
 	        
 		} catch (Exception e) {
 			Logger.error(e);
