@@ -2,6 +2,7 @@ package me.kryniowesegryderiusz.kgenerators.generators.recipes;
 
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.Collection;
 import java.util.HashMap;
 
 import org.bukkit.Material;
@@ -11,6 +12,7 @@ import org.bukkit.inventory.ShapedRecipe;
 import org.bukkit.inventory.ShapelessRecipe;
 
 import me.kryniowesegryderiusz.kgenerators.Main;
+import me.kryniowesegryderiusz.kgenerators.dependencies.hooks.EcoItemsHook;
 import me.kryniowesegryderiusz.kgenerators.generators.generator.objects.Generator;
 import me.kryniowesegryderiusz.kgenerators.generators.recipes.objects.Recipe;
 import me.kryniowesegryderiusz.kgenerators.logger.Logger;
@@ -47,6 +49,8 @@ public class RecipesManager {
 				Logger.error("Recipes file: Cannot load recipe for " + generatorID + ": " + e.getMessage());
 			}
     	}
+    	
+    	EcoItemsHook.processRecipes(this);
     	
     	Logger.info("Recipes file: Loaded " + this.recipes.size() + " recipes");
 	}
@@ -92,6 +96,10 @@ public class RecipesManager {
 			}
 			return true;
 		} else return false;
+	}
+	
+	public Collection<Recipe> getAll() {
+		return this.recipes.values();
 	}
 
 	public boolean isGeneratorRecipe(Generator g, ItemStack[] items) {
