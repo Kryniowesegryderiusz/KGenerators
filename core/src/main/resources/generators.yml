@@ -96,7 +96,7 @@ stone_generator_level_1:
   - '&6This is stone generator!'
   - '&6It generates stone!'
   - '&eUse /kgenerators upgrade'
-  - '&eto upgrade it for 500$'
+  - '&eto upgrade it!'
   delay: 40
   type: double
   generates:

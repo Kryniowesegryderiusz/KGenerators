@@ -173,6 +173,6 @@ public class Limit {
 		for (Generator g : this.generators) {
 			generators.add(g.getId());
 		}
-		return String.format("ID: %s | PlaceLimit: %s | OnlyOwnerUse: %s | OnlyOwnerPickup: %s | Affected generators: %s", this.id, this.placeLimit, this.onlyOwnerUse, generators);
+		return String.format("ID: %s | PlaceLimit: %s | OnlyOwnerUse: %s | OnlyOwnerPickup: %s | Affected generators: %s", this.id, this.placeLimit, this.onlyOwnerUse, this.onlyOwnerPickUp, generators);
 	}
 }

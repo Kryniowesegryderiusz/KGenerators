@@ -98,18 +98,15 @@ public class Settings {
 		if (config.contains("intervals.hologram-update"))
 			this.setHologramUpdateFrequency(config.getInt("intervals.hologram-update"));
 		if (config.contains("intervals.generation-check"))
-			this.setHologramUpdateFrequency(config.getInt("intervals.generation-check"));
+			this.setGenerationCheckFrequency(config.getInt("intervals.generation-check"));
 		if (config.contains("intervals.gui-update"))
-			this.setHologramUpdateFrequency(config.getInt("intervals.gui-update"));
+			this.setGuiUpdateFrequency(config.getInt("intervals.gui-update"));
 		
 		if (config.contains("pick-up-to-eq"))
 			this.setPickUpToEq(config.getBoolean("pick-up-to-eq"));
 		
 		if (config.contains("drop-to-eq"))
 			this.setDropUpToEq(config.getBoolean("drop-to-eq"));
-		
-		if (config.contains("disabled-worlds") )
-			this.getDisabledWorlds().addAll((ArrayList<String>) config.getList("disabled-worlds"));
 		
 		if (config.contains("disabled-worlds") )
 			this.getDisabledWorlds().addAll((ArrayList<String>) config.getList("disabled-worlds"));

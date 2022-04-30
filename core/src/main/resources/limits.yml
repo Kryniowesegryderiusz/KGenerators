@@ -51,7 +51,7 @@ stone_generators_limits:
 #This limits players to have max 10 stone_generator_level_1 and sets it's item to generator's item
 stone_generator_level_1_limits:
   name: "Stone generator level 1 limit"
-  item: stone_generator_level_1
+  item: generator:stone_generator_level_1
   generators:
   - stone_generator_level_1
   place-limit: 10
@@ -59,7 +59,7 @@ stone_generator_level_1_limits:
 #This limits ores generators to be used only by owners
 ore_generators_owner_limits:
   name: "Stone generator level 1 limit"
-  item: stone_generator_level_1
+  item: generator:stone_generator_level_1
   generators:
   - stone_generator_level_1
   only-owner-pickup: true
