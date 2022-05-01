@@ -9,7 +9,6 @@ lang: en
 #Database settings
 database:
   #Possible options: SQLITE, MYSQL, YAML (not recommended for big servers)
-  #You can convert data from one database to another! More info here: https://github.com/Kryniowesegryderiusz/KGenerators/wiki/Converting-databases 
   dbtype: SQLITE
   #Settings for MYSQL
   host: hostname
