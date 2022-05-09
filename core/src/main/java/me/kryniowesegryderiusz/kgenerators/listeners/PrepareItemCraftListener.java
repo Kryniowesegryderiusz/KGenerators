@@ -15,7 +15,7 @@ import me.kryniowesegryderiusz.kgenerators.lang.enums.Message;
 public class PrepareItemCraftListener implements Listener {
 	
 	@EventHandler(priority=EventPriority.MONITOR)
-	public void onPrepareItemCraftEvent(PrepareItemCraftEvent  e)
+	public void onPrepareItemCraft(PrepareItemCraftEvent  e)
 	{				
 		/*
 		 * PreCheck for trying craft something with generator

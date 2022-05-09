@@ -14,12 +14,12 @@ import me.kryniowesegryderiusz.kgenerators.generators.locations.objects.Generato
 public class BlockPistonListener implements Listener {
 
 	@EventHandler
-	public void BlockPistonExtendEvent (final BlockPistonExtendEvent e){
+	public void onBlockPistonExtend(final BlockPistonExtendEvent e){
 		e.setCancelled(pistonEvent(e.getBlocks()));
 	}
 	
 	@EventHandler
-	public void BlockPistonRetractEvent (final BlockPistonRetractEvent e){
+	public void onBlockPistonRetractEvent (final BlockPistonRetractEvent e){
 		e.setCancelled(pistonEvent(e.getBlocks()));
 	}
 	

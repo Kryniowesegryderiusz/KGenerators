@@ -16,7 +16,7 @@ import me.kryniowesegryderiusz.kgenerators.utils.PlayerUtils;
 public class BlockBreakListener implements Listener {
 	
 	@EventHandler(priority = EventPriority.HIGH)
-	public void BlockBreakEvent(final BlockBreakEvent e)
+	public void onBlockBreak(final BlockBreakEvent e)
 	{
 		if (e.isCancelled()) return;
 		

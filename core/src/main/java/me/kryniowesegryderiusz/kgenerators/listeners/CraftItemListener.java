@@ -16,7 +16,7 @@ import me.kryniowesegryderiusz.kgenerators.lang.enums.Message;
 public class CraftItemListener implements Listener {
 	
 	@EventHandler(priority=EventPriority.HIGHEST)
-	public void CraftItemEvent(final CraftItemEvent e){
+	public void onCraftItem(final CraftItemEvent e){
 		
 		if (!(e.getWhoClicked() instanceof Player)){
 			return;

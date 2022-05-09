@@ -40,7 +40,6 @@ public abstract class ItemUtils {
 			return xm.parseItem();
 		} catch (NoSuchElementException e) {
 			Logger.error(place+": " + s + " is not a proper material or generator id! Using STONE!");
-			//e.printStackTrace();
 		}
 		return XMaterial.STONE.parseItem();
     }

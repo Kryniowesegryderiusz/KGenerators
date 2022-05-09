@@ -9,7 +9,7 @@ import me.kryniowesegryderiusz.kgenerators.Main;
 public class FurnaceSmeltListener implements Listener {
 	
 	@EventHandler
-	public void furnaceSmeltEvent(final FurnaceSmeltEvent e)
+	public void onFurnaceSmelt(final FurnaceSmeltEvent e)
 	{
 		if (Main.getGenerators().get(e.getSource()) != null)
 		{

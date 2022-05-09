@@ -37,7 +37,7 @@ example_generator:
     #type: item - generator will spawn simple item
     - type: item
       chance: 10.0
-      material: DIRT
+      item: DIRT
     #type: item - generator will spawn more complicated item
     - type: item
       chance: 10.0
@@ -49,6 +49,10 @@ example_generator:
         - "&cThats Magic Stone"
         enchants:
           - FORTUNE:1
+    #type: entity - generator will spawn entity
+    - type: entity
+      chance: 10.0
+      entity: CHICKEN
   #
   # ***        Optional generators settings below.        ***
   # *** If you dont set them default values (these) would be used ***

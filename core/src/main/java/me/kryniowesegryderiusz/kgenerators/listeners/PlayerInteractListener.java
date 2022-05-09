@@ -16,7 +16,7 @@ public class PlayerInteractListener implements Listener {
 	
 	@SuppressWarnings("deprecation")
 	@EventHandler(priority = EventPriority.HIGH)
-	public void playerInteract(PlayerInteractEvent e)
+	public void onPlayerInteract(PlayerInteractEvent e)
 	{
 		if(Main.getMultiVersion().isHigher(9) && e.getHand() != EquipmentSlot.HAND) return;
 		

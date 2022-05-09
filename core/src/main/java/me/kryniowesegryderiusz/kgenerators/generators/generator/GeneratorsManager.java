@@ -20,6 +20,7 @@ import me.kryniowesegryderiusz.kgenerators.dependencies.enums.Dependency;
 import me.kryniowesegryderiusz.kgenerators.dependencies.objects.GeneratedItemsAdderBlock;
 import me.kryniowesegryderiusz.kgenerators.generators.generator.enums.GeneratorType;
 import me.kryniowesegryderiusz.kgenerators.generators.generator.objects.GeneratedBlock;
+import me.kryniowesegryderiusz.kgenerators.generators.generator.objects.GeneratedEntity;
 import me.kryniowesegryderiusz.kgenerators.generators.generator.objects.GeneratedItem;
 import me.kryniowesegryderiusz.kgenerators.generators.generator.objects.Generator;
 import me.kryniowesegryderiusz.kgenerators.logger.Logger;
@@ -37,6 +38,7 @@ public class GeneratorsManager {
     	this.generatedObjectsManager = new GeneratedObjectsManager();
     	this.generatedObjectsManager.registerGeneratedObject(GeneratedBlock.class);
     	this.generatedObjectsManager.registerGeneratedObject(GeneratedItem.class);
+    	this.generatedObjectsManager.registerGeneratedObject(GeneratedEntity.class);
     	if (Main.getDependencies().isEnabled(Dependency.ITEMS_ADDER))
     		this.generatedObjectsManager.registerGeneratedObject(GeneratedItemsAdderBlock.class);
     	this.reload();

@@ -15,7 +15,7 @@ import me.kryniowesegryderiusz.kgenerators.lang.enums.Message;
 public class BlockPlaceListener implements Listener {
 	
 	@EventHandler(priority = EventPriority.HIGH)
-	public void BlockPlaceEvent(final BlockPlaceEvent e){
+	public void onBlockPlace(final BlockPlaceEvent e){
 		
 		if (e.isCancelled()) return;
 		
