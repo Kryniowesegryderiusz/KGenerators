@@ -2,6 +2,7 @@ package me.kryniowesegryderiusz.kgenerators.generators.locations.objects;
 
 import javax.annotation.Nullable;
 
+import org.bukkit.Chunk;
 import org.bukkit.Location;
 import org.bukkit.Material;
 import org.bukkit.entity.Player;
@@ -39,6 +40,7 @@ public class GeneratorLocation implements IGeneratorLocation {
 	@Getter GeneratorPlayer owner;
 	@Getter Location location;
 	@Getter Location hologramLocation;
+	@Getter Chunk chunk;
 	
 	/**
 	 * Creates GeneratorLocation.
@@ -59,6 +61,8 @@ public class GeneratorLocation implements IGeneratorLocation {
 		else if(generator.getType() == GeneratorType.DOUBLE) this.hologramLocation.add(0.5,2,0.5);
 		
 		if (getGenerator().getPlaceholder() != null) this.hologramLocation.add(0,1,0);
+		
+		this.chunk = this.location.getChunk();
 	}
 	
 	/*

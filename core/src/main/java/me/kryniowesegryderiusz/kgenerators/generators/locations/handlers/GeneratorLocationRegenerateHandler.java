@@ -16,6 +16,11 @@ public class GeneratorLocationRegenerateHandler {
 	
 	public void handle(GeneratorLocation gLocation) {
 		
+		if (!gLocation.getChunk().isLoaded()) {
+			gLocation.scheduleGeneratorRegeneration();
+			return;
+		}
+		
 		PreBlockGenerationEvent event = new PreBlockGenerationEvent(gLocation);
 		Main.getInstance().getServer().getPluginManager().callEvent(event);
 		if (event.isCancelled()) return;
