@@ -183,10 +183,14 @@ public class Logger {
 						
 						fileString += "Enabled plugins: ";
 						for (Plugin plugin : Main.getInstance().getServer().getPluginManager().getPlugins())
-						{
 							fileString += plugin.getName() + " " + plugin.getDescription().getVersion() + ", ";
-						}
-							
+						
+						fileString += "\n\n";
+						
+						fileString += "Loaded generators: " + Main.getGenerators().getAmount() + "\n";
+						fileString += "Scheduled generators: " + Main.getSchedules().getAmount() + "\n";
+						fileString += "Placed generators: " + Main.getLocations().getAmount() + "\n";
+						
 						fileString += "\n\n";
 							
 						try {

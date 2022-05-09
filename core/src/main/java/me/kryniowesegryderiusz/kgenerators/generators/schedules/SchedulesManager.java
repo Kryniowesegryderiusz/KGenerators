@@ -86,6 +86,10 @@ public class SchedulesManager {
         	f.delete();
         });
 	}
+	
+	public int getAmount() {
+		return this.schedules.size();
+	}
 
 	public void schedule(GeneratorLocation gLocation, boolean place) {
 		
