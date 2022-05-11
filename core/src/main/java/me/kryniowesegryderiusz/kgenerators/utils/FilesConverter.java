@@ -7,7 +7,6 @@ import org.bukkit.configuration.InvalidConfigurationException;
 import org.bukkit.inventory.ItemStack;
 
 import me.kryniowesegryderiusz.kgenerators.Main;
-import me.kryniowesegryderiusz.kgenerators.data.enums.DatabaseType;
 import me.kryniowesegryderiusz.kgenerators.generators.locations.handlers.enums.ActionType;
 import me.kryniowesegryderiusz.kgenerators.logger.Logger;
 import me.kryniowesegryderiusz.kgenerators.settings.Settings;
@@ -45,9 +44,9 @@ public class FilesConverter {
 		{
 			add(file, "#Database settings");
 			add(file, "database:");
-			add(file, "  #Possible options: SQLITE, MYSQL, YAML (not recommended for big servers)");
+			add(file, "  #Possible options: SQLITE, MYSQL (not recommended for big servers)");
 			add(file, "  #You can convert data from one database to another! More info here: https://github.com/Kryniowesegryderiusz/KGenerators/wiki/Converting-databases ");
-			add(file, "  dbtype: YAML");
+			add(file, "  dbtype: SQLITE");
 			add(file, "  #Settings for MYSQL");
 			add(file, "  host: hostname");
 			add(file, "  port: 3306");
@@ -55,8 +54,6 @@ public class FilesConverter {
 			add(file, "  username: username");
 			add(file, "  password: password");
 			Logger.info("FilesConverter: Added database settings to config file");
-			settings.setDbType(DatabaseType.YAML);
-			Logger.warn("FilesConverter: Changed database type from default to YAML");
 		}
 		
 		if (!config.contains("can-generate-instead"))

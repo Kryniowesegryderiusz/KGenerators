@@ -4,7 +4,6 @@ import me.kryniowesegryderiusz.kgenerators.logger.Logger;
 
 public enum DatabaseType {
 	
-	YAML,
 	SQLITE,
 	MYSQL,
 	OTHER

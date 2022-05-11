@@ -327,7 +327,7 @@ public class Commands implements CommandExecutor {
 								Logger.textToConsole("You already have this database type!");
 						}
 						else
-							Logger.textToConsole("You have to choose database you want to convert to! YAML/SQLITE/MYSQL");
+							Logger.textToConsole("You have to choose database you want to convert to!");
 					}
 					else
 						Lang.getMessageStorage().send(sender, Message.COMMANDS_ANY_ONLY_CONSOLE);

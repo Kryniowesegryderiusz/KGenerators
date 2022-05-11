@@ -11,7 +11,6 @@ import lombok.Getter;
 import me.kryniowesegryderiusz.kgenerators.Main;
 import me.kryniowesegryderiusz.kgenerators.data.databases.IDatabase;
 import me.kryniowesegryderiusz.kgenerators.data.databases.SQLDatabase;
-import me.kryniowesegryderiusz.kgenerators.data.databases.YAMLDatabase;
 import me.kryniowesegryderiusz.kgenerators.data.enums.DatabaseType;
 import me.kryniowesegryderiusz.kgenerators.generators.locations.objects.GeneratorLocation;
 import me.kryniowesegryderiusz.kgenerators.logger.Logger;
@@ -38,8 +37,6 @@ public class DatabaseManager {
 				return new SQLDatabase(DatabaseType.MYSQL, Main.getSettings().getSqlConfig());
 			case SQLITE:
 				return new SQLDatabase(DatabaseType.SQLITE, Main.getSettings().getSqlConfig());
-			case YAML:
-				return new YAMLDatabase();
 			default:
 				Logger.error("DatabasesHandler: Could not return OTHER database, as not specified");
 				return null;
