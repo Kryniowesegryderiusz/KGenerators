@@ -155,7 +155,7 @@ public class FilesUtils {
 			    } 
 			    
 			    if (map.containsKey("name"))
-			    	meta.setDisplayName((String) map.get("name"));
+			    	meta.setDisplayName(Main.getMultiVersion().getChatUtils().colorize((String) map.get("name")));
 			    
 			    if (map.containsKey("lore")) {
 			        ArrayList<String> lore = new ArrayList<>();
