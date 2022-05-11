@@ -56,7 +56,7 @@ public class Recipe {
 	            for (String ingredientsString : ingredientsSection.getKeys(false)) {
 	                char ingredientsChar = ingredientsString.charAt(0);
 	                
-	                ItemStack item = FilesUtils.loadItemStack(file, generatorID + ".ingredients." + ingredientsString, false);
+	                ItemStack item = FilesUtils.loadItemStack(file, generatorID + ".ingredients", ingredientsString, false);
 
 	                shapedRecipe = Main.getMultiVersion().getRecipesLoader().setIngredient(shapedRecipe, ingredientsChar, item);
 	                this.addIngredient(ingredientsChar, item);

@@ -45,7 +45,5 @@ public class EcoItemsHook {
 				Logger.debug("Dependencies: EcoItems: Registered new recipe: kgenerators_"+r.getGenerator().getId());
 			}
 		}
-		
 	}
-
 }

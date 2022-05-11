@@ -12,6 +12,7 @@ import org.bukkit.inventory.ShapedRecipe;
 import org.bukkit.inventory.ShapelessRecipe;
 
 import me.kryniowesegryderiusz.kgenerators.Main;
+import me.kryniowesegryderiusz.kgenerators.dependencies.enums.Dependency;
 import me.kryniowesegryderiusz.kgenerators.dependencies.hooks.EcoItemsHook;
 import me.kryniowesegryderiusz.kgenerators.generators.generator.objects.Generator;
 import me.kryniowesegryderiusz.kgenerators.generators.recipes.objects.Recipe;
@@ -50,7 +51,8 @@ public class RecipesManager {
 			}
     	}
     	
-    	EcoItemsHook.processRecipes(this);
+    	if (Main.getDependencies().isEnabled(Dependency.ECO_ITEMS))
+    		EcoItemsHook.processRecipes(this);
     	
     	Logger.info("Recipes file: Loaded " + this.recipes.size() + " recipes");
 	}

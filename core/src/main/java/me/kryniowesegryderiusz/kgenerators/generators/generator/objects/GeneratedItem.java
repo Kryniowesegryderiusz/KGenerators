@@ -26,15 +26,9 @@ public class GeneratedItem extends AbstractGeneratedObject {
 
 	@Override
 	protected boolean loadTypeSpecific(Map<?, ?> generatedObjectConfig) {
-		if (generatedObjectConfig.containsKey("item")) {
-			this.item = FilesUtils.loadItemStack((Map<?, ?>) generatedObjectConfig, "item", "Generators file: GeneratedItem", false);
-			if (this.item != null)
-				return true;
-		} else if (generatedObjectConfig.containsKey("material")) {
-			this.item = FilesUtils.loadItemStack((Map<?, ?>) generatedObjectConfig, "material", "Generators file: GeneratedItem", false);
-			if (this.item != null)
-				return true;
-		}
+		this.item = FilesUtils.loadItemStack((Map<?, ?>) generatedObjectConfig, "item", "Generators file: GeneratedItem", false);
+		if (this.item != null)
+			return true;
 		return false;
 	}
 

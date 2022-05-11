@@ -12,6 +12,7 @@ import java.util.List;
 import java.util.Map;
 import java.util.Optional;
 
+import org.bukkit.configuration.MemorySection;
 import org.bukkit.inventory.ItemFlag;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.meta.ItemMeta;
@@ -86,19 +87,17 @@ public class FilesUtils {
 	/**
 	 * Loads ItemStack from config
 	 * @param config
-	 * @param path
-	 * @param isBlockCheck
+	 * @param path - path of object with item key
+	 * @param key - config key of item configuration
+	 * @param isBlockCheck - should this item be a block
 	 * @return ItemStack
 	 */
-	public static ItemStack loadItemStack(Config config, String path, boolean isBlockCheck)
-	{
-		if (config.contains(path+".material") || config.contains(path+".item") || config.contains(path+".type")) {
-			return loadItemStack(config.getMapList(path).get(0), config.getName()+"#"+path, isBlockCheck);
-		} else
-			return ItemUtils.parseItemStack(config.getString(path), config.getFile().getPath()+"#"+path, isBlockCheck);
+	public static ItemStack loadItemStack(Config config, String path, String key, boolean isBlockCheck) {
+		return loadItemStack(config.getConfigurationSection(path).getValues(false), key, config.getName()+"#"+path, isBlockCheck);
 	}
 	
-	public static ItemStack loadItemStack(Map<?,?> generalConfig, String objectName, String place, boolean isBlockCheck) {
+	/*
+	public static ItemStack loadItemStack(Map<?,?> generalConfig, String place, boolean isBlockCheck) {
 		if (generalConfig.get("item") != null)
 			if (generalConfig.get("item") instanceof String)
 				return ItemUtils.parseItemStack((String) generalConfig.get("item"), place, false);
@@ -110,20 +109,43 @@ public class FilesUtils {
 			else
 				return FilesUtils.loadItemStack((Map<?, ?>) generalConfig.get("material"), place, false);
 		else return null;
+	}*/
+	
+	/**
+	 * Loads ItemStack from mapped config
+	 * @param map - map of object with item key
+	 * @param key - config key of item configuration
+	 * @param place - where is this method fired from
+	 * @param isBlockCheck - should this item be a block
+	 * @return ItemStack
+	 */
+	public static ItemStack loadItemStack(Map<?, ?> map, String key, String place, boolean isBlockCheck) {
+		if (map.get(key) instanceof String)
+			return ItemUtils.parseItemStack((String) map.get(key), place, isBlockCheck);
+		else if (map.get(key) instanceof MemorySection)
+			return loadItemStack((Map<?, ?>) ((MemorySection) map.get(key)).getValues(false), place, isBlockCheck);
+		else
+			return loadItemStack((Map<?, ?>) map.get(key), place, isBlockCheck);
 	}
 
+	/**
+	 * Loads ItemStack from mapped item
+	 * @param map - map of item
+	 * @param place - where is this method fired from
+	 * @param isBlockCheck - should this item be a block
+	 * @return ItemStack
+	 */
 	@SuppressWarnings("unchecked")
-	private static ItemStack loadItemStack(Map<?, ?> config, String place, boolean isBlockCheck)
-	{
+	private static ItemStack loadItemStack(Map<?, ?> map, String place, boolean isBlockCheck) {
+		
 		ItemStack item = null;
 		try {
-
-				if (config.containsKey("item"))
-					item = ItemUtils.parseItemStack((String) config.get("item"), place, isBlockCheck);
-				else if (config.containsKey("type"))
-					item = ItemUtils.parseItemStack((String) config.get("type"), place, isBlockCheck);
-				else if (config.containsKey("material"))
-					item = ItemUtils.parseItemStack((String) config.get("material"), place, isBlockCheck);
+				if (map.containsKey("item"))
+					item = ItemUtils.parseItemStack((String) map.get("item"), place, isBlockCheck);
+				else if (map.containsKey("type"))
+					item = ItemUtils.parseItemStack((String) map.get("type"), place, isBlockCheck);
+				else if (map.containsKey("material"))
+					item = ItemUtils.parseItemStack((String) map.get("material"), place, isBlockCheck);
 				
 			    ItemMeta meta = null;
 			    if (item.getItemMeta() != null) {
@@ -132,20 +154,20 @@ public class FilesUtils {
 			    	meta = Main.getInstance().getServer().getItemFactory().getItemMeta(item.getType());
 			    } 
 			    
-			    if (config.containsKey("name"))
-			    	meta.setDisplayName((String) config.get("name"));
+			    if (map.containsKey("name"))
+			    	meta.setDisplayName((String) map.get("name"));
 			    
-			    if (config.containsKey("lore")) {
+			    if (map.containsKey("lore")) {
 			        ArrayList<String> lore = new ArrayList<>();
-			        for (String s : (ArrayList<String>)config.get("lore")) {
+			        for (String s : (ArrayList<String>)map.get("lore")) {
 			          if (s != null)
 			            lore.add(Main.getMultiVersion().getChatUtils().colorize(s)); 
 			        } 
 			        meta.setLore(lore);
 			    }
 			    
-			    if (config.containsKey("item-flags")) {
-			    	for (String s : (ArrayList<String>)config.get("item-flags")) {
+			    if (map.containsKey("item-flags")) {
+			    	for (String s : (ArrayList<String>)map.get("item-flags")) {
 			            if (s != null) {
 				            try {
 				            	meta.addItemFlags(ItemFlag.valueOf(s));
@@ -158,8 +180,8 @@ public class FilesUtils {
 			    
 			    item.setItemMeta(meta);
 			    
-			    if (config.containsKey("enchants")) {
-			    	for (String s : (ArrayList<String>)config.get("enchants")) {
+			    if (map.containsKey("enchants")) {
+			    	for (String s : (ArrayList<String>)map.get("enchants")) {
 			            if (s != null)
 			              {
 			            	String[] splitted = s.split(":");
@@ -172,8 +194,8 @@ public class FilesUtils {
 			          }
 			    }
 			    
-			    if (config.containsKey("custom-nbt")) {
-			    	for (String s : (ArrayList<String>)config.get("custom-nbt")) {
+			    if (map.containsKey("custom-nbt")) {
+			    	for (String s : (ArrayList<String>)map.get("custom-nbt")) {
 			            if (s != null) {
 			            	String[] splitted = s.split(":");
 			            	NBTAPIHook.addNBT(item, place, splitted[0], splitted[1]);
@@ -181,8 +203,8 @@ public class FilesUtils {
 			          }
 			    }
 			    
-			    if (config.containsKey("amount"))
-			    	item.setAmount((int) config.get("amount"));
+			    if (map.containsKey("amount"))
+			    	item.setAmount((int) map.get("amount"));
 			    
 			    /*
 			    if (XMaterial.matchXMaterial(item) == XMaterial.PLAYER_HEAD || XMaterial.matchXMaterial(item) == XMaterial.PLAYER_WALL_HEAD)

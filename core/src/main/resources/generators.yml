@@ -11,15 +11,17 @@ example_generator:
   # *** Required generator settings below. ***
   # ***       You HAVE TO set them!        ***
   #
-  #Generator block.
-  #ALWAYS use names from https://hub.spigotmc.org/javadocs/spigot/org/bukkit/Material.html
-  generator: GRASS
-  #Generator item name
-  name: '&aExample generator'
-  #Generator item lore
-  lore:
-  - '&6This is example generator!'
-  - '&6Its not loaded!'
+  #Generator item
+  #More about that can be found on wiki https://kzone.gitbook.io/docs/kgenerators/configuration-files/configuring-itemstack
+  generator-item:
+    material: GRASS
+    name: '&aExample generator'
+    lore:
+    - '&6This is example generator!'
+    enchants:
+    - "DURABILITY:1"
+    item-flags:
+    - HIDE_ENCHANTS
   #Delay between generations (in ticks: 20 = 1s)) You can set -1 or 0 to regen immediately
   delay: 40 #2s
   #Type of generator.
@@ -57,8 +59,6 @@ example_generator:
   # ***        Optional generators settings below.        ***
   # *** If you dont set them default values (these) would be used ***
   #
-  #Should generator item glow?
-  glow: true
   #Should generator immediately generate block/item after placing?
   #If not generator will wait time from delay option after placing
   generate-immediately-after-place: true
@@ -94,13 +94,18 @@ example_generator:
 #Below you can find pre-configured generators. You can freely edit/remove them and add new ones ^^
 
 stone_generator_level_1:
-  generator: END_STONE
-  name: '&aStone generator I'
-  lore:
-  - '&6This is stone generator!'
-  - '&6It generates stone!'
-  - '&eUse /kgenerators upgrade'
-  - '&eto upgrade it!'
+  generator-item:
+    material: END_STONE
+    name: '&aStone generator I'
+    lore:
+    - '&6This is stone generator!'
+    - '&6It generates stone!'
+    - '&eUse /kgenerators upgrade'
+    - '&eto upgrade it!'
+    enchants:
+    - "DURABILITY:1"
+    item-flags:
+    - HIDE_ENCHANTS
   delay: 40
   type: double
   generates:
@@ -108,7 +113,6 @@ stone_generator_level_1:
       chance: 100.0
       material: STONE
   # *** Optional generators settings below ***
-  glow: true
   generate-immediately-after-place: true
   placeholder: RED_SANDSTONE
   allow-piston-push: true
@@ -116,11 +120,16 @@ stone_generator_level_1:
 #This generator could be obtained by typing /kgenerators upgrade on stone_generator_level_1
 #Upgrade tree is avaible in upgrades.yml file!
 stone_generator_level_2:
-  generator: END_STONE
-  name: '&aStone generator II'
-  lore:
-  - '&6This is level II stone generator!'
-  - '&6It generates stone quicker!'
+  generator-item:
+    material: END_STONE
+    name: '&aStone generator II'
+    lore:
+    - '&6This is level II stone generator!'
+    - '&6It generates stone quicker!'
+    enchants:
+    - "DURABILITY:1"
+    item-flags:
+    - HIDE_ENCHANTS
   delay: 20
   type: double
   generates:
@@ -128,7 +137,6 @@ stone_generator_level_2:
       chance: 100.0
       material: STONE
   # *** Optional generators settings below ***
-  glow: true
   generate-immediately-after-place: true
   placeholder: RED_SANDSTONE
   allow-piston-push: true
@@ -136,11 +144,16 @@ stone_generator_level_2:
 #This generator has only required settings and GENERATES ITEMS! 
 #As you see you dont have to use all of them
 wood_generator:
-  generator: OAK_LOG
-  name: '&aWoods generator'
-  lore:
-  - '&6This is woods generator!'
-  - '&6Place it to generate wood'
+  generator-item:
+    material: OAK_LOG
+    name: '&aWoods generator'
+    lore:
+    - '&6This is woods generator!'
+    - '&6Place it to generate wood'
+    enchants:
+    - "DURABILITY:1"
+    item-flags:
+    - HIDE_ENCHANTS
   delay: 20
   type: single
   generates:
@@ -163,11 +176,16 @@ wood_generator:
 #Just like that:
   
 ores_generator:
-  generator: REDSTONE_ORE
-  name: '&aOres generator'
-  lore:
-  - '&6This is ores generator!'
-  - '&6Place it to generate ores'
+  generator-item:
+    material: REDSTONE_ORE
+    name: '&aOres generator'
+    lore:
+    - '&6This is ores generator!'
+    - '&6Place it to generate ores'
+    enchants:
+    - "DURABILITY:1"
+    item-flags:
+    - HIDE_ENCHANTS
   delay: 80
   type: single
   hologram: true

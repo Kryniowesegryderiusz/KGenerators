@@ -22,6 +22,7 @@ import me.kryniowesegryderiusz.kgenerators.generators.generator.enums.GeneratorT
 import me.kryniowesegryderiusz.kgenerators.generators.upgrades.objects.Upgrade;
 import me.kryniowesegryderiusz.kgenerators.logger.Logger;
 import me.kryniowesegryderiusz.kgenerators.settings.objects.Actions;
+import me.kryniowesegryderiusz.kgenerators.utils.FilesUtils;
 import me.kryniowesegryderiusz.kgenerators.utils.ItemUtils;
 import me.kryniowesegryderiusz.kgenerators.utils.immutable.Config;
 import me.kryniowesegryderiusz.kgenerators.utils.immutable.RandomSelector;
@@ -63,27 +64,45 @@ public class Generator {
 	    
 		this.type = GeneratorType.getGeneratorTypeByString(config.getString(generatorID+".type"));
 		
-		Boolean glow = true;
-		if (config.contains(generatorID+".glow")) {
-			glow = config.getBoolean(generatorID+".glow");
+		/*
+		 * Generator item
+		 */
+		if (config.contains(generatorID+".generator-item")) {
+			this.generatorItem = FilesUtils.loadItemStack(config, generatorID, "generator-item", true);
+		} else if (config.contains(generatorID+".generator")) {
+			Logger.error("Generator " + generatorID + " uses old generator item configuration that will be not supported in the future!");
+			Logger.error("Check https://github.com/Kryniowesegryderiusz/KGenerators/blob/main/core/src/main/resources/generators.yml#L14 for new configuration options!");
+			
+			Boolean glow = true;
+			if (config.contains(generatorID+".glow")) {
+				glow = config.getBoolean(generatorID+".glow");
+			}
+			this.generatorItem = ItemUtils.parseItemStack(config.getString(generatorID+".generator"), "Generators file", true);
+			ArrayList<String> loreGot = new ArrayList<String>();
+			ArrayList<String> lore = new ArrayList<String>();
+			ItemMeta meta = (ItemMeta) this.generatorItem.getItemMeta();
+			meta.setDisplayName(Main.getMultiVersion().getChatUtils().colorize(config.getString(generatorID+".name")));
+			loreGot = (ArrayList<String>) config.getList(generatorID+".lore");
+		    for (String l : loreGot) {
+		    	l = Main.getMultiVersion().getChatUtils().colorize(l);
+		    	lore.add(l);
+		      }
+			meta.setLore(lore);
+			lore.clear();
+			if (glow)
+				meta.addItemFlags(ItemFlag.HIDE_ENCHANTS);
+			this.generatorItem.setItemMeta(meta);
+			if (glow)
+				this.generatorItem.addUnsafeEnchantment(Enchantment.LOOT_BONUS_BLOCKS, 1);
+		} else {
+			Logger.error("Generator " + generatorID + " is lacking generator-item configuration");
+			error = true;
 		}
-		this.generatorItem = ItemUtils.parseItemStack(config.getString(generatorID+".generator"), "Generators file", true);
-		ArrayList<String> loreGot = new ArrayList<String>();
-		ArrayList<String> lore = new ArrayList<String>();
-		ItemMeta meta = (ItemMeta) this.generatorItem.getItemMeta();
-		meta.setDisplayName(Main.getMultiVersion().getChatUtils().colorize(config.getString(generatorID+".name")));
-		loreGot = (ArrayList<String>) config.getList(generatorID+".lore");
-	    for (String l : loreGot) {
-	    	l = Main.getMultiVersion().getChatUtils().colorize(l);
-	    	lore.add(l);
-	      }
-		meta.setLore(lore);
-		lore.clear();
-		if (glow)
-			meta.addItemFlags(ItemFlag.HIDE_ENCHANTS);
-		this.generatorItem.setItemMeta(meta);
-		if (glow)
-			this.generatorItem.addUnsafeEnchantment(Enchantment.LOOT_BONUS_BLOCKS, 1);
+		
+		
+		/*
+		 * Generates section
+		 */
 		
 		if (config.contains(generatorID+".generates"))
 		    for (Map<?, ?> generatedObjectConfig : (List<Map<?, ?>>) config.getMapList(generatorID+".generates")) {
@@ -99,6 +118,7 @@ public class Generator {
 			Logger.error("Generators file: " + generatorID + " doesnt have generating section!");
 			error = true;
 		}
+		
 		if (this.chances.isEmpty()) {
 			Logger.error("Generators file: " + generatorID + " doesnt have any generating objects set!");
 			error = true;
