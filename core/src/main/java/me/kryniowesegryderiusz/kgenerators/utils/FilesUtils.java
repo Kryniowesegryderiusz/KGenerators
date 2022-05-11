@@ -12,10 +12,12 @@ import java.util.List;
 import java.util.Map;
 import java.util.Optional;
 
+import org.bukkit.inventory.ItemFlag;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.meta.ItemMeta;
 
 import me.kryniowesegryderiusz.kgenerators.Main;
+import me.kryniowesegryderiusz.kgenerators.dependencies.hooks.NBTAPIHook;
 import me.kryniowesegryderiusz.kgenerators.logger.Logger;
 import me.kryniowesegryderiusz.kgenerators.utils.immutable.Config;
 import me.kryniowesegryderiusz.kgenerators.xseries.XEnchantment;
@@ -125,9 +127,9 @@ public class FilesUtils {
 				
 			    ItemMeta meta = null;
 			    if (item.getItemMeta() != null) {
-			      meta = item.getItemMeta();
+			    	meta = item.getItemMeta();
 			    } else {
-			      meta = Main.getInstance().getServer().getItemFactory().getItemMeta(item.getType());
+			    	meta = Main.getInstance().getServer().getItemFactory().getItemMeta(item.getType());
 			    } 
 			    
 			    if (config.containsKey("name"))
@@ -142,6 +144,18 @@ public class FilesUtils {
 			        meta.setLore(lore);
 			    }
 			    
+			    if (config.containsKey("item-flags")) {
+			    	for (String s : (ArrayList<String>)config.get("item-flags")) {
+			            if (s != null) {
+				            try {
+				            	meta.addItemFlags(ItemFlag.valueOf(s));
+				    		} catch (Exception e) {
+				    			Logger.error("FilesUtils: There isnt any ItemFlag like: " + s);
+				    		}
+			            }
+			    	}
+			    }
+			    
 			    item.setItemMeta(meta);
 			    
 			    if (config.containsKey("enchants")) {
@@ -150,18 +164,25 @@ public class FilesUtils {
 			              {
 			            	String[] splitted = s.split(":");
 			            	Optional<XEnchantment> xeo = XEnchantment.matchXEnchantment(splitted[0]);
-			            	if (xeo.isPresent())
-			            	{
+			            	if (xeo.isPresent()) {
 			            		item.addUnsafeEnchantment(xeo.get().parseEnchantment(), Integer.valueOf(splitted[1]));
-			            	}
-			            	else
+			            	} else
 			            		Logger.error(place+": Cannot load enchantment! " + splitted[0] + " doesnt exist!");
 			              }
 			          }
 			    }
 			    
+			    if (config.containsKey("custom-nbt")) {
+			    	for (String s : (ArrayList<String>)config.get("custom-nbt")) {
+			            if (s != null) {
+			            	String[] splitted = s.split(":");
+			            	NBTAPIHook.addNBT(item, place, splitted[0], splitted[1]);
+			              }
+			          }
+			    }
+			    
 			    if (config.containsKey("amount"))
-			    	item.setAmount(Integer.valueOf((String) config.get("amount")));
+			    	item.setAmount((int) config.get("amount"));
 			    
 			    /*
 			    if (XMaterial.matchXMaterial(item) == XMaterial.PLAYER_HEAD || XMaterial.matchXMaterial(item) == XMaterial.PLAYER_WALL_HEAD)

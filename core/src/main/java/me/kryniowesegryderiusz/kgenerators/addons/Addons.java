@@ -7,8 +7,7 @@ import me.kryniowesegryderiusz.kgenerators.addons.objects.Addon;
 
 public class Addons {
 	
-	@Getter
-	static ArrayList<Addon> addons = new ArrayList<Addon>();
+	@Getter static ArrayList<Addon> addons = new ArrayList<Addon>();
 	
 	public static void register(Addon addon)
 	{
