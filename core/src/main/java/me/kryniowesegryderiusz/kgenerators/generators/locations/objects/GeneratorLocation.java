@@ -95,20 +95,13 @@ public class GeneratorLocation implements IGeneratorLocation {
 	 * You probably wanna use {@link #isBlockPossibleToMine(Location)} at first
 	 * @return wheather its possible to mine
 	 */
-	public boolean isPermittedToMine(Player player)
-	{
+	public boolean isPermittedToMine(Player player) {
 		String permission = "kgenerators.mine." + this.getGenerator().getId();
 		if (!player.hasPermission(permission))
 		{
 			Lang.getMessageStorage().send(player, Message.GENERATORS_DIGGING_NO_PERMISSION,
 					"<permission>", permission,
 					"<generator>", this.getGenerator().getGeneratorItem().getItemMeta().getDisplayName());
-			return false;
-		}
-		
-		if (Main.getDependencies().isEnabled(Dependency.WORLD_GUARD) && !player.hasPermission("kgenerators.bypass.worldguard") && Main.getMultiVersion().getWorldGuardUtils().worldGuardFlagCheck(this.getGeneratedBlockLocation(), player, WGFlag.ONLY_GEN_BREAK))
-		{
-			Lang.getMessageStorage().send(player, Message.GENERATORS_DIGGING_ONLY_GEN);
 			return false;
 		}
 		

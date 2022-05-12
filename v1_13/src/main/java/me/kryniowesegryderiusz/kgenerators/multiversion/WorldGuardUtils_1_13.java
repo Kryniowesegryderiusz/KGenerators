@@ -83,7 +83,7 @@ public class WorldGuardUtils_1_13 implements WorldGuardUtils {
 
 	/* Returns if pick up is allow/deny */
 	@Override
-	public boolean worldGuardFlagCheck(Location location, Player player, WGFlag flag) {
+	public boolean isWorldGuardFlagAllow(Location location, Player player, WGFlag flag) {
 		
 		RegionContainer container = WorldGuard.getInstance().getPlatform().getRegionContainer();
 		

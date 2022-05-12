@@ -70,7 +70,7 @@ public class WorldGuardUtils_1_8 implements WorldGuardUtils {
 	}
 
 	@Override
-	public boolean worldGuardFlagCheck(Location location, Player player, WGFlag flag) {
+	public boolean isWorldGuardFlagAllow(Location location, Player player, WGFlag flag) {
 		
 		LocalPlayer localPlayer = worldGuard.wrapPlayer(player);
 		RegionContainer container = worldGuard.getRegionContainer();

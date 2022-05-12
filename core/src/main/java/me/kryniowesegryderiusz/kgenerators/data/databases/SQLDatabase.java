@@ -306,7 +306,7 @@ public class SQLDatabase implements IDatabase {
 			stat = conn.prepareStatement("SELECT COUNT(*) FROM " + PLACED_TABLE);
 	        ResultSet res = stat.executeQuery();
 	    	while (res.next()) {
-	    		amount = res.getInt(0);
+	    		amount = res.getInt(1);
 	    	}
 	        stat.close();
 		} catch (SQLException e) {

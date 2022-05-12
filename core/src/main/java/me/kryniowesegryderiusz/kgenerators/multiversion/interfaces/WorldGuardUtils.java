@@ -8,6 +8,6 @@ import me.kryniowesegryderiusz.kgenerators.dependencies.enums.WGFlag;
 public interface WorldGuardUtils {
 	
 	boolean isWorldGuardHooked();
-	boolean worldGuardFlagCheck(Location location, Player player, WGFlag flag);
+	boolean isWorldGuardFlagAllow(Location location, Player player, WGFlag flag);
 	void worldGuardFlagsAdd();	
 }
