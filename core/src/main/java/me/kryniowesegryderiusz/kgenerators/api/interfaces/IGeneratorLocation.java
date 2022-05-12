@@ -20,8 +20,9 @@ public interface IGeneratorLocation {
 	public boolean isBlockPossibleToMine(Location location);
 	
 	/**
-	 * Checks if player is permitted to mine this generator
+	 * Checks if player is permitted to mine generated block
 	 * Should be checked with every player-related mining action
+	 * You probably wanna use {@link #isBlockPossibleToMine(Location)} at first
 	 * @param player
 	 * @return true if player is permitted
 	 */

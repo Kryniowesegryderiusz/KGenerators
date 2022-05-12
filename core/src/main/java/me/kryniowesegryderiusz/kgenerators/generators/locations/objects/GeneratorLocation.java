@@ -90,6 +90,11 @@ public class GeneratorLocation implements IGeneratorLocation {
 	}
 	
 	//api
+	/**
+	 * Checks if player is permitted to mine generated block.
+	 * You probably wanna use {@link #isBlockPossibleToMine(Location)} at first
+	 * @return wheather its possible to mine
+	 */
 	public boolean isPermittedToMine(Player player)
 	{
 		String permission = "kgenerators.mine." + this.getGenerator().getId();
@@ -101,14 +106,14 @@ public class GeneratorLocation implements IGeneratorLocation {
 			return false;
 		}
 		
-		if (Main.getDependencies().isEnabled(Dependency.WORLD_GUARD) && !player.hasPermission("kgenerators.bypass.worldguard") && Main.getMultiVersion().getWorldGuardUtils().worldGuardFlagCheck(location, player, WGFlag.ONLY_GEN_BREAK))
+		if (Main.getDependencies().isEnabled(Dependency.WORLD_GUARD) && !player.hasPermission("kgenerators.bypass.worldguard") && Main.getMultiVersion().getWorldGuardUtils().worldGuardFlagCheck(this.getGeneratedBlockLocation(), player, WGFlag.ONLY_GEN_BREAK))
 		{
 			Lang.getMessageStorage().send(player, Message.GENERATORS_DIGGING_ONLY_GEN);
 			return false;
 		}
 		
-		if (!BentoBoxHook.isAllowed(player, BentoBoxHook.Type.USE_FLAG, location) 
-				|| !SuperiorSkyblock2Hook.isAllowed(player, SuperiorSkyblock2Hook.Type.USE_FLAG, location))
+		if (!BentoBoxHook.isAllowed(player, BentoBoxHook.Type.USE_FLAG, this.getGeneratedBlockLocation()) 
+				|| !SuperiorSkyblock2Hook.isAllowed(player, SuperiorSkyblock2Hook.Type.USE_FLAG, this.getGeneratedBlockLocation()))
 		{
 			Lang.getMessageStorage().send(player, Message.GENERATORS_DIGGING_CANT_HERE);
 			return false;
