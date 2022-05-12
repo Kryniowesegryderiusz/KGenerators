@@ -61,6 +61,8 @@ public enum Message implements IMessage {
 	COMMANDS_ANY_GENERATOR_DOESNT_EXIST("commands.any.generator-doesnt-exist", "&cThat generator doesn't exist"),
 	COMMANDS_ANY_MENU_DOESNT_EXIST("commands.any.menu-doesnt-exist", "&cThat menu doesn't exist"),
 	COMMANDS_ANY_ONLY_CONSOLE("commands.any.console-only", "&cThis command can be executed only from console!"),
+	COMMANDS_ANY_NOT_A_INTEGER("commands.any.not-a-integer", "&c'<variable>' should be integer!"),
+	COMMANDS_ANY_WORLD_DOESNT_EXIST("commands.any.world-doesnt-exist", "&cWorld '<world>' doesn't exist"),
 	
 	COMMANDS_LIST_HEADER("commands.list.header", "&aGenerators:"),
 	COMMANDS_LIST_LIST("commands.list.list", "&8- <generator> &8(&7ID: <generatorID>&8)"),
@@ -107,6 +109,11 @@ public enum Message implements IMessage {
 	COMMANDS_TIME_LEFT_FORMAT_HOUR("commands.timeleft.format.hours", "h"),
 	COMMANDS_TIME_LEFT_FORMAT_DAY("commands.timeleft.format.days", "d"),
 	COMMANDS_TIME_LEFT_FORMAT_NONE("commands.timeleft.format.none", "None"),
+	
+	COMMANDS_SPAWN_DONE("commands.spawn.done", "&aGenerator spawned! New generator: &e<location_info>"),
+	COMMANDS_SPAWN_USAGE("commands.spawn.usage", "&cUsage: &e/kgenerators spawn <world> <x> <y> <z> <generator> [owner]"),
+	COMMANDS_SPAWN_NO_PERMISSION("commands.spawn.no-permission", "&cYou dont have permission &8(&7<permission>&8)&c to spawn generator!"),
+	COMMANDS_SPAWN_HELP("commands.spawn.help", "Spawns generator at location"),
 	
 	COMMANDS_UPGRADE_HELP("commands.upgrade.help", "Upgrade generator"),
 	

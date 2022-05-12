@@ -1,5 +1,6 @@
 package me.kryniowesegryderiusz.kgenerators.generators.locations.handlers;
 
+import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Player;
 
 import me.kryniowesegryderiusz.kgenerators.Main;
@@ -16,11 +17,11 @@ public class GeneratorLocationPlaceHandler {
 	/**
 	 * Handle place of generator and saves it if successful
 	 * @param GeneratorLocation not being in Manager nor Database yet
-	 * @param Player - player placing generator
+	 * @param sender - player (CommandSender) placing generator
+	 * @param generateGeneratorBlock - 
 	 * @return whether placing was successful
 	 */
-	public boolean handle(GeneratorLocation gLocation, Player player)
-	{    	
+	public boolean handle(GeneratorLocation gLocation, CommandSender sender, boolean generateGeneratorBlock) {    	
 		Generator generator = gLocation.getGenerator();
 		
 		/*
@@ -28,12 +29,12 @@ public class GeneratorLocationPlaceHandler {
 		 */
 		
     	if (gLocation.getGenerator().isWorldDisabled(gLocation.getGeneratedBlockLocation().getWorld())) {
-    		Lang.getMessageStorage().send(player, Message.GENERATORS_ANY_DISABLED_WORLD_SPECIFIC, "<generator>", generator.getGeneratorItemName());
+    		Lang.getMessageStorage().send(sender, Message.GENERATORS_ANY_DISABLED_WORLD_SPECIFIC, "<generator>", generator.getGeneratorItemName());
     		return false;
     	}
     	
-    	if (!player.hasPermission("kgenerators.place."+generator.getId())) {
-    		Lang.getMessageStorage().send(player, Message.GENERATORS_PLACE_NO_PERMISSION,
+    	if (!sender.hasPermission("kgenerators.place."+generator.getId())) {
+    		Lang.getMessageStorage().send(sender, Message.GENERATORS_PLACE_NO_PERMISSION,
     				"<permission>", "kgenerators.place."+generator.getId());
     		return false;
     	}
@@ -43,12 +44,12 @@ public class GeneratorLocationPlaceHandler {
 	    }
     	
     	if (generator.getType() == GeneratorType.DOUBLE && !Main.getMultiVersion().getBlocksUtils().isAir(gLocation.getGeneratedBlockLocation().getBlock())) {
-    		if (player != null) Lang.getMessageStorage().send(player, Message.GENERATORS_PLACE_CANT_PLACE_DOUBLE_BELOW_BLOCK);
+    		Lang.getMessageStorage().send(sender, Message.GENERATORS_PLACE_CANT_PLACE_DOUBLE_BELOW_BLOCK);
     		return false;
     	}
     	
     	if (generator.getType() == GeneratorType.DOUBLE && Main.getPlacedGenerators().getLoaded(gLocation.getGeneratedBlockLocation()) != null) {
-    		if (player != null) Lang.getMessageStorage().send(player, Message.GENERATORS_PLACE_CANT_PLACE_DOUBLE_BELOW_GENERATOR);
+    		Lang.getMessageStorage().send(sender, Message.GENERATORS_PLACE_CANT_PLACE_DOUBLE_BELOW_GENERATOR);
     		return false;
     	}
     	
@@ -58,12 +59,15 @@ public class GeneratorLocationPlaceHandler {
 
     	gLocation.save();
     	
-    	if (player != null) Main.getSettings().getPlaceSound().play(player);
+    	if (sender instanceof Player) Main.getSettings().getPlaceSound().play((Player) sender);
     	
-    	if (player != null)
-    		Logger.info(player.getName() + " placed " + generator.getId() + " in " + gLocation.toStringLocation());
+    	if (sender instanceof Player)
+    		Logger.info(((Player) sender).getName() + " placed " + generator.getId() + " in " + gLocation.toStringLocation());
     	else
     		Logger.info("Something placed " + generator.getId() + " in " + gLocation.toStringLocation());
+    	
+    	if (generateGeneratorBlock && gLocation.getGenerator().getType() == GeneratorType.DOUBLE)
+    		Main.getMultiVersion().getBlocksUtils().setBlock(gLocation.getLocation(), gLocation.getGenerator().getGeneratorItem());
     	
     	Main.getMultiVersion().getBlocksUtils().setBlock(gLocation.getGeneratedBlockLocation(), XMaterial.AIR.parseItem());
     	
@@ -72,5 +76,5 @@ public class GeneratorLocationPlaceHandler {
     	else
     		Main.getSchedules().schedule(gLocation, true);
 		return true;
-	}	
+	}
 }

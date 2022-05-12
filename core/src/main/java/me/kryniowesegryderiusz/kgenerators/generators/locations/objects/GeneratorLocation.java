@@ -5,6 +5,7 @@ import javax.annotation.Nullable;
 import org.bukkit.Chunk;
 import org.bukkit.Location;
 import org.bukkit.Material;
+import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Player;
 import org.bukkit.inventory.ItemStack;
 
@@ -148,8 +149,7 @@ public class GeneratorLocation implements IGeneratorLocation {
 	}
 	
 	//api
-	public void scheduleGeneratorRegeneration()
-	{
+	public void scheduleGeneratorRegeneration() {
 		Main.getSchedules().schedule(this, false);
 	}
 	
@@ -164,7 +164,16 @@ public class GeneratorLocation implements IGeneratorLocation {
 	 * @return whether placing was successful
 	 */
 	public boolean placeGenerator(Player player) {
-		return placeHandler.handle(this, player);
+		return placeHandler.handle(this, player, false);
+	}
+	
+	/**
+	 * Places generator and saves it
+	 * For commands/api usage
+	 * @return whether placing was successful
+	 */
+	public boolean placeGenerator(CommandSender sender, boolean generateGeneratorBlock ) {
+		return placeHandler.handle(this, sender, generateGeneratorBlock);
 	}
 	
 	public void pickUpGenerator(Player player) {

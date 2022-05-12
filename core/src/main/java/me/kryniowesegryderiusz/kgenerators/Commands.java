@@ -15,10 +15,12 @@ import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.Recipe;
 
 import me.kryniowesegryderiusz.kgenerators.data.enums.DatabaseType;
+import me.kryniowesegryderiusz.kgenerators.generators.generator.enums.GeneratorType;
 import me.kryniowesegryderiusz.kgenerators.generators.generator.objects.Generator;
 import me.kryniowesegryderiusz.kgenerators.generators.generator.objects.GeneratorAction;
 import me.kryniowesegryderiusz.kgenerators.generators.locations.handlers.enums.ActionType;
 import me.kryniowesegryderiusz.kgenerators.generators.locations.handlers.enums.InteractionType;
+import me.kryniowesegryderiusz.kgenerators.generators.locations.objects.GeneratorLocation;
 import me.kryniowesegryderiusz.kgenerators.lang.Lang;
 import me.kryniowesegryderiusz.kgenerators.lang.enums.Message;
 import me.kryniowesegryderiusz.kgenerators.logger.Logger;
@@ -159,7 +161,7 @@ public class Commands implements CommandExecutor {
 										amount = Integer.valueOf(args[3]);
 										item.setAmount(amount);
 									} catch (NumberFormatException e) {
-										Lang.getMessageStorage().send(sender, Message.COMMANDS_GIVE_USAGE);
+										Lang.getMessageStorage().send(sender, Message.COMMANDS_ANY_NOT_A_INTEGER, "<variable>", args[3]);
 										return false;
 									}
 								}
@@ -201,7 +203,7 @@ public class Commands implements CommandExecutor {
 				case "timeleft":
 					if (sender instanceof Player){
 						Player p = (Player) sender;
-						if (sender.hasPermission("kgenerators.timeleft")){
+						if (sender.hasPermission("kgenerators.timeleft")) {
 							Location l = null;
 							if (p.getTargetBlockExact(5) != null) l = p.getTargetBlockExact(5).getLocation();
 							if (l != null && Main.getPlacedGenerators().isLoaded(l) && Main.getSchedules().timeLeft(Main.getPlacedGenerators().getLoaded(l)) >= 0)
@@ -312,6 +314,43 @@ public class Commands implements CommandExecutor {
 								"<permission>", "kgenerators.menu");
 					}
 					break;
+				case "spawn":
+					if (sender.hasPermission("kgenerators.spawn") || sender instanceof ConsoleCommandSender){
+						if (args.length >= 6) {
+							if (Bukkit.getWorld(args[1]) != null) {
+								try {
+									Integer.valueOf(args[2]);
+									Integer.valueOf(args[3]);
+									Integer.valueOf(args[4]);
+									
+									Generator g = Main.getGenerators().get(args[5]);
+									
+									if (g != null) {
+										String owner = null;
+										if (args.length >= 7)
+											owner = args[6];
+										
+										GeneratorLocation gl = new GeneratorLocation(g, Main.getPlacedGenerators().stringToLocation(args[1]+","+args[2]+","+args[3]+","+args[4]), Main.getPlayers().getPlayer(owner));
+										if (gl.placeGenerator(sender, true))
+											gl.save();
+										
+										
+										Lang.getMessageStorage().send(sender, Message.COMMANDS_SPAWN_DONE, "<location_info>", gl.toString());
+										
+									} else
+										Lang.getMessageStorage().send(sender, Message.COMMANDS_ANY_GENERATOR_DOESNT_EXIST);
+									
+								} catch (NumberFormatException e) {
+									Lang.getMessageStorage().send(sender, Message.COMMANDS_ANY_NOT_A_INTEGER, "<variable>", args[2] + "," + args[3] + "," + args[4]);
+									return false;
+								}
+							} else
+								Lang.getMessageStorage().send(sender, Message.COMMANDS_ANY_WORLD_DOESNT_EXIST, "<world>", args[1]);
+						} else
+							Lang.getMessageStorage().send(sender, Message.COMMANDS_SPAWN_USAGE);
+					} else
+						Lang.getMessageStorage().send(sender, Message.COMMANDS_SPAWN_NO_PERMISSION, "<permission>", "kgenerators.spawn");
+					break;
 				case "convertdbto":
 					if (sender instanceof ConsoleCommandSender)
 					{
@@ -336,12 +375,9 @@ public class Commands implements CommandExecutor {
 					Lang.getMessageStorage().send(sender, Message.COMMANDS_ANY_WRONG);
 					break;
 			}
-		}
-		else
-		{
+		} else
 			Lang.getMessageStorage().send(sender, Message.COMMANDS_ANY_NO_PERMISSION,
 					"<permission>", "kgenerators.commands");
-		}
 
 		return false;
 	}
