@@ -230,7 +230,7 @@ public class SQLDatabase implements IDatabase {
 			
 			PreparedStatement stat;
 			stat = conn.prepareStatement("SELECT * FROM " + PLACED_TABLE 
-					+ " WHERE `world` = ? AND `x` >= ? AND `x` <= ?  `y` >= ? AND `y` <= ?  `z` >= ? AND `z` <= ? ");
+					+ " WHERE `world` = ? AND `x` >= ? AND `x` <= ? AND `y` >= ? AND `y` <= ? AND `z` >= ? AND `z` <= ?");
 			stat.setString(1, world.getName());
 			stat.setInt(2, minX);
 			stat.setInt(3, maxX);

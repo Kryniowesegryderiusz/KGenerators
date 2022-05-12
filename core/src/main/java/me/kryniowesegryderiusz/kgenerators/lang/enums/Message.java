@@ -115,6 +115,13 @@ public enum Message implements IMessage {
 	COMMANDS_SPAWN_NO_PERMISSION("commands.spawn.no-permission", "&cYou dont have permission &8(&7<permission>&8)&c to spawn generator!"),
 	COMMANDS_SPAWN_HELP("commands.spawn.help", "Spawns generator at location"),
 	
+	COMMANDS_REMOVE_DONE("commands.remove.done", "&aRemoved <amount> generators!"),
+	COMMANDS_REMOVE_USAGE("commands.remove.usage", "&cUsage: &e/kgenerators remove worldedit"),
+	COMMANDS_REMOVE_NO_PERMISSION("commands.remove.no-permission", "&cYou dont have permission &8(&7<permission>&8)&c to remove generators!"),
+	COMMANDS_REMOVE_HELP("commands.remove.help", "Removes generators"),
+	COMMANDS_REMOVE_WORLDEDIT_NOT_FOUND("commands.remove.worldedit-not-found", "&cSelection is not complete!"),
+	COMMANDS_REMOVE_WORLDEDIT_WRONG_SELECTION("commands.remove.worldedit-wrong-selection", "&cSelection is not complete!"),
+	
 	COMMANDS_UPGRADE_HELP("commands.upgrade.help", "Upgrade generator"),
 	
 	COMMANDS_RELOAD_DONE("commands.reload.done", "&aPlugin configuration reloaded! Check console or log.txt in plugin''s directory for possible errors!"),

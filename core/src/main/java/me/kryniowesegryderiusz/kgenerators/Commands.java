@@ -1,5 +1,6 @@
 package me.kryniowesegryderiusz.kgenerators;
 
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map.Entry;
@@ -15,6 +16,7 @@ import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.Recipe;
 
 import me.kryniowesegryderiusz.kgenerators.data.enums.DatabaseType;
+import me.kryniowesegryderiusz.kgenerators.dependencies.hooks.WorldEditHook;
 import me.kryniowesegryderiusz.kgenerators.generators.generator.enums.GeneratorType;
 import me.kryniowesegryderiusz.kgenerators.generators.generator.objects.Generator;
 import me.kryniowesegryderiusz.kgenerators.generators.generator.objects.GeneratorAction;
@@ -350,6 +352,30 @@ public class Commands implements CommandExecutor {
 							Lang.getMessageStorage().send(sender, Message.COMMANDS_SPAWN_USAGE);
 					} else
 						Lang.getMessageStorage().send(sender, Message.COMMANDS_SPAWN_NO_PERMISSION, "<permission>", "kgenerators.spawn");
+					break;
+				case "remove":
+					if (sender instanceof Player) {
+						Player p = (Player) sender;
+						if (p.hasPermission("kgenerators.remove")) {
+							if (args.length >= 2) {
+								if (args[1].toLowerCase().equals("worldedit")) {
+									ArrayList<GeneratorLocation> gls = WorldEditHook.getGeneratorsInRange(p);
+									if (gls != null) {	
+										int amount = gls.size();
+										for (GeneratorLocation gl : gls) {
+											gl.removeGenerator(false, null);
+										}
+										Lang.getMessageStorage().send(sender, Message.COMMANDS_REMOVE_DONE, "<amount>", String.valueOf(amount));
+									}
+								} else
+									Lang.getMessageStorage().send(sender, Message.COMMANDS_REMOVE_USAGE);
+							} else 
+								Lang.getMessageStorage().send(sender, Message.COMMANDS_REMOVE_USAGE);
+						}
+						else
+							Lang.getMessageStorage().send(sender, Message.COMMANDS_REMOVE_NO_PERMISSION, "<permission>", "kgenerators.remove");
+					} else
+						System.out.println("[KGenerators] Use that command as player!");
 					break;
 				case "convertdbto":
 					if (sender instanceof ConsoleCommandSender)

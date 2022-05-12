@@ -15,4 +15,5 @@ public enum Dependency
 	DECENT_HOLOGRAMS,
 	ITEMS_ADDER,
 	ECO_ITEMS,
+	WORLD_EDIT,
 }

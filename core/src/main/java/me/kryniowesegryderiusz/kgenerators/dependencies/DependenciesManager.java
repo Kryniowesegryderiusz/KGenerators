@@ -84,6 +84,11 @@ public class DependenciesManager {
     		dependencies.add(Dependency.SLIMEFUN);
     	}
     	
+    	if (Bukkit.getPluginManager().isPluginEnabled("WorldEdit")) {
+    		Logger.info("Dependencies: Detected plugin WorldEdit. Hooking into it.");
+    		dependencies.add(Dependency.WORLD_EDIT);
+    	}
+    	
     	if (Main.getMultiVersion().getWorldGuardUtils() != null && Main.getMultiVersion().getWorldGuardUtils().isWorldGuardHooked()) {
    			Logger.info("Dependencies: Detected plugin WorldGuard. Hooked into it.");
    			dependencies.add(Dependency.WORLD_GUARD);
