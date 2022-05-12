@@ -31,8 +31,9 @@ public class PlayerInteractListener implements Listener {
 		
 		if (e.getAction() == Action.LEFT_CLICK_BLOCK) e.setCancelled(gLocation.handleAction(InteractionType.LEFT_CLICK, e.getPlayer()));
 		else if (e.getAction() == Action.RIGHT_CLICK_BLOCK) {
-			gLocation.handleAction(InteractionType.RIGHT_CLICK, e.getPlayer());
-			e.setCancelled(true);
+			e.setCancelled(gLocation.handleAction(InteractionType.RIGHT_CLICK, e.getPlayer()));
+			if (e.getClickedBlock().getBlockData().getAsString().contains("[")) //check for tiles
+				e.setCancelled(true);
 		}
 	}
 }
