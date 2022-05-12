@@ -23,37 +23,40 @@ public class GeneratorLocationPlaceHandler {
 	{    	
 		Generator generator = gLocation.getGenerator();
 		
-    	if (gLocation.getGenerator().isWorldDisabled(gLocation.getGeneratedBlockLocation().getWorld()))
-    	{
+		/*
+		 * Pre checks
+		 */
+		
+    	if (gLocation.getGenerator().isWorldDisabled(gLocation.getGeneratedBlockLocation().getWorld())) {
     		Lang.getMessageStorage().send(player, Message.GENERATORS_ANY_DISABLED_WORLD_SPECIFIC, "<generator>", generator.getGeneratorItemName());
     		return false;
     	}
     	
-    	if (!player.hasPermission("kgenerators.place."+generator.getId()))
-    	{
+    	if (!player.hasPermission("kgenerators.place."+generator.getId())) {
     		Lang.getMessageStorage().send(player, Message.GENERATORS_PLACE_NO_PERMISSION,
     				"<permission>", "kgenerators.place."+generator.getId());
     		return false;
     	}
     	
-    	if (!gLocation.getOwner().canPlace(gLocation))
-	    {
+    	if (!gLocation.getOwner().canPlace(gLocation)) {
 	    	return false;
 	    }
     	
-    	if (generator.getType() == GeneratorType.DOUBLE && !Main.getMultiVersion().getBlocksUtils().isAir(gLocation.getGeneratedBlockLocation().getBlock()))
-    	{
+    	if (generator.getType() == GeneratorType.DOUBLE && !Main.getMultiVersion().getBlocksUtils().isAir(gLocation.getGeneratedBlockLocation().getBlock())) {
     		if (player != null) Lang.getMessageStorage().send(player, Message.GENERATORS_PLACE_CANT_PLACE_DOUBLE_BELOW_BLOCK);
     		return false;
     	}
     	
-    	if (generator.getType() == GeneratorType.DOUBLE && Main.getLocations().get(gLocation.getGeneratedBlockLocation()) != null)
-    	{
+    	if (generator.getType() == GeneratorType.DOUBLE && Main.getPlacedGenerators().getLoaded(gLocation.getGeneratedBlockLocation()) != null) {
     		if (player != null) Lang.getMessageStorage().send(player, Message.GENERATORS_PLACE_CANT_PLACE_DOUBLE_BELOW_GENERATOR);
     		return false;
     	}
+    	
+    	/*
+    	 * Placing
+    	 */
 
-    	gLocation.save(true);
+    	gLocation.save();
     	
     	if (player != null) Main.getSettings().getPlaceSound().play(player);
     	

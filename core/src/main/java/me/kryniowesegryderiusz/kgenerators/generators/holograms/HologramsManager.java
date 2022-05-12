@@ -24,48 +24,46 @@ public class HologramsManager {
 	private ArrayList<GeneratorLocation> holograms = new ArrayList<>();
 	
 	public HologramsManager() {
-		Bukkit.getScheduler().runTask((Plugin)Main.getInstance(), () -> {
-			
-			if (Main.getDependencies().isEnabled(Dependency.DECENT_HOLOGRAMS)) {
-				hologramProvider = new DecentHologramsProvider();
-				Logger.info("Holograms: Enabling DecentHologramsProvider");
-			} else if (Main.getDependencies().isEnabled(Dependency.HOLOGRAPHIC_DISPLAYS)) {
-				hologramProvider = new HolographicDisplaysProvider();
-				Logger.info("Holograms: Enabling HolographicDisplaysProvider");
-			} else {
-	        	for (Map.Entry<String, Generator> e : Main.getGenerators().getEntrySet()) {
-					if ((e.getValue()).isHologram())
-						Logger.warn("Holograms: Generator " + e.getKey() + " has enabled holograms, but hologram provider was not found! Holograms wont work!"); 
-				}
+		if (Main.getDependencies().isEnabled(Dependency.DECENT_HOLOGRAMS)) {
+			hologramProvider = new DecentHologramsProvider();
+			Logger.info("Holograms: Enabling DecentHologramsProvider");
+		} else if (Main.getDependencies().isEnabled(Dependency.HOLOGRAPHIC_DISPLAYS)) {
+			hologramProvider = new HolographicDisplaysProvider();
+			Logger.info("Holograms: Enabling HolographicDisplaysProvider");
+		} else {
+        	for (Map.Entry<String, Generator> e : Main.getGenerators().getEntrySet()) {
+				if ((e.getValue()).isHologram())
+					Logger.warn("Holograms: Generator " + e.getKey() + " has enabled holograms, but hologram provider was not found! Holograms wont work!"); 
 			}
-			
-			Bukkit.getScheduler().scheduleSyncRepeatingTask(Main.getInstance(), new Runnable() {
-				public void run() {
-					if (hologramProvider == null)
-						return; 
-					ArrayList<GeneratorLocation> toRemove = new ArrayList<>();
-					for (GeneratorLocation gLocation : holograms) {
-						if (Main.getLocations().stillExists(gLocation) && Main.getSchedules().timeLeft(gLocation) > 0) {
-							int lineNo = 0;
-							for (String s : Lang.getHologramTextStorage().get(HologramText.REMAINING_TIME).getLines()) {
-								if (s.contains("<time>")) {
-									hologramProvider.updateHologramLine(gLocation, lineNo, s.replaceAll("<time>", Main.getSchedules().timeLeftFormatted(gLocation)));
-									break;
-								} 
-								lineNo++;
+		}
+		
+		Bukkit.getScheduler().scheduleSyncRepeatingTask(Main.getInstance(), new Runnable() {
+			public void run() {
+				if (hologramProvider == null)
+					return; 
+				ArrayList<GeneratorLocation> toRemove = new ArrayList<>();
+				for (GeneratorLocation gLocation : holograms) {
+					if (Main.getPlacedGenerators().isLoaded(gLocation) && Main.getSchedules().timeLeft(gLocation) > 0) {
+						int lineNo = 0;
+						for (String s : Lang.getHologramTextStorage().get(HologramText.REMAINING_TIME).getLines()) {
+							if (s.contains("<time>")) {
+								hologramProvider.updateHologramLine(gLocation, lineNo, s.replaceAll("<time>", Main.getSchedules().timeLeftFormatted(gLocation)));
+								break;
 							} 
-							continue;
+							lineNo++;
 						} 
-						hologramProvider.removeHologram(gLocation);
-						toRemove.add(gLocation);
+						continue;
 					} 
-					holograms.removeAll(toRemove);
-				}
-			},	0L, Main.getSettings().getHologramUpdateFrequency() * 1L);
-		});
+					hologramProvider.removeHologram(gLocation);
+					toRemove.add(gLocation);
+				} 
+				holograms.removeAll(toRemove);
+			}
+		},	0L, Main.getSettings().getHologramUpdateFrequency() * 1L);
 	}
 	
 	public void createHologram(GeneratorLocation gLocation) {
+		
 		if (hologramProvider == null)
 			return; 
 		if (gLocation == null)

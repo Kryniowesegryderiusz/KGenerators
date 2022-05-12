@@ -15,13 +15,13 @@ import me.kryniowesegryderiusz.kgenerators.lang.enums.Message;
 public class BlockPlaceListener implements Listener {
 	
 	@EventHandler(priority = EventPriority.HIGH)
-	public void onBlockPlace(final BlockPlaceEvent e){
+	public void onBlockPlace(final BlockPlaceEvent e) {
 		
 		if (e.isCancelled()) return;
 		
 		Player player = e.getPlayer();
 		
-		if (Main.getLocations().get(e.getBlock().getLocation()) != null)
+		if (Main.getPlacedGenerators().getLoaded(e.getBlock().getLocation()) != null)
 		{
 			Lang.getMessageStorage().send(player, Message.GENERATORS_PLACE_CANT_PLACE_BLOCK);
 			e.setCancelled(true);

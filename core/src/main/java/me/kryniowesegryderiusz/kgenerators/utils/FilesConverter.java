@@ -112,6 +112,13 @@ public class FilesConverter {
 			Logger.info("FilesConverter: Added explosion-handler settings to config file");
 		}
 		
+		if (!config.contains("count-delay-on-unloaded-chunks"))
+		{
+			add(file, "");
+			add(file, "#Should regeneration delay pass, even if chunk is unloaded?");
+			add(file, "count-delay-on-unloaded-chunks: true");
+		}
+		
 		if (!config.contains("actions"))
 		{
 			add(file, "");

@@ -144,7 +144,7 @@ public class BentoBoxHook implements Listener {
 	{
 		IslandDeletion id = e.getDeletedIslandInfo();
 		Logger.info("Detected BentoBox removing island in world " + id.getWorld().getName() + " starting at " + id.getMinX() + "," + id.getMinZ() + " and ending at " + id.getMaxX()+","+id.getMaxZ());
-		Main.getLocations().bulkRemoveGenerators(id.getWorld(), id.getMinX(), 0, id.getMinZ(), id.getMaxX(), id.getWorld().getMaxHeight(), id.getMaxZ(), false);
+		Main.getPlacedGenerators().bulkRemoveGenerators(id.getWorld(), id.getMinX(), 0, id.getMinZ(), id.getMaxX(), id.getWorld().getMaxHeight(), id.getMaxZ(), false);
 	}
 	
 	private static void loadConfigValues()

@@ -22,6 +22,8 @@ public class GeneratorPlayer {
 	
 	private String nick;
 	
+	@Getter private boolean loaded = false;
+	
 	public GeneratorPlayer(String nick)
 	{
 		this.nick = nick;
@@ -58,6 +60,14 @@ public class GeneratorPlayer {
 	
 	@Getter
 	private HashMap<Generator, Integer> playersGenerators = new HashMap<Generator, Integer>();
+	
+	public void loadPlayer() {
+		
+		for (GeneratorLocation gl : Main.getDatabases().getDb().getGenerators(nick)) {
+			this.addGeneratorToPlayer(gl.getGenerator());
+		}
+		this.loaded = true;
+	}
 	
 	public void addGeneratorToPlayer(Generator generator)
 	{

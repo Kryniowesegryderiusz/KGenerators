@@ -25,11 +25,8 @@ public class PlayerInteractListener implements Listener {
 		Location location = e.getClickedBlock().getLocation();
 		Location upperLocation = location.clone().add(0,1,0);
 				
-		GeneratorLocation gLocation = null;
-		
-		if (Main.getLocations().get(upperLocation) != null) gLocation = Main.getLocations().get(upperLocation);
-		if (Main.getLocations().get(location) != null) gLocation = Main.getLocations().get(location);
-		
+		GeneratorLocation gLocation = Main.getPlacedGenerators().getLoaded(location);
+		if (gLocation == null) gLocation = Main.getPlacedGenerators().getLoaded(upperLocation);
 		if (gLocation == null) return;
 		
 		if (e.getAction() == Action.LEFT_CLICK_BLOCK) e.setCancelled(gLocation.handleAction(InteractionType.LEFT_CLICK, e.getPlayer()));

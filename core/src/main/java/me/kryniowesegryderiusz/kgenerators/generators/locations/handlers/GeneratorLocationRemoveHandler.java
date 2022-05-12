@@ -20,9 +20,12 @@ public class GeneratorLocationRemoveHandler {
 		Location location = gLocation.getLocation();
 		Generator generator = gLocation.getGenerator();
 		
-		Main.getLocations().remove(gLocation);
 		Main.getSchedules().remove(gLocation);
-		Main.getDatabases().getDb().removePlacedGenerator(location);
+		Main.getDatabases().getDb().removeSchedule(gLocation);
+		
+		Main.getPlacedGenerators().removeLoaded(gLocation);
+		Main.getDatabases().getDb().removeGenerator(location);
+		
 		gLocation.getOwner().removeGeneratorFromPlayer(gLocation.getGenerator());
 		
 		if (drop) {
@@ -31,6 +34,7 @@ public class GeneratorLocationRemoveHandler {
 		
 		Main.getMultiVersion().getBlocksUtils().setBlock(location, air);
 		Main.getMultiVersion().getBlocksUtils().setBlock(gLocation.getGeneratedBlockLocation(), air);
+		
 		ItemsAdderHook.handleGeneratorLocationRemove(gLocation);
 	}
 }

@@ -1,12 +1,16 @@
 package me.kryniowesegryderiusz.kgenerators.data.databases;
 
 import java.sql.Connection;
+import java.util.ArrayList;
 
 import javax.annotation.Nullable;
 
+import org.bukkit.Chunk;
 import org.bukkit.Location;
+import org.bukkit.World;
 
 import me.kryniowesegryderiusz.kgenerators.generators.locations.objects.GeneratorLocation;
+import me.kryniowesegryderiusz.kgenerators.generators.schedules.objects.Schedule;
 
 public interface IDatabase {
 	
@@ -21,21 +25,61 @@ public interface IDatabase {
 	 */
 	public void closeConnection();
 	
-	/**
-	 * Loads generators from database
-	 * **WARNING!** This method should be run ONLY ON SERVER STARTUP
+	public void updateTable();
+	
+	/*
+	 * Placed generators table
 	 */
-	public void loadGenerators();
+	
+	/**
+	 * Gets saved generators according to owner
+	 */
+	@Nullable public GeneratorLocation getGenerator(Location location);
+	
+	/**
+	 * Gets all saved generators
+	 */
+	public ArrayList<GeneratorLocation> getGenerators();
+	
+	/**
+	 * Gets saved generators according to ranges
+	 */
+	public ArrayList<GeneratorLocation> getGenerators(World world, int minX, int minY, int minZ, int maxX, int maxY, int maxZ);
+	
+	/**
+	 * Gets saved generators according to owner
+	 */
+	public ArrayList<GeneratorLocation> getGenerators(String owner);
+	
+	/**
+	 * Gets saved generators according to owner
+	 */
+	public ArrayList<GeneratorLocation> getGenerators(Chunk chunk);
+	
+	/**
+	 * Gets saved generators amount
+	 */
+	public int getGeneratorsAmount();
 	
 	/**
 	 * Saves generator location info to database
 	 * @param GeneratorLocation
 	 */
-	public void savePlacedGenerator(GeneratorLocation gl);
+	public void saveGenerator(GeneratorLocation gl);
 	
 	/**
 	 * Removes location from database
 	 * @param Location
 	 */
-	public void removePlacedGenerator(Location l);
+	public void removeGenerator(Location l);
+	
+	/*
+	 * Scheduled generators table
+	 */
+	
+	public void addSchedule(GeneratorLocation gl, Schedule schedule);
+	
+	public Schedule getSchedule(GeneratorLocation gl);
+	
+	public void removeSchedule(GeneratorLocation gl);
 }

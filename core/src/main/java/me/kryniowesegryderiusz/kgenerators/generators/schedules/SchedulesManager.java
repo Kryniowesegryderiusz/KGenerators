@@ -15,6 +15,7 @@ import org.bukkit.inventory.ItemStack;
 
 import me.kryniowesegryderiusz.kgenerators.Main;
 import me.kryniowesegryderiusz.kgenerators.generators.locations.objects.GeneratorLocation;
+import me.kryniowesegryderiusz.kgenerators.generators.schedules.objects.Schedule;
 import me.kryniowesegryderiusz.kgenerators.lang.Lang;
 import me.kryniowesegryderiusz.kgenerators.lang.enums.Message;
 import me.kryniowesegryderiusz.kgenerators.logger.Logger;
@@ -23,72 +24,38 @@ import me.kryniowesegryderiusz.kgenerators.utils.immutable.ConfigManager;
 
 public class SchedulesManager {
 	
-	private HashMap<GeneratorLocation, Integer> schedules = new HashMap<GeneratorLocation, Integer>();
+	private HashMap<GeneratorLocation, Schedule> schedules = new HashMap<GeneratorLocation, Schedule>();
 	
 	public SchedulesManager() {
-		/*
-		 * Schedule task initialiser
-		 */
 		Bukkit.getScheduler().scheduleSyncRepeatingTask(Main.getInstance(), new Runnable() {
 		    @Override
 		    public void run() {
 				int freq = Main.getSettings().getGenerationCheckFrequency();
-				ArrayList<GeneratorLocation> toRemove = new ArrayList<GeneratorLocation>();
-				for (Entry<GeneratorLocation, Integer> e : schedules.entrySet()) {
-					e.setValue(e.getValue()-freq);
-					if (e.getValue() <= 0) {
-						if (Main.getLocations().stillExists(e.getKey()))
-							e.getKey().regenerateGenerator();
-						toRemove.add(e.getKey());
+				
+				ArrayList<GeneratorLocation> readyForRegeneration = new ArrayList<GeneratorLocation>();
+				
+				for (Entry<GeneratorLocation, Schedule> e : schedules.entrySet()) {
+					e.getValue().decreaseDelay(freq);
+					if (e.getValue().isReadyForRegeneration()) {
+						readyForRegeneration.add(e.getKey());
 					}
 				}
 				
-				for (GeneratorLocation l : toRemove) {
-					if(schedules.get(l) <= 0)
-						remove(l);
+				for (GeneratorLocation gl : readyForRegeneration) {
+					remove(gl);
+					if (Main.getPlacedGenerators().isLoaded(gl));
+						gl.regenerateGenerator();
 				}
 		    }
 		}, 0L, Main.getSettings().getGenerationCheckFrequency()*1L);
-		
-		/*
-		 * Scheduled tasks loader
-		 */
-		
-		File f = new File(Main.getInstance().getDataFolder()+"/data", "schedules.yml");
-		
-		if (!f.exists()){
-    		return;
-    	}
-		
-		Config file;
-		
-		try {
-			file = ConfigManager.getConfig("schedules.yml", "/data", false, false);
-			file.loadConfig();
-		} catch (IOException | InvalidConfigurationException e) {
-			Logger.error("Scheduled generators data file: Cant load scheduled generators file. Disabling plugin.");
-			Logger.error(e);
-			Main.getInstance().getServer().getPluginManager().disablePlugin(Main.getInstance());
-			return;
-		}
-    	
-        Bukkit.getScheduler().runTask(Main.getInstance(), () -> {
-        	ConfigurationSection mainSection = file.getConfigurationSection("");
-			int amount = 0;
-        	for(String generatorLocationString: mainSection.getKeys(false)) {
-        		Location location = Main.getLocations().stringToLocation(generatorLocationString);
-        		GeneratorLocation gLocation = Main.getLocations().get(location);
-        		this.insert(gLocation, file.getInt(generatorLocationString + ".delay"));
-        		if (gLocation.getGenerator().isHologram()) Main.getHolograms().createHologram(gLocation);
-        		amount++;
-        	}
-        	Logger.info("Scheduled generators data file: Loaded " + String.valueOf(amount) + " scheduled generators");
-        	f.delete();
-        });
 	}
 	
 	public int getAmount() {
 		return this.schedules.size();
+	}
+	
+	public boolean isScheduled(GeneratorLocation gLocation) {
+		return schedules.containsKey(gLocation);
 	}
 
 	public void schedule(GeneratorLocation gLocation, boolean place) {
@@ -106,9 +73,57 @@ public class SchedulesManager {
 			if (gLocation.getGenerator().isHologram())
 				Main.getHolograms().createHologram(gLocation);
 			
-			schedules.put(gLocation, gLocation.getGenerator().getDelay());
+			schedules.put(gLocation, new Schedule(gLocation.getGenerator().getDelay()));
 		}
 	}
+	
+	public Schedule getSchedule(GeneratorLocation gLocation) {
+		return this.schedules.get(gLocation);
+	}
+	
+	public void remove(GeneratorLocation gLocation) {
+		Main.getHolograms().removeHologram(gLocation);
+		schedules.remove(gLocation);
+	}
+	
+	/*
+	 * Methods related to chunk management
+	 */
+	
+	public void loadSchedule(GeneratorLocation gLocation) {
+
+		Schedule schedule = Main.getDatabases().getDb().getSchedule(gLocation);
+		if (schedule == null) return;
+		
+		if (gLocation.getGenerator().isHologram())
+			Main.getHolograms().createHologram(gLocation);
+		
+		Main.getDatabases().getDb().removeSchedule(gLocation);
+		
+		schedules.put(gLocation, schedule);
+	}
+	
+	public void unloadSchedule(GeneratorLocation gl) {
+		if (Main.getSchedules().isScheduled(gl)) {
+			Main.getDatabases().getDb().addSchedule(gl, Main.getSchedules().getSchedule(gl));
+			Main.getSchedules().remove(gl);
+			if (gl.getGenerator().isHologram())
+				Main.getHolograms().removeHologram(gl);
+		}
+	}
+	
+	public void unloadAllSchedules() {
+		for (GeneratorLocation gl : this.schedules.keySet()) {
+			Main.getDatabases().getDb().addSchedule(gl, Main.getSchedules().getSchedule(gl));
+			if (gl.getGenerator().isHologram())
+				Main.getHolograms().removeHologram(gl);
+		}
+		this.schedules.clear();
+	}
+	
+	/*
+	 * Internal methods
+	 */
 	
 	private void generatePlaceholder(GeneratorLocation gLocation) {	
 		ItemStack placeholder = gLocation.getGenerator().getPlaceholder();
@@ -116,25 +131,28 @@ public class SchedulesManager {
 			Main.getMultiVersion().getBlocksUtils().setBlock(gLocation.getGeneratedBlockLocation(), placeholder);
 	}
 	
+	/*
+	 * Time left methods
+	 */
+	
 	/**
 	 * @param location Generator location
 	 * @return left ticks or -1 if not exist
 	 */
-	public int timeLeft(GeneratorLocation gLocation)
-	{
+	public int timeLeft(GeneratorLocation gLocation) {
 		if (schedules.containsKey(gLocation))
-			return schedules.get(gLocation);
+			return schedules.get(gLocation).getTimeLeft();
 		else {
 			Location aLocation = gLocation.getLocation().clone().add(0,1,0);
 			GeneratorLocation agLocation;
 			
-			if (Main.getLocations().get(aLocation) == null)
+			if (Main.getPlacedGenerators().getLoaded(aLocation) != null)
 				return -1;
 			else
-				agLocation = Main.getLocations().get(aLocation);
+				agLocation = Main.getPlacedGenerators().getLoaded(aLocation);
 			
 			if (schedules.containsKey(agLocation) && Main.getMultiVersion().getBlocksUtils().isAir(aLocation.getBlock()))
-				return schedules.get(agLocation);
+				return schedules.get(agLocation).getTimeLeft();
 			else
 				return -1;
 		}
@@ -180,40 +198,40 @@ public class SchedulesManager {
 	public String timeLeftFormatted(GeneratorLocation generatorLocation) {
 		return timeLeftFormatted(generatorLocation, false);
 	}
-	
-	public void insert(GeneratorLocation gLocation, Integer delay) {
-		schedules.put(gLocation, delay);
-	}
-	
-	public void remove(GeneratorLocation gLocation) {
-		Main.getHolograms().removeHologram(gLocation);
-		schedules.remove(gLocation);
-	}
-	
-	public boolean isScheduled(GeneratorLocation gLocation) {
-		return schedules.containsKey(gLocation);
-	}
-	
-	public void saveToFile() {
-		Config file;
 
-		try {
-			file = ConfigManager.getConfig("schedules.yml", "/data", false, true);
-			file.loadConfig();
-		} catch (IOException | InvalidConfigurationException e1) {
-			Logger.error(e1);
-			return;
-		}
-			
-		for(Entry<GeneratorLocation, Integer> e : this.schedules.entrySet()) {
-			file.set(Main.getLocations().locationToString(e.getKey().getLocation()) + ".delay", e.getValue());
-		}
+	/*
+	 * Deprecated
+	 */
+	
+	public void loadOldSchedulesFile() {
+		File f = new File(Main.getInstance().getDataFolder()+"/data", "schedules.yml");
+		
+		if (!f.exists()){
+    		return;
+    	}
+		
+		Config file;
 		
 		try {
-			file.saveConfig();
-		} catch (IOException e1) {
-			Logger.error(e1);
+			file = ConfigManager.getConfig("schedules.yml", "/data", false, false);
+			file.loadConfig();
+		} catch (IOException | InvalidConfigurationException e) {
+			Logger.error("Scheduled generators data file: Cant load scheduled generators file. Disabling plugin.");
+			Logger.error(e);
+			Main.getInstance().getServer().getPluginManager().disablePlugin(Main.getInstance());
+			return;
 		}
+    	
+    	ConfigurationSection mainSection = file.getConfigurationSection("");
+		int amount = 0;
+    	for(String generatorLocationString: mainSection.getKeys(false)) {
+    		Location location = Main.getPlacedGenerators().stringToLocation(generatorLocationString);
+    		GeneratorLocation gLocation = Main.getPlacedGenerators().getUnloaded(location);
+    		schedules.put(gLocation, new Schedule(file.getInt(generatorLocationString + ".delay")));
+    		if (gLocation.getGenerator().isHologram()) Main.getHolograms().createHologram(gLocation);
+    		amount++;
+    	}
+    	Logger.info("Scheduled generators data file: Loaded " + String.valueOf(amount) + " scheduled generators");
+    	f.delete();
 	}
-
 }

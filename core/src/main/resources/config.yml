@@ -41,6 +41,9 @@ generators-actionbar-messages: true
 #2 - remove generator
 explosion-handler: 0
 
+#Should regeneration delay pass, even if chunk is unloaded?
+count-delay-on-unloaded-chunks: true
+
 #This configuration section is for configuring actions needed for particular features
 #Possible modes: BREAK (avaible only for pick-up), LEFT_CLICK, RIGHT_CLICK, NONE (ex. because of gui usage)
 #Item could be "ANY"

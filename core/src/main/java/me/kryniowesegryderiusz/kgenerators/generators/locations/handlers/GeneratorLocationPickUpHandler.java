@@ -24,7 +24,7 @@ public class GeneratorLocationPickUpHandler {
 		
 		Generator generator = gLocation.getGenerator();
 		
-		if (!Main.getLocations().stillExists(gLocation)) {
+		if (!Main.getPlacedGenerators().isLoaded(gLocation)) {
 			Lang.getMessageStorage().send(p, Message.GENERATORS_ANY_NO_LONGER_THERE);
 			return;
 		}

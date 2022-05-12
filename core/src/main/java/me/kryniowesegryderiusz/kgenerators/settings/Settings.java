@@ -54,6 +54,8 @@ public class Settings {
 	@Setter @Getter private DatabaseType dbType = DatabaseType.SQLITE;
 	@Setter @Getter private SQLConfig sqlConfig;
 	
+	@Getter private boolean adjustDelayOnUnloadedChunks = true;
+	
 	public Settings()
 	{
 		Config config;
@@ -94,6 +96,9 @@ public class Settings {
 		
 		if (config.contains("explosion-handler"))
 			this.setExplosionHandler((short) config.getInt("explosion-handler"));
+		
+		if (config.contains("count-delay-on-unloaded-chunks"))
+			this.adjustDelayOnUnloadedChunks = config.getBoolean("count-delay-on-unloaded-chunks");
 		
 		if (config.contains("intervals.hologram-update"))
 			this.setHologramUpdateFrequency(config.getInt("intervals.hologram-update"));

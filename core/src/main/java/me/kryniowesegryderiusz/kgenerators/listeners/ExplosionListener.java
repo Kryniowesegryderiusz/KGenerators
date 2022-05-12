@@ -35,7 +35,7 @@ public class ExplosionListener implements Listener {
 	private Boolean isExplosionCancelled (List<Block> blocks) {
 		for (Block block : blocks) {	
 			short handler = Main.getSettings().getExplosionHandler();
-			GeneratorLocation gLoc = Main.getLocations().get(block.getLocation());
+			GeneratorLocation gLoc = Main.getPlacedGenerators().getLoaded(block.getLocation());
 			if (gLoc != null) {
 				if(handler == 1 || handler == 2) {
 					boolean drop = false;

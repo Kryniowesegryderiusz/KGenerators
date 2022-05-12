@@ -1,45 +1,50 @@
 package me.kryniowesegryderiusz.kgenerators.data.objects;
 
+import java.sql.ResultSet;
+import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.Map.Entry;
 
 import org.bukkit.Bukkit;
+import org.bukkit.Chunk;
 import org.bukkit.Location;
 import org.bukkit.World;
 
+import lombok.Getter;
 import me.kryniowesegryderiusz.kgenerators.Main;
 import me.kryniowesegryderiusz.kgenerators.generators.generator.objects.Generator;
 import me.kryniowesegryderiusz.kgenerators.generators.locations.objects.GeneratorLocation;
 import me.kryniowesegryderiusz.kgenerators.generators.players.objects.GeneratorPlayer;
 import me.kryniowesegryderiusz.kgenerators.logger.Logger;
 
-public class PlacedGeneratorsLoader {
+public class GeneratorsLoader {
 	
-	int amount = 0;
-	int notLoaded = 0;
-	ArrayList<String> errNotSetId = new ArrayList<String>();
-	ArrayList<String> errNotExist = new ArrayList<String>();
-	ArrayList<String> errWorlds = new ArrayList<String>();
+	@Getter private int amount = 0;
+	@Getter private int notLoaded = 0;
+	private ArrayList<String> errNotSetId = new ArrayList<String>();
+	private ArrayList<String> errNotExist = new ArrayList<String>();
+	private ArrayList<String> errWorlds = new ArrayList<String>();
 	
-	public PlacedGeneratorsLoader()
-	{
-		
-	}
+	private ArrayList<GeneratorLocation> loadedGenerators = new ArrayList<GeneratorLocation>();
 	
 	/**
 	 * 
 	 * @param generatorId
 	 * @param location ("world,x,y,z")
-	 * @param nick of owner or blank
+	 * @Param chunk ("world,x,z")
+	 * @param owner of owner or null
+	 * @throws SQLException 
 	 */
-	public void loadNext(String generatorId, String location, String nick)
+	public void loadNext(ResultSet res) throws SQLException {
+		this.loadNext(res.getString("generator_id"), 
+				res.getString("world")+","+res.getString("x")+","+res.getString("y")+","+res.getString("z"), 
+				res.getString("world")+","+res.getString("chunk_x")+","+res.getString("chunk_z"),
+				res.getString("owner"));
+	}
+	
+	public void loadNext(String generatorId, String location, String chunk, String owner)
 	{
 		boolean err = false;
-		
-		if (nick != null && !nick.isEmpty())
-			Main.getPlayers().createPlayer(nick);
-		
-		GeneratorPlayer gPlayer = Main.getPlayers().getPlayer(nick);
 		
 		String world = location.split(",")[0];    		
 		if (Main.getInstance().getServer().getWorld(world) == null)
@@ -48,7 +53,11 @@ public class PlacedGeneratorsLoader {
 				errWorlds.add(world);
 			err = true;
 		}
-		Location generatorLocation = Main.getLocations().stringToLocation(location);
+		Location generatorLocation = Main.getPlacedGenerators().stringToLocation(location);
+		
+		Chunk generatorChunk = null;
+		if (!chunk.contains("null") && !chunk.equals(","))
+			generatorChunk = Main.getPlacedGenerators().stringToChunk(chunk);
 		
 		if (generatorId != null){
 			if (!Main.getGenerators().exists(generatorId))
@@ -67,8 +76,7 @@ public class PlacedGeneratorsLoader {
 		
 		if (!err)
 		{
-			new GeneratorLocation(Main.getGenerators().get(generatorId), generatorLocation, gPlayer).save(false);
-			gPlayer.addGeneratorToPlayer(Main.getGenerators().get(generatorId));
+			this.loadedGenerators.add(new GeneratorLocation(Main.getGenerators().get(generatorId), generatorLocation, generatorChunk, Main.getPlayers().createPlayer(owner)));
 			amount++;
 		}
 		else
@@ -77,7 +85,7 @@ public class PlacedGeneratorsLoader {
 		}
 	}
 	
-	public void finish()
+	public ArrayList<GeneratorLocation> finish()
 	{
 		if (notLoaded != 0)
 		{
@@ -103,6 +111,7 @@ public class PlacedGeneratorsLoader {
 	    		Logger.error("Database: Generator id is not set for: " + errNotSetId.toString());
 	    	}
 		}
-		Logger.info("Database: Loaded properly " + amount + " placed generators");
+		
+		return this.loadedGenerators;
 	}
 }

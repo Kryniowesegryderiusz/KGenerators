@@ -16,11 +16,6 @@ public class GeneratorLocationRegenerateHandler {
 	
 	public void handle(GeneratorLocation gLocation) {
 		
-		if (!gLocation.getChunk().isLoaded()) {
-			gLocation.scheduleGeneratorRegeneration();
-			return;
-		}
-		
 		PreBlockGenerationEvent event = new PreBlockGenerationEvent(gLocation);
 		Main.getInstance().getServer().getPluginManager().callEvent(event);
 		if (event.isCancelled()) return;
@@ -33,7 +28,7 @@ public class GeneratorLocationRegenerateHandler {
 			return;
 		}
 		
-		if (!Main.getLocations().stillExists(gLocation)
+		if (!Main.getPlacedGenerators().isLoaded(gLocation)
 				&& !Main.getMultiVersion().getBlocksUtils().isAir(generatingLocationBlock) 
 				&& !Main.getMultiVersion().getBlocksUtils().isOnWhitelist(generatingLocationBlock)
 				&& !gLocation.isBlockPossibleToMine(generatingLocation)) {

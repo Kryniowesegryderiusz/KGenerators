@@ -19,7 +19,7 @@ import me.kryniowesegryderiusz.kgenerators.dependencies.enums.Dependency;
 import me.kryniowesegryderiusz.kgenerators.dependencies.hooks.ItemsAdderHook;
 import me.kryniowesegryderiusz.kgenerators.generators.generator.GeneratorsManager;
 import me.kryniowesegryderiusz.kgenerators.generators.holograms.HologramsManager;
-import me.kryniowesegryderiusz.kgenerators.generators.locations.GeneratorLocationsManager;
+import me.kryniowesegryderiusz.kgenerators.generators.locations.PlacedGeneratorsManager;
 import me.kryniowesegryderiusz.kgenerators.generators.players.PlayersManager;
 import me.kryniowesegryderiusz.kgenerators.generators.players.limits.LimitsManager;
 import me.kryniowesegryderiusz.kgenerators.generators.recipes.RecipesManager;
@@ -30,6 +30,8 @@ import me.kryniowesegryderiusz.kgenerators.lang.Lang;
 import me.kryniowesegryderiusz.kgenerators.listeners.BlockBreakListener;
 import me.kryniowesegryderiusz.kgenerators.listeners.BlockPistonListener;
 import me.kryniowesegryderiusz.kgenerators.listeners.BlockPlaceListener;
+import me.kryniowesegryderiusz.kgenerators.listeners.ChunkLoadListener;
+import me.kryniowesegryderiusz.kgenerators.listeners.ChunkUnloadListener;
 import me.kryniowesegryderiusz.kgenerators.listeners.CraftItemListener;
 import me.kryniowesegryderiusz.kgenerators.listeners.ExplosionListener;
 import me.kryniowesegryderiusz.kgenerators.listeners.FurnaceSmeltListener;
@@ -50,7 +52,7 @@ public class Main extends JavaPlugin {
 	
 	@Getter private static GeneratorsManager generators;
 	@Getter private static HologramsManager holograms;
-	@Getter private static GeneratorLocationsManager locations = new GeneratorLocationsManager();
+	@Getter private static PlacedGeneratorsManager placedGenerators = new PlacedGeneratorsManager();
 	@Getter private static PlayersManager players = new PlayersManager();
 	@Getter private static LimitsManager limits;
 	@Getter private static RecipesManager recipes;
@@ -91,7 +93,7 @@ public class Main extends JavaPlugin {
     @Override
     public void onDisable() {
     	if (schedules != null)
-    		schedules.saveToFile();
+    		schedules.unloadAllSchedules();
     	if (menus != null)
     		menus.closeAll();
     	if (databases != null && databases.getDb() != null)
@@ -102,7 +104,7 @@ public class Main extends JavaPlugin {
     	Logger.info("Reload: KGenerators reload started");
     	settings = new Settings();
     	generators.reload();
-    	players.reload();
+    	players.clear();
     	upgrades.reload();
     	limits = new LimitsManager();
     	Lang.loadFromFiles();
@@ -128,12 +130,17 @@ public class Main extends JavaPlugin {
 			
 			/* Database setup */
 			databases = new DatabaseManager(Main.getSettings().getDbType());
-			databases.getDb().loadGenerators();
+			databases.getDb().updateTable();
 			
 			/* Other systems starter */
 			holograms = new HologramsManager();
 			schedules = new SchedulesManager();
 			menus = new MenusManager();
+			
+			/* Load from already loaded chunks */
+			placedGenerators.loadFromLoadedChunks();
+			
+			schedules.loadOldSchedulesFile();
 			
 			/* Commands setup */
 			this.getServer().getPluginCommand("kgenerators").setExecutor(new Commands());
@@ -149,6 +156,8 @@ public class Main extends JavaPlugin {
 			this.getServer().getPluginManager().registerEvents(new InventoryClickListener(), this);
 			this.getServer().getPluginManager().registerEvents(new FurnaceSmeltListener(), this);
 			this.getServer().getPluginManager().registerEvents(new PrepareItemCraftListener(), this);
+			this.getServer().getPluginManager().registerEvents(new ChunkLoadListener(), this);
+			this.getServer().getPluginManager().registerEvents(new ChunkUnloadListener(), this);
 			
 			/* 
 			 * Metrix
@@ -156,7 +165,8 @@ public class Main extends JavaPlugin {
 			int pluginId = 7871;
 			Metrics metrics = new Metrics(this, pluginId);
 			metrics.addCustomChart(new Metrics.SingleLineChart("configured_generators", () -> Main.getGenerators().getAmount()));
-			metrics.addCustomChart(new Metrics.SingleLineChart("placed_generators", () -> Main.getLocations().getAmount()));
+			metrics.addCustomChart(new Metrics.SingleLineChart("placed_generators", () -> Main.getDatabases().getDb().getGeneratorsAmount()));
+			metrics.addCustomChart(new Metrics.SingleLineChart("loaded_generators", () -> Main.getPlacedGenerators().getAmount()));
 			metrics.addCustomChart(new Metrics.SimplePie("database_type", () -> {return Main.getSettings().getDbType().toString();}));
 			metrics.addCustomChart(new Metrics.AdvancedPie("features", new Callable<Map<String, Integer>>() {
 				@Override

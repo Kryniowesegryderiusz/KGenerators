@@ -187,9 +187,8 @@ public class Logger {
 						
 						fileString += "\n\n";
 						
-						fileString += "Loaded generators: " + Main.getGenerators().getAmount() + "\n";
+						fileString += "Loaded generators: " + Main.getPlacedGenerators().getAmount() + "/" + Main.getGenerators().getAmount() + "\n";
 						fileString += "Scheduled generators: " + Main.getSchedules().getAmount() + "\n";
-						fileString += "Placed generators: " + Main.getLocations().getAmount() + "\n";
 						
 						fileString += "\n\n";
 							

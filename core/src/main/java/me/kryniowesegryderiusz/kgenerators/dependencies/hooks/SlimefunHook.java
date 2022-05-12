@@ -55,27 +55,18 @@ public class SlimefunHook implements Listener {
 	}
 	
 	/**
-	 * Schould event be cancelled?
+	 * Should event be cancelled?
 	 * @param Location mined
 	 */
 	public static boolean handler(Location l)
 	{
-		GeneratorLocation gLocation = Main.getLocations().get(l);
-		GeneratorLocation ugLocation = Main.getLocations().get(l.clone().add(0,-1,0));
-		
-		/*
-		 * Double generator base protection
-		 */
-		if (gLocation != null && gLocation.getGenerator().getType() == GeneratorType.DOUBLE)
-			return true;
-		else if (ugLocation != null && ugLocation.getGenerator().getType() == GeneratorType.DOUBLE)
-		{
-			ugLocation.scheduleGeneratorRegeneration();
+		GeneratorLocation gLocation = Main.getPlacedGenerators().getLoaded(l);
+		if (gLocation != null) {
+			if (gLocation.getGeneratedBlockLocation().equals(l))
+				gLocation.scheduleGeneratorRegeneration();
+			else return true;
 		}
-		else if (gLocation != null && gLocation.getGenerator().getType() == GeneratorType.SINGLE)
-		{
-			gLocation.scheduleGeneratorRegeneration();
-		}
+			
 		return false;
 	}
 

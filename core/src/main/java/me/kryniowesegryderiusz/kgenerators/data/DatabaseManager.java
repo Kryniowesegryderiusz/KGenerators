@@ -1,11 +1,8 @@
 package me.kryniowesegryderiusz.kgenerators.data;
 
 import java.io.File;
-import java.util.Map.Entry;
 
 import javax.annotation.Nullable;
-
-import org.bukkit.Location;
 
 import lombok.Getter;
 import me.kryniowesegryderiusz.kgenerators.Main;
@@ -49,15 +46,13 @@ public class DatabaseManager {
 		
 		IDatabase newDb = getDatabase(toDbType);
 		
-		if (newDb == null || newDb.getConnection() == null)
-		{
+		if (newDb == null || newDb.getConnection() == null) {
 			Logger.error("Cannot change database to " + toDbType.toString() + "! Connection could not be initialised!");
 			return;
 		}
 		
-		for (Entry<Location, GeneratorLocation> e : Main.getLocations().getEntrySet())
-		{
-			newDb.savePlacedGenerator(e.getValue());
+		for (GeneratorLocation gl : db.getGenerators()) {
+			newDb.saveGenerator(gl);
 		}
 		
 		Main.getSettings().setDbType(toDbType);
@@ -65,5 +60,4 @@ public class DatabaseManager {
 		
 		Logger.info("Succesfully converted database to " + toDbType.toString()+"!");
 	}
-
 }

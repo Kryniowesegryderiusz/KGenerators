@@ -26,9 +26,7 @@ public class BlockPistonListener implements Listener {
 	/* Returns true if cancelled */
 	Boolean pistonEvent(List<Block> blocks) {
 		for (Block block : blocks) {
-
-			GeneratorLocation gLoc = Main.getLocations().get(block.getLocation());
-			
+			GeneratorLocation gLoc = Main.getPlacedGenerators().getLoaded(block.getLocation());
 			if (gLoc != null) {
 				if (!gLoc.getGenerator().isAllowPistonPush()
 						|| !gLoc.getGeneratedBlockLocation().equals(block.getLocation())

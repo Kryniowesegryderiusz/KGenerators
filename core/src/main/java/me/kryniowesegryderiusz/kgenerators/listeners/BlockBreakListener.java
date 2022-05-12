@@ -22,7 +22,7 @@ public class BlockBreakListener implements Listener {
 		
 		Player p = e.getPlayer();
 		
-		GeneratorLocation gLoc = Main.getLocations().get(e.getBlock().getLocation());
+		GeneratorLocation gLoc = Main.getPlacedGenerators().getLoaded(e.getBlock().getLocation());
 		
 		if (gLoc == null) return;
 

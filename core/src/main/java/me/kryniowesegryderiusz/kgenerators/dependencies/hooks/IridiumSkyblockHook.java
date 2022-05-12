@@ -41,7 +41,7 @@ public class IridiumSkyblockHook implements Listener {
 			Location max = is.getPos2(w);
 			
 			Logger.info("Detected IridiumSkyblock removing island in world " + min.getWorld().getName() + " starting at " + min.getBlockX() + "," + min.getBlockZ() + " and ending at " + max.getBlockX()+","+max.getBlockZ());
-			Main.getLocations().bulkRemoveGenerators(min.getWorld(), min.getBlockX(), 0, min.getBlockZ(), max.getBlockX(), min.getWorld().getMaxHeight(), max.getBlockZ(), false);
+			Main.getPlacedGenerators().bulkRemoveGenerators(min.getWorld(), min.getBlockX(), 0, min.getBlockZ(), max.getBlockX(), min.getWorld().getMaxHeight(), max.getBlockZ(), false);
 		}
 	}
 

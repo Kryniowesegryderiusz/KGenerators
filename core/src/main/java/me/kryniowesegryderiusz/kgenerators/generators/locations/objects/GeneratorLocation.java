@@ -49,8 +49,7 @@ public class GeneratorLocation implements IGeneratorLocation {
 	 * @param Location location
 	 * @param GeneratorPlayer owner - nullable
 	 */
-	public GeneratorLocation(Generator generator, Location location, GeneratorPlayer owner)
-	{
+	public GeneratorLocation(Generator generator, Location location, Chunk chunk, GeneratorPlayer owner) {
 		this.generator = generator;
 		this.owner = owner;
 		this.location = location;
@@ -62,7 +61,14 @@ public class GeneratorLocation implements IGeneratorLocation {
 		
 		if (getGenerator().getPlaceholder() != null) this.hologramLocation.add(0,1,0);
 		
-		this.chunk = this.location.getChunk();
+		if(chunk == null)
+			this.chunk = this.location.getChunk();
+		else
+			this.chunk = chunk;
+	}
+	
+	public GeneratorLocation(Generator generator, Location location, GeneratorPlayer owner) {
+		this(generator, location, null, owner);
 	}
 	
 	/*
@@ -117,7 +123,7 @@ public class GeneratorLocation implements IGeneratorLocation {
 	//api
 	public boolean isBroken()
 	{
-		if (!Main.getLocations().stillExists(this))
+		if (!Main.getPlacedGenerators().isLoaded(this))
 			return false;
 		
 		if (!Main.getSchedules().isScheduled(this))
@@ -126,6 +132,10 @@ public class GeneratorLocation implements IGeneratorLocation {
 				return true;
 		}
 		return false;
+	}
+	
+	public boolean isLoaded() {
+		return Main.getPlacedGenerators().isLoaded(this);
 	}
 	
 	/*
@@ -169,15 +179,11 @@ public class GeneratorLocation implements IGeneratorLocation {
 	}
 	
 	/**
-	 * Saves generator to Manager and/or database
-	 * @param saveToDatabase - saves generator also to database
+	 * Saves generator to database and loads it
 	 */
-	public void save(boolean saveToDatabase) {
-		Main.getLocations().add(this);
-		if (saveToDatabase)
-	    	Main.getDatabases().getDb().savePlacedGenerator(this);
-	    
-		if (!this.owner.isNone()) this.owner.addGeneratorToPlayer(generator);
+	public void save() {
+    	Main.getDatabases().getDb().saveGenerator(this);
+    	Main.getPlacedGenerators().loadGenerator(this);
 	}
 	
 	/**
@@ -200,7 +206,7 @@ public class GeneratorLocation implements IGeneratorLocation {
 			Main.getMultiVersion().getBlocksUtils().setBlock(this.location.clone().add(0,1,0), new ItemStack(Material.AIR));
 		}
 		
-		Main.getDatabases().getDb().savePlacedGenerator(this);
+		Main.getDatabases().getDb().saveGenerator(this);
 		
 		this.regenerateGenerator();
 	}
@@ -214,10 +220,10 @@ public class GeneratorLocation implements IGeneratorLocation {
 	{
 		if (this.owner != null)
 			return this.generator.getId() + " owned by " + this.owner.getName() 
-			+ " placed in " + toStringLocation();
+			+ " placed in " + toStringLocation() + " (" + this.getChunk().getX() + "," + this.getChunk().getZ() + ")";
 		else
 			return this.generator.getId() + " owned by no one"
-			+ " placed in " + toStringLocation();
+			+ " placed in " + toStringLocation() + " (" + this.getChunk().getX() + "," + this.getChunk().getZ() + ")";
 	}
 	
 	public String toStringLocation()

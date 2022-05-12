@@ -70,7 +70,7 @@ public class Upgrade {
 	}
 	
 	public void blockUpgrade(GeneratorLocation gl, Player p) {
-		if (!Main.getLocations().stillExists(gl)) {
+		if (Main.getPlacedGenerators().getLoaded(gl.getLocation()) == null) {
 			Lang.getMessageStorage().send(p, Message.GENERATORS_ANY_NO_LONGER_THERE);
 			return;
 		}

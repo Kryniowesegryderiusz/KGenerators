@@ -72,14 +72,14 @@ public class SuperiorSkyblock2Hook implements Listener {
 		Location max = e.getIsland().getMaximum();
 		
 		Logger.info("Detected SuperiorSkyblock2 removing island in world " + min.getWorld().getName() + " starting at " + min.getBlockX() + "," + min.getBlockZ() + " and ending at " + max.getBlockX()+","+max.getBlockZ());
-		Main.getLocations().bulkRemoveGenerators(min.getWorld(), min.getBlockX(), 0, min.getBlockZ(), max.getBlockX(), min.getWorld().getMaxHeight(), max.getBlockZ(), false);
+		Main.getPlacedGenerators().bulkRemoveGenerators(min.getWorld(), min.getBlockX(), 0, min.getBlockZ(), max.getBlockX(), min.getWorld().getMaxHeight(), max.getBlockZ(), false);
 
 	}
 	
 	@EventHandler(priority = EventPriority.HIGH)
 	public void onStackEvent(BlockStackEvent e)
 	{
-		if (Main.getLocations().get(e.getBlock().getLocation()) != null)
+		if (Main.getPlacedGenerators().getLoaded(e.getBlock().getLocation()) != null)
 			e.setCancelled(true);
 	}
 	

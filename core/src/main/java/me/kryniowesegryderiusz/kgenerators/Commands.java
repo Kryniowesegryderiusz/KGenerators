@@ -204,10 +204,10 @@ public class Commands implements CommandExecutor {
 						if (sender.hasPermission("kgenerators.timeleft")){
 							Location l = null;
 							if (p.getTargetBlockExact(5) != null) l = p.getTargetBlockExact(5).getLocation();
-							if (l != null && Main.getLocations().get(l) != null && Main.getSchedules().timeLeft(Main.getLocations().get(l)) >= 0)
+							if (l != null && Main.getPlacedGenerators().isLoaded(l) && Main.getSchedules().timeLeft(Main.getPlacedGenerators().getLoaded(l)) >= 0)
 							{
 								Lang.getMessageStorage().send(sender, Message.GENERATORS_TIME_LEFT_OUTPUT,
-										"<time>", Main.getSchedules().timeLeftFormatted(Main.getLocations().get(l)));
+										"<time>", Main.getSchedules().timeLeftFormatted(Main.getPlacedGenerators().getLoaded(l)));
 							}
 							else
 								Lang.getMessageStorage().send(sender, Message.COMMANDS_TIME_LEFT_NO_GENERATOR);
