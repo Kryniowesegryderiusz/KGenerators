@@ -18,6 +18,7 @@ import me.kryniowesegryderiusz.kgenerators.Main;
 import me.kryniowesegryderiusz.kgenerators.api.objects.AbstractGeneratedObject;
 import me.kryniowesegryderiusz.kgenerators.dependencies.enums.Dependency;
 import me.kryniowesegryderiusz.kgenerators.dependencies.objects.GeneratedItemsAdderBlock;
+import me.kryniowesegryderiusz.kgenerators.dependencies.objects.GeneratedOraxenBlock;
 import me.kryniowesegryderiusz.kgenerators.generators.generator.enums.GeneratorType;
 import me.kryniowesegryderiusz.kgenerators.generators.generator.objects.GeneratedBlock;
 import me.kryniowesegryderiusz.kgenerators.generators.generator.objects.GeneratedEntity;
@@ -41,6 +42,8 @@ public class GeneratorsManager {
     	this.generatedObjectsManager.registerGeneratedObject(GeneratedEntity.class);
     	if (Main.getDependencies().isEnabled(Dependency.ITEMS_ADDER))
     		this.generatedObjectsManager.registerGeneratedObject(GeneratedItemsAdderBlock.class);
+    	if (Main.getDependencies().isEnabled(Dependency.ORAXEN))
+    		this.generatedObjectsManager.registerGeneratedObject(GeneratedOraxenBlock.class);
     	this.reload();
 	}
 	

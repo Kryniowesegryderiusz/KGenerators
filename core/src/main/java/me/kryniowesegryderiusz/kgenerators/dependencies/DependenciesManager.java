@@ -89,6 +89,11 @@ public class DependenciesManager {
     		dependencies.add(Dependency.WORLD_EDIT);
     	}
     	
+    	if (Bukkit.getPluginManager().isPluginEnabled("Oraxen")) {
+    		Logger.info("Dependencies: Detected plugin Oraxen. Hooking into it.");
+    		dependencies.add(Dependency.ORAXEN);
+    	}
+    	
     	if (Main.getMultiVersion().getWorldGuardUtils() != null && Main.getMultiVersion().getWorldGuardUtils().isWorldGuardHooked()) {
    			Logger.info("Dependencies: Detected plugin WorldGuard. Hooked into it.");
    			dependencies.add(Dependency.WORLD_GUARD);

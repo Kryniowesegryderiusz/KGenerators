@@ -51,10 +51,13 @@ public class GeneratedObjectsMenu {
 			else
 				chanceMenuItem.replaceLore("<generated_object_lore>", new StringContent());
 			
-			if(ago.getType().equals("item"))
+			if(ago.getType().contains("item"))
 				chanceMenuItem.replaceLore("<generated_object_type>", Lang.getMenuItemAdditionalLinesStorage().get(MenuItemAdditionalLines.GENERATED_OBJECT_TYPE_ITEM));
-			else if(ago.getType().equals("block") || ago.getType().equals("itemsadder_block"))
+			else if(ago.getType().contains("block"))
 				chanceMenuItem.replaceLore("<generated_object_type>", Lang.getMenuItemAdditionalLinesStorage().get(MenuItemAdditionalLines.GENERATED_OBJECT_TYPE_BLOCK));
+			else if(ago.getType().contains("entity"))
+				chanceMenuItem.replaceLore("<generated_object_type>", Lang.getMenuItemAdditionalLinesStorage().get(MenuItemAdditionalLines.GENERATED_OBJECT_TYPE_ENTITY));
+			else chanceMenuItem.replaceLore("<generated_object_type>", new StringContent());
 			
 			chanceMenuItem.replace("<chance>", generator.getChancePercentFormatted(ago));
 			

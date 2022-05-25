@@ -8,6 +8,7 @@ import org.bukkit.inventory.ItemStack;
 import me.kryniowesegryderiusz.kgenerators.Main;
 import me.kryniowesegryderiusz.kgenerators.dependencies.hooks.EcoItemsHook;
 import me.kryniowesegryderiusz.kgenerators.dependencies.hooks.ItemsAdderHook;
+import me.kryniowesegryderiusz.kgenerators.dependencies.hooks.OraxenHook;
 import me.kryniowesegryderiusz.kgenerators.logger.Logger;
 import me.kryniowesegryderiusz.kgenerators.xseries.XMaterial;
 
@@ -21,12 +22,15 @@ public abstract class ItemUtils {
         			&& Main.getGenerators() != null
         			&& Main.getGenerators().exists(splitted[1]))
         		return Main.getGenerators().get(splitted[1]).getGeneratorItem().clone();
-        	if (splitted[0].equals("itemsadder")
+        	else if (splitted[0].equals("itemsadder")
         			&& ItemsAdderHook.getItemStack(splitted[1]) != null)
         		return ItemsAdderHook.getItemStack(splitted[1]);
-        	if (splitted[0].equals("ecoitems")
+        	else if (splitted[0].equals("ecoitems")
         			&& EcoItemsHook.getItemStack(splitted[1]) != null)
         		return EcoItemsHook.getItemStack(splitted[1]);
+        	else if (splitted[0].equals("oraxen")
+        			&& OraxenHook.getItemStack(splitted[1]) != null)
+        		return OraxenHook.getItemStack(splitted[1]);
     	}
     	
     	Optional<XMaterial> oxm = XMaterial.matchXMaterial(s);

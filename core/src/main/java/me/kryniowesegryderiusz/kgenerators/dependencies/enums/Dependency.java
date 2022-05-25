@@ -16,4 +16,5 @@ public enum Dependency
 	ITEMS_ADDER,
 	ECO_ITEMS,
 	WORLD_EDIT,
+	ORAXEN,
 }
