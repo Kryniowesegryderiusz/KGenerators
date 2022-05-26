@@ -56,7 +56,6 @@ public class PlacedGeneratorsManager {
 	 */
 	
 	/**
-	 * @param location
 	 * @return loaded GeneratorLocation related to location or null if none
 	 */
 	@Nullable public GeneratorLocation getLoaded(Location location) {
@@ -65,16 +64,25 @@ public class PlacedGeneratorsManager {
 		else return null;
 	}
 	
+	/**
+	 * @return loaded GeneratorLocation list related to location or null if none
+	 */
 	public ArrayList<GeneratorLocation> getLoaded(Chunk c){
 		if (this.loadedGenerators.containsKey(c))
 			return this.loadedGenerators.get(c).getAll();
 		else return new ArrayList<GeneratorLocation>();
 	}
 	
+	/**
+	 * @return whether GeneratorLocation related to location is loaded
+	 */
 	public boolean isLoaded(Location loc) {
 		return this.getLoaded(loc) != null;
 	}
 	
+	/**
+	 * @return whether GeneratorLocation is loaded
+	 */
 	public boolean isLoaded(GeneratorLocation gLoc) {
 		return isLoaded(gLoc.getLocation());
 	}

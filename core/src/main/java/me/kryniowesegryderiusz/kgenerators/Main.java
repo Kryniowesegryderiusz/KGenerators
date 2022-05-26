@@ -36,6 +36,7 @@ import me.kryniowesegryderiusz.kgenerators.listeners.CraftItemListener;
 import me.kryniowesegryderiusz.kgenerators.listeners.ExplosionListener;
 import me.kryniowesegryderiusz.kgenerators.listeners.FurnaceSmeltListener;
 import me.kryniowesegryderiusz.kgenerators.listeners.InventoryClickListener;
+import me.kryniowesegryderiusz.kgenerators.listeners.LeavesDecayListener;
 import me.kryniowesegryderiusz.kgenerators.listeners.PlayerInteractListener;
 import me.kryniowesegryderiusz.kgenerators.listeners.PrepareItemCraftListener;
 import me.kryniowesegryderiusz.kgenerators.logger.Logger;
@@ -158,6 +159,7 @@ public class Main extends JavaPlugin {
 			this.getServer().getPluginManager().registerEvents(new PrepareItemCraftListener(), this);
 			this.getServer().getPluginManager().registerEvents(new ChunkLoadListener(), this);
 			this.getServer().getPluginManager().registerEvents(new ChunkUnloadListener(), this);
+			this.getServer().getPluginManager().registerEvents(new LeavesDecayListener(), this);
 			
 			/* 
 			 * Metrix
@@ -165,7 +167,7 @@ public class Main extends JavaPlugin {
 			int pluginId = 7871;
 			Metrics metrics = new Metrics(this, pluginId);
 			metrics.addCustomChart(new Metrics.SingleLineChart("configured_generators", () -> Main.getGenerators().getAmount()));
-			metrics.addCustomChart(new Metrics.SingleLineChart("placed_generators", () -> Main.getDatabases().getDb().getGeneratorsAmount()));
+			metrics.addCustomChart(new Metrics.SingleLineChart("database_generators", () -> Main.getDatabases().getDb().getGeneratorsAmount()));
 			metrics.addCustomChart(new Metrics.SingleLineChart("loaded_generators", () -> Main.getPlacedGenerators().getAmount()));
 			metrics.addCustomChart(new Metrics.SimplePie("database_type", () -> {return Main.getSettings().getDbType().toString();}));
 			metrics.addCustomChart(new Metrics.AdvancedPie("features", new Callable<Map<String, Integer>>() {
