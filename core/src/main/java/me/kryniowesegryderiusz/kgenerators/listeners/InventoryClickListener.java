@@ -23,8 +23,8 @@ import me.kryniowesegryderiusz.kgenerators.logger.Logger;
 public class InventoryClickListener implements Listener {
 	
 	@EventHandler(priority = EventPriority.HIGH)
-	public void onInventoryClick(InventoryClickEvent e)
-	{
+	public void onInventoryClick(InventoryClickEvent e) {
+		
 		if (e.isCancelled())
 			return;
 		
