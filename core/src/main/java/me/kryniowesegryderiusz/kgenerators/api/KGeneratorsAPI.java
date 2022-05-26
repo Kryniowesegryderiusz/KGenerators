@@ -33,7 +33,7 @@ public class KGeneratorsAPI
 	 */
 	public static @Nullable IGeneratorLocation getGeneratorLocation(Location location)
 	{
-		return Main.getPlacedGenerators().getUnloaded(location);
+		return Main.getPlacedGenerators().getUnknown(location);
 	}
 	
 	/**

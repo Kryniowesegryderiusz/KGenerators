@@ -71,12 +71,20 @@ public class SQLDatabase implements IDatabase {
 		try {
 			PreparedStatement stat;
 			if (dbType == DatabaseType.MYSQL)
-				stat = conn.prepareStatement("SHOW COLUMNS FROM `kgen_placed` LIKE 'chunk_x'");
+				stat = conn.prepareStatement("SHOW COLUMNS FROM "+PLACED_TABLE+" LIKE `chunk_x`");
 			else
-				stat = conn.prepareStatement("SELECT * FROM PRAGMA_TABLE_INFO('kgen_placed') WHERE name='chunk_x'"); //Here is hard coded
+				stat = conn.prepareStatement("PRAGMA TABLE_INFO("+PLACED_TABLE+")"); //Here is hard coded
 			ResultSet res = stat.executeQuery();
-			if(!res.next())
-			{
+			boolean found = false;
+			while(res.next()) {
+				if (res.getString("name").equals("chunk_x")) {
+					found = true;
+					break;
+				}
+	        }
+	        stat.close();
+	        
+	        if(!found) {
 				Logger.warn("Database: Updating database! That can take a while! Do not stop the server!");
 				
 				Statement stat2 = conn.createStatement();
@@ -98,10 +106,10 @@ public class SQLDatabase implements IDatabase {
 	            
 	            Logger.warn("Database: Updated database!");
 	        }
-	        stat.close();
+	        
 		} catch (Exception e) {
 			Main.getInstance().getServer().getPluginManager().disablePlugin(Main.getInstance());
-			Logger.error("Database: Cannot initialise SQL connection. Disabling plugin for safety reasons.");
+			Logger.error("Database: Cannot update database to KGenV7. Disabling plugin.");
 			Logger.error(e);
 		}
 	}

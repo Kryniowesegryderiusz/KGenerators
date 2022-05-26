@@ -226,7 +226,7 @@ public class SchedulesManager {
 		int amount = 0;
     	for(String generatorLocationString: mainSection.getKeys(false)) {
     		Location location = Main.getPlacedGenerators().stringToLocation(generatorLocationString);
-    		GeneratorLocation gLocation = Main.getPlacedGenerators().getUnloaded(location);
+    		GeneratorLocation gLocation = Main.getPlacedGenerators().getUnknown(location);
     		schedules.put(gLocation, new Schedule(file.getInt(generatorLocationString + ".delay")));
     		if (gLocation.getGenerator().isHologram()) Main.getHolograms().createHologram(gLocation);
     		amount++;

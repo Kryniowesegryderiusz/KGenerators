@@ -1,7 +1,6 @@
 package me.kryniowesegryderiusz.kgenerators.generators.locations;
 
 import java.util.ArrayList;
-import java.util.Date;
 import java.util.HashMap;
 import java.util.Map.Entry;
 
@@ -37,7 +36,13 @@ public class PlacedGeneratorsManager {
 		Main.getSchedules().unloadSchedule(gLocation);
 	}
 	
-	@Nullable public GeneratorLocation getUnloaded(Location location) {
+	/**
+	 * Return generatorLocation, whether is loaded or not
+	 * Loads generator if unloaded;
+	 * @param location
+	 * @return
+	 */
+	@Nullable public GeneratorLocation getUnknown(Location location) {
 		GeneratorLocation gl = this.getLoaded(location);
 		if (gl == null) {
 			this.loadGenerator(Main.getDatabases().getDb().getGenerator(location));
@@ -66,11 +71,19 @@ public class PlacedGeneratorsManager {
 		else return new ArrayList<GeneratorLocation>();
 	}
 	
+	public boolean isLoaded(Location loc) {
+		return this.getLoaded(loc) != null;
+	}
+	
 	public boolean isLoaded(GeneratorLocation gLoc) {
+		return isLoaded(gLoc.getLocation());
+	}
+	
+	public boolean isChunkLoaded(GeneratorLocation gLoc) {
 		return loadedGenerators.get(gLoc.getChunk()) != null;
 	}
 	
-	public boolean isLoaded(Location loc) {
+	public boolean isChunkLoaded(Location loc) {
 		return loadedGenerators.get(loc.getChunk()) != null;
 	}
 	

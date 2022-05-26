@@ -3,8 +3,6 @@ package me.kryniowesegryderiusz.kgenerators.generators.locations.handlers;
 import org.bukkit.entity.Player;
 
 import me.kryniowesegryderiusz.kgenerators.Main;
-import me.kryniowesegryderiusz.kgenerators.dependencies.enums.Dependency;
-import me.kryniowesegryderiusz.kgenerators.dependencies.enums.WGFlag;
 import me.kryniowesegryderiusz.kgenerators.dependencies.hooks.BentoBoxHook;
 import me.kryniowesegryderiusz.kgenerators.dependencies.hooks.SuperiorSkyblock2Hook;
 import me.kryniowesegryderiusz.kgenerators.dependencies.hooks.WorldGuardHook;
