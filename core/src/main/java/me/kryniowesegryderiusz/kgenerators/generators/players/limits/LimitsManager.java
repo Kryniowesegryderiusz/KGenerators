@@ -17,9 +17,9 @@ import me.kryniowesegryderiusz.kgenerators.utils.immutable.Config;
 import me.kryniowesegryderiusz.kgenerators.utils.immutable.ConfigManager;
 
 public class LimitsManager {
-	
+
 	private LinkedHashMap<String, Limit> limits = new LinkedHashMap<String, Limit>();
-	
+
 	public LimitsManager() {
 		Config config;
 
@@ -32,54 +32,46 @@ public class LimitsManager {
 			Main.getInstance().getServer().getPluginManager().disablePlugin(Main.getInstance());
 			return;
 		}
-		
-		if (!config.contains("enabled") || config.getBoolean("enabled") != true)
-		{
+
+		if (!config.contains("enabled") || config.getBoolean("enabled") != true) {
 			Logger.info("Limits file: Limits are disabled. You can enable them in limits.yml!");
 			return;
 		}
-		
+
 		ConfigurationSection mainSection = config.getConfigurationSection("");
-		for(String id: mainSection.getKeys(false)){
-			
-			if (!id.equals("example_limit_group") && !id.equals("enabled"))
-			{
+		for (String id : mainSection.getKeys(false)) {
+			if (!id.equals("example_limit_group") && !id.equals("enabled")) {
 				new Limit(this, config, id);
 			}
 		}
 		Logger.info("Limits file: Loaded " + this.limits.size() + " limits");
 	}
-	
-	public void add(Limit limit)
-	{
+
+	public void add(Limit limit) {
 		limits.put(limit.getId(), limit);
 	}
-	
-	public Limit get(String id)
-	{
+
+	public Limit get(String id) {
 		return limits.get(id);
 	}
-	
-	public Set<Entry<String, Limit>> getEntrySet()
-	{
+
+	public Set<Entry<String, Limit>> getEntrySet() {
 		return limits.entrySet();
 	}
-	
-	public Collection<Limit> getValues()
-	{
+
+	public Collection<Limit> getValues() {
 		return limits.values();
-	}	
-	
+	}
+
 	/**
 	 * Checks if any limit has only owner use in context of generator
+	 * 
 	 * @param generator
 	 * @return
 	 */
-	public boolean isOnlyOwnerUse(Generator g)
-	{
-		for (Limit l : limits.values())
-		{
-			if(l.getGenerators().contains(g) && l.isOnlyOwnerUse())
+	public boolean isOnlyOwnerUse(Generator g) {
+		for (Limit l : limits.values()) {
+			if (l.getGenerators().contains(g) && l.isOnlyOwnerUse())
 				return true;
 		}
 		return false;
@@ -88,9 +80,9 @@ public class LimitsManager {
 	public void clear() {
 		limits.clear();
 	}
-	
+
 	public boolean hasLimits() {
 		return this.limits.size() != 0;
 	}
-	
+
 }

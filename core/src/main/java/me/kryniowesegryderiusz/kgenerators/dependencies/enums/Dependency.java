@@ -17,4 +17,5 @@ public enum Dependency
 	ECO_ITEMS,
 	WORLD_EDIT,
 	ORAXEN,
+	WILDSTACKER,
 }

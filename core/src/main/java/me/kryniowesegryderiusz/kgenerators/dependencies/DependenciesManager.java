@@ -14,6 +14,7 @@ import me.kryniowesegryderiusz.kgenerators.dependencies.hooks.MinionsHook;
 import me.kryniowesegryderiusz.kgenerators.dependencies.hooks.SlimefunHook;
 import me.kryniowesegryderiusz.kgenerators.dependencies.hooks.SuperiorSkyblock2Hook;
 import me.kryniowesegryderiusz.kgenerators.dependencies.hooks.VaultHook;
+import me.kryniowesegryderiusz.kgenerators.dependencies.hooks.WildStackerHook;
 import me.kryniowesegryderiusz.kgenerators.logger.Logger;
 
 public class DependenciesManager {
@@ -92,6 +93,12 @@ public class DependenciesManager {
     	if (Bukkit.getPluginManager().isPluginEnabled("Oraxen")) {
     		Logger.info("Dependencies: Detected plugin Oraxen. Hooking into it.");
     		dependencies.add(Dependency.ORAXEN);
+    	}
+    	
+    	if (Bukkit.getPluginManager().isPluginEnabled("WildStacker")) {
+    		Logger.info("Dependencies: Detected plugin WildStacker. Hooking into it.");
+    		dependencies.add(Dependency.WILDSTACKER);
+    		WildStackerHook.setup();
     	}
     	
     	if (Main.getMultiVersion().getWorldGuardUtils() != null && Main.getMultiVersion().getWorldGuardUtils().isWorldGuardHooked()) {

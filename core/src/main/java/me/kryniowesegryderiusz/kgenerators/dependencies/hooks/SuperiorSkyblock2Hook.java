@@ -33,8 +33,7 @@ public class SuperiorSkyblock2Hook implements Listener {
 	
 	static boolean initialised = false;
 	
-	public static void setup()
-	{
+	public static void setup() {
 		Main.getInstance().getServer().getPluginManager().registerEvents(new SuperiorSkyblock2Hook(), Main.getInstance());
 	}
 	

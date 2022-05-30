@@ -79,6 +79,10 @@
       <id>sk89q-repo</id>
       <url>https://maven.enginehub.org/repo/</url>
     </repository>
+    <repository>
+      <id>bg-repo</id>
+      <url>https://repo.bg-software.com/repository/api/</url>
+    </repository>
   </repositories>
   <dependencies>
     <dependency>
@@ -158,6 +162,12 @@
       <artifactId>oraxen</artifactId>
       <version>-SNAPSHOT</version>
       <scope>provided</scope>
+    </dependency>
+    <dependency>
+      <groupId>com.bgsoftware</groupId>
+      <artifactId>WildStackerAPI</artifactId>
+      <version>3.7.0</version>
+      <scope>compile</scope>
     </dependency>
     <dependency>
       <groupId>me.jet315</groupId>
