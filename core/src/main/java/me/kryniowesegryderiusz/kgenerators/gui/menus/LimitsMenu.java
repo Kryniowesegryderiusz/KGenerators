@@ -2,6 +2,7 @@ package me.kryniowesegryderiusz.kgenerators.gui.menus;
 
 import java.util.ArrayList;
 
+import org.bukkit.Material;
 import org.bukkit.entity.Player;
 import org.bukkit.inventory.Inventory;
 import org.bukkit.inventory.ItemStack;
@@ -18,6 +19,7 @@ import me.kryniowesegryderiusz.kgenerators.lang.enums.MenuItemAdditionalLines;
 import me.kryniowesegryderiusz.kgenerators.lang.enums.MenuItemType;
 import me.kryniowesegryderiusz.kgenerators.lang.objects.StringContent;
 import me.kryniowesegryderiusz.kgenerators.logger.Logger;
+import me.kryniowesegryderiusz.kgenerators.utils.immutable.SkullCreator;
 
 public class LimitsMenu {
 
@@ -43,6 +45,10 @@ public class LimitsMenu {
 
 		for (Limit limit : Main.getLimits().getValues()) {
 			ItemStack item = limit.getItem().clone();
+			
+			if (item.getType() == Material.PLAYER_HEAD)
+				item = SkullCreator.itemFromName(player.getName());
+			
 			MenuItem chanceMenuItem = Lang.getMenuItemStorage().get(MenuItemType.LIMITS_MENU_LIMIT);
 			if (chanceMenuItem.getItemType().contains("<limit_display_item>"))
 				chanceMenuItem.setItemStack(item);
