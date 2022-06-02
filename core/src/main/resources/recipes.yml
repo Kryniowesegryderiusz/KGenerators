@@ -23,6 +23,7 @@ example_generator:
     #"B" is item of ores_generator
     B: generator:ores_generator
     #"C" is other custom configured item
+    #More options for item settings can be found here https://kzone.gitbook.io/docs/kgenerators/configuration-files/configuring-itemstack
     C:
       material: STONE
       name: "Magic stone"

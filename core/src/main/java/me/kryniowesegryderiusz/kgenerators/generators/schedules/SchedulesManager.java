@@ -21,6 +21,7 @@ import me.kryniowesegryderiusz.kgenerators.lang.enums.Message;
 import me.kryniowesegryderiusz.kgenerators.logger.Logger;
 import me.kryniowesegryderiusz.kgenerators.utils.immutable.Config;
 import me.kryniowesegryderiusz.kgenerators.utils.immutable.ConfigManager;
+import me.kryniowesegryderiusz.kgenerators.utils.objects.CustomBlockData;
 
 public class SchedulesManager {
 	
@@ -126,9 +127,9 @@ public class SchedulesManager {
 	 */
 	
 	private void generatePlaceholder(GeneratorLocation gLocation) {	
-		ItemStack placeholder = gLocation.getGenerator().getPlaceholder();
+		CustomBlockData placeholder = gLocation.getGenerator().getPlaceholder();
 		if (placeholder != null)
-			Main.getMultiVersion().getBlocksUtils().setBlock(gLocation.getGeneratedBlockLocation(), placeholder);
+			placeholder.setBlock(gLocation.getGeneratedBlockLocation());
 	}
 	
 	/*

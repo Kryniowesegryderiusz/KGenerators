@@ -27,9 +27,9 @@ import com.mojang.authlib.properties.Property;
  *
  * @author Dean B on 12/28/2016.
  */
-public class SkullCreator {
+public class PlayerHeadUtils {
 
-	private SkullCreator() {}
+	private PlayerHeadUtils() {}
 
 	private static boolean warningPosted = false;
 
@@ -161,7 +161,6 @@ public class SkullCreator {
 		SkullMeta meta = (SkullMeta) item.getItemMeta();
 		mutateItemMeta(meta, base64);
 		item.setItemMeta(meta);
-
 		return item;
 	}
 

@@ -10,22 +10,21 @@ import me.kryniowesegryderiusz.kgenerators.dependencies.hooks.EcoItemsHook;
 import me.kryniowesegryderiusz.kgenerators.dependencies.hooks.ItemsAdderHook;
 import me.kryniowesegryderiusz.kgenerators.dependencies.hooks.OraxenHook;
 import me.kryniowesegryderiusz.kgenerators.logger.Logger;
-import me.kryniowesegryderiusz.kgenerators.utils.immutable.SkullCreator;
+import me.kryniowesegryderiusz.kgenerators.utils.immutable.PlayerHeadUtils;
 import me.kryniowesegryderiusz.kgenerators.xseries.XMaterial;
 
 public abstract class ItemUtils {
 	
-    public static ItemStack parseItemStack(String s, String place, boolean isBlockCheck) {
-    	
-    	if (s.contains(":")) {
-    		String[] splitted = s.split(":");
+    public static ItemStack parseItemStack(String material, String place, boolean isBlockCheck) { 	
+    	if (material.contains(":")) {
+    		String[] splitted = material.split(":");
         	if (splitted[0].equals("generator")
         			&& Main.getGenerators() != null
         			&& Main.getGenerators().exists(splitted[1]))
         		return Main.getGenerators().get(splitted[1]).getGeneratorItem().clone();
         	else if (splitted[0].equals("customhead")
-        			&& SkullCreator.itemFromBase64(splitted[1]) != null)
-        		return SkullCreator.itemFromBase64(splitted[1]);
+        			&& PlayerHeadUtils.itemFromBase64(splitted[1]) != null)
+        		return PlayerHeadUtils.itemFromBase64(splitted[1]);
         	else if (splitted[0].equals("itemsadder")
         			&& ItemsAdderHook.getItemStack(splitted[1]) != null)
         		return ItemsAdderHook.getItemStack(splitted[1]);
@@ -36,19 +35,21 @@ public abstract class ItemUtils {
         			&& OraxenHook.getItemStack(splitted[1]) != null)
         		return OraxenHook.getItemStack(splitted[1]);
     	}
-    	
-    	Optional<XMaterial> oxm = XMaterial.matchXMaterial(s);
+		return getXMaterial(material, place, isBlockCheck).parseItem();
+    }
+    
+	public static XMaterial getXMaterial(String material, String place, boolean isBlockCheck) {
+		Optional<XMaterial> oxm = XMaterial.matchXMaterial(material);
 		try {
 			XMaterial xm = oxm.get();
-			if (isBlockCheck && !xm.parseMaterial().isBlock())
-			{
-				Logger.error(place+": " + s + " is not a block! Using STONE!");
-				return XMaterial.STONE.parseItem();
+			if (isBlockCheck && !xm.parseMaterial().isBlock()) {
+				Logger.error(place + ": " + material + " is not a block! Using STONE!");
+				return XMaterial.STONE;
 			}
-			return xm.parseItem();
+			return xm;
 		} catch (NoSuchElementException e) {
-			Logger.error(place+": " + s + " is not a proper material or generator id! Using STONE!");
+			Logger.error(place + ": " + material + " is not a proper material or generator id! Using STONE!");
 		}
-		return XMaterial.STONE.parseItem();
-    }
+		return XMaterial.STONE;
+	}
 }

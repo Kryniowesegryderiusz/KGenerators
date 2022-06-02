@@ -37,6 +37,18 @@ public class BlocksUtils_1_8 implements BlocksUtils {
 		state.update(true);
 		
 	}
+	
+
+	@Override
+	public void setBlock(Location location, XMaterial item) {
+		this.setBlock(location, item.parseItem());
+	}
+
+	@Override
+	public void setBlock(Location location, Material material) {
+		location.getBlock().setType(material);
+		
+	}
 
 	@Override
 	public boolean isOnWhitelist(Block block) {
@@ -62,6 +74,5 @@ public class BlocksUtils_1_8 implements BlocksUtils {
 		if (block.getType() == Material.AIR) return true;
 		return false;
 	}
-	
 	
 }

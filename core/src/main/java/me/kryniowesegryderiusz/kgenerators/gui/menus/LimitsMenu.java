@@ -19,7 +19,7 @@ import me.kryniowesegryderiusz.kgenerators.lang.enums.MenuItemAdditionalLines;
 import me.kryniowesegryderiusz.kgenerators.lang.enums.MenuItemType;
 import me.kryniowesegryderiusz.kgenerators.lang.objects.StringContent;
 import me.kryniowesegryderiusz.kgenerators.logger.Logger;
-import me.kryniowesegryderiusz.kgenerators.utils.immutable.SkullCreator;
+import me.kryniowesegryderiusz.kgenerators.utils.immutable.PlayerHeadUtils;
 
 public class LimitsMenu {
 
@@ -47,7 +47,7 @@ public class LimitsMenu {
 			ItemStack item = limit.getItem().clone();
 			
 			if (item.getType() == Material.PLAYER_HEAD)
-				item = SkullCreator.itemFromName(player.getName());
+				item = PlayerHeadUtils.itemFromName(player.getName());
 			
 			MenuItem chanceMenuItem = Lang.getMenuItemStorage().get(MenuItemType.LIMITS_MENU_LIMIT);
 			if (chanceMenuItem.getItemType().contains("<limit_display_item>"))

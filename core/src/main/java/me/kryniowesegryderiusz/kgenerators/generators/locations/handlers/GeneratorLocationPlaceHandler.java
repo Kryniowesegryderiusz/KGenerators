@@ -71,7 +71,7 @@ public class GeneratorLocationPlaceHandler {
     	if (generateGeneratorBlock && gLocation.getGenerator().getType() == GeneratorType.DOUBLE)
     		Main.getMultiVersion().getBlocksUtils().setBlock(gLocation.getLocation(), gLocation.getGenerator().getGeneratorItem());
     	
-    	Main.getMultiVersion().getBlocksUtils().setBlock(gLocation.getGeneratedBlockLocation(), XMaterial.AIR.parseItem());
+    	Main.getMultiVersion().getBlocksUtils().setBlock(gLocation.getGeneratedBlockLocation(), XMaterial.AIR);
     	
     	if (gLocation.getGenerator().isGenerateImmediatelyAfterPlace())
     		gLocation.regenerateGenerator();

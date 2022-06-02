@@ -16,7 +16,6 @@ import me.kryniowesegryderiusz.kgenerators.xseries.XMaterial;
 public class GeneratorLocationRemoveHandler {
 	
 	public void handle(GeneratorLocation gLocation, boolean drop, @Nullable Player toWho) {
-		final ItemStack air = XMaterial.AIR.parseItem();
 		Location location = gLocation.getLocation();
 		Generator generator = gLocation.getGenerator();
 		
@@ -32,8 +31,8 @@ public class GeneratorLocationRemoveHandler {
 			PlayerUtils.dropToInventory(toWho, location, generator.getGeneratorItem());
 		}
 		
-		Main.getMultiVersion().getBlocksUtils().setBlock(location, air);
-		Main.getMultiVersion().getBlocksUtils().setBlock(gLocation.getGeneratedBlockLocation(), air);
+		Main.getMultiVersion().getBlocksUtils().setBlock(location, XMaterial.AIR);
+		Main.getMultiVersion().getBlocksUtils().setBlock(gLocation.getGeneratedBlockLocation(), XMaterial.AIR);
 		
 		ItemsAdderHook.handleGeneratorLocationRemove(gLocation);
 	}

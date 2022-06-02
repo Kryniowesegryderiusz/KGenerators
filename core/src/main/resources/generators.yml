@@ -12,7 +12,7 @@ example_generator:
   # ***       You HAVE TO set them!        ***
   #
   #Generator item
-  #More about that can be found on wiki https://kzone.gitbook.io/docs/kgenerators/configuration-files/configuring-itemstack
+  #More options for item settings can be found here https://kzone.gitbook.io/docs/kgenerators/configuration-files/configuring-itemstack
   generator-item:
     material: GRASS
     name: '&aExample generator'
@@ -33,29 +33,15 @@ example_generator:
   #ALWAYS use names from https://hub.spigotmc.org/javadocs/spigot/org/bukkit/Material.html
   generates:
     #type: block - generator will spawn block
+    #More options for block settings can be found here https://kzone.gitbook.io/docs/kgenerators/configuration-files/configuring-block
     - type: block
       chance: 10.0
       material: DIRT
-    #type: player head block - generator will custom head block
-    - type: block
-      chance: 10.0
-      material: customhead:ewogICJ0aW1lc3RhbXAiIDogMTY1NDEzNTEyMjkwOSwKICAicHJvZmlsZUlkIiA6ICI5ZGY3MmQyMTIzZDc0MWRiOWZmNGFlYzljZWIxNTRlNiIsCiAgInByb2ZpbGVOYW1lIiA6ICJLcnluaW8iLAogICJzaWduYXR1cmVSZXF1aXJlZCIgOiB0cnVlLAogICJ0ZXh0dXJlcyIgOiB7CiAgICAiU0tJTiIgOiB7CiAgICAgICJ1cmwiIDogImh0dHA6Ly90ZXh0dXJlcy5taW5lY3JhZnQubmV0L3RleHR1cmUvMjQxMGMwZjI4ZDBjOTFkMGZlODFjZmUzZjZlMjMwYmFhN2YxOTY5NTlhOGI4NDBkN2U2ZDdlMDNjNjYzNDBkNSIKICAgIH0KICB9Cn0=
     #type: item - generator will spawn simple item
-    - type: item
-      chance: 10.0
-      item: DIRT
-    #type: item - generator will spawn more complicated item
     #More options for item settings can be found here https://kzone.gitbook.io/docs/kgenerators/configuration-files/configuring-itemstack
     - type: item
       chance: 10.0
-      item:
-        material: STONE
-        amount: 5
-        name: "Magic stone"
-        lore:
-        - "&cThats Magic Stone"
-        enchants:
-          - FORTUNE:1
+      item: DIRT
     #type: entity - generator will spawn entity
     - type: entity
       chance: 10.0

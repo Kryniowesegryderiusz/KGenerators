@@ -20,6 +20,17 @@ public class BlocksUtils_1_13 implements BlocksUtils {
 	public void setBlock(Location location, ItemStack item) {
 		location.getBlock().setType(item.getType());
 	}
+	
+	@Override
+	public void setBlock(Location location, XMaterial xmaterial) {
+		location.getBlock().setType(xmaterial.parseMaterial());
+		
+	}
+
+	@Override
+	public void setBlock(Location location, Material material) {
+		location.getBlock().setType(material);
+	}
 
 	@Override
 	public boolean isOnWhitelist(Block block) {
@@ -35,5 +46,4 @@ public class BlocksUtils_1_13 implements BlocksUtils {
 		if (block.getType() == Material.AIR || block.getType() == Material.CAVE_AIR) return true;
 		return false;
 	}
-
 }

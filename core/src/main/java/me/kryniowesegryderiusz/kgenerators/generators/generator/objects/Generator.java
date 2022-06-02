@@ -26,6 +26,7 @@ import me.kryniowesegryderiusz.kgenerators.utils.FilesUtils;
 import me.kryniowesegryderiusz.kgenerators.utils.ItemUtils;
 import me.kryniowesegryderiusz.kgenerators.utils.immutable.Config;
 import me.kryniowesegryderiusz.kgenerators.utils.immutable.RandomSelector;
+import me.kryniowesegryderiusz.kgenerators.utils.objects.CustomBlockData;
 import me.kryniowesegryderiusz.kgenerators.xseries.XMaterial;
 
 public class Generator {
@@ -36,7 +37,7 @@ public class Generator {
 	@Getter private GeneratorType type = GeneratorType.SINGLE;
     private LinkedHashMap<AbstractGeneratedObject, Double> chances = new LinkedHashMap<AbstractGeneratedObject, Double>();
     
-	@Getter private ItemStack placeholder;
+	@Getter private CustomBlockData placeholder;
 	@Getter private boolean generateImmediatelyAfterPlace;
 	@Getter private boolean allowPistonPush = false;
 	@Getter private boolean hologram = false;
@@ -132,8 +133,8 @@ public class Generator {
 		 */
 		
 		if (config.contains(generatorID+".placeholder") && !config.getString(generatorID+".placeholder").isEmpty()) {
-			this.placeholder = ItemUtils.parseItemStack(config.getString(generatorID+".placeholder"), "Generators file", true);
-			if (this.placeholder.equals(XMaterial.AIR.parseItem()))
+			this.placeholder = CustomBlockData.load(config.getString(generatorID+".placeholder"), "Generators file");
+			if (this.placeholder.getXMaterial() == XMaterial.AIR)
 				this.placeholder = null;
 		}
 		
