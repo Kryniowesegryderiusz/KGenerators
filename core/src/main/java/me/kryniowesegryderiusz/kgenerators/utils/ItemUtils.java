@@ -2,14 +2,13 @@ package me.kryniowesegryderiusz.kgenerators.utils;
 
 import java.util.NoSuchElementException;
 import java.util.Optional;
-
 import org.bukkit.inventory.ItemStack;
-
 import me.kryniowesegryderiusz.kgenerators.Main;
 import me.kryniowesegryderiusz.kgenerators.dependencies.hooks.EcoItemsHook;
 import me.kryniowesegryderiusz.kgenerators.dependencies.hooks.ItemsAdderHook;
 import me.kryniowesegryderiusz.kgenerators.dependencies.hooks.OraxenHook;
 import me.kryniowesegryderiusz.kgenerators.logger.Logger;
+import me.kryniowesegryderiusz.kgenerators.utils.immutable.SkullCreator;
 import me.kryniowesegryderiusz.kgenerators.xseries.XMaterial;
 
 public abstract class ItemUtils {
@@ -22,6 +21,9 @@ public abstract class ItemUtils {
         			&& Main.getGenerators() != null
         			&& Main.getGenerators().exists(splitted[1]))
         		return Main.getGenerators().get(splitted[1]).getGeneratorItem().clone();
+        	else if (splitted[0].equals("customhead")
+        			&& SkullCreator.itemFromBase64(splitted[1]) != null)
+        		return SkullCreator.itemFromBase64(splitted[1]);
         	else if (splitted[0].equals("itemsadder")
         			&& ItemsAdderHook.getItemStack(splitted[1]) != null)
         		return ItemsAdderHook.getItemStack(splitted[1]);

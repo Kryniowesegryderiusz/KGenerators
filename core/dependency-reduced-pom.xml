@@ -83,6 +83,10 @@
       <id>bg-repo</id>
       <url>https://repo.bg-software.com/repository/api/</url>
     </repository>
+    <repository>
+      <id>authlib</id>
+      <url>https://papermc.io/repo/repository/maven-releases/</url>
+    </repository>
   </repositories>
   <dependencies>
     <dependency>
@@ -168,6 +172,12 @@
       <artifactId>WildStackerAPI</artifactId>
       <version>3.7.0</version>
       <scope>compile</scope>
+    </dependency>
+    <dependency>
+      <groupId>com.mojang</groupId>
+      <artifactId>authlib</artifactId>
+      <version>1.5.25</version>
+      <scope>provided</scope>
     </dependency>
     <dependency>
       <groupId>me.jet315</groupId>
