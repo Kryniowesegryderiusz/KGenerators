@@ -38,8 +38,8 @@ public class Generator {
     private LinkedHashMap<AbstractGeneratedObject, Double> chances = new LinkedHashMap<AbstractGeneratedObject, Double>();
     
 	@Getter private CustomBlockData placeholder;
-	@Getter private boolean generateImmediatelyAfterPlace;
-	@Getter private boolean allowPistonPush = false;
+	@Getter private boolean generateImmediatelyAfterPlace = true;
+	@Getter private boolean allowPistonPush = true;
 	@Getter private boolean hologram = false;
     @Getter private Actions actions = null;
     @Getter private ArrayList<String> disabledWorlds = new ArrayList<String>();
