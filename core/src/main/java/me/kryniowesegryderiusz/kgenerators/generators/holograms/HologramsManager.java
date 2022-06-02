@@ -4,7 +4,6 @@ import java.util.ArrayList;
 import java.util.Map;
 
 import org.bukkit.Bukkit;
-import org.bukkit.plugin.Plugin;
 
 import me.kryniowesegryderiusz.kgenerators.Main;
 import me.kryniowesegryderiusz.kgenerators.dependencies.enums.Dependency;

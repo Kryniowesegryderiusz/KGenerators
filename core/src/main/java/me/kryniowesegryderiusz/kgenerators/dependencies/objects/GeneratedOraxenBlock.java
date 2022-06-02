@@ -4,10 +4,8 @@ import java.util.Map;
 
 import org.bukkit.inventory.ItemStack;
 
-import io.th0rgal.oraxen.items.OraxenItems;
 import io.th0rgal.oraxen.mechanics.provided.gameplay.block.BlockMechanicFactory;
 import lombok.Getter;
-import me.kryniowesegryderiusz.kgenerators.Main;
 import me.kryniowesegryderiusz.kgenerators.api.interfaces.IGeneratorLocation;
 import me.kryniowesegryderiusz.kgenerators.api.objects.AbstractGeneratedObject;
 import me.kryniowesegryderiusz.kgenerators.dependencies.hooks.OraxenHook;

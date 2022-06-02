@@ -17,7 +17,6 @@ import org.bukkit.inventory.Recipe;
 
 import me.kryniowesegryderiusz.kgenerators.data.enums.DatabaseType;
 import me.kryniowesegryderiusz.kgenerators.dependencies.hooks.WorldEditHook;
-import me.kryniowesegryderiusz.kgenerators.generators.generator.enums.GeneratorType;
 import me.kryniowesegryderiusz.kgenerators.generators.generator.objects.Generator;
 import me.kryniowesegryderiusz.kgenerators.generators.generator.objects.GeneratorAction;
 import me.kryniowesegryderiusz.kgenerators.generators.locations.handlers.enums.ActionType;

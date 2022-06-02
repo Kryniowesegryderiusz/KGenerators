@@ -12,8 +12,6 @@ import org.bukkit.inventory.ItemStack;
 import lombok.Getter;
 import me.kryniowesegryderiusz.kgenerators.Main;
 import me.kryniowesegryderiusz.kgenerators.api.interfaces.IGeneratorLocation;
-import me.kryniowesegryderiusz.kgenerators.dependencies.enums.Dependency;
-import me.kryniowesegryderiusz.kgenerators.dependencies.enums.WGFlag;
 import me.kryniowesegryderiusz.kgenerators.dependencies.hooks.BentoBoxHook;
 import me.kryniowesegryderiusz.kgenerators.dependencies.hooks.SuperiorSkyblock2Hook;
 import me.kryniowesegryderiusz.kgenerators.generators.generator.enums.GeneratorType;

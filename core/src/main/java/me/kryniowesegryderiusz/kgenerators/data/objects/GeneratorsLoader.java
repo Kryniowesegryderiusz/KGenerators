@@ -14,7 +14,6 @@ import lombok.Getter;
 import me.kryniowesegryderiusz.kgenerators.Main;
 import me.kryniowesegryderiusz.kgenerators.generators.generator.objects.Generator;
 import me.kryniowesegryderiusz.kgenerators.generators.locations.objects.GeneratorLocation;
-import me.kryniowesegryderiusz.kgenerators.generators.players.objects.GeneratorPlayer;
 import me.kryniowesegryderiusz.kgenerators.logger.Logger;
 
 public class GeneratorsLoader {
