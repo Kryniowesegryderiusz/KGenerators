@@ -4,7 +4,9 @@ import java.util.Map;
 
 import org.bukkit.inventory.ItemStack;
 
+import io.th0rgal.oraxen.mechanics.MechanicsManager;
 import io.th0rgal.oraxen.mechanics.provided.gameplay.block.BlockMechanicFactory;
+import io.th0rgal.oraxen.mechanics.provided.gameplay.noteblock.NoteBlockMechanicFactory;
 import lombok.Getter;
 import me.kryniowesegryderiusz.kgenerators.api.interfaces.IGeneratorLocation;
 import me.kryniowesegryderiusz.kgenerators.api.objects.AbstractGeneratedObject;
@@ -38,7 +40,12 @@ public class GeneratedOraxenBlock extends AbstractGeneratedObject {
 
 	@Override
 	public void regenerate(IGeneratorLocation generatorLocation) {
-		BlockMechanicFactory.setBlockModel(generatorLocation.getGeneratedBlockLocation().getBlock(), this.material);
+		if (MechanicsManager.getMechanicFactory("block") != null && MechanicsManager.getMechanicFactory("block").getMechanic(material) != null)
+			BlockMechanicFactory.setBlockModel(generatorLocation.getGeneratedBlockLocation().getBlock(), this.material);
+		else if (MechanicsManager.getMechanicFactory("noteblock") != null && MechanicsManager.getMechanicFactory("noteblock").getMechanic(material) != null)
+			NoteBlockMechanicFactory.setBlockModel(generatorLocation.getGeneratedBlockLocation().getBlock(), this.material);
+		else
+			Logger.error("GeneratedOraxenBlock: Unsupported Oraxen block factory! Currently supported are only block and noteblock!");
 	}
 
 	@Override
