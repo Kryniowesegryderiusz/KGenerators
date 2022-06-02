@@ -18,4 +18,5 @@ public enum Dependency
 	WORLD_EDIT,
 	ORAXEN,
 	WILDSTACKER,
+	CMI_HOLOGRAMS,
 }

@@ -214,6 +214,13 @@
       <scope>system</scope>
       <systemPath>${project.basedir}/libs/eco-6.35.1-all.jar</systemPath>
     </dependency>
+    <dependency>
+      <groupId>com.zrips</groupId>
+      <artifactId>cmi</artifactId>
+      <version>8.7.8.2</version>
+      <scope>system</scope>
+      <systemPath>${project.basedir}/libs/CMIAPI8.7.8.2.jar</systemPath>
+    </dependency>
   </dependencies>
   <properties>
     <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>

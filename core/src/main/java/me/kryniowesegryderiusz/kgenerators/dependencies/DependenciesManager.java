@@ -113,11 +113,14 @@ public class DependenciesManager {
     	}
     	
         if (Bukkit.getPluginManager().isPluginEnabled("HolographicDisplays")) {
-        	Logger.info("Dependencies: Detected plugin HolographicDisplays. Hooked into it.");
+        	Logger.info("Dependencies: Detected plugin HolographicDisplays. Hooked holograms into it.");
         	dependencies.add(Dependency.HOLOGRAPHIC_DISPLAYS);
         } else if (Bukkit.getPluginManager().isPluginEnabled("DecentHolograms")) {
-        	Logger.info("Dependencies: Detected plugin DecentHolograms. Hooked into it.");
+        	Logger.info("Dependencies: Detected plugin DecentHolograms. Hooked holograms into it.");
         	dependencies.add(Dependency.DECENT_HOLOGRAMS);
+        } else if (Bukkit.getPluginManager().isPluginEnabled("CMI")) {
+        	Logger.info("Dependencies: Detected plugin CMI. Hooked holograms into it.");
+        	dependencies.add(Dependency.CMI_HOLOGRAMS);
         }
 	}
 	

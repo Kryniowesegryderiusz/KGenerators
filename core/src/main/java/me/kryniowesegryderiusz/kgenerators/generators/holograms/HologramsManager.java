@@ -7,6 +7,7 @@ import org.bukkit.Bukkit;
 
 import me.kryniowesegryderiusz.kgenerators.Main;
 import me.kryniowesegryderiusz.kgenerators.dependencies.enums.Dependency;
+import me.kryniowesegryderiusz.kgenerators.dependencies.objects.CMIHologramsProvider;
 import me.kryniowesegryderiusz.kgenerators.dependencies.objects.DecentHologramsProvider;
 import me.kryniowesegryderiusz.kgenerators.dependencies.objects.HolographicDisplaysProvider;
 import me.kryniowesegryderiusz.kgenerators.generators.generator.objects.Generator;
@@ -29,6 +30,9 @@ public class HologramsManager {
 		} else if (Main.getDependencies().isEnabled(Dependency.HOLOGRAPHIC_DISPLAYS)) {
 			hologramProvider = new HolographicDisplaysProvider();
 			Logger.info("Holograms: Enabling HolographicDisplaysProvider");
+		} else if (Main.getDependencies().isEnabled(Dependency.CMI_HOLOGRAMS)) {
+			hologramProvider = new CMIHologramsProvider();
+			Logger.info("Holograms: Enabling CMIHologramsProvider");
 		} else {
         	for (Map.Entry<String, Generator> e : Main.getGenerators().getEntrySet()) {
 				if ((e.getValue()).isHologram())

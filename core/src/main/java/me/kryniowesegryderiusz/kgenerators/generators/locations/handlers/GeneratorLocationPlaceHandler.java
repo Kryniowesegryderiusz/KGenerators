@@ -64,9 +64,9 @@ public class GeneratorLocationPlaceHandler {
     	if (sender instanceof Player) Main.getSettings().getPlaceSound().play((Player) sender);
     	
     	if (sender instanceof Player)
-    		Logger.info(((Player) sender).getName() + " placed " + generator.getId() + " in " + gLocation.toStringLocation());
+    		Logger.debug(((Player) sender).getName() + " placed " + generator.getId() + " in " + gLocation.toStringLocation());
     	else
-    		Logger.info("Something placed " + generator.getId() + " in " + gLocation.toStringLocation());
+    		Logger.debug("Something placed " + generator.getId() + " in " + gLocation.toStringLocation());
     	
     	if (generateGeneratorBlock && gLocation.getGenerator().getType() == GeneratorType.DOUBLE)
     		Main.getMultiVersion().getBlocksUtils().setBlock(gLocation.getLocation(), gLocation.getGenerator().getGeneratorItem());

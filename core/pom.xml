@@ -226,6 +226,15 @@
             <version>1.5.25</version>
             <scope>provided</scope>
         </dependency>  
+        
+		<!-- CMI -->
+		<dependency>
+			<groupId>com.zrips</groupId>
+			<artifactId>cmi</artifactId>
+			<version>8.7.8.2</version>
+			<scope>system</scope>
+			<systemPath>${project.basedir}/libs/CMIAPI8.7.8.2.jar</systemPath>
+		</dependency>
 	</dependencies>
 
 	<build>

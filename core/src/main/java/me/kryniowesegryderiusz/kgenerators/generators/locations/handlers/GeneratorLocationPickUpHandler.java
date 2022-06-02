@@ -46,7 +46,7 @@ public class GeneratorLocationPickUpHandler {
 		}
 		
 		gLocation.removeGenerator(true, p);
-		Logger.info(p.getName() + " picked up " + gLocation.toString());
+		Logger.debug(p.getName() + " picked up " + gLocation.toString());
 		Lang.getMessageStorage().send(p, Message.GENERATORS_PICK_UP_SUCCESFULL,
 				"<generator>", generator.getGeneratorItem().getItemMeta().getDisplayName());
 		

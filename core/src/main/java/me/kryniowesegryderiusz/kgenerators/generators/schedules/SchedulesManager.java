@@ -71,10 +71,10 @@ public class SchedulesManager {
 				this.generatePlaceholder(gLocation);
 			});
 			
+			schedules.put(gLocation, new Schedule(gLocation.getGenerator().getDelay()));
+			
 			if (gLocation.getGenerator().isHologram())
 				Main.getHolograms().createHologram(gLocation);
-			
-			schedules.put(gLocation, new Schedule(gLocation.getGenerator().getDelay()));
 		}
 	}
 	
