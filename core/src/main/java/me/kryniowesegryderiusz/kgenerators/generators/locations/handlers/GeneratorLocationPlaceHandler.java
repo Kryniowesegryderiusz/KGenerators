@@ -59,6 +59,8 @@ public class GeneratorLocationPlaceHandler {
 
     	gLocation.save();
     	
+    	if (sender instanceof Player) gLocation.getOwner().addGeneratorToPlayer(gLocation.getGenerator());
+    	
     	if (sender instanceof Player) Main.getSettings().getPlaceSound().play((Player) sender);
     	
     	if (sender instanceof Player)

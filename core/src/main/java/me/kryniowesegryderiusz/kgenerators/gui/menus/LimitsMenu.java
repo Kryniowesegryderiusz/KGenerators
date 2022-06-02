@@ -20,31 +20,28 @@ import me.kryniowesegryderiusz.kgenerators.lang.objects.StringContent;
 import me.kryniowesegryderiusz.kgenerators.logger.Logger;
 
 public class LimitsMenu {
-	
-	public static Inventory get(Player player)
-	{
+
+	public static Inventory get(Player player) {
 		ArrayList<MenuItemType> exludedEnumMenuItems = new ArrayList<MenuItemType>();
 		exludedEnumMenuItems.add(MenuItemType.LIMITS_MENU_LIMIT);
 		exludedEnumMenuItems.add(MenuItemType.LIMITS_MENU_BACK);
-		
-		Inventory menu = Lang.getMenuInventoryStorage().get(MenuInventoryType.LIMITS).getInv(MenuInventoryType.LIMITS, player, exludedEnumMenuItems);
-		
-		if (Main.getMenus().getMenuPlayer(player) != null)
-		{
-			for (int i : Lang.getMenuItemStorage().get(MenuItemType.LIMITS_MENU_BACK).getSlots())
-			{
+
+		Inventory menu = Lang.getMenuInventoryStorage().get(MenuInventoryType.LIMITS).getInv(MenuInventoryType.LIMITS,
+				player, exludedEnumMenuItems);
+
+		if (Main.getMenus().getMenuPlayer(player) != null) {
+			for (int i : Lang.getMenuItemStorage().get(MenuItemType.LIMITS_MENU_BACK).getSlots()) {
 				menu.setItem(i, Lang.getMenuItemStorage().get(MenuItemType.LIMITS_MENU_BACK).build());
 			}
 		}
-		
+
 		ArrayList<Integer> slotList = Lang.getMenuItemStorage().get(MenuItemType.LIMITS_MENU_LIMIT).getSlots();
 		int lastId = -1;
-		
+
 		GeneratorPlayer gp = Main.getPlayers().getPlayer(player);
 		PlayerLimits pl = new PlayerLimits(player);
-		
-		for (Limit limit : Main.getLimits().getValues())
-		{
+
+		for (Limit limit : Main.getLimits().getValues()) {
 			ItemStack item = limit.getItem().clone();
 			MenuItem chanceMenuItem = Lang.getMenuItemStorage().get(MenuItemType.LIMITS_MENU_LIMIT);
 			if (chanceMenuItem.getItemType().contains("<limit_display_item>"))
@@ -53,35 +50,35 @@ public class LimitsMenu {
 			chanceMenuItem.replace("<limit_name>", limit.getName());
 			chanceMenuItem.replace("<amount>", String.valueOf(limit.getPlacedGenerators(gp)));
 			chanceMenuItem.replace("<limit>", String.valueOf(pl.getLimit(limit)));
-			
-			if (limit.getGenerators().size() != Main.getGenerators().getEntrySet().size())
-			{
+
+			if (limit.getGenerators().size() != Main.getGenerators().getEntrySet().size()) {
 				ArrayList<String> generators = new ArrayList<String>();
-				for (Generator g : limit.getGenerators())
-				{
-					StringContent s = Lang.getMenuItemAdditionalLinesStorage().get(MenuItemAdditionalLines.LIMITS_GENERATOR_LIST);
+				for (Generator g : limit.getGenerators()) {
+					StringContent s = Lang.getMenuItemAdditionalLinesStorage()
+							.get(MenuItemAdditionalLines.LIMITS_GENERATOR_LIST);
 					s.replace("<generator_name>", g.getGeneratorItemName());
 					generators.addAll(s.getLines());
 				}
 				chanceMenuItem.replaceLore("<generators_list>", new StringContent(generators));
+			} else {
+				chanceMenuItem.replaceLore("<generators_list>",
+						Lang.getMenuItemAdditionalLinesStorage().get(MenuItemAdditionalLines.LIMITS_ALL_GENERATORS));
 			}
-			else
-			{
-				chanceMenuItem.replaceLore("<generators_list>", Lang.getMenuItemAdditionalLinesStorage().get(MenuItemAdditionalLines.LIMITS_ALL_GENERATORS));
-			}
-			
+
 			if (limit.isOnlyOwnerUse())
-				chanceMenuItem.replaceLore("<is_only_owner_use>", Lang.getMenuItemAdditionalLinesStorage().get(MenuItemAdditionalLines.LIMITS_ONLY_OWNER_USE));
+				chanceMenuItem.replaceLore("<is_only_owner_use>",
+						Lang.getMenuItemAdditionalLinesStorage().get(MenuItemAdditionalLines.LIMITS_ONLY_OWNER_USE));
 			else
 				chanceMenuItem.replaceLore("<is_only_owner_use>", null);
-			
+
 			if (limit.isOnlyOwnerPickUp())
-				chanceMenuItem.replaceLore("<is_only_owner_pick_up>", Lang.getMenuItemAdditionalLinesStorage().get(MenuItemAdditionalLines.LIMITS_ONLY_OWNER_PICK_UP));
+				chanceMenuItem.replaceLore("<is_only_owner_pick_up>", Lang.getMenuItemAdditionalLinesStorage()
+						.get(MenuItemAdditionalLines.LIMITS_ONLY_OWNER_PICK_UP));
 			else
 				chanceMenuItem.replaceLore("<is_only_owner_pick_up>", null);
-			
+
 			lastId++;
-			
+
 			ItemStack readyItem = chanceMenuItem.build();
 			try {
 				menu.setItem(slotList.get(lastId), readyItem);
@@ -90,14 +87,14 @@ public class LimitsMenu {
 				Logger.error(e1);
 			}
 		}
-		
+
 		return menu;
 	}
 
-	public static void onClick(Player p, int slot, ItemStack currentItem)	{
-		if (Lang.getMenuItemStorage().get(MenuItemType.LIMITS_MENU_BACK).getSlots().contains(slot) && Lang.getMenuItemStorage().get(MenuItemType.LIMITS_MENU_BACK).isEnabled()
-				&& currentItem.equals(Lang.getMenuItemStorage().get(MenuItemType.LIMITS_MENU_BACK).build()))
-		{
+	public static void onClick(Player p, int slot, ItemStack currentItem) {
+		if (Lang.getMenuItemStorage().get(MenuItemType.LIMITS_MENU_BACK).getSlots().contains(slot)
+				&& Lang.getMenuItemStorage().get(MenuItemType.LIMITS_MENU_BACK).isEnabled()
+				&& currentItem.equals(Lang.getMenuItemStorage().get(MenuItemType.LIMITS_MENU_BACK).build())) {
 			Main.getMenus().openMainMenu(p);
 		}
 	}
