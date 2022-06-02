@@ -108,8 +108,11 @@ public class Generator {
 		    for (Map<?, ?> generatedObjectConfig : (List<Map<?, ?>>) config.getMapList(generatorID+".generates")) {
 	
 		    	AbstractGeneratedObject ago = generatorsManager.getGeneratedObjectsManager().getNewObject((String) generatedObjectConfig.get("type"));
-		    	if (ago != null && ago.load(generatedObjectConfig))
-	    			this.chances.put(ago, ago.getChance());
+		    	if (ago != null && ago.load(generatedObjectConfig)) {
+		    		this.chances.put(ago, ago.getChance());
+		    		this.fullChance += ago.getChance();
+		    	}
+	    			
 		    }
 		else if (config.contains(generatorID+".chances")) {
 			Logger.error("Generator " + generatorID + " has OLD generates (chances) section set, which allow only block generation!");
