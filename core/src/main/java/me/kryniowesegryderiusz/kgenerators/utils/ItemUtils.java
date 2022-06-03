@@ -52,4 +52,32 @@ public abstract class ItemUtils {
 		}
 		return XMaterial.STONE;
 	}
+	
+	/**
+	 * Compares ItemStacks ignoring "internal" NBT and itemstack amount
+	 * @param i1
+	 * @param i2
+	 * @return
+	 */
+	public static boolean compareSafe(ItemStack is1, ItemStack is2) {
+		
+		ItemStack is1c = is1.clone(), is2c = is2.clone();
+		is1c.setAmount(1);
+		is2c.setAmount(1);
+		
+        String is1String = splitInternal(is1c.toString()), is2String = splitInternal(is2c.toString());
+
+        return is1String.equals(is2String);
+	}
+	
+	private static String splitInternal(String s) {
+        if (s.contains(", internal=")) {
+            String[] split = s.split(", internal=");
+            if (split[1].split(", ", 2).length > 1)
+            	s = split[0] + ", " + split[1].split(", ", 2)[1];
+            else
+            	s = split[0] + "}}";
+        }
+		return s;
+	}
 }

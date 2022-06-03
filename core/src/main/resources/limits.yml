@@ -43,7 +43,7 @@ example_limit_group:
 #===============================================================
 
 #This limits players to have max 50 generators at all
-#It affeccts all generators
+#It affeccts all generators (because they are not listed)
 global_limits:
   name: "Global limit"
   item: PLAYER_HEAD
