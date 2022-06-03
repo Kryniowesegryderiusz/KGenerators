@@ -2,10 +2,11 @@
 #https://www.spigotmc.org/resources/79246/
 #Need help? Join KGenerators discord: https://discord.gg/BZRjhpP4Ab
 
-#Check why a lot of settings are optional and how does it work: https://kzone.gitbook.io/docs/kgenerators/configuration-files/optional-settings
-
-#EXAMPLE GENERATOR IS ONLY AN EXAMPLE AND ITS NOT LOADED!
-#unique ID
+#===========================================================================
+#=====              Below you can find EXAMPLE-generator.              ===== 
+#===== IT WONT BE LOADED! Here you can just find all options explained =====
+#===========================================================================
+#unique ID of generator
 example_generator:
   #
   # *** Required generator settings below. ***
@@ -82,8 +83,13 @@ example_generator:
       item: ANY
       sneak: false
 
-#Below you can find pre-configured generators. You can freely edit/remove them and add new ones ^^
+#===============================================================
+#=====    Below you can find PRECONFIGURED generators.     ===== 
+#===== You can freely EDIT/REMOVE them and ADD new ones ^^ =====
+#===============================================================
 
+#This is just standard stone generator
+#You can get it via /kgen getall or /kgen give <nick> stone_generator_level_1
 stone_generator_level_1:
   generator-item:
     material: END_STONE

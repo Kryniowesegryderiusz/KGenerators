@@ -4,11 +4,18 @@
 
 # WARNING! To add/update/remove recipe you HAVE TO RESTART SERVER!
 
-#Change this to true to enable recipes
+#=================================================
+#=====            Enable recipes.            ===== 
+#===== Change this to true to enable recipes =====
+#=================================================
+
 enabled: false
 
-#EXAMPLE RECIPE IS ONLY AN EXAMPLE AND ITS NOT LOADED!
-# Recipe for example_generator:
+#===========================================================================
+#=====               Below you can find EXAMPLE-recipe.                ===== 
+#===== IT WONT BE LOADED! Here you can just find all options explained =====
+#===========================================================================
+#generator id o generator this recipe refers to
 example_generator:
   # Shape of generator in crafting table. Used letters are items defined in ingredients section. You can use space, if you dont want to set item in slot.
   shape:
@@ -32,7 +39,10 @@ example_generator:
       enchants:
         - FORTUNE:1
 
-#Below you can find pre-configured recipes. You can freely edit/remove them and add new ones ^^
+#===============================================================
+#=====      Below you can find PRECONFIGURED recipes.      ===== 
+#===== You can freely EDIT/REMOVE them and ADD new ones ^^ =====
+#===============================================================
       
 stone_generator_level_1:
   shape:

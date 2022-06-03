@@ -4,11 +4,18 @@
 
 #More information and examples can be found on wiki https://kzone.gitbook.io/docs/kgenerators/configuration-files/limits
 
-#Change this to true to enable limits
+#=================================================
+#=====            Enable limits.             ===== 
+#===== Change this to true to enable recipes =====
+#=================================================
+
 enabled: false
 
-#EXAMPLE LIMIT IS ONLY AN EXAMPLE AND ITS NOT LOADED!
-#Limit id
+#===========================================================================
+#=====               Below you can find EXAMPLE-limit.                 ===== 
+#===== IT WONT BE LOADED! Here you can just find all options explained =====
+#===========================================================================
+#Unique limit id
 example_limit_group:
   #Name of that group (display purposes)
   name: "Example limit"
@@ -21,7 +28,7 @@ example_limit_group:
   - example_generator_id_level_2
   #Default number of placed generators of that type per player
   #Set to -1 to disable that limit
-  #Can be overwritten by permission: kgenerators.placelimit.<limit_id>.<limit>
+  #!!! Can be overwritten by permission: kgenerators.placelimit.<limit_id>.<limit>
   place-limit: 10
   #Should only owner be able to pick up generator?
   only-owner-pickup: true
@@ -30,7 +37,10 @@ example_limit_group:
   #Doesnt work for third-party plugins ex. breaking blocks hoppers
   only-owner-use: false
 
-#Below you can find pre-configured limits. You can freely edit/remove them and add new ones ^^
+#===============================================================
+#=====       Below you can find PRECONFIGURED limits.      ===== 
+#===== You can freely EDIT/REMOVE them and ADD new ones ^^ =====
+#===============================================================
 
 #This limits players to have max 50 generators at all
 #It affeccts all generators
