@@ -7,12 +7,9 @@ import java.util.Map.Entry;
 import org.bukkit.entity.Player;
 import org.bukkit.permissions.PermissionAttachmentInfo;
 
-import lombok.Getter;
 import me.kryniowesegryderiusz.kgenerators.Main;
 
 public class PlayerLimits {
-
-	@Getter
 
 	private HashMap<Limit, Integer> adjustedPlaceLimits = new HashMap<Limit, Integer>();
 

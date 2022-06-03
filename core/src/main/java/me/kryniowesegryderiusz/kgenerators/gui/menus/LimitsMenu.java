@@ -55,7 +55,11 @@ public class LimitsMenu {
 
 			chanceMenuItem.replace("<limit_name>", limit.getName());
 			chanceMenuItem.replace("<amount>", String.valueOf(limit.getPlacedGenerators(gp)));
-			chanceMenuItem.replace("<limit>", String.valueOf(pl.getLimit(limit)));
+			
+			if (pl.getLimit(limit) == -1)
+				chanceMenuItem.replace("<limit>", "∞");
+			else
+				chanceMenuItem.replace("<limit>", String.valueOf(pl.getLimit(limit)));
 
 			if (limit.getGenerators().size() != Main.getGenerators().getEntrySet().size()) {
 				ArrayList<String> generators = new ArrayList<String>();

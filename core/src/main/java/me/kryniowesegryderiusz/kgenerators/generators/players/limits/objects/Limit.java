@@ -95,7 +95,7 @@ public class Limit {
 		if (!generators.contains(gloc.getGenerator()))
 			return true;
 
-		if (getPlacedGenerators(gp) < pLimits.getAdjustedPlaceLimits().get(this))
+		if (pLimits.getLimit(this) == -1 || getPlacedGenerators(gp) < pLimits.getLimit(this))
 			return true;
 		else {
 			Lang.getMessageStorage().send(gp.getOnlinePlayer(), Message.GENERATORS_LIMITS_CANT_MORE, "<number>",
