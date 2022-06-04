@@ -39,10 +39,21 @@ example_generator:
       chance: 10.0
       material: DIRT
     #type: item - generator will spawn simple item
-    #More options for item settings can be found here https://kzone.gitbook.io/docs/kgenerators/configuration-files/configuring-itemstack
     - type: item
       chance: 10.0
       item: DIRT
+    #type: item - generator will spawn more complicated item
+    #More options for item settings can be found here https://kzone.gitbook.io/docs/kgenerators/configuration-files/configuring-itemstack
+    - type: item
+      chance: 10.0
+      item:
+        material: STONE
+        amount: 5
+        name: "Magic stone"
+        lore:
+        - "&cThats Magic Stone"
+        enchants:
+          - FORTUNE:1
     #type: entity - generator will spawn entity
     - type: entity
       chance: 10.0

@@ -71,13 +71,14 @@ public class SQLDatabase implements IDatabase {
 		try {
 			PreparedStatement stat;
 			if (dbType == DatabaseType.MYSQL)
-				stat = conn.prepareStatement("SHOW COLUMNS FROM "+PLACED_TABLE+" LIKE `chunk_x`");
+				stat = conn.prepareStatement("SHOW COLUMNS FROM "+PLACED_TABLE+" LIKE 'chunk_x'");
 			else
-				stat = conn.prepareStatement("PRAGMA TABLE_INFO("+PLACED_TABLE+")"); //Here is hard coded
+				stat = conn.prepareStatement("PRAGMA TABLE_INFO("+PLACED_TABLE+")");
 			ResultSet res = stat.executeQuery();
 			boolean found = false;
 			while(res.next()) {
-				if (res.getString("name").equals("chunk_x")) {
+				if ((dbType == DatabaseType.MYSQL && res.getString(1).equals("chunk_x"))
+						|| (dbType == DatabaseType.SQLITE && res.getString("name").equals("chunk_x"))) {
 					found = true;
 					break;
 				}

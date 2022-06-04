@@ -177,7 +177,7 @@ public class Main extends JavaPlugin {
 		            if (Main.getLimits().hasLimits()) valueMap.put("Limits", 1);
 		            if (Main.getRecipes().hasRecipes()) valueMap.put("Recipes", 1);
 		            if (Main.getUpgrades().hasUpgrades()) valueMap.put("Upgrades", 1);
-		            if (Main.getSettings().isDropUpToEq()) valueMap.put("DropToInventory", 1);
+		            if (Main.getSettings().isBlockDropUpToEq()) valueMap.put("DropToInventory", 1);
 		            return valueMap;
 				}
 			}));

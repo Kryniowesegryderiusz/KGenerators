@@ -8,7 +8,7 @@ lang: en
 
 #Database settings
 database:
-  #Possible options: SQLITE, MYSQL, YAML (not recommended for big servers)
+  #Possible options: SQLITE, MYSQL (MariaDB included)
   dbtype: SQLITE
   #Settings for MYSQL
   host: hostname
@@ -30,7 +30,7 @@ disabled-worlds:
 pick-up-to-eq: true
 
 #Should block-related drops be added directly to inventory?
-drop-to-eq: false
+block-drop-to-eq: false
 
 #Should "generators" lang section be sent by actionbar instad of chat?
 generators-actionbar-messages: true

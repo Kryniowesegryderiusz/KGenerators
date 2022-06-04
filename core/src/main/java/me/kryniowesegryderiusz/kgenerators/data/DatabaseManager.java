@@ -28,8 +28,7 @@ public class DatabaseManager {
 	 */
 	@Nullable public IDatabase getDatabase(DatabaseType dbType)
 	{
-		switch (dbType)
-		{
+		switch (dbType) {
 			case MYSQL:
 				return new SQLDatabase(DatabaseType.MYSQL, Main.getSettings().getSqlConfig());
 			case SQLITE:
