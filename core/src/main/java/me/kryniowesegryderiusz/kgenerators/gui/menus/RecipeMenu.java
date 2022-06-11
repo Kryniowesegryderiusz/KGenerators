@@ -54,7 +54,7 @@ public class RecipeMenu {
 				recipeMenuItem.replace("<block_name>", Lang.getCustomNamesStorage().getItemTypeName(item));
 				
 				lastId++;
-				ItemStack readyItem = recipeMenuItem.build();
+				ItemStack readyItem = recipeMenuItem.build(player);
 				try {
 					menu.setItem(slotList.get(lastId), readyItem);
 				} catch (Exception e1) {
@@ -76,7 +76,7 @@ public class RecipeMenu {
 			resultItem.setItemStack(generator.getGeneratorItem());
 		resultItem.replace("<generator_name>", generator.getGeneratorItem().getItemMeta().getDisplayName());
 		
-		ItemStack readyItem = resultItem.build();
+		ItemStack readyItem = resultItem.build(player);
 
 		for (int i : resultItem.getSlots())
 			menu.setItem(i, readyItem);

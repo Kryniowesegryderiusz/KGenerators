@@ -6,6 +6,7 @@ import java.util.Arrays;
 
 import org.bukkit.Material;
 import org.bukkit.enchantments.Enchantment;
+import org.bukkit.entity.Player;
 import org.bukkit.inventory.ItemFlag;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.meta.ItemMeta;
@@ -13,6 +14,7 @@ import org.bukkit.inventory.meta.ItemMeta;
 import lombok.Getter;
 import lombok.Setter;
 import me.kryniowesegryderiusz.kgenerators.Main;
+import me.kryniowesegryderiusz.kgenerators.dependencies.hooks.PlaceholderAPIHook;
 import me.kryniowesegryderiusz.kgenerators.lang.enums.MenuItemType;
 import me.kryniowesegryderiusz.kgenerators.lang.objects.StringContent;
 import me.kryniowesegryderiusz.kgenerators.logger.Logger;
@@ -32,22 +34,19 @@ public class MenuItem implements Cloneable {
 	private String slots = "";
 	@Setter
 	private boolean glow = false;
-	
-	public MenuItem(String itemType)
-	{
+
+	public MenuItem(String itemType) {
 		this.itemType = itemType;
 	}
-	
-	public MenuItem(String itemType, String name, boolean glow, String slots)
-	{
+
+	public MenuItem(String itemType, String name, boolean glow, String slots) {
 		this.itemType = itemType;
 		setName(name);
 		this.glow = glow;
 		this.slots = slots.replaceAll(" ", "");
 	}
-	
-	public MenuItem(boolean enabled, String itemType, String name, boolean glow, String slots, ArrayList<String> lore)
-	{
+
+	public MenuItem(boolean enabled, String itemType, String name, boolean glow, String slots, ArrayList<String> lore) {
 		this.enabled = enabled;
 		this.itemType = itemType;
 		setName(name);
@@ -56,157 +55,135 @@ public class MenuItem implements Cloneable {
 		this.lore.clear();
 		addLore(lore);
 	}
-	
-	public MenuItem(String itemType, String name, boolean glow, String... loreAndSlot)
-	{
+
+	public MenuItem(String itemType, String name, boolean glow, String... loreAndSlot) {
 		this.itemType = itemType;
 		setName(name);
 		this.glow = glow;
 		boolean first = true;
-		for (String s : Arrays.asList(loreAndSlot))
-		{
-			if (first)
-			{
+		for (String s : Arrays.asList(loreAndSlot)) {
+			if (first) {
 				this.slots = s.replaceAll(" ", "");
 				first = false;
-			}
-			else
-			{
+			} else {
 				addLore(s);
 			}
 		}
 	}
-	
-	public void addLore(String loreLine)
-	{
+
+	public void addLore(String loreLine) {
 		if (loreLine != null)
 			this.lore.add(Main.getMultiVersion().getChatUtils().colorize(loreLine));
 	}
-	
-	public void addLore(String... lore)
-	{
-		for (String s : Arrays.asList(lore))
-		{
+
+	public void addLore(String... lore) {
+		for (String s : Arrays.asList(lore)) {
 			if (s != null)
 				this.lore.add(Main.getMultiVersion().getChatUtils().colorize(s));
 		}
 	}
-	
-	public void addLore(StringContent stringContent)
-	{
+
+	public void addLore(StringContent stringContent) {
 		this.addLore(stringContent.getLines());
 	}
-	
-	public void addLore(ArrayList<String> lore)
-	{
-		for (String s : lore)
-		{
+
+	public void addLore(ArrayList<String> lore) {
+		for (String s : lore) {
 			if (s != null)
 				this.lore.add(Main.getMultiVersion().getChatUtils().colorize(s));
 		}
 	}
-	
-	public void setName(String name)
-	{
+
+	public void setName(String name) {
 		if (name != null)
 			this.name = Main.getMultiVersion().getChatUtils().colorize(name);
 	}
-	
-	public void replace(String key, String value)
-	{
+
+	public void replace(String key, String value) {
 		this.name = this.name.replace(key, value);
-		for (int i = 0; i < this.lore.size(); i++)
-		{
+		for (int i = 0; i < this.lore.size(); i++) {
 			this.lore.set(i, this.lore.get(i).replace(key, value));
 		}
 	}
-	
-	public void replaceLore(String key, StringContent stringContent)
-	{
+
+	public void replaceLore(String key, StringContent stringContent) {
 		ArrayList<String> newDesc = new ArrayList<String>();
-		for (String s : this.lore)
-		{
-			if (s.contains(key))
-			{
-				if (stringContent != null)
-				{
-					for (String as : stringContent.getLines())
-					{
+		for (String s : this.lore) {
+			if (s.contains(key)) {
+				if (stringContent != null) {
+					for (String as : stringContent.getLines()) {
 						newDesc.add(Main.getMultiVersion().getChatUtils().colorize(as));
 					}
 				}
-			}
-			else
-			{
+			} else {
 				newDesc.add(s);
 			}
 		}
 		this.lore = newDesc;
 	}
-	
-	public ItemStack build()
-	{
+
+	public ItemStack build(Player p) {
 		ItemStack item;
 		if (itemStack != null)
 			item = itemStack;
 		else
 			item = ItemUtils.parseItemStack(this.itemType, "MenuItem", false);
-		
+
 		if (item.getType().equals(Material.AIR))
 			return item;
-		
+
 		ItemMeta meta = null;
-		if (item.getItemMeta() != null)
-		{
+		if (item.getItemMeta() != null) {
 			meta = (ItemMeta) item.getItemMeta();
-		}
-		else
-		{
+		} else {
 			meta = Main.getInstance().getServer().getItemFactory().getItemMeta(item.getType());
 		}
-			
-		
+
 		meta.setDisplayName(this.name);
-		
+
 		if (!lore.isEmpty())
 			meta.setLore(this.lore);
-		
+
 		if (glow)
 			meta.addItemFlags(ItemFlag.HIDE_ENCHANTS);
-		
+
 		item.setItemMeta(meta);
-		
+
 		if (glow)
 			item.addUnsafeEnchantment(Enchantment.LOOT_BONUS_BLOCKS, 1);
 		
-		return item;
+		item = PlaceholderAPIHook.translatePlaceholders(p, item);
 		
+		return item;
+
 	}
 
 	public void load(MenuItemType menu, Config config) {
 		load(menu.getKey(), config);
 	}
-	
+
 	@SuppressWarnings("unchecked")
 	public void load(String path, Config config) {
-		if (config.contains(path))
-		{
-			this.itemType = config.getString(path+".item");
-			if (config.contains(path+".name")) setName(config.getString(path+".name"));
+		if (config.contains(path)) {
+			this.itemType = config.getString(path + ".item");
+			if (config.contains(path + ".name"))
+				setName(config.getString(path + ".name"));
 			this.lore.clear();
-			if (config.contains(path+".lore")) addLore((ArrayList<String>) config.getList(path+".lore"));
-			if (config.contains(path+".glow")) this.glow = config.getBoolean(path+".glow");
-			if (config.contains(path+".slots")) this.slots = config.getString(path+".slots");
-			if (config.contains(path+".enabled")) this.enabled = config.getBoolean(path+".enabled");
-		}
-		else
-		{
-			config.set(path+".enabled", true);
-			config.set(path+".item", this.itemType);
-			config.set(path+".name", this.name);
-			config.set(path+".lore", this.lore);
-			config.set(path+".slots", this.slots);
-			config.set(path+".glow", this.glow);
+			if (config.contains(path + ".lore"))
+				addLore((ArrayList<String>) config.getList(path + ".lore"));
+			if (config.contains(path + ".glow"))
+				this.glow = config.getBoolean(path + ".glow");
+			if (config.contains(path + ".slots"))
+				this.slots = config.getString(path + ".slots");
+			if (config.contains(path + ".enabled"))
+				this.enabled = config.getBoolean(path + ".enabled");
+		} else {
+			config.set(path + ".enabled", true);
+			config.set(path + ".item", this.itemType);
+			config.set(path + ".name", this.name);
+			config.set(path + ".lore", this.lore);
+			config.set(path + ".slots", this.slots);
+			config.set(path + ".glow", this.glow);
 			try {
 				config.saveConfig();
 			} catch (IOException e) {
@@ -215,19 +192,18 @@ public class MenuItem implements Cloneable {
 			}
 		}
 	}
-	
-	public ArrayList<Integer> getSlots()
-	{
+
+	public ArrayList<Integer> getSlots() {
 		ArrayList<Integer> slots = new ArrayList<Integer>();
 		String[] s = this.slots.split(",");
-		for (int i = 0; i<s.length; i++)
+		for (int i = 0; i < s.length; i++)
 			slots.add(Integer.valueOf(s[i]));
 		return slots;
 	}
-	
-	public MenuItem clone()
-    {
-        return new MenuItem(this.enabled, this.itemType, this.name, this.glow, this.slots, new ArrayList<String>(this.lore));
-    }
-	
+
+	public MenuItem clone() {
+		return new MenuItem(this.enabled, this.itemType, this.name, this.glow, this.slots,
+				new ArrayList<String>(this.lore));
+	}
+
 }

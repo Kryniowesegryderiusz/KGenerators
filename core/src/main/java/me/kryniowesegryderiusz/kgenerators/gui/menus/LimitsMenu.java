@@ -33,7 +33,7 @@ public class LimitsMenu {
 
 		if (Main.getMenus().getMenuPlayer(player) != null) {
 			for (int i : Lang.getMenuItemStorage().get(MenuItemType.LIMITS_MENU_BACK).getSlots()) {
-				menu.setItem(i, Lang.getMenuItemStorage().get(MenuItemType.LIMITS_MENU_BACK).build());
+				menu.setItem(i, Lang.getMenuItemStorage().get(MenuItemType.LIMITS_MENU_BACK).build(player));
 			}
 		}
 
@@ -89,7 +89,7 @@ public class LimitsMenu {
 
 			lastId++;
 
-			ItemStack readyItem = chanceMenuItem.build();
+			ItemStack readyItem = chanceMenuItem.build(player);
 			try {
 				menu.setItem(slotList.get(lastId), readyItem);
 			} catch (Exception e1) {
@@ -104,7 +104,7 @@ public class LimitsMenu {
 	public static void onClick(Player p, int slot, ItemStack currentItem) {
 		if (Lang.getMenuItemStorage().get(MenuItemType.LIMITS_MENU_BACK).getSlots().contains(slot)
 				&& Lang.getMenuItemStorage().get(MenuItemType.LIMITS_MENU_BACK).isEnabled()
-				&& currentItem.equals(Lang.getMenuItemStorage().get(MenuItemType.LIMITS_MENU_BACK).build())) {
+				&& currentItem.equals(Lang.getMenuItemStorage().get(MenuItemType.LIMITS_MENU_BACK).build(p))) {
 			Main.getMenus().openMainMenu(p);
 		}
 	}

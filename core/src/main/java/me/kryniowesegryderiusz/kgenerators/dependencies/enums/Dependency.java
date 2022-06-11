@@ -19,4 +19,5 @@ public enum Dependency
 	ORAXEN,
 	WILDSTACKER,
 	CMI_HOLOGRAMS,
+	PLACEHOLDERAPI,
 }

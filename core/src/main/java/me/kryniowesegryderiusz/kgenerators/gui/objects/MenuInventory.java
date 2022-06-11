@@ -64,7 +64,7 @@ public class MenuInventory {
 						menuItem.replace(rep.get(i), rep.get(i+1));
 					}
 					
-					ItemStack item = menuItem.build();
+					ItemStack item = menuItem.build(player);
 					
 					for (int i : menuItem.getSlots())
 					{

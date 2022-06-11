@@ -63,7 +63,7 @@ public class GeneratedObjectsMenu {
 			
 			lastId++;
 			
-			ItemStack readyItem = chanceMenuItem.build();
+			ItemStack readyItem = chanceMenuItem.build(player);
 			try {
 				menu.setItem(slotList.get(lastId), readyItem);
 			} catch (Exception e1) {

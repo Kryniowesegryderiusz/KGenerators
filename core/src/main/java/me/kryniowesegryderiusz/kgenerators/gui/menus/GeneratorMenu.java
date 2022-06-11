@@ -39,7 +39,7 @@ public class GeneratorMenu {
 		{
 			for (int i : Lang.getMenuItemStorage().get(MenuItemType.GENERATOR_MENU_RESET).getSlots())
 			{
-				menu.setItem(i, Lang.getMenuItemStorage().get(MenuItemType.GENERATOR_MENU_RESET).build());
+				menu.setItem(i, Lang.getMenuItemStorage().get(MenuItemType.GENERATOR_MENU_RESET).build(player));
 			}
 		}
 		
@@ -51,7 +51,7 @@ public class GeneratorMenu {
 			{
 				mi.replace("<next_generator>", upgrade.getNextGenerator().getGeneratorItemName());
 				mi.replaceLore("<costs>", upgrade.getCostsFormattedGUI());
-				ItemStack is = mi.build();
+				ItemStack is = mi.build(player);
 				
 				for (int i : Lang.getMenuItemStorage().get(MenuItemType.GENERATOR_MENU_UPGRADE).getSlots())
 				{
@@ -65,7 +65,7 @@ public class GeneratorMenu {
 			{
 				for (int i : Lang.getMenuItemStorage().get(MenuItemType.GENERATOR_MENU_UPGRADE_MAXED).getSlots())
 				{
-					menu.setItem(i, Lang.getMenuItemStorage().get(MenuItemType.GENERATOR_MENU_UPGRADE_MAXED).build());
+					menu.setItem(i, Lang.getMenuItemStorage().get(MenuItemType.GENERATOR_MENU_UPGRADE_MAXED).build(player));
 				}
 			}
 		}

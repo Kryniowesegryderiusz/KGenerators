@@ -37,7 +37,7 @@ public class UpgradeMenu {
 			ingredientItem.setItemStack(previousGenerator.getGeneratorItem());
 		ingredientItem.replace("<generator_name>", previousGenerator.getGeneratorItemName());
 		
-		ItemStack readyItem = ingredientItem.build();
+		ItemStack readyItem = ingredientItem.build(player);
 
 		for (int i : ingredientItem.getSlots())
 			menu.setItem(i, readyItem);
@@ -52,7 +52,7 @@ public class UpgradeMenu {
 			resultItem.setItemStack(generator.getGeneratorItem());
 		resultItem.replace("<generator_name>", generator.getGeneratorItemName());
 		
-		readyItem = resultItem.build();
+		readyItem = resultItem.build(player);
 
 		for (int i : resultItem.getSlots())
 			menu.setItem(i, readyItem);
@@ -65,7 +65,7 @@ public class UpgradeMenu {
 		
 		markerItem.replaceLore("<costs>", previousGenerator.getUpgrade().getCostsFormattedGUI());
 		
-		readyItem = markerItem.build();
+		readyItem = markerItem.build(player);
 		
 		for (int i : markerItem.getSlots())
 			menu.setItem(i, readyItem);

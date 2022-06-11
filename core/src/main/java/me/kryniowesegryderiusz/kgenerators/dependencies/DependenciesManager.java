@@ -101,6 +101,11 @@ public class DependenciesManager {
     		WildStackerHook.setup();
     	}
     	
+    	if (Bukkit.getPluginManager().isPluginEnabled("PlaceholderAPI")) {
+    		Logger.info("Dependencies: Detected plugin PlaceholderAPI. Hooking into it.");
+    		dependencies.add(Dependency.PLACEHOLDERAPI);
+    	}
+    	
     	if (Main.getMultiVersion().getWorldGuardUtils() != null && Main.getMultiVersion().getWorldGuardUtils().isWorldGuardHooked()) {
    			Logger.info("Dependencies: Detected plugin WorldGuard. Hooked into it.");
    			dependencies.add(Dependency.WORLD_GUARD);
