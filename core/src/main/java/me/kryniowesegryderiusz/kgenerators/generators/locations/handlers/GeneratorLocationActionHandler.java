@@ -14,37 +14,32 @@ import me.kryniowesegryderiusz.kgenerators.lang.Lang;
 import me.kryniowesegryderiusz.kgenerators.lang.enums.Message;
 
 public class GeneratorLocationActionHandler {
-	
+
 	/**
 	 * @return true if event should be cancelled
 	 */
-	public boolean handle(GeneratorLocation gLocation, InteractionType usedActionType, Player player)
-	{		
+	public boolean handle(GeneratorLocation gLocation, InteractionType usedActionType, Player player) {
 		Set<Entry<ActionType, GeneratorAction>> entryset = Main.getSettings().getActions().getEntrySet();
-		
+
 		if (gLocation.getGenerator().getActions() != null)
 			entryset = gLocation.getGenerator().getActions().getEntrySet();
-		
-		for (Entry<ActionType, GeneratorAction> e : entryset)
-		{
-			if (e.getValue().requirementsMet(usedActionType, player))
-			{
+
+		for (Entry<ActionType, GeneratorAction> e : entryset) {
+			if (e.getValue().requirementsMet(usedActionType, player)) {
 				ActionType action = e.getKey();
-				switch (action)
-				{
-					case PICKUP:
-						gLocation.pickUpGenerator(player);
-						return true;
-					case OPENGUI:
-						Main.getMenus().openGeneratorMenu(player, gLocation);
-						break;
-					case TIMELEFT:
-						if (Main.getSchedules().timeLeft(gLocation) > 0)
-						{
-							Lang.getMessageStorage().send(player, Message.GENERATORS_TIME_LEFT_OUTPUT,
-									"<time>", Main.getSchedules().timeLeftFormatted(gLocation));
-						}
-						break;
+				switch (action) {
+				case PICKUP:
+					gLocation.pickUpGenerator(player);
+					return true;
+				case OPENGUI:
+					Main.getMenus().openGeneratorMenu(player, gLocation);
+					break;
+				case TIMELEFT:
+					if (Main.getSchedules().timeLeft(gLocation) > 0) {
+						Lang.getMessageStorage().send(player, Message.GENERATORS_TIME_LEFT_OUTPUT, "<time>",
+								Main.getSchedules().timeLeftFormatted(gLocation));
+					}
+					break;
 				}
 			}
 		}
