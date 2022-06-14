@@ -6,6 +6,7 @@ import org.bukkit.Location;
 import org.bukkit.inventory.ItemStack;
 
 import lombok.Getter;
+import me.kryniowesegryderiusz.kgenerators.Main;
 import me.kryniowesegryderiusz.kgenerators.api.interfaces.IGeneratorLocation;
 import me.kryniowesegryderiusz.kgenerators.api.objects.AbstractGeneratedObject;
 import me.kryniowesegryderiusz.kgenerators.utils.FilesUtils;
@@ -34,9 +35,11 @@ public class GeneratedItem extends AbstractGeneratedObject {
 
 	@Override
 	public void regenerate(IGeneratorLocation generatorLocation) {
-		Location generatedBlockLocation = generatorLocation.getGeneratedBlockLocation().clone().add(0.5, 0, 0.5);
-		generatedBlockLocation.setPitch(-90);
-		generatedBlockLocation.getWorld().dropItem(generatedBlockLocation, item);
+		Location generateLocation = generatorLocation.getGeneratedBlockLocation().clone().add(0.5, 0, 0.5);
+		if (!Main.getMultiVersion().getBlocksUtils().isAir(generatorLocation.getGeneratedBlockLocation().getBlock()))
+			generateLocation.add(0,1,0);
+		generateLocation.setPitch(-90);
+		generateLocation.getWorld().dropItem(generateLocation, item);
 		generatorLocation.scheduleGeneratorRegeneration();
 	}
 
