@@ -96,7 +96,7 @@ public class UpgradesManager {
     	try {
     		config = ConfigManager.getConfig("upgrades.yml", (String) null, true, false);
 			config.loadConfig();
-		} catch (IOException | InvalidConfigurationException e) {
+		} catch (Exception e) {
 			Logger.error("Upgrades file: Cant load upgrades. Disabling plugin.");
 			Logger.error(e);
 			Main.getInstance().getServer().getPluginManager().disablePlugin(Main.getInstance());

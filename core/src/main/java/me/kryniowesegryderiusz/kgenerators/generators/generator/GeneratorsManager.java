@@ -134,7 +134,7 @@ public class GeneratorsManager {
 		try {
 			config = ConfigManager.getConfig("generators.yml", (String) null, true, false);
 			config.loadConfig();
-		} catch (IOException | InvalidConfigurationException e) {
+		} catch (Exception e) {
 			Logger.error("Generators file: Cant load generators config. Disabling plugin.");
 			Logger.error(e);
 			Main.getInstance().getServer().getPluginManager().disablePlugin(Main.getInstance());

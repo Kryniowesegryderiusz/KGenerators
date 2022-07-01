@@ -154,7 +154,7 @@ public class BentoBoxHook implements Listener {
     	try {
     		config = ConfigManager.getConfig("config.yml", (String) null, false, false);
 			config.loadConfig();
-		} catch (IOException | InvalidConfigurationException e) {
+		} catch (Exception e) {
 			Logger.error("Bentobox hook: Cant load config. Using default values.");
 			Logger.error(e);
 			return;

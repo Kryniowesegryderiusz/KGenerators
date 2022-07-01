@@ -26,7 +26,7 @@ public class LimitsManager {
 		try {
 			config = ConfigManager.getConfig("limits.yml", (String) null, true, false);
 			config.loadConfig();
-		} catch (IOException | InvalidConfigurationException e) {
+		} catch (Exception e) {
 			Logger.error("Limits file: Cant load limits. Disabling plugin.");
 			Logger.error(e);
 			Main.getInstance().getServer().getPluginManager().disablePlugin(Main.getInstance());

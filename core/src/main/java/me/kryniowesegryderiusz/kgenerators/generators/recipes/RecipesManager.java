@@ -30,7 +30,7 @@ public class RecipesManager {
     	try {
     		file = ConfigManager.getConfig("recipes.yml", (String) null, true, false);
     		file.loadConfig();
-		} catch (IOException | InvalidConfigurationException e) {
+		} catch (Exception e) {
 			Logger.error("Recipes file: Cant load recipes config. Disabling plugin.");
 			Logger.error(e);
 			Main.getInstance().getServer().getPluginManager().disablePlugin(Main.getInstance());

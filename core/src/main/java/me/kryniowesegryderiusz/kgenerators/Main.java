@@ -114,14 +114,15 @@ public class Main extends JavaPlugin {
     
     public void enable() {
     	try {
+    		
+			settings = new Settings();
+			FilesConverter.updateConfig(settings);
+    		
 			/* Dependencies check */
 			dependencies.standardDependenciesCheck();
 			
 			/* Configs loader */
 			generators = new GeneratorsManager();
-			
-			settings = new Settings();
-			FilesConverter.updateConfig(settings);
 			
 			Lang.loadFromFiles();
 			
