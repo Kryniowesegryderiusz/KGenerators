@@ -50,7 +50,7 @@ public class HologramsManager {
 						int lineNo = 0;
 						for (String s : Lang.getHologramTextStorage().get(HologramText.REMAINING_TIME).getLines()) {
 							if (s.contains("<time>")) {
-								hologramProvider.updateHologramLine(gLocation, lineNo, s.replaceAll("<time>", Main.getSchedules().timeLeftFormatted(gLocation)));
+								hologramProvider.updateHologramLine(gLocation, lineNo, s.replaceAll("<time>", Main.getSchedules().timeLeftFormatted(gLocation).replaceAll("<generator_name>", gLocation.getGenerator().getGeneratorItemName())));
 								break;
 							} 
 							lineNo++;
@@ -90,6 +90,8 @@ public class HologramsManager {
 		for (String s : Lang.getHologramTextStorage().get(HologramText.REMAINING_TIME).getLines()) {
 			if (s.contains("<time>"))
 				s = s.replaceAll("<time>", time); 
+			if (s.contains("<generator_name>"))
+				s = s.replaceAll("<generator_name>", gLocation.getGenerator().getGeneratorItemName()); 
 			lines.add(s);
 		} 
 		return lines;

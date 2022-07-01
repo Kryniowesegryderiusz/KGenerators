@@ -132,6 +132,7 @@ messages:
 holograms:
   remaining-time:
   - ''
+  - '<generator_name>'
   - '&6Time left:'
   - '&e<time>'
   - ''
