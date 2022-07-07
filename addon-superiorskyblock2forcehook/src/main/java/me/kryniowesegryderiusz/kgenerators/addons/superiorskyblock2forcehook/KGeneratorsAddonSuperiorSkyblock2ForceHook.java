@@ -19,7 +19,7 @@ public class KGeneratorsAddonSuperiorSkyblock2ForceHook extends JavaPlugin imple
     	
     	new Addon(this);
     	
-    	if (this.getServer().getPluginManager().getPlugin("KGenerators") != null) {
+    	if (this.getServer().getPluginManager().getPlugin("KGenerators") == null) {
     		this.getServer().getLogger().warning("KGenerators is not installed! There is no point of having this plugin installed!");
     		return;
     	}
