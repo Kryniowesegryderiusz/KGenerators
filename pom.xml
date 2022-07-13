@@ -1,28 +1,30 @@
-<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 https://maven.apache.org/xsd/maven-4.0.0.xsd">
+<project xmlns="http://maven.apache.org/POM/4.0.0"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 https://maven.apache.org/xsd/maven-4.0.0.xsd">
 	<modelVersion>4.0.0</modelVersion>
 	<groupId>me.kryniowesegryderiusz</groupId>
 	<artifactId>kgenerators-parent</artifactId>
-	<version>7.1.1</version>
+	<version>7.2</version>
 	<packaging>pom</packaging>
 	<name>KGenerators</name>
 	<description>Your own custom single/double generators</description>
 
-   	<properties>
-        <author>Kryniowesegryderiusz (Krynio_ on spigot)</author>
-     	<BUILD_NUMBER>Unknown</BUILD_NUMBER>
-    </properties>
-	
-   <modules>
-       <module>core</module>
-       <module>v1_8</module>
-       <module>v1_9</module>
-       <module>v1_12</module>
-       <module>v1_13</module>
-       <module>v1_16</module>
-       <module>dist</module>
-       <module>addon-superiorskyblock2forcehook</module>
-   </modules>
-   
+	<properties>
+		<author>Kryniowesegryderiusz (Krynio_ on spigot)</author>
+		<BUILD_NUMBER>Unknown</BUILD_NUMBER>
+	</properties>
+
+	<modules>
+		<module>core</module>
+		<module>v1_8</module>
+		<module>v1_9</module>
+		<module>v1_12</module>
+		<module>v1_13</module>
+		<module>v1_16</module>
+		<module>dist</module>
+		<module>addon-superiorskyblock2forcehook</module>
+	</modules>
+
 	<distributionManagement>
 		<repository>
 			<id>codemc-releases</id>
@@ -33,5 +35,5 @@
 			<url>https://repo.codemc.io/repository/maven-snapshots/</url>
 		</snapshotRepository>
 	</distributionManagement>
-   
+
 </project>

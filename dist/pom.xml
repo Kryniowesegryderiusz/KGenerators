@@ -1,75 +1,77 @@
-<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 https://maven.apache.org/xsd/maven-4.0.0.xsd">
+<project xmlns="http://maven.apache.org/POM/4.0.0"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 https://maven.apache.org/xsd/maven-4.0.0.xsd">
 	<modelVersion>4.0.0</modelVersion>
 	<artifactId>kgenerators-dist</artifactId>
 	<packaging>jar</packaging>
 	<parent>
-    	<groupId>me.kryniowesegryderiusz</groupId>
-    	<artifactId>kgenerators-parent</artifactId>
-		<version>7.1.1</version>
+		<groupId>me.kryniowesegryderiusz</groupId>
+		<artifactId>kgenerators-parent</artifactId>
+		<version>7.2</version>
 	</parent>
-	
-   	<properties>
-    	<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
-    	<project.reporting.outputEncoding>UTF-8</project.reporting.outputEncoding>
+
+	<properties>
+		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
+		<project.reporting.outputEncoding>UTF-8</project.reporting.outputEncoding>
 	</properties>
 
 	<build>
 		<directory>../target</directory>
-         <finalName>KGenerators-${project.parent.version}-b${env.BUILD_NUMBER}</finalName>
-         <plugins>
-         	<plugin>
-             	<groupId>org.apache.maven.plugins</groupId>
-                <artifactId>maven-shade-plugin</artifactId>
-                <version>3.1.1</version>
-                <executions>
-                	<execution>
-                       <phase>package</phase>
-                       <goals>
-                           <goal>shade</goal>
-                       </goals>
-                       <configuration>
-                           <artifactSet>
-                               <includes>
-                                   <include>me.kryniowesegryderiusz:kgenerators-*</include>
-                               </includes>
-                           </artifactSet>
-                       </configuration>
-                   </execution>
-               </executions>
-           </plugin>
-       </plugins>
-   </build>
-   <dependencies>
-       <dependency>
-           <groupId>me.kryniowesegryderiusz</groupId>
-           <artifactId>kgenerators-core</artifactId>
-           <version>${project.parent.version}</version>
-       </dependency>
-       <dependency>
-           <groupId>me.kryniowesegryderiusz</groupId>
-           <artifactId>kgenerators-v1_8</artifactId>
-           <version>${project.parent.version}</version>
-       </dependency>
-       <dependency>
-           <groupId>me.kryniowesegryderiusz</groupId>
-           <artifactId>kgenerators-v1_9</artifactId>
-           <version>${project.parent.version}</version>
-       </dependency>
-       <dependency>
-           <groupId>me.kryniowesegryderiusz</groupId>
-           <artifactId>kgenerators-v1_12</artifactId>
-           <version>${project.parent.version}</version>
-       </dependency>
-       <dependency>
-           <groupId>me.kryniowesegryderiusz</groupId>
-           <artifactId>kgenerators-v1_13</artifactId>
-           <version>${project.parent.version}</version>
-       </dependency>
-       <dependency>
-           <groupId>me.kryniowesegryderiusz</groupId>
-           <artifactId>kgenerators-v1_16</artifactId>
-           <version>${project.parent.version}</version>
-       </dependency>
-   </dependencies>
-    
+		<finalName>KGenerators-${project.parent.version}-b${env.BUILD_NUMBER}</finalName>
+		<plugins>
+			<plugin>
+				<groupId>org.apache.maven.plugins</groupId>
+				<artifactId>maven-shade-plugin</artifactId>
+				<version>3.1.1</version>
+				<executions>
+					<execution>
+						<phase>package</phase>
+						<goals>
+							<goal>shade</goal>
+						</goals>
+						<configuration>
+							<artifactSet>
+								<includes>
+									<include>me.kryniowesegryderiusz:kgenerators-*</include>
+								</includes>
+							</artifactSet>
+						</configuration>
+					</execution>
+				</executions>
+			</plugin>
+		</plugins>
+	</build>
+	<dependencies>
+		<dependency>
+			<groupId>me.kryniowesegryderiusz</groupId>
+			<artifactId>kgenerators-core</artifactId>
+			<version>${project.parent.version}</version>
+		</dependency>
+		<dependency>
+			<groupId>me.kryniowesegryderiusz</groupId>
+			<artifactId>kgenerators-v1_8</artifactId>
+			<version>${project.parent.version}</version>
+		</dependency>
+		<dependency>
+			<groupId>me.kryniowesegryderiusz</groupId>
+			<artifactId>kgenerators-v1_9</artifactId>
+			<version>${project.parent.version}</version>
+		</dependency>
+		<dependency>
+			<groupId>me.kryniowesegryderiusz</groupId>
+			<artifactId>kgenerators-v1_12</artifactId>
+			<version>${project.parent.version}</version>
+		</dependency>
+		<dependency>
+			<groupId>me.kryniowesegryderiusz</groupId>
+			<artifactId>kgenerators-v1_13</artifactId>
+			<version>${project.parent.version}</version>
+		</dependency>
+		<dependency>
+			<groupId>me.kryniowesegryderiusz</groupId>
+			<artifactId>kgenerators-v1_16</artifactId>
+			<version>${project.parent.version}</version>
+		</dependency>
+	</dependencies>
+
 </project>
