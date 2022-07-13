@@ -1,7 +1,7 @@
 /*
  * The MIT License (MIT)
  *
- * Copyright (c) 2021 Crypto Morin
+ * Copyright (c) 2022 Crypto Morin
  *
  * Permission is hereby granted, free of charge, to any person obtaining a copy
  * of this software and associated documentation files (the "Software"), to deal
@@ -21,20 +21,8 @@
  */
 package me.kryniowesegryderiusz.kgenerators.xseries;
 
-import java.util.HashMap;
-import java.util.Locale;
-import java.util.Map;
-import java.util.Objects;
-import java.util.Optional;
-import java.util.WeakHashMap;
-import java.util.concurrent.CompletableFuture;
-
-import javax.annotation.Nonnull;
-import javax.annotation.Nullable;
-
-import org.apache.commons.lang.StringUtils;
-import org.apache.commons.lang.Validate;
-import org.apache.commons.lang.WordUtils;
+import com.google.common.base.Enums;
+import com.google.common.base.Strings;
 import org.bukkit.Instrument;
 import org.bukkit.Location;
 import org.bukkit.Note;
@@ -45,8 +33,11 @@ import org.bukkit.plugin.java.JavaPlugin;
 import org.bukkit.scheduler.BukkitRunnable;
 import org.bukkit.scheduler.BukkitTask;
 
-import com.google.common.base.Enums;
-import com.google.common.base.Strings;
+import javax.annotation.Nonnull;
+import javax.annotation.Nullable;
+import java.util.*;
+import java.util.concurrent.CompletableFuture;
+import java.util.stream.Collectors;
 
 /**
  * <b>XSound</b> - Universal Minecraft Sound Support<br>
@@ -64,7 +55,7 @@ import com.google.common.base.Strings;
  * play command: https://minecraft.gamepedia.com/Commands/play
  *
  * @author Crypto Morin
- * @version 7.0.1
+ * @version 8.0.0
  * @see Sound
  */
 public enum XSound {
@@ -258,6 +249,17 @@ public enum XSound {
     BLOCK_FLOWERING_AZALEA_HIT,
     BLOCK_FLOWERING_AZALEA_PLACE,
     BLOCK_FLOWERING_AZALEA_STEP,
+    BLOCK_FROGLIGHT_BREAK,
+    BLOCK_FROGLIGHT_FALL,
+    BLOCK_FROGLIGHT_HIT,
+    BLOCK_FROGLIGHT_PLACE,
+    BLOCK_FROGLIGHT_STEP,
+    BLOCK_FROGSPAWN_BREAK,
+    BLOCK_FROGSPAWN_FALL,
+    BLOCK_FROGSPAWN_HATCH,
+    BLOCK_FROGSPAWN_HIT,
+    BLOCK_FROGSPAWN_PLACE,
+    BLOCK_FROGSPAWN_STEP,
     BLOCK_FUNGUS_BREAK,
     BLOCK_FUNGUS_FALL,
     BLOCK_FUNGUS_HIT,
@@ -323,6 +325,11 @@ public enum XSound {
     BLOCK_LODESTONE_HIT,
     BLOCK_LODESTONE_PLACE,
     BLOCK_LODESTONE_STEP,
+    BLOCK_MANGROVE_ROOTS_BREAK,
+    BLOCK_MANGROVE_ROOTS_FALL,
+    BLOCK_MANGROVE_ROOTS_HIT,
+    BLOCK_MANGROVE_ROOTS_PLACE,
+    BLOCK_MANGROVE_ROOTS_STEP,
     BLOCK_MEDIUM_AMETHYST_BUD_BREAK,
     BLOCK_MEDIUM_AMETHYST_BUD_PLACE,
     BLOCK_METAL_BREAK,
@@ -342,6 +349,21 @@ public enum XSound {
     BLOCK_MOSS_HIT,
     BLOCK_MOSS_PLACE,
     BLOCK_MOSS_STEP,
+    BLOCK_MUDDY_MANGROVE_ROOTS_BREAK,
+    BLOCK_MUDDY_MANGROVE_ROOTS_FALL,
+    BLOCK_MUDDY_MANGROVE_ROOTS_HIT,
+    BLOCK_MUDDY_MANGROVE_ROOTS_PLACE,
+    BLOCK_MUDDY_MANGROVE_ROOTS_STEP,
+    BLOCK_MUD_BREAK,
+    BLOCK_MUD_BRICKS_BREAK,
+    BLOCK_MUD_BRICKS_FALL,
+    BLOCK_MUD_BRICKS_HIT,
+    BLOCK_MUD_BRICKS_PLACE,
+    BLOCK_MUD_BRICKS_STEP,
+    BLOCK_MUD_FALL,
+    BLOCK_MUD_HIT,
+    BLOCK_MUD_PLACE,
+    BLOCK_MUD_STEP,
     BLOCK_NETHERITE_BLOCK_BREAK,
     BLOCK_NETHERITE_BLOCK_FALL,
     BLOCK_NETHERITE_BLOCK_HIT,
@@ -394,6 +416,11 @@ public enum XSound {
     BLOCK_NYLIUM_HIT,
     BLOCK_NYLIUM_PLACE,
     BLOCK_NYLIUM_STEP,
+    BLOCK_PACKED_MUD_BREAK,
+    BLOCK_PACKED_MUD_FALL,
+    BLOCK_PACKED_MUD_HIT,
+    BLOCK_PACKED_MUD_PLACE,
+    BLOCK_PACKED_MUD_STEP,
     BLOCK_PISTON_CONTRACT("PISTON_RETRACT"),
     BLOCK_PISTON_EXTEND("PISTON_EXTEND"),
     BLOCK_POINTED_DRIPSTONE_BREAK,
@@ -445,6 +472,17 @@ public enum XSound {
     BLOCK_SCAFFOLDING_HIT,
     BLOCK_SCAFFOLDING_PLACE,
     BLOCK_SCAFFOLDING_STEP,
+    BLOCK_SCULK_BREAK,
+    BLOCK_SCULK_CATALYST_BLOOM,
+    BLOCK_SCULK_CATALYST_BREAK,
+    BLOCK_SCULK_CATALYST_FALL,
+    BLOCK_SCULK_CATALYST_HIT,
+    BLOCK_SCULK_CATALYST_PLACE,
+    BLOCK_SCULK_CATALYST_STEP,
+    BLOCK_SCULK_CHARGE,
+    BLOCK_SCULK_FALL,
+    BLOCK_SCULK_HIT,
+    BLOCK_SCULK_PLACE,
     BLOCK_SCULK_SENSOR_BREAK,
     BLOCK_SCULK_SENSOR_CLICKING,
     BLOCK_SCULK_SENSOR_CLICKING_STOP,
@@ -452,6 +490,19 @@ public enum XSound {
     BLOCK_SCULK_SENSOR_HIT,
     BLOCK_SCULK_SENSOR_PLACE,
     BLOCK_SCULK_SENSOR_STEP,
+    BLOCK_SCULK_SHRIEKER_BREAK,
+    BLOCK_SCULK_SHRIEKER_FALL,
+    BLOCK_SCULK_SHRIEKER_HIT,
+    BLOCK_SCULK_SHRIEKER_PLACE,
+    BLOCK_SCULK_SHRIEKER_SHRIEK,
+    BLOCK_SCULK_SHRIEKER_STEP,
+    BLOCK_SCULK_SPREAD,
+    BLOCK_SCULK_STEP,
+    BLOCK_SCULK_VEIN_BREAK,
+    BLOCK_SCULK_VEIN_FALL,
+    BLOCK_SCULK_VEIN_HIT,
+    BLOCK_SCULK_VEIN_PLACE,
+    BLOCK_SCULK_VEIN_STEP,
     BLOCK_SHROOMLIGHT_BREAK,
     BLOCK_SHROOMLIGHT_FALL,
     BLOCK_SHROOMLIGHT_HIT,
@@ -559,6 +610,13 @@ public enum XSound {
     BLOCK_WOOL_PLACE("BLOCK_WOOL_FALL"),
     BLOCK_WOOL_STEP("STEP_WOOL", "BLOCK_CLOTH_STEP"),
     ENCHANT_THORNS_HIT,
+    ENTITY_ALLAY_AMBIENT_WITHOUT_ITEM,
+    ENTITY_ALLAY_AMBIENT_WITH_ITEM,
+    ENTITY_ALLAY_DEATH,
+    ENTITY_ALLAY_HURT,
+    ENTITY_ALLAY_ITEM_GIVEN,
+    ENTITY_ALLAY_ITEM_TAKEN,
+    ENTITY_ALLAY_ITEM_THROWN,
     ENTITY_ARMOR_STAND_BREAK("ENTITY_ARMORSTAND_BREAK"),
     ENTITY_ARMOR_STAND_FALL("ENTITY_ARMORSTAND_FALL"),
     ENTITY_ARMOR_STAND_HIT("ENTITY_ARMORSTAND_HIT"),
@@ -705,6 +763,14 @@ public enum XSound {
     ENTITY_FOX_SNIFF,
     ENTITY_FOX_SPIT,
     ENTITY_FOX_TELEPORT,
+    ENTITY_FROG_AMBIENT,
+    ENTITY_FROG_DEATH,
+    ENTITY_FROG_EAT,
+    ENTITY_FROG_HURT,
+    ENTITY_FROG_LAY_SPAWN,
+    ENTITY_FROG_LONG_JUMP,
+    ENTITY_FROG_STEP,
+    ENTITY_FROG_TONGUE,
     ENTITY_GENERIC_BIG_FALL("FALL_BIG"),
     ENTITY_GENERIC_BURN,
     ENTITY_GENERIC_DEATH,
@@ -734,6 +800,7 @@ public enum XSound {
     ENTITY_GOAT_AMBIENT,
     ENTITY_GOAT_DEATH,
     ENTITY_GOAT_EAT,
+    ENTITY_GOAT_HORN_BREAK,
     ENTITY_GOAT_HURT,
     ENTITY_GOAT_LONG_JUMP,
     ENTITY_GOAT_MILK,
@@ -742,6 +809,7 @@ public enum XSound {
     ENTITY_GOAT_SCREAMING_AMBIENT,
     ENTITY_GOAT_SCREAMING_DEATH,
     ENTITY_GOAT_SCREAMING_EAT,
+    ENTITY_GOAT_SCREAMING_HORN_BREAK,
     ENTITY_GOAT_SCREAMING_HURT,
     ENTITY_GOAT_SCREAMING_LONG_JUMP,
     ENTITY_GOAT_SCREAMING_MILK,
@@ -898,6 +966,7 @@ public enum XSound {
     ENTITY_PARROT_IMITATE_STRAY,
     ENTITY_PARROT_IMITATE_VEX,
     ENTITY_PARROT_IMITATE_VINDICATOR,
+    ENTITY_PARROT_IMITATE_WARDEN,
     ENTITY_PARROT_IMITATE_WITCH,
     ENTITY_PARROT_IMITATE_WITHER,
     ENTITY_PARROT_IMITATE_WITHER_SKELETON,
@@ -1061,6 +1130,10 @@ public enum XSound {
     ENTITY_STRIDER_SADDLE,
     ENTITY_STRIDER_STEP,
     ENTITY_STRIDER_STEP_LAVA,
+    ENTITY_TADPOLE_DEATH,
+    ENTITY_TADPOLE_FLOP,
+    ENTITY_TADPOLE_GROW_UP,
+    ENTITY_TADPOLE_HURT,
     ENTITY_TNT_PRIMED("FUSE"),
     ENTITY_TROPICAL_FISH_AMBIENT,
     ENTITY_TROPICAL_FISH_DEATH,
@@ -1116,6 +1189,26 @@ public enum XSound {
     ENTITY_WANDERING_TRADER_REAPPEARED,
     ENTITY_WANDERING_TRADER_TRADE,
     ENTITY_WANDERING_TRADER_YES,
+    ENTITY_WARDEN_AGITATED,
+    ENTITY_WARDEN_AMBIENT,
+    ENTITY_WARDEN_ANGRY,
+    ENTITY_WARDEN_ATTACK_IMPACT,
+    ENTITY_WARDEN_DEATH,
+    ENTITY_WARDEN_DIG,
+    ENTITY_WARDEN_EMERGE,
+    ENTITY_WARDEN_HEARTBEAT,
+    ENTITY_WARDEN_HURT,
+    ENTITY_WARDEN_LISTENING,
+    ENTITY_WARDEN_LISTENING_ANGRY,
+    ENTITY_WARDEN_NEARBY_CLOSE,
+    ENTITY_WARDEN_NEARBY_CLOSER,
+    ENTITY_WARDEN_NEARBY_CLOSEST,
+    ENTITY_WARDEN_ROAR,
+    ENTITY_WARDEN_SNIFF,
+    ENTITY_WARDEN_SONIC_BOOM,
+    ENTITY_WARDEN_SONIC_CHARGE,
+    ENTITY_WARDEN_STEP,
+    ENTITY_WARDEN_TENDRIL_CLICKS,
     ENTITY_WITCH_AMBIENT,
     ENTITY_WITCH_CELEBRATE,
     ENTITY_WITCH_DEATH,
@@ -1194,11 +1287,13 @@ public enum XSound {
     ITEM_BUCKET_EMPTY_FISH,
     ITEM_BUCKET_EMPTY_LAVA,
     ITEM_BUCKET_EMPTY_POWDER_SNOW,
+    ITEM_BUCKET_EMPTY_TADPOLE,
     ITEM_BUCKET_FILL,
     ITEM_BUCKET_FILL_AXOLOTL,
     ITEM_BUCKET_FILL_FISH,
     ITEM_BUCKET_FILL_LAVA,
     ITEM_BUCKET_FILL_POWDER_SNOW,
+    ITEM_BUCKET_FILL_TADPOLE,
     ITEM_BUNDLE_DROP_CONTENTS,
     ITEM_BUNDLE_INSERT,
     ITEM_BUNDLE_REMOVE_ONE,
@@ -1217,6 +1312,15 @@ public enum XSound {
     ITEM_FIRECHARGE_USE,
     ITEM_FLINTANDSTEEL_USE("FIRE_IGNITE"),
     ITEM_GLOW_INK_SAC_USE,
+    ITEM_GOAT_HORN_PLAY,
+    ITEM_GOAT_HORN_SOUND_0,
+    ITEM_GOAT_HORN_SOUND_1,
+    ITEM_GOAT_HORN_SOUND_2,
+    ITEM_GOAT_HORN_SOUND_3,
+    ITEM_GOAT_HORN_SOUND_4,
+    ITEM_GOAT_HORN_SOUND_5,
+    ITEM_GOAT_HORN_SOUND_6,
+    ITEM_GOAT_HORN_SOUND_7,
     ITEM_HOE_TILL,
     ITEM_HONEYCOMB_WAX_ON,
     ITEM_HONEY_BOTTLE_DRINK,
@@ -1241,6 +1345,7 @@ public enum XSound {
     MUSIC_CREDITS,
     MUSIC_DISC_11("RECORD_11"),
     MUSIC_DISC_13("RECORD_13"),
+    MUSIC_DISC_5,
     MUSIC_DISC_BLOCKS("RECORD_BLOCKS"),
     MUSIC_DISC_CAT("RECORD_CAT"),
     MUSIC_DISC_CHIRP("RECORD_CHIRP"),
@@ -1262,14 +1367,18 @@ public enum XSound {
     MUSIC_NETHER_NETHER_WASTES,
     MUSIC_NETHER_SOUL_SAND_VALLEY,
     MUSIC_NETHER_WARPED_FOREST,
+    MUSIC_OVERWORLD_DEEP_DARK,
     MUSIC_OVERWORLD_DRIPSTONE_CAVES,
     MUSIC_OVERWORLD_FROZEN_PEAKS,
     MUSIC_OVERWORLD_GROVE,
     MUSIC_OVERWORLD_JAGGED_PEAKS,
+    MUSIC_OVERWORLD_JUNGLE_AND_FOREST,
     MUSIC_OVERWORLD_LUSH_CAVES,
     MUSIC_OVERWORLD_MEADOW,
+    MUSIC_OVERWORLD_OLD_GROWTH_TAIGA,
     MUSIC_OVERWORLD_SNOWY_SLOPES,
     MUSIC_OVERWORLD_STONY_PEAKS,
+    MUSIC_OVERWORLD_SWAMP,
     MUSIC_UNDER_WATER,
     PARTICLE_SOUL_ESCAPE,
     UI_BUTTON_CLICK("CLICK"),
@@ -1363,7 +1472,7 @@ public enum XSound {
      */
     @Nonnull
     public static Optional<XSound> matchXSound(@Nonnull String sound) {
-        Validate.notEmpty(sound, "Cannot match XSound of a null or empty sound name");
+        if (sound == null || sound.isEmpty()) throw new IllegalArgumentException("Cannot match XSound of a null or empty sound name");
         return Optional.ofNullable(Data.NAMES.get(format(sound)));
     }
 
@@ -1425,6 +1534,35 @@ public enum XSound {
         });
     }
 
+    private static List<String> split(@Nonnull String str, @SuppressWarnings("SameParameterValue") char separatorChar) {
+        List<String> list = new ArrayList<>(5);
+        boolean match = false, lastMatch = false;
+        int len = str.length();
+        int start = 0;
+
+        for (int i = 0; i < len; i++) {
+            if (str.charAt(i) == separatorChar) {
+                if (match) {
+                    list.add(str.substring(start, i));
+                    match = false;
+                    lastMatch = true;
+                }
+
+                // This is important, it should not be i++
+                start = i + 1;
+                continue;
+            }
+
+            lastMatch = false;
+            match = true;
+        }
+
+        if (match || lastMatch) {
+            list.add(str.substring(start, len));
+        }
+        return list;
+    }
+
     /**
      * Just an extra feature that loads sounds from strings.
      * Useful for getting sounds from config files.
@@ -1465,15 +1603,16 @@ public enum XSound {
     @Nullable
     public static Record parse(@Nullable String sound) {
         if (Strings.isNullOrEmpty(sound) || sound.equalsIgnoreCase("none")) return null;
-        String[] split = StringUtils.split(StringUtils.deleteWhitespace(sound), ',');
+        List<String> split = split(sound.replace(" ", ""), ',');
 
-        String name = split[0];
+        String name = split.get(0);
         boolean playAtLocation;
         if (name.charAt(0) == '~') {
             name = name.substring(1);
             playAtLocation = true;
         } else playAtLocation = false;
 
+        if (name.isEmpty()) throw new IllegalArgumentException("No sound name specified: " + sound);
         Optional<XSound> soundType = matchXSound(name);
         if (!soundType.isPresent()) return null;
 
@@ -1481,11 +1620,14 @@ public enum XSound {
         float pitch = DEFAULT_PITCH;
 
         try {
-            if (split.length > 1) {
-                volume = Float.parseFloat(split[1]);
-                if (split.length > 2) pitch = Float.parseFloat(split[2]);
-            }
-        } catch (NumberFormatException ignored) {
+            if (split.size() > 1) volume = Float.parseFloat(split.get(1));
+        } catch (NumberFormatException ex) {
+            throw new NumberFormatException("Invalid number '" + split.get(1) + "' for sound volume '" + sound + '\'');
+        }
+        try {
+            if (split.size() > 2) pitch = Float.parseFloat(split.get(2));
+        } catch (NumberFormatException ex) {
+            throw new NumberFormatException("Invalid number '" + split.get(2) + "' for sound pitch '" + sound + '\'');
         }
 
         return new Record(soundType.get(), null, null, volume, pitch, playAtLocation);
@@ -1543,9 +1685,9 @@ public enum XSound {
         Objects.requireNonNull(player, "Cannot play note from null player");
         Objects.requireNonNull(playTo, "Cannot play note to null entity");
 
-        Validate.isTrue(ascendLevel > 0, "Note ascend level cannot be lower than 1");
-        Validate.isTrue(ascendLevel <= 7, "Note ascend level cannot be greater than 7");
-        Validate.isTrue(delay > 0, "Delay ticks must be at least 1");
+        if (ascendLevel <= 0) throw new IllegalArgumentException("Note ascend level cannot be lower than 1");
+        if (ascendLevel > 7) throw new IllegalArgumentException("Note ascend level cannot be greater than 7");
+        if (delay <= 0) throw new IllegalArgumentException("Delay ticks must be at least 1");
 
         return new BukkitRunnable() {
             int repeating = ascendLevel;
@@ -1565,7 +1707,9 @@ public enum XSound {
      */
     @Override
     public String toString() {
-        return WordUtils.capitalize(this.name().replace('_', ' ').toLowerCase(Locale.ENGLISH));
+        return Arrays.stream(name().split("_"))
+                .map(t -> t.charAt(0) + t.substring(1).toLowerCase())
+                .collect(Collectors.joining(" "));
     }
 
     /**
@@ -1614,8 +1758,8 @@ public enum XSound {
         Objects.requireNonNull(plugin, "Cannot play repeating sound from null plugin");
         Objects.requireNonNull(entity, "Cannot play repeating sound at null location");
 
-        Validate.isTrue(repeat > 0, "Cannot repeat playing sound " + repeat + " times");
-        Validate.isTrue(delay > 0, "Delay ticks must be at least 1");
+        if (repeat <= 0) throw new IllegalArgumentException("Cannot repeat playing sound " + repeat + " times");
+        if (delay <= 0) throw new IllegalArgumentException("Delay ticks must be at least 1");
 
         return new BukkitRunnable() {
             int repeating = repeat;
@@ -1729,11 +1873,18 @@ public enum XSound {
      */
     public static class Record {
         @Nonnull public final XSound sound;
-        public final float volume;
-        public final float pitch;
+        public final float volume, pitch;
         public boolean playAtLocation;
         @Nullable public Player player;
         @Nullable public Location location;
+
+        public Record(@Nonnull XSound sound) {
+            this(sound, DEFAULT_VOLUME, DEFAULT_PITCH);
+        }
+
+        public Record(@Nonnull XSound sound, float volume, float pitch) {
+            this(sound, null, null, volume, pitch, false);
+        }
 
         public Record(@Nonnull XSound sound, @Nullable Player player, @Nullable Location location, float volume, float pitch, boolean playAtLocation) {
             this.sound = Objects.requireNonNull(sound, "Sound cannot be null");
@@ -1744,16 +1895,27 @@ public enum XSound {
             this.playAtLocation = playAtLocation;
         }
 
+        /**
+         * Plays the sound only for a single player and no one else can hear it.
+         */
         public Record forPlayer(@Nullable Player player) {
             this.player = player;
             return this;
         }
 
+        /**
+         * Plays the sound to all the nearby players (based on the specified volume)
+         */
         public Record atLocation(@Nullable Location location) {
             this.location = location;
             return this;
         }
 
+        /**
+         * Plays the sound only for a single player and no on else can hear it.
+         * The source of the sound is different and players using headphones may
+         * hear the sound with a <a href="https://en.wikipedia.org/wiki/3D_audio_effect">3D audio effect</a>.
+         */
         public Record forPlayerAtLocation(@Nullable Player player, @Nullable Location location) {
             this.player = player;
             this.location = location;
@@ -1781,6 +1943,29 @@ public enum XSound {
             Objects.requireNonNull(updatedLocation, "Cannot play sound at null location");
             if (playAtLocation || player == null) location.getWorld().playSound(updatedLocation, sound.parseSound(), volume, pitch);
             else player.playSound(updatedLocation, sound.parseSound(), volume, pitch);
+        }
+
+        /**
+         * Stops the sound playing to the players that this sound was played to.
+         * Note this works fine if the sound was played to one specific player, but for
+         * location-based sounds this only works if the players were within the same range as the original
+         * volume level.
+         * <p>
+         * If this is a critical issue you can extend this class and add a cache for all the players that heard the sound.
+         *
+         * @since 7.0.2
+         */
+        public void stopSound() {
+            if (playAtLocation) {
+                for (Entity entity : location.getWorld().getNearbyEntities(location, volume, volume, volume)) {
+                    if (entity instanceof Player) ((Player) entity).stopSound(sound.parseSound());
+                }
+            }
+            if (player != null) player.stopSound(sound.parseSound());
+        }
+
+        public String rebuild() {
+            return (playAtLocation ? "~" : "") + sound.sound + ", " + volume + ", " + pitch;
         }
     }
 }

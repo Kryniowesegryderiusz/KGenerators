@@ -1,7 +1,7 @@
 /*
  * The MIT License (MIT)
  *
- * Copyright (c) 2021 Crypto Morin
+ * Copyright (c) 2022 Crypto Morin
  *
  * Permission is hereby granted, free of charge, to any person obtaining a copy
  * of this software and associated documentation files (the "Software"), to deal
@@ -21,32 +21,18 @@
  */
 package me.kryniowesegryderiusz.kgenerators.xseries;
 
-import java.util.Collections;
-import java.util.EnumSet;
-import java.util.HashMap;
-import java.util.Locale;
-import java.util.Map;
-import java.util.Objects;
-import java.util.Optional;
-import java.util.Set;
-
-import javax.annotation.Nonnull;
-import javax.annotation.Nullable;
-
-import org.apache.commons.lang.StringUtils;
-import org.apache.commons.lang.Validate;
-import org.apache.commons.lang.WordUtils;
-import org.apache.commons.lang.math.NumberUtils;
+import com.google.common.base.Enums;
 import org.bukkit.Material;
 import org.bukkit.NamespacedKey;
 import org.bukkit.enchantments.Enchantment;
 import org.bukkit.entity.EntityType;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.meta.EnchantmentStorageMeta;
-import org.bukkit.inventory.meta.ItemMeta;
 
-import com.google.common.base.Enums;
-import com.google.common.base.Strings;
+import javax.annotation.Nonnull;
+import javax.annotation.Nullable;
+import java.util.*;
+import java.util.stream.Collectors;
 
 /**
  * Enchantment support with multiple aliases.
@@ -58,7 +44,7 @@ import com.google.common.base.Strings;
  * Enchanting: https://minecraft.gamepedia.com/Enchanting
  *
  * @author Crypto Morin
- * @version 2.1.1
+ * @version 2.3.0
  * @see Enchantment
  */
 public enum XEnchantment {
@@ -77,7 +63,6 @@ public enum XEnchantment {
     FIRE_ASPECT(true, "FIRE", "MELEE_FIRE", "MELEE_FLAME", "FA"),
     FROST_WALKER(true, "FROST", "WALKER"),
     IMPALING(true, "IMPALE", "OCEAN_DAMAGE", "OCEAN_DMG"),
-    SOUL_SPEED(true, "SPEED_SOUL", "SOUL_RUNNER"),
     KNOCKBACK(true, "K_BACK", "KB"),
     LOOT_BONUS_BLOCKS("FORTUNE", "BLOCKS_LOOT_BONUS", "FORT", "LBB"),
     LOOT_BONUS_MOBS("LOOTING", "MOB_LOOT", "MOBS_LOOT_BONUS", "LBM"),
@@ -96,7 +81,9 @@ public enum XEnchantment {
     QUICK_CHARGE(true, "QUICKCHARGE", "QUICK_DRAW", "FAST_CHARGE", "FAST_DRAW"),
     RIPTIDE(true, "RIP", "TIDE", "LAUNCH"),
     SILK_TOUCH(true, "SOFT_TOUCH", "ST"),
+    SOUL_SPEED(true, "SPEED_SOUL", "SOUL_RUNNER"),
     SWEEPING_EDGE("SWEEPING", "SWEEPING_EDGE", "SWEEP_EDGE"),
+    SWIFT_SNEAK(true, "SNEAK_SWIFT"),
     THORNS(true, "HIGHCRIT", "THORN", "HIGHERCRIT", "T"),
     VANISHING_CURSE(true, "VANISHING_CURSE", "VANISH_CURSE", "VANISHING", "VANISH"),
     WATER_WORKER("AQUA_AFFINITY", "WATER_WORKER", "AQUA_AFFINITY", "WATER_MINE", "WW");
@@ -245,7 +232,7 @@ public enum XEnchantment {
      */
     @Nonnull
     public static Optional<XEnchantment> matchXEnchantment(@Nonnull String enchantment) {
-        Validate.notEmpty(enchantment, "Enchantment name cannot be null or empty");
+        if (enchantment == null || enchantment.isEmpty()) throw new IllegalArgumentException("Enchantment name cannot be null or empty");
         return Optional.ofNullable(Data.NAMES.get(format(enchantment)));
     }
 
@@ -256,7 +243,7 @@ public enum XEnchantment {
      * @param enchantment the enchantment.
      *
      * @return an enchantment.
-     * @throws IllegalArgumentException may be thrown as an unexpeceted exception.
+     * @throws IllegalArgumentException may be thrown as an unexpected exception.
      * @since 1.0.0
      */
     @Nonnull
@@ -264,47 +251,6 @@ public enum XEnchantment {
     public static XEnchantment matchXEnchantment(@Nonnull Enchantment enchantment) {
         Objects.requireNonNull(enchantment, "Cannot parse XEnchantment of a null enchantment");
         return Objects.requireNonNull(Data.NAMES.get(enchantment.getName()), () -> "Unsupported enchantment: " + enchantment.getName());
-    }
-
-    /**
-     * Adds an unsafe enchantment to the given item from a string.
-     * <p>
-     * <blockquote><pre>
-     *    ItemStack item = ...;
-     *    addEnchantFromString(item, "unbreaking, 10");
-     *    addEnchantFromString(item, "mending");
-     * </pre></blockquote>
-     * <p>
-     * Note that if you set your item's meta {@link ItemStack#setItemMeta(ItemMeta)} the enchantment
-     * will be removed.
-     * You need to use {@link ItemMeta#addEnchant(Enchantment, int, boolean)} instead.
-     * You can use the {@link #matchXEnchantment(String)} method in this case.
-     *
-     * @param item        the item to add the enchantment to.
-     * @param enchantment the enchantment string containing the enchantment name and level (optional)
-     *
-     * @return an enchanted {@link ItemStack} or the item itself without enchantment added if enchantment type is null.
-     * @see #matchXEnchantment(String)
-     * @since 1.0.0
-     */
-    @Nonnull
-    public static ItemStack addEnchantFromString(@Nonnull ItemStack item, @Nullable String enchantment) {
-        Objects.requireNonNull(item, "Cannot add enchantment to null ItemStack");
-        if (Strings.isNullOrEmpty(enchantment) || enchantment.equalsIgnoreCase("none")) return item;
-
-        String[] split = StringUtils.split(StringUtils.deleteWhitespace(enchantment), ',');
-        if (split.length == 0) split = StringUtils.split(enchantment, ' ');
-
-        Optional<XEnchantment> enchantOpt = matchXEnchantment(split[0]);
-        if (!enchantOpt.isPresent()) return item;
-        Enchantment enchant = enchantOpt.get().parseEnchantment();
-        if (enchant == null) return item;
-
-        int lvl = 1;
-        if (split.length > 1) lvl = NumberUtils.toInt(split[1]);
-
-        item.addUnsafeEnchantment(enchant, lvl);
-        return item;
     }
 
     /**
@@ -320,7 +266,7 @@ public enum XEnchantment {
         ItemStack book = new ItemStack(Material.ENCHANTED_BOOK);
         EnchantmentStorageMeta meta = (EnchantmentStorageMeta) book.getItemMeta();
 
-        meta.addStoredEnchant(this.parseEnchantment(), level, true);
+        meta.addStoredEnchant(this.enchantment, level, true);
         book.setItemMeta(meta);
         return book;
     }
@@ -332,7 +278,7 @@ public enum XEnchantment {
      * @since 1.0.0
      */
     @Nullable
-    public Enchantment parseEnchantment() {
+    public Enchantment getEnchant() {
         return this.enchantment;
     }
 
@@ -342,29 +288,31 @@ public enum XEnchantment {
      * An invocation of this method yields exactly the same result as the expression:
      * <p>
      * <blockquote>
-     * {@link #parseEnchantment()} != null
+     * {@link #getEnchant()} != null
      * </blockquote>
      *
      * @return true if the current version has this enchantment, otherwise false.
      * @since 1.0.0
      */
     public boolean isSupported() {
-        return parseEnchantment() != null;
+        return enchantment != null;
     }
 
     /**
-     * In most cases your should be using {@link #name()} instead.
+     * In most cases you should be using {@link #name()} instead.
      *
      * @return a friendly readable string name.
      */
     @Override
     @Nonnull
     public String toString() {
-        return WordUtils.capitalize(this.name().replace('_', ' ').toLowerCase(Locale.ENGLISH));
+        return Arrays.stream(name().split("_"))
+                .map(t -> t.charAt(0) + t.substring(1).toLowerCase())
+                .collect(Collectors.joining(" "));
     }
 
     /**
-     * Used for datas that need to be accessed during enum initilization.
+     * Used for data that need to be accessed during enum initialization.
      *
      * @since 2.0.0
      */

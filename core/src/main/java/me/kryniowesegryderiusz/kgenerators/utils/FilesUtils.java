@@ -187,7 +187,7 @@ public class FilesUtils {
 			            	String[] splitted = s.split(":");
 			            	Optional<XEnchantment> xeo = XEnchantment.matchXEnchantment(splitted[0]);
 			            	if (xeo.isPresent()) {
-			            		item.addUnsafeEnchantment(xeo.get().parseEnchantment(), Integer.valueOf(splitted[1]));
+			            		item.addUnsafeEnchantment(xeo.get().getEnchant(), Integer.valueOf(splitted[1]));
 			            	} else
 			            		Logger.error(place+": Cannot load enchantment! " + splitted[0] + " doesnt exist!");
 			              }
