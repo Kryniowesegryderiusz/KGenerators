@@ -28,6 +28,15 @@ public class CustomBlockData {
 		return "Material: " + this.xMaterial.name();
 	}
 	
+	/**
+	 * Checks xMaterial
+	 * @param item
+	 * @return true if xMaterials are same
+	 */
+	public boolean isSimilar(ItemStack is) {
+		return XMaterial.matchXMaterial(is) == xMaterial;
+	}
+	
 	public static CustomBlockData load(String configString, String place) {
 		if (configString.contains(":")) {
 			String[] splitted = configString.split(":");

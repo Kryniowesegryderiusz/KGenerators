@@ -249,6 +249,6 @@ public class Generator {
 	}
 
 	public boolean isPlaceholder(ItemStack item) {
-		return this.placeholder != null && this.placeholder.equals(item);
+		return this.placeholder != null && this.placeholder.isSimilar(item);
 	}
 }
