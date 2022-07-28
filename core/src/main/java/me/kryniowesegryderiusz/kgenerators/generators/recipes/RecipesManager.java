@@ -87,7 +87,7 @@ public class RecipesManager {
 	}
 	
 	public boolean isGeneratorRecipe(Generator generator, ArrayList<ItemStack> items) {
-		if (this.get(generator) != null) {
+		if (items.size() == 9 && this.get(generator) != null) {
 			ArrayList<ItemStack> recipeItems = this.get(generator).getRecipe();
 			for (int i  = 0; i < 9; i++) {
 				
