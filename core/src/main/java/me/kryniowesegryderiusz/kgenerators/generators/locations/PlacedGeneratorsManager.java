@@ -32,8 +32,16 @@ public class PlacedGeneratorsManager {
 	}
 	
 	public void unloadGenerator(GeneratorLocation gLocation) {
+		Main.getDatabases().getDb().saveGenerator(gLocation);
 		this.removeLoaded(gLocation);
 		Main.getSchedules().unloadSchedule(gLocation);
+	}
+	
+	public ArrayList<GeneratorLocation> getAll() {	
+		ArrayList<GeneratorLocation> all = new ArrayList<GeneratorLocation>();
+		for (ChunkGeneratorLocations c : this.loadedGenerators.values())
+			all.addAll(c.getAll());
+		return all;
 	}
 	
 	/**

@@ -41,7 +41,9 @@ public class BlockBreakListener implements Listener {
 				
 				gLoc.scheduleGeneratorRegeneration();
 				
-				if (Main.getSettings().isBlockDropUpToEq()) {
+				if (gLoc.getLastGeneratedObject() != null && gLoc.getLastGeneratedObject().getCustomDrops() != null) {
+					gLoc.getLastGeneratedObject().getCustomDrops().doCustomDrops(e);
+				} else if (Main.getSettings().isBlockDropUpToEq()) {
 					
 		    		if (!p.hasPermission("kgenerators.droptoinventory"))
 		    			return;

@@ -20,6 +20,7 @@ import me.kryniowesegryderiusz.kgenerators.dependencies.hooks.ItemsAdderHook;
 import me.kryniowesegryderiusz.kgenerators.generators.generator.GeneratorsManager;
 import me.kryniowesegryderiusz.kgenerators.generators.holograms.HologramsManager;
 import me.kryniowesegryderiusz.kgenerators.generators.locations.PlacedGeneratorsManager;
+import me.kryniowesegryderiusz.kgenerators.generators.locations.objects.GeneratorLocation;
 import me.kryniowesegryderiusz.kgenerators.generators.players.PlayersManager;
 import me.kryniowesegryderiusz.kgenerators.generators.players.limits.LimitsManager;
 import me.kryniowesegryderiusz.kgenerators.generators.recipes.RecipesManager;
@@ -93,8 +94,10 @@ public class Main extends JavaPlugin {
     
     @Override
     public void onDisable() {
-    	if (schedules != null)
-    		schedules.unloadAllSchedules();
+    	
+    	for (GeneratorLocation gl : Main.getPlacedGenerators().getAll())
+    		Main.getPlacedGenerators().unloadGenerator(gl);
+
     	if (menus != null)
     		menus.closeAll();
     	if (databases != null && databases.getDb() != null)

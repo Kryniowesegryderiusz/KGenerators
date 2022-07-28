@@ -251,4 +251,25 @@ public class Generator {
 	public boolean isPlaceholder(ItemStack item) {
 		return this.placeholder != null && this.placeholder.isSimilar(item);
 	}
+	
+	public int getGeneratedObjectId(AbstractGeneratedObject ago1) {
+
+		int id = -1;
+		for (AbstractGeneratedObject ago2 : this.chances.keySet()) {
+			id++;
+			if (ago1 == ago2) {
+				return id;
+			}
+		}
+		return -1;
+	}
+	
+	public AbstractGeneratedObject getGeneratedObjectById(int id) {
+		int i = -1;
+		for (AbstractGeneratedObject ago : this.chances.keySet()) {
+			i++;
+			if (id == i) return ago;
+		}
+		return null;
+	}
 }

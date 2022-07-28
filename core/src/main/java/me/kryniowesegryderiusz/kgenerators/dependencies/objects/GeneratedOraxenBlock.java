@@ -25,7 +25,7 @@ public class GeneratedOraxenBlock extends AbstractGeneratedObject {
 	protected boolean compareSameType(AbstractGeneratedObject generatedObject) {
 		GeneratedOraxenBlock giab = (GeneratedOraxenBlock) generatedObject;
 		return giab.getMaterial().equals(this.material);
-	}
+	} 
 
 	@Override
 	protected boolean loadTypeSpecific(Map<?, ?> generatedObjectConfig) {

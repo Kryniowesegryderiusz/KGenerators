@@ -8,6 +8,8 @@ import org.bukkit.Location;
 import org.bukkit.entity.Player;
 import org.bukkit.inventory.ItemStack;
 
+import me.kryniowesegryderiusz.kgenerators.Main;
+
 public class PlayerUtils {
 	/*
 	 * Standard features
@@ -40,5 +42,18 @@ public class PlayerUtils {
 				alternativeLocation.getWorld().dropItem(alternativeLocation, item);
 			}
 		}
+	}
+	
+	/**
+	 * Performs block drop to eq and permission checks for drop
+	 * @param player
+	 * @param location
+	 * @param items
+	 */
+	public static void dropBlockToInventory(Player p, Location location, ItemStack... items) {
+		if (Main.getSettings().isBlockDropUpToEq() && p.hasPermission("kgenerators.droptoinventory"))
+			dropToInventory(p, location, items);
+		else
+			dropToInventory(null, location, items);
 	}
 }

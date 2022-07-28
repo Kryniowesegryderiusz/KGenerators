@@ -41,7 +41,7 @@ public class SQLDatabase implements IDatabase {
 				Class.forName("org.sqlite.JDBC");
 				conn = DriverManager.getConnection("jdbc:sqlite:"+Main.getInstance().getDataFolder().getPath()+"/data/database.db");
 				Statement stat = conn.createStatement();
-				stat.executeUpdate("CREATE TABLE IF NOT EXISTS "+PLACED_TABLE+" (id INTEGER NOT NULL PRIMARY KEY, world VARCHAR(32), x INT(8), y INT(8), z INT(8), chunk_x INT(8), chunk_z INT(8), generator_id VARCHAR(64), owner VARCHAR(16))");
+				stat.executeUpdate("CREATE TABLE IF NOT EXISTS "+PLACED_TABLE+" (id INTEGER NOT NULL PRIMARY KEY, world VARCHAR(32), x INT(8), y INT(8), z INT(8), chunk_x INT(8), chunk_z INT(8), generator_id VARCHAR(64), owner VARCHAR(16), last_generated_object INT(8))");
 				stat.executeUpdate("CREATE TABLE IF NOT EXISTS "+SCHEDULED_TABLE+" (id INTEGER NOT NULL PRIMARY KEY, world VARCHAR(32), x INT(8), y INT(8), z INT(8), creation_timestamp INT(8), delay_left INT(8))");
 				stat.close();
 			} else if (dbType == DatabaseType.MYSQL) {
@@ -49,7 +49,7 @@ public class SQLDatabase implements IDatabase {
 		    	        "?characterEncoding=utf8&autoReconnect=true&user=" + sqlconfig.getDbUser() + "&password=" + sqlconfig.getDbPass();        
     	        conn = DriverManager.getConnection(DB_URL);
     			Statement stat = conn.createStatement();
-    			stat.executeUpdate("CREATE TABLE IF NOT EXISTS "+PLACED_TABLE+" (id INT(8) NOT NULL PRIMARY KEY AUTO_INCREMENT, world VARCHAR(32), x INT(8), y INT(8), z INT(8), chunk_x INT(8), chunk_z INT(8), generator_id VARCHAR(64), owner VARCHAR(16))");
+    			stat.executeUpdate("CREATE TABLE IF NOT EXISTS "+PLACED_TABLE+" (id INT(8) NOT NULL PRIMARY KEY AUTO_INCREMENT, world VARCHAR(32), x INT(8), y INT(8), z INT(8), chunk_x INT(8), chunk_z INT(8), generator_id VARCHAR(64), owner VARCHAR(16), last_generated_object INT(8))");
     			stat.executeUpdate("CREATE TABLE IF NOT EXISTS "+SCHEDULED_TABLE+" (id INT(8) NOT NULL PRIMARY KEY AUTO_INCREMENT, world VARCHAR(32), x INT(8), y INT(8), z INT(8), creation_timestamp INT(8), delay_left INT(8))");
     			stat.close();
 			} else {
@@ -68,6 +68,11 @@ public class SQLDatabase implements IDatabase {
 	
 	@Override
 	public void updateTable() {
+		
+		/*
+		 * Add chunks columns
+		 */
+		
 		try {
 			PreparedStatement stat;
 			if (dbType == DatabaseType.MYSQL)
@@ -86,7 +91,7 @@ public class SQLDatabase implements IDatabase {
 	        stat.close();
 	        
 	        if(!found) {
-				Logger.warn("Database: Updating database! That can take a while! Do not stop the server!");
+				Logger.warn("Database: Updating database to V7! That can take a while! Do not stop the server!");
 				
 				Statement stat2 = conn.createStatement();
 	        	stat2.executeUpdate("ALTER TABLE "+PLACED_TABLE+" ADD chunk_x INT(8)");
@@ -95,7 +100,7 @@ public class SQLDatabase implements IDatabase {
 	            
 	            for (GeneratorLocation gl : this.getGenerators()) {
 	    			PreparedStatement stat3;
-	    			stat3 = conn.prepareStatement("UPDATE " + PLACED_TABLE + " SET `chunk_x` = ?, `chunk_z` = ? WHERE `world` = ? AND `x` = ? AND `y` = ? AND  `z` = ?");
+	    			stat3 = conn.prepareStatement("UPDATE " + PLACED_TABLE + " SET `chunk_x` = ?, `chunk_z` = ? WHERE `world` = ? AND `x` = ? AND `y` = ? AND `z` = ?");
 	    			stat3.setInt(1, gl.getChunk().getX());
 	        		stat3.setInt(2, gl.getChunk().getZ());
 	        		stat3.setString(3, gl.getLocation().getWorld().getName());
@@ -105,12 +110,62 @@ public class SQLDatabase implements IDatabase {
 	        		stat3.executeUpdate();
 	            }
 	            
-	            Logger.warn("Database: Updated database!");
+	            Logger.warn("Database: Updated database with chunks!");
 	        }
 	        
 		} catch (Exception e) {
 			Main.getInstance().getServer().getPluginManager().disablePlugin(Main.getInstance());
 			Logger.error("Database: Cannot update database to KGenV7. Disabling plugin.");
+			Logger.error(e);
+		}
+		
+		
+		/*
+		 * Add last generated object columns
+		 */
+		
+		try {
+			PreparedStatement stat;
+			if (dbType == DatabaseType.MYSQL)
+				stat = conn.prepareStatement("SHOW COLUMNS FROM "+PLACED_TABLE+" LIKE 'last_generated_object'");
+			else
+				stat = conn.prepareStatement("PRAGMA TABLE_INFO("+PLACED_TABLE+")");
+			ResultSet res = stat.executeQuery();
+			boolean found = false;
+			while(res.next()) {
+				if ((dbType == DatabaseType.MYSQL && res.getString(1).equals("last_generated_object"))
+						|| (dbType == DatabaseType.SQLITE && res.getString("name").equals("last_generated_object"))) {
+					found = true;
+					break;
+				}
+	        }
+	        stat.close();
+	        
+	        if(!found) {
+				Logger.warn("Database: Updating database to V7.3! That can take a while! Do not stop the server!");
+				
+				Statement stat2 = conn.createStatement();
+	        	stat2.executeUpdate("ALTER TABLE "+PLACED_TABLE+" ADD last_generated_object INT(8)");
+	            stat2.close();
+	            
+	            for (GeneratorLocation gl : this.getGenerators()) {
+	    			PreparedStatement stat3;
+	    			stat3 = conn.prepareStatement("UPDATE " + PLACED_TABLE + " SET `chunk_x` = ?, `chunk_z` = ? WHERE `world` = ? AND `x` = ? AND `y` = ? AND `z` = ? AND `last_generated_object` = -1");
+	    			stat3.setInt(1, gl.getChunk().getX());
+	        		stat3.setInt(2, gl.getChunk().getZ());
+	        		stat3.setString(3, gl.getLocation().getWorld().getName());
+	        		stat3.setInt(4, gl.getLocation().getBlockX());
+	        		stat3.setInt(5, gl.getLocation().getBlockY());
+	        		stat3.setInt(6, gl.getLocation().getBlockZ());
+	        		stat3.executeUpdate();
+	            }
+	            
+	            Logger.warn("Database: Updated database with last generated objects!");
+	        }
+	        
+		} catch (Exception e) {
+			Main.getInstance().getServer().getPluginManager().disablePlugin(Main.getInstance());
+			Logger.error("Database: Cannot update database to KGenV7.3. Disabling plugin.");
 			Logger.error(e);
 		}
 	}
@@ -133,20 +188,22 @@ public class SQLDatabase implements IDatabase {
 
 	@Override
 	public void saveGenerator(GeneratorLocation gl) {
+		
         try {
     		if (this.isPlacedGeneratorInDatabase(gl)) {
     			PreparedStatement stat2;
-        		stat2 = conn.prepareStatement("UPDATE " + PLACED_TABLE + " SET `generator_id` = ?, `owner` = ? WHERE `world` = ? AND `x` = ? AND `y` = ? AND  `z` = ?");
+        		stat2 = conn.prepareStatement("UPDATE " + PLACED_TABLE + " SET `generator_id` = ?, `owner` = ?, `last_generated_object` = ? WHERE `world` = ? AND `x` = ? AND `y` = ? AND  `z` = ?");
         		stat2.setString(1, gl.getGenerator().getId());
         		stat2.setString(2, gl.getOwner().getName());
-        		stat2.setString(3, gl.getLocation().getWorld().getName());
-        		stat2.setInt(4, gl.getLocation().getBlockX());
-        		stat2.setInt(5, gl.getLocation().getBlockY());
-        		stat2.setInt(6, gl.getLocation().getBlockZ());
+        		stat2.setInt(3, gl.getLastGeneratedObjectId());
+        		stat2.setString(4, gl.getLocation().getWorld().getName());
+        		stat2.setInt(5, gl.getLocation().getBlockX());
+        		stat2.setInt(6, gl.getLocation().getBlockY());
+        		stat2.setInt(7, gl.getLocation().getBlockZ());
     			stat2.executeUpdate();
     		} else {
     			PreparedStatement stat2;
-        		stat2 = conn.prepareStatement("INSERT INTO " + PLACED_TABLE + " (world,x,y,z,generator_id,owner,chunk_x,chunk_z) VALUES (?, ?, ?, ?, ?, ?, ?, ?)");
+        		stat2 = conn.prepareStatement("INSERT INTO " + PLACED_TABLE + " (world,x,y,z,generator_id,owner,chunk_x,chunk_z,last_generated_object) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?)");
         		stat2.setString(1, gl.getLocation().getWorld().getName());
         		stat2.setInt(2, gl.getLocation().getBlockX());
         		stat2.setInt(3, gl.getLocation().getBlockY());
@@ -155,6 +212,7 @@ public class SQLDatabase implements IDatabase {
         		stat2.setString(6, gl.getOwner().getName());
         		stat2.setInt(7, gl.getChunk().getX());
         		stat2.setInt(8, gl.getChunk().getZ());
+        		stat2.setInt(9, gl.getLastGeneratedObjectId());
     			stat2.executeUpdate();
     		}
 		} catch (SQLException e) {
