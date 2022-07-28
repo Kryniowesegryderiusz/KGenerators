@@ -3,6 +3,11 @@ package me.kryniowesegryderiusz.kgenerators.generators.generator.objects;
 import java.util.Map;
 
 import org.bukkit.Location;
+import org.bukkit.entity.Item;
+import org.bukkit.event.EventHandler;
+import org.bukkit.event.EventPriority;
+import org.bukkit.event.Listener;
+import org.bukkit.event.entity.ItemMergeEvent;
 import org.bukkit.inventory.ItemStack;
 
 import lombok.Getter;
@@ -11,13 +16,19 @@ import me.kryniowesegryderiusz.kgenerators.api.interfaces.IGeneratorLocation;
 import me.kryniowesegryderiusz.kgenerators.api.objects.AbstractGeneratedObject;
 import me.kryniowesegryderiusz.kgenerators.utils.FilesUtils;
 
-public class GeneratedItem extends AbstractGeneratedObject {
-	
+public class GeneratedItem extends AbstractGeneratedObject implements Listener {
+
 	public GeneratedItem() {
 		super("item");
 	}
 
-	@Getter private ItemStack item;
+	@Getter
+	private ItemStack item;
+
+	@Getter
+	private boolean waitForPickUp = false;
+
+	private Item entity;
 
 	@Override
 	protected boolean compareSameType(AbstractGeneratedObject generatedObject) {
@@ -27,9 +38,18 @@ public class GeneratedItem extends AbstractGeneratedObject {
 
 	@Override
 	protected boolean loadTypeSpecific(Map<?, ?> generatedObjectConfig) {
-		this.item = FilesUtils.loadItemStack((Map<?, ?>) generatedObjectConfig, "item", "Generators file: GeneratedItem", false);
-		if (this.item != null)
+
+		if (generatedObjectConfig.containsKey("wait-for-pick-up"))
+			this.waitForPickUp = (boolean) generatedObjectConfig.get("wait-for-pick-up");
+
+		this.item = FilesUtils.loadItemStack((Map<?, ?>) generatedObjectConfig, "item",
+				"Generators file: GeneratedItem", false);
+
+		if (this.item != null) {
+			if (this.waitForPickUp)
+				Main.getInstance().getServer().getPluginManager().registerEvents(this, Main.getInstance());
 			return true;
+		}
 		return false;
 	}
 
@@ -37,9 +57,9 @@ public class GeneratedItem extends AbstractGeneratedObject {
 	public void regenerate(IGeneratorLocation generatorLocation) {
 		Location generateLocation = generatorLocation.getGeneratedBlockLocation().clone().add(0.5, 0, 0.5);
 		if (!Main.getMultiVersion().getBlocksUtils().isAir(generatorLocation.getGeneratedBlockLocation().getBlock()))
-			generateLocation.add(0,1,0);
+			generateLocation.add(0, 1, 0);
 		generateLocation.setPitch(-90);
-		generateLocation.getWorld().dropItem(generateLocation, item);
+		this.entity = generatorLocation.getGeneratedBlockLocation().getWorld().dropItem(generateLocation, item);
 		generatorLocation.scheduleGeneratorRegeneration();
 	}
 
@@ -50,9 +70,25 @@ public class GeneratedItem extends AbstractGeneratedObject {
 
 	@Override
 	protected String toStringSpecific() {
-		if (this.getItem() == null)
-			return "None";
-		return "Item: " + this.getItem().toString();
+
+		String s = "None";
+		if (this.getItem() != null)
+			s = "Item: " + this.getItem().toString();
+		if (this.waitForPickUp)
+			s += " [waitForPickUp]";
+
+		return s;
+	}
+
+	@Override
+	public boolean isReady() {
+		return !(this.waitForPickUp && !this.entity.isDead());
+	}
+
+	@EventHandler(priority = EventPriority.MONITOR)
+	public void onItemMerge(ItemMergeEvent e) {
+		if (!e.isCancelled() && e.getEntity() == this.entity)
+			this.entity = e.getTarget();
 	}
 
 }
