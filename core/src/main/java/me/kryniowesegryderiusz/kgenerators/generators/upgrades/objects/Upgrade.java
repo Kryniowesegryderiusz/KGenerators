@@ -145,6 +145,6 @@ public class Upgrade {
 	}
 	
 	public String toString() {
-		return String.format("generator: %s | Next generator: %s | Costs: %s", this.generatorId, this.nextGeneratorId, this.getCostsFormatted(0));
+		return String.format("generator: %s | Next generator: %s | Costs: %s", this.generatorId, this.nextGeneratorId, this.getCostsFormatted(1));
 	}
 }

@@ -97,7 +97,7 @@ public class GeneratorsManager {
 	}
 
 	/**
-	 * Checks if generator item exists
+	 * Checks if generator item exists in other generator
 	 * 
 	 * @param generatorId
 	 * @param item
@@ -105,7 +105,7 @@ public class GeneratorsManager {
 	 */
 	public String exactGeneratorItemExists(String generatorId, ItemStack item) {
 		for (Entry<String, Generator> entry : getEntrySet()) {
-			if (entry.getValue().getGeneratorItem().equals(item))
+			if (entry.getValue().getGeneratorItem().equals(item) && !entry.getKey().equals(generatorId))
 				return entry.getKey();
 		}
 		return null;
@@ -144,6 +144,12 @@ public class GeneratorsManager {
 		ConfigurationSection mainSection = config.getConfigurationSection("");
 		for (String generatorID : mainSection.getKeys(false)) {
 			if (!generatorID.equals("example_generator")) {
+				
+				if (this.generators.containsKey(generatorID)) {
+					Logger.debug("Generators file: " + generatorID + " is already loaded - updating it!");
+					this.generators.get(generatorID).loadConfiguration(this, config, generatorID);
+				}
+				
 				new Generator(this, config, generatorID);
 			}
 		}

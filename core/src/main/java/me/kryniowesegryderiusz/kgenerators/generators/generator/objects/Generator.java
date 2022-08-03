@@ -62,7 +62,21 @@ public class Generator {
 
 	@SuppressWarnings("unchecked")
 	public Generator(GeneratorsManager generatorsManager, Config config, String generatorID) {
-
+		if (this.loadConfiguration(generatorsManager, config, generatorID)) {
+			Logger.error("Generators file: Couldnt load " + generatorID);
+		} else {
+			generatorsManager.add(generatorID, this);
+		}
+	}
+	
+	/**
+	 * 
+	 * @param config
+	 * @param generatorID
+	 * @return true if generator loaded properly
+	 */
+	public boolean loadConfiguration(GeneratorsManager generatorsManager, Config config, String generatorID) {
+		
 		Boolean error = false;
 
 		/*
@@ -179,25 +193,23 @@ public class Generator {
 			this.actions = new Actions();
 			this.actions.load(config, generatorID);
 		}
-
+		
 		String doubledGeneratorId = generatorsManager.exactGeneratorItemExists(generatorID, this.getGeneratorItem());
 		if (doubledGeneratorId != null) {
 			Logger.error("Generators file: " + generatorID + " has same generator item as " + doubledGeneratorId);
-			error = true;
-		}
-
-		if (generatorsManager.exists(generatorID)) {
-			Logger.error("Generators file: generatorID of " + generatorID + "is duplicated!");
+			Logger.error("Generators file: Couldnt load " + generatorID);
 			error = true;
 		}
 
 		if (error) {
-			Logger.error("Generators file: Couldnt load " + generatorID);
+			Logger.error("Generators file: An error appeared, while loading configuration for " + generatorID);
+			return false;
 		} else {
-			generatorsManager.add(generatorID, this);
-			Logger.debug("Generators file: Loaded " + type + " " + generatorID + " generating variety of "
+			Logger.debug("Generators file: Loaded properly " + type + " " + generatorID + " generating variety of "
 					+ this.chances.size() + " objects every " + delay + " ticks");
+			return true;
 		}
+
 	}
 
 	public boolean doesChancesContain(AbstractGeneratedObject generatedObject) {
