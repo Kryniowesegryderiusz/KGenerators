@@ -62,7 +62,7 @@ public class Generator {
 
 	@SuppressWarnings("unchecked")
 	public Generator(GeneratorsManager generatorsManager, Config config, String generatorID) {
-		if (this.loadConfiguration(generatorsManager, config, generatorID)) {
+		if (!this.loadConfiguration(generatorsManager, config, generatorID)) {
 			Logger.error("Generators file: Couldnt load " + generatorID);
 		} else {
 			generatorsManager.add(generatorID, this);
