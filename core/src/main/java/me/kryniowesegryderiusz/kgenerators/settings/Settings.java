@@ -58,6 +58,8 @@ public class Settings {
 	
 	public Settings()
 	{
+		Logger.debug("Settings: Loading settings");
+		
 		Config config;
 		
     	if (!new File(Main.getInstance().getDataFolder(), "config.yml").exists()){

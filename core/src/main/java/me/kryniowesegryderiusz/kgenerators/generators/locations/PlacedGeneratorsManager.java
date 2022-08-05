@@ -150,11 +150,21 @@ public class PlacedGeneratorsManager {
 	 * On startup
 	 */
 	public void loadFromLoadedChunks() {
-		for (GeneratorLocation gl : Main.getDatabases().getDb().getGenerators()) {
-			if (gl.getChunk().isLoaded()) {
-				this.addLoaded(gl);
-				Main.getSchedules().loadSchedule(gl);
+		Logger.debug("PlacedGenerators: Loading generators from already loaded chunks");
+		for (World w : Bukkit.getWorlds()) {
+			int amount = 0;
+			int chunks = 0;
+			for (Chunk c : w.getLoadedChunks()) {
+				for (GeneratorLocation gl : Main.getDatabases().getDb().getGenerators(c)) {
+					if (gl.getChunk().isLoaded()) {
+						this.addLoaded(gl);
+						Main.getSchedules().loadSchedule(gl);
+						amount++;
+					}
+				}
+				chunks++;
 			}
+			Logger.info("PlacedGenerators: Loaded " + amount + " generators from world " + w.getName() + " (" + chunks + " chunks)");
 		}
 	}
 	

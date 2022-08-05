@@ -24,6 +24,9 @@ public class HologramsManager {
 	private ArrayList<GeneratorLocation> holograms = new ArrayList<>();
 	
 	public HologramsManager() {
+		
+		Logger.debug("HologramsManager: Setting up manager");
+		
 		if (Main.getDependencies().isEnabled(Dependency.DECENT_HOLOGRAMS)) {
 			hologramProvider = new DecentHologramsProvider();
 			Logger.info("Holograms: Enabling DecentHologramsProvider");

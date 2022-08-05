@@ -213,7 +213,7 @@ public class Logger {
 		List<String> lines = Files.readAllLines(Paths.get(Main.getInstance().getDataFolder().getPath(), file),
 				Charset.defaultCharset());
 		for (String l : lines) {
-			if (!fileStrings.contains("password"))
+			if (!l.contains("password"))
 				fileStrings += l + "\n";
 		}
 		return fileStrings;

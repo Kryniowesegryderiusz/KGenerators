@@ -19,6 +19,7 @@ public class DatabaseManager {
 	private IDatabase db;
 
 	public DatabaseManager(DatabaseType dbType) {
+		Logger.debug("DatabaseManager: Setting up manager");
 		this.db = this.getDatabase(dbType);
 	}
 

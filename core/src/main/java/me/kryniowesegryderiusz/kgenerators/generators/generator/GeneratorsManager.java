@@ -38,6 +38,7 @@ public class GeneratorsManager {
 	private GeneratedObjectsManager generatedObjectsManager;
 
 	public GeneratorsManager() {
+		Logger.debug("GeneratorsManager: Setting up manager");
 		this.generatedObjectsManager = new GeneratedObjectsManager();
 		this.generatedObjectsManager.registerGeneratedObject(GeneratedBlock.class);
 		this.generatedObjectsManager.registerGeneratedObject(GeneratedItem.class);

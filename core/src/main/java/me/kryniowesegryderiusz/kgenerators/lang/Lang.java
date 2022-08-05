@@ -35,6 +35,9 @@ public class Lang {
 	@Getter private static CustomNamesStorage customNamesStorage;
 	
 	public static void loadFromFiles() {
+		
+		Logger.debug("Lang: Loading lang files");
+		
 		Config config;
 		Config configGui;
 		Config configCustomNames;

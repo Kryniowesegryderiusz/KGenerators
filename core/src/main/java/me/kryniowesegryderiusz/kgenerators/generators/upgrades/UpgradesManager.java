@@ -89,6 +89,8 @@ public class UpgradesManager {
 	
 	public void reload() {
 		
+		Logger.debug("UpgradesManager: Setting up manager");
+		
 		upgrades.clear();
 		
 		Config config;

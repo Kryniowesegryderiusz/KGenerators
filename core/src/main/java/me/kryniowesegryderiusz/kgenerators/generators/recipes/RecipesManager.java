@@ -25,6 +25,8 @@ public class RecipesManager {
 	private HashMap<Generator, Recipe> recipes = new HashMap<Generator, Recipe>();
 	
 	public RecipesManager(){
+		Logger.debug("RecipesManager: Setting up manager");
+		
 		Config file;
 
     	try {

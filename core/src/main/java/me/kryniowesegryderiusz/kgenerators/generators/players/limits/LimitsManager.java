@@ -21,6 +21,9 @@ public class LimitsManager {
 	private LinkedHashMap<String, Limit> limits = new LinkedHashMap<String, Limit>();
 
 	public LimitsManager() {
+		
+		Logger.debug("LimitsManager: Setting up manager");
+		
 		Config config;
 
 		try {

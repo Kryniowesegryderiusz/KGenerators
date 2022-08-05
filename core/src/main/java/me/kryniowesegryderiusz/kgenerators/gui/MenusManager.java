@@ -26,12 +26,16 @@ import me.kryniowesegryderiusz.kgenerators.lang.enums.MenuInventoryType;
 import me.kryniowesegryderiusz.kgenerators.lang.enums.MenuItemType;
 import me.kryniowesegryderiusz.kgenerators.lang.enums.Message;
 import me.kryniowesegryderiusz.kgenerators.lang.interfaces.IMenuInventoryType;
+import me.kryniowesegryderiusz.kgenerators.logger.Logger;
 
 public class MenusManager implements Listener {
 	
 	private HashMap<Player, MenuPlayer> guis = new HashMap<Player, MenuPlayer>();
 	
 	public MenusManager() {
+		
+		Logger.debug("MenusManager: Setting up manager");
+		
 		Bukkit.getScheduler().scheduleSyncRepeatingTask(Main.getInstance(), new Runnable() {
 		    @Override
 		    public void run() {

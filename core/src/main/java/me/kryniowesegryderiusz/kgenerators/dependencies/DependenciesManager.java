@@ -22,6 +22,8 @@ public class DependenciesManager {
 	@Getter private ArrayList<Dependency> dependencies = new ArrayList<Dependency>();
 	
 	public void standardDependenciesCheck() {
+		
+		Logger.debug("Dependencies: Setting up dependencies");
     	
 		/*
 		 * Delayed checks

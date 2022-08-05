@@ -28,6 +28,9 @@ public class SchedulesManager {
 	private HashMap<GeneratorLocation, Schedule> schedules = new HashMap<GeneratorLocation, Schedule>();
 	
 	public SchedulesManager() {
+		
+		Logger.debug("SchedulesManager: Setting up manager");
+		
 		Bukkit.getScheduler().scheduleSyncRepeatingTask(Main.getInstance(), new Runnable() {
 		    @Override
 		    public void run() {

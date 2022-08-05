@@ -113,6 +113,7 @@ public class Main extends JavaPlugin {
     	limits = new LimitsManager();
     	Lang.loadFromFiles();
     	this.getServer().getPluginManager().callEvent(new ReloadEvent());
+    	Logger.info("Reload: KGenerators reloaded successfully");
     }
     
     public void enable() {
@@ -150,8 +151,9 @@ public class Main extends JavaPlugin {
 			/* Commands setup */
 			this.getServer().getPluginCommand("kgenerators").setExecutor(new Commands());
 			this.getServer().getPluginCommand("kgenerators").setTabCompleter(new CommandTabCompleter());
-
+			
 			/* Listeners setup */
+			Logger.debug("MainManager: Loading listeners");
 			this.getServer().getPluginManager().registerEvents(new BlockBreakListener(), this);
 			this.getServer().getPluginManager().registerEvents(new BlockPlaceListener(), this);
 			this.getServer().getPluginManager().registerEvents(new CraftItemListener(), this);
@@ -168,6 +170,7 @@ public class Main extends JavaPlugin {
 			/* 
 			 * Metrix
 			 */
+			Logger.debug("MainManager: Loading Metrix");
 			int pluginId = 7871;
 			Metrics metrics = new Metrics(this, pluginId);
 			metrics.addCustomChart(new Metrics.SingleLineChart("configured_generators", () -> Main.getGenerators().getAmount()));
@@ -215,6 +218,8 @@ public class Main extends JavaPlugin {
 		            return valueMap;
 				}
 			}));
+			
+			Logger.info("MainManager: KGenerators loaded successfully");
 	        
 		} catch (Exception e) {
 			Logger.error(e);
