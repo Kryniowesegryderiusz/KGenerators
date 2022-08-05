@@ -46,8 +46,9 @@ public class SQLDatabase implements IDatabase {
 				stat.close();
 			} else if (dbType == DatabaseType.MYSQL) {
 		        String DB_URL = "jdbc:mysql://" + sqlconfig.getDbHost() + ":" + sqlconfig.getDbPort() + "/" + sqlconfig.getDbName() +
-		    	        "?characterEncoding=utf8&autoReconnect=true&user=" + sqlconfig.getDbUser() + "&password=" + sqlconfig.getDbPass();        
-    	        conn = DriverManager.getConnection(DB_URL);
+		    	        "?characterEncoding=utf8&autoReconnect=true";        
+    	        conn = DriverManager.getConnection(DB_URL, sqlconfig.getDbUser(), sqlconfig.getDbPass());
+    	        
     			Statement stat = conn.createStatement();
     			stat.executeUpdate("CREATE TABLE IF NOT EXISTS "+PLACED_TABLE+" (id INT(8) NOT NULL PRIMARY KEY AUTO_INCREMENT, world VARCHAR(32), x INT(8), y INT(8), z INT(8), chunk_x INT(8), chunk_z INT(8), generator_id VARCHAR(64), owner VARCHAR(16), last_generated_object INT(8))");
     			stat.executeUpdate("CREATE TABLE IF NOT EXISTS "+SCHEDULED_TABLE+" (id INT(8) NOT NULL PRIMARY KEY AUTO_INCREMENT, world VARCHAR(32), x INT(8), y INT(8), z INT(8), creation_timestamp INT(8), delay_left INT(8))");
