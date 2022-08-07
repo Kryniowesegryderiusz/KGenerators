@@ -164,7 +164,7 @@ public class PlacedGeneratorsManager {
 				}
 				chunks++;
 			}
-			Logger.info("PlacedGenerators: Loaded " + amount + " generators from world " + w.getName() + " (" + chunks + " chunks)");
+			Logger.debug("PlacedGenerators: Loaded " + amount + " generators from world " + w.getName() + " (" + chunks + " chunks)");
 		}
 	}
 	
