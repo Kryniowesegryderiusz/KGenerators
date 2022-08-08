@@ -103,8 +103,8 @@ public class GeneratorLocation implements IGeneratorLocation {
 
 	// api
 	public boolean isBlockPossibleToMine(Location location) {
-		return this.getGeneratedBlockLocation().equals(location) && !this.getGenerator().getPlaceholder()
-				.equals(Main.getMultiVersion().getBlocksUtils().getItemStackByBlock(location.getBlock()));
+		return this.getGeneratedBlockLocation().equals(location) && (this.getGenerator().getPlaceholder() == null || !this.getGenerator().getPlaceholder().getItem()
+				.equals(Main.getMultiVersion().getBlocksUtils().getItemStackByBlock(location.getBlock())));
 	}
 
 	// api
