@@ -46,7 +46,7 @@ public class SQLDatabase implements IDatabase {
 				stat.close();
 			} else if (dbType == DatabaseType.MYSQL) {
 		        String DB_URL = "jdbc:mysql://" + sqlconfig.getDbHost() + ":" + sqlconfig.getDbPort() + "/" + sqlconfig.getDbName() +
-		    	        "?characterEncoding=utf8&autoReconnect=true?useSSL=" + sqlconfig.isSsl();
+		    	        "?characterEncoding=utf8&autoReconnect=true&useSSL=" + sqlconfig.isSsl();
     	        conn = DriverManager.getConnection(DB_URL, sqlconfig.getDbUser(), sqlconfig.getDbPass());
     	        
     			Statement stat = conn.createStatement();
