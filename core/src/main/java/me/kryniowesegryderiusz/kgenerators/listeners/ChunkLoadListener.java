@@ -8,12 +8,14 @@ import me.kryniowesegryderiusz.kgenerators.Main;
 import me.kryniowesegryderiusz.kgenerators.generators.locations.objects.GeneratorLocation;
 
 public class ChunkLoadListener implements Listener {
-	
+
 	@EventHandler
 	public void onChunkLoad(final ChunkLoadEvent e) {
-		for (GeneratorLocation gl : Main.getDatabases().getDb().getGenerators(e.getChunk())) {
-			Main.getPlacedGenerators().loadGenerator(gl);
-		}
+		Main.getInstance().getServer().getScheduler().runTaskAsynchronously(Main.getInstance(), () -> {
+			for (GeneratorLocation gl : Main.getDatabases().getDb().getGenerators(e.getChunk())) {
+				Main.getPlacedGenerators().loadGenerator(gl);
+			}
+		});
 	}
 
 }

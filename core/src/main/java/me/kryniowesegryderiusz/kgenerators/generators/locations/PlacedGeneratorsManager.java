@@ -207,7 +207,7 @@ public class PlacedGeneratorsManager {
 	 * ChunkGeneratorLocations class
 	 */
 
-	public class ChunkGeneratorLocations{
+	public class ChunkGeneratorLocations {
 		private HashMap<Location, GeneratorLocation> locations = new HashMap<Location, GeneratorLocation>();
 		
 		public void addLocation(GeneratorLocation gLocation) {
@@ -235,6 +235,5 @@ public class PlacedGeneratorsManager {
 			return all;
 		}
 	}
-	
 }
 

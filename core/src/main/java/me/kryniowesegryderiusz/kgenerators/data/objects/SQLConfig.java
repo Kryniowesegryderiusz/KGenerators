@@ -18,17 +18,19 @@ public class SQLConfig {
 
 	@Getter
 	private String dbPass;
-  
+
+	@Getter
+	private boolean ssl = false;
+
 	public SQLConfig(String dbHost, int dbPort, String dbName, String dbUser, String dbPass) {
-	  this.dbHost = dbHost;
-	  this.dbPort = dbPort;
-	  this.dbName = dbName;
-	  this.dbUser = dbUser;
-	  this.dbPass = dbPass;
+		this.dbHost = dbHost;
+		this.dbPort = dbPort;
+		this.dbName = dbName;
+		this.dbUser = dbUser;
+		this.dbPass = dbPass;
 	}
-	
-	public SQLConfig(Config config)
-	{
+
+	public SQLConfig(Config config) {
 		if (config.contains("database.host"))
 			this.dbHost = config.getString("database.host");
 		if (config.contains("database.port"))
@@ -39,5 +41,7 @@ public class SQLConfig {
 			this.dbUser = config.getString("database.username");
 		if (config.contains("database.password"))
 			this.dbPass = config.getString("database.password");
+		if (config.contains("database.use-sll"))
+			this.ssl = config.getBoolean("database.use-ssl");
 	}
 }
