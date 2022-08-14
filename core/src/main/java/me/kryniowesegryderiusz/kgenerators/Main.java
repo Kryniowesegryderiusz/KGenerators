@@ -94,12 +94,17 @@ public class Main extends JavaPlugin {
     
     @Override
     public void onDisable() {
+    	Logger.info("Disabling KGenerators");
     	
+    	Logger.info("Saving " + Main.getPlacedGenerators().getAmount() + " running generators.");
     	for (GeneratorLocation gl : Main.getPlacedGenerators().getAll())
     		Main.getPlacedGenerators().unloadGenerator(gl);
 
+    	Logger.info("Safely closing menus.");
     	if (menus != null)
     		menus.closeAll();
+    	
+    	Logger.info("Safely shutting down database.");
     	if (databases != null && databases.getDb() != null)
     		databases.getDb().closeConnection();
     }

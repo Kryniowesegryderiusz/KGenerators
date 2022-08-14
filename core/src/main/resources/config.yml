@@ -89,8 +89,8 @@ sounds:
 #Changed values need server restart to affect plugin functioning
 intervals:
   #How often should generators check if they should regenerate?
-  #All generator delays should be a multiple of this number
-  generation-check: 10
+  #All generator delays should be multiple of this number
+  generation-check: 5
   #How often should holograms be updated?
   hologram-update: 20
   #How often should generators guis be updated?

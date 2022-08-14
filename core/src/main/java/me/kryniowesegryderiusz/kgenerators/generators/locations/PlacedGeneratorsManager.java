@@ -150,22 +150,32 @@ public class PlacedGeneratorsManager {
 	 * On startup
 	 */
 	public void loadFromLoadedChunks() {
+
 		Logger.debug("PlacedGenerators: Loading generators from already loaded chunks");
-		Main.getInstance().getServer().getScheduler().runTaskAsynchronously(Main.getInstance(), () -> {
-			for (World w : Bukkit.getWorlds()) {
-				int amount = 0;
-				int chunks = 0;
-				for (Chunk c : w.getLoadedChunks()) {
-					for (GeneratorLocation gl : Main.getDatabases().getDb().getGenerators(c)) {
-						if (gl.getChunk().isLoaded()) {
-							this.addLoaded(gl);
-							Main.getSchedules().loadSchedule(gl);
-							amount++;
+
+		HashMap<World, Chunk[]> loadedChunks = new HashMap<World, Chunk[]>();
+		
+		for (World w : Bukkit.getWorlds()) {
+			loadedChunks.put(w, w.getLoadedChunks());
+		}
+		
+		Main.getInstance().getServer().getScheduler().runTaskAsynchronously(Main.getInstance(), new Runnable() {
+			@Override
+			public void run() {
+				for (Entry<World, Chunk[]> e : loadedChunks.entrySet()) {
+					int amount = 0;
+					int chunks = 0;
+					for (Chunk c : e.getValue()) {
+						for (GeneratorLocation gl : Main.getDatabases().getDb().getGenerators(c)) {
+							if (gl.getChunk().isLoaded()) {
+								loadGenerator(gl);
+								amount++;
+							}
 						}
+						chunks++;
 					}
-					chunks++;
+					Logger.debug("PlacedGenerators: Loaded " + amount + " generators from world " + e.getKey().getName() + " (" + chunks + " chunks)");
 				}
-				Logger.debug("PlacedGenerators: Loaded " + amount + " generators from world " + w.getName() + " (" + chunks + " chunks)");
 			}
 		});
 	}

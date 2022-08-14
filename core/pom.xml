@@ -250,6 +250,16 @@
 			<version>2.11.1</version>
 			<scope>provided</scope>
 		</dependency>
+
+		<!-- HikariCP -->
+		<dependency>
+			<groupId>com.zaxxer</groupId>
+			<artifactId>HikariCP</artifactId>
+			<version>4.0.3</version>
+			<scope>compile</scope>
+			<type>jar</type>
+		</dependency>
+
 	</dependencies>
 
 	<build>
@@ -305,6 +315,7 @@
 					<artifactSet>
 						<includes>
 							<include>de.tr7zw:*</include>
+							<include>com.zaxxer:*</include>
 						</includes>
 					</artifactSet>
 				</configuration>

@@ -53,7 +53,7 @@ public class DatabaseManager {
 
 				IDatabase newDb = getDatabase(toDbType);
 
-				if (newDb == null || newDb.getConnection() == null) {
+				if (newDb == null) {
 					Logger.error("DatabasesHandler: Cannot change database to " + toDbType.toString()
 							+ "! Connection could not be initialised!");
 					return;

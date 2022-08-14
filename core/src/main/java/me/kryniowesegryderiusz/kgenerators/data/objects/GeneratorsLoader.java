@@ -45,43 +45,48 @@ public class GeneratorsLoader {
 	}
 
 	public void loadNext(String generatorId, String location, String chunk, String owner, int lastGeneratedObjectId) {
-		boolean err = false;
+		try {
+			boolean err = false;
 
-		String world = location.split(",")[0];
-		if (Main.getInstance().getServer().getWorld(world) == null) {
-			if (!errWorlds.contains(world))
-				errWorlds.add(world);
-			err = true;
-		}
-		Location generatorLocation = Main.getPlacedGenerators().stringToLocation(location);
-
-		Chunk generatorChunk = null;
-		if (!chunk.contains("null") && !chunk.equals(","))
-			generatorChunk = Main.getPlacedGenerators().stringToChunk(chunk);
-
-		if (generatorId != null) {
-			if (!Main.getGenerators().exists(generatorId)) {
-				if (!errNotExist.contains(generatorId))
-					errNotExist.add(generatorId);
+			String world = location.split(",")[0];
+			if (Main.getInstance().getServer().getWorld(world) == null) {
+				if (!errWorlds.contains(world))
+					errWorlds.add(world);
 				err = true;
 			}
-		} else {
-			if (!errNotSetId.contains(location))
-				errNotSetId.add(location);
-			err = true;
-		}
-		
-		AbstractGeneratedObject ago = null;
-		if (lastGeneratedObjectId >= 0) {
-			ago = Main.getGenerators().get(generatorId).getGeneratedObjectById(lastGeneratedObjectId);
-		}
+			Location generatorLocation = Main.getPlacedGenerators().stringToLocation(location);
 
-		if (!err) {
-			this.loadedGenerators.add(new GeneratorLocation(Main.getGenerators().get(generatorId), generatorLocation,
-					generatorChunk, Main.getPlayers().createPlayer(owner), ago));
-			amount++;
-		} else {
-			notLoaded++;
+			Chunk generatorChunk = null;
+			if (!chunk.contains("null") && !chunk.equals(","))
+				generatorChunk = Main.getPlacedGenerators().stringToChunk(chunk);
+
+			if (generatorId != null) {
+				if (!Main.getGenerators().exists(generatorId)) {
+					if (!errNotExist.contains(generatorId))
+						errNotExist.add(generatorId);
+					err = true;
+				}
+			} else {
+				if (!errNotSetId.contains(location))
+					errNotSetId.add(location);
+				err = true;
+			}
+			
+			AbstractGeneratedObject ago = null;
+			if (lastGeneratedObjectId >= 0) {
+				ago = Main.getGenerators().get(generatorId).getGeneratedObjectById(lastGeneratedObjectId);
+			}
+
+			if (!err) {
+				this.loadedGenerators.add(new GeneratorLocation(Main.getGenerators().get(generatorId), generatorLocation,
+						generatorChunk, Main.getPlayers().createPlayer(owner), ago));
+				amount++;
+			} else {
+				notLoaded++;
+			}
+		} catch (Exception e) {
+			Logger.error("An error occured, while loading " + generatorId + " | " + location + " | " + chunk + " | " + owner + " | " + lastGeneratedObjectId);
+			Logger.error(e);
 		}
 	}
 

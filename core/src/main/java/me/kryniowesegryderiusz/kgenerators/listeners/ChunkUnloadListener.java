@@ -11,11 +11,9 @@ public class ChunkUnloadListener implements Listener {
 
 	@EventHandler
 	public void onChunkUnload(final ChunkUnloadEvent e) {
-		Main.getInstance().getServer().getScheduler().runTaskAsynchronously(Main.getInstance(), () -> {
-			for (GeneratorLocation gl : Main.getPlacedGenerators().getLoaded(e.getChunk())) {
-				Main.getPlacedGenerators().unloadGenerator(gl);
-			}
-		});
+		for (GeneratorLocation gl : Main.getPlacedGenerators().getLoaded(e.getChunk())) {
+			Main.getPlacedGenerators().unloadGenerator(gl);
+		}
 	}
 
 }

@@ -15,12 +15,6 @@ import me.kryniowesegryderiusz.kgenerators.generators.schedules.objects.Schedule
 public interface IDatabase {
 	
 	/**
-	 * Gets database connection
-	 * @return connection or null if not SQL
-	 */
-	@Nullable public Connection getConnection();
-	
-	/**
 	 * Closes database connection
 	 */
 	public void closeConnection();
