@@ -1,6 +1,5 @@
 package me.kryniowesegryderiusz.kgenerators.listeners;
 
-import org.bukkit.Material;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.EventPriority;
@@ -24,12 +23,6 @@ public class BlockBreakListener implements Listener {
 	public void onBlockBreak(final BlockBreakEvent e)
 	{
 		if (e.isCancelled()) return;
-		
-		if (!Main.getPlacedGenerators().getLoadedChunksManager().isLoaded(e.getBlock().getChunk())) {
-			Lang.getMessageStorage().send(e.getPlayer(), Message.GENERATOR_CHUNK_NOT_LOADED_YET);
-			e.setCancelled(true);
-			return;
-		}
 		
 		Player p = e.getPlayer();
 		

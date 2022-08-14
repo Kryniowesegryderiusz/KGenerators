@@ -31,15 +31,15 @@ public class ChunkLoadListener implements Listener {
 				ArrayList<GeneratorLocation> generators = Main.getDatabases().getDb().getGenerators(c);
 				
 				if (generators == null) {
-					Logger.error("ChunkManagement: Cant load chunk " + c.getX() + " " + c.getZ() + "! Postponing for 5 seconds!");
-					loadChunk(c, 5*20);
+					Logger.error("ChunkManagement: Cant load chunk " + c.getX() + " " + c.getZ() + "! Trying again!");
+					loadChunk(c, 1*20);
 					return;
 				}
 				
 				for (GeneratorLocation gl : generators) {
 					Main.getPlacedGenerators().loadGenerator(gl);
 				}
-				Main.getPlacedGenerators().getLoadedChunksManager().addChunk(c);
+
 			}
 		}, delay);
 	}

@@ -18,6 +18,7 @@ public class ChunkUnloadListener implements Listener {
 		if (Main.getDatabases().isMigratorRunning()) return;
 		
 		Chunk c = e.getChunk();
+		
 		ArrayList<GeneratorLocation> generatorsToUnload = Main.getPlacedGenerators().getLoaded(c);
 		
 		Main.getInstance().getServer().getScheduler().runTaskAsynchronously(Main.getInstance(), new Runnable() {
@@ -26,7 +27,6 @@ public class ChunkUnloadListener implements Listener {
 				for (GeneratorLocation gl : generatorsToUnload) {
 					Main.getPlacedGenerators().unloadGenerator(gl);
 				}
-				Main.getPlacedGenerators().getLoadedChunksManager().removeChunk(c);
 			}
 		});
 		

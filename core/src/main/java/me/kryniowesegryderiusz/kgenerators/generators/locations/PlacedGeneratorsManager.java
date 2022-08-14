@@ -11,6 +11,7 @@ import org.bukkit.Chunk;
 import org.bukkit.Location;
 import org.bukkit.World;
 
+import lombok.AllArgsConstructor;
 import lombok.Getter;
 import me.kryniowesegryderiusz.kgenerators.Main;
 import me.kryniowesegryderiusz.kgenerators.generators.generator.enums.GeneratorType;
@@ -19,8 +20,6 @@ import me.kryniowesegryderiusz.kgenerators.listeners.ChunkLoadListener;
 import me.kryniowesegryderiusz.kgenerators.logger.Logger;
 
 public class PlacedGeneratorsManager {
-	
-	@Getter private LoadedChunksManager loadedChunksManager = new LoadedChunksManager();
 	
 	private HashMap<Chunk, ChunkGeneratorLocations> loadedGenerators = new HashMap<Chunk, ChunkGeneratorLocations>();
 	
@@ -247,21 +246,28 @@ public class PlacedGeneratorsManager {
 		}
 	}
 	
-	public class LoadedChunksManager {
+	@AllArgsConstructor
+	public class ChunkInfo {
+		@Getter int x;
+		@Getter int z;
 		
-		HashMap<World, ArrayList<Chunk>> loadedChunks = new HashMap<World, ArrayList<Chunk>>();
-		
-		public void addChunk(Chunk c) {
-			loadedChunks.putIfAbsent(c.getWorld(), new ArrayList<Chunk>());
-			loadedChunks.get(c.getWorld()).add(c);
+		public ChunkInfo(Chunk c) {
+			this.x = c.getX();
+			this.z = c.getZ();
 		}
 		
-		public void removeChunk(Chunk c) {
-			loadedChunks.get(c.getWorld()).remove(c);
+		@Override
+		public boolean equals(Object obj) {
+	        if(obj == null || obj.getClass()!= this.getClass())
+	            return false;
+	        
+	        ChunkInfo ci = (ChunkInfo) obj;	        
+			return x == ci.getX() && z == ci.getZ();
 		}
 		
-		public boolean isLoaded(Chunk c) {
-			return loadedChunks.containsKey(c.getWorld()) && loadedChunks.get(c.getWorld()).contains(c);
+		@Override
+		public String toString() {
+			return "ChunkInfo:"+x+"-"+z;
 		}
 	}
 }

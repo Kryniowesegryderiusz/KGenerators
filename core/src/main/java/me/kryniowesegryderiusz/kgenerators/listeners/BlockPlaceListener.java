@@ -29,14 +29,7 @@ public class BlockPlaceListener implements Listener {
 		}
 
 		Generator generator = Main.getGenerators().get(e.getItemInHand());
-		if (generator != null) {
-			
-			if (!Main.getPlacedGenerators().getLoadedChunksManager().isLoaded(e.getBlock().getChunk())) {
-				Lang.getMessageStorage().send(e.getPlayer(), Message.GENERATOR_CHUNK_NOT_LOADED_YET);
-				e.setCancelled(true);
-				return;
-			}
-			
+		if (generator != null) {		
 			e.setCancelled(
 					!new GeneratorLocation(generator, e.getBlock().getLocation(), Main.getPlayers().getPlayer(player))
 							.placeGenerator(player));
