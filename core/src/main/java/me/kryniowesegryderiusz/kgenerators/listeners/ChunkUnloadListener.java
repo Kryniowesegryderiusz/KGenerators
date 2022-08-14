@@ -1,5 +1,8 @@
 package me.kryniowesegryderiusz.kgenerators.listeners;
 
+import java.util.ArrayList;
+
+import org.bukkit.Chunk;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
 import org.bukkit.event.world.ChunkUnloadEvent;
@@ -11,9 +14,23 @@ public class ChunkUnloadListener implements Listener {
 
 	@EventHandler
 	public void onChunkUnload(final ChunkUnloadEvent e) {
-		for (GeneratorLocation gl : Main.getPlacedGenerators().getLoaded(e.getChunk())) {
-			Main.getPlacedGenerators().unloadGenerator(gl);
-		}
+		
+		if (Main.getDatabases().isMigratorRunning()) return;
+		
+		Chunk c = e.getChunk();
+		ArrayList<GeneratorLocation> generatorsToUnload = Main.getPlacedGenerators().getLoaded(c);
+		
+		Main.getInstance().getServer().getScheduler().runTaskAsynchronously(Main.getInstance(), new Runnable() {
+			@Override
+			public void run() {
+				for (GeneratorLocation gl : generatorsToUnload) {
+					Main.getPlacedGenerators().unloadGenerator(gl);
+				}
+				Main.getPlacedGenerators().getLoadedChunksManager().removeChunk(c);
+			}
+		});
+		
+
 	}
 
 }

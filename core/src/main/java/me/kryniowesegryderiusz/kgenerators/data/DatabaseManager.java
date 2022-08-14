@@ -1,6 +1,8 @@
 package me.kryniowesegryderiusz.kgenerators.data;
 
 import java.io.File;
+import java.util.ArrayList;
+import java.util.concurrent.TimeUnit;
 
 import javax.annotation.Nullable;
 
@@ -17,6 +19,8 @@ public class DatabaseManager {
 
 	@Getter
 	private IDatabase db;
+	
+	@Getter boolean isMigratorRunning = false;
 
 	public DatabaseManager(DatabaseType dbType) {
 		Logger.debug("DatabaseManager: Setting up manager");
@@ -51,6 +55,10 @@ public class DatabaseManager {
 			public void run() {
 				Logger.info("DatabasesHandler: Converting database from " + Main.getSettings().getDbType().name() + " to " + toDbType.name() + ". IT COULD TAKE A WHILE!");
 
+				//db.getDataSource().setConnectionTimeout(5*60*1000);
+				//db.getDataSource().setLeakDetectionThreshold(5*60*1000);
+				//db.getDataSource().setMaximumPoolSize(500);
+				
 				IDatabase newDb = getDatabase(toDbType);
 
 				if (newDb == null) {
@@ -59,12 +67,23 @@ public class DatabaseManager {
 					return;
 				}
 				
-				migratorInfo = new MigratorInfo(db.getGeneratorsAmount());
+				int amount = db.getGeneratorsAmount();
+				
+				migratorInfo = new MigratorInfo(amount);
+				isMigratorRunning = true;
 
-				for (GeneratorLocation gl : db.getGenerators()) {
-					newDb.saveGenerator(gl);
-					migratorInfo.increment();
+				int amountAtOnce = 500;
+				
+				for (int i = 0; i <= amount; i = i + amountAtOnce) {
+					Logger.info("DatabasesHandler: Migrating next "+amountAtOnce+" generators: " + i + "-" + (i+amountAtOnce));
+					ArrayList<GeneratorLocation> next = db.getGenerators(i, amountAtOnce);
+					Logger.info("DatabaseHandler: Obtained " + next.size() + " from old database");
+					for (GeneratorLocation gl : next) {
+						newDb.saveGenerator(gl);
+						migratorInfo.increment();
+					}
 				}
+
 
 				Main.getSettings().setDbType(toDbType);
 				FilesUtils.changeText(new File(Main.getInstance().getDataFolder(), "config.yml"), "  dbtype: ",
@@ -72,6 +91,7 @@ public class DatabaseManager {
 
 				migratorInfo.end();
 				migratorInfo = null;
+				isMigratorRunning = false;
 				
 				db = newDb;
 				Logger.info("DatabasesHandler: Succesfully converted database to " + toDbType.toString() + "!");

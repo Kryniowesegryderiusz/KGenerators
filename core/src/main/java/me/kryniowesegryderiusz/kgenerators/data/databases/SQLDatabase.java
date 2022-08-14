@@ -3,7 +3,6 @@ package me.kryniowesegryderiusz.kgenerators.data.databases;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
-import java.sql.SQLException;
 import java.sql.Statement;
 import java.time.Instant;
 import java.util.ArrayList;
@@ -15,6 +14,7 @@ import org.bukkit.World;
 import com.zaxxer.hikari.HikariConfig;
 import com.zaxxer.hikari.HikariDataSource;
 
+import lombok.Getter;
 import me.kryniowesegryderiusz.kgenerators.Main;
 import me.kryniowesegryderiusz.kgenerators.data.enums.DatabaseType;
 import me.kryniowesegryderiusz.kgenerators.data.objects.GeneratorsLoader;
@@ -28,7 +28,7 @@ public class SQLDatabase implements IDatabase {
 
 	private DatabaseType dbType;
 	
-	private HikariDataSource dataSource;
+	@Getter private HikariDataSource dataSource;
 
 	static String PLACED_TABLE = "`kgen_placed`";
 	static String SCHEDULED_TABLE = "`kgen_scheduled`";
@@ -60,7 +60,7 @@ public class SQLDatabase implements IDatabase {
 				config.setJdbcUrl("jdbc:sqlite:" + Main.getInstance().getDataFolder().getPath() + "/data/database.db");
 				config.setConnectionTestQuery("SELECT 1");
 				config.setMaxLifetime(60000); // 60 Sec
-				config.setMaximumPoolSize(10); // 10 Connections (including idle connections)
+				config.setMaximumPoolSize(50); // 50 Connections (including idle connections)
 				config.setLeakDetectionThreshold(20000);
 				
 				dataSource = new HikariDataSource(config);
@@ -98,7 +98,7 @@ public class SQLDatabase implements IDatabase {
 				config.setPassword(sqlconfig.getDbPass());
 				config.setConnectionTestQuery("SELECT 1");
 				config.setMaxLifetime(60000); // 60 Sec
-				config.setMaximumPoolSize(10); // 10 Connections (including idle connections)
+				config.setMaximumPoolSize(50); // 50 Connections (including idle connections)
 				config.setLeakDetectionThreshold(20000);
 				
 				dataSource = new HikariDataSource(config);
@@ -113,16 +113,16 @@ public class SQLDatabase implements IDatabase {
 				conn.close();
 				
 			} else {
-				Logger.error("Database: SQL: Error during initialisation SQL class - wrong database type!");
+				Logger.error("Database " + dbType.name() + ": SQL: Error during initialisation SQL class - wrong database type!");
 				return;
 			}
 
 
-			Logger.info("Database: Connected to " + dbType.toString() + " database");
+			Logger.info("Database " + dbType.name() + ": Connected to " + dbType.toString() + " database");
 
 		} catch (Exception e) {
 			Main.getInstance().getServer().getPluginManager().disablePlugin(Main.getInstance());
-			Logger.error("Database: Cannot initialise SQL connection. Disabling plugin for safety reasons.");
+			Logger.error("Database " + dbType.name() + ": Cannot initialise SQL connection. Disabling plugin for safety reasons.");
 			Logger.error(e);
 		}
 	}
@@ -130,7 +130,7 @@ public class SQLDatabase implements IDatabase {
 	@Override
 	public void closeConnection() {
 		if (dataSource != null && !dataSource.isClosed()) dataSource.close();
-		Logger.info("Database: Connection closed");
+		Logger.info("Database " + dbType.name() + ": Connection closed");
 	}
 
 	@Override
@@ -144,7 +144,7 @@ public class SQLDatabase implements IDatabase {
 		
 		try {
 			conn = dataSource.getConnection();
-		} catch (SQLException e) {
+		} catch (Exception e) {
 			Logger.error(e);
 		}
 		
@@ -168,7 +168,7 @@ public class SQLDatabase implements IDatabase {
 			stat.close();
 
 			if (!found) {
-				Logger.warn("Database: Updating database to V7! That can take a while! Do not stop the server!");
+				Logger.warn("Database " + dbType.name() + ": Updating database to V7! That can take a while! Do not stop the server!");
 
 				stat.executeUpdate("ALTER TABLE " + PLACED_TABLE + " ADD chunk_x INT(8)");
 				stat.executeUpdate("ALTER TABLE " + PLACED_TABLE + " ADD chunk_z INT(8)");
@@ -187,12 +187,12 @@ public class SQLDatabase implements IDatabase {
 					stat.executeUpdate();
 				}
 
-				Logger.warn("Database: Updated database with chunks!");
+				Logger.warn("Database " + dbType.name() + ": Updated database with chunks!");
 			}
 
 		} catch (Exception e) {
 			Main.getInstance().getServer().getPluginManager().disablePlugin(Main.getInstance());
-			Logger.error("Database: Cannot update database to KGenV7. Disabling plugin.");
+			Logger.error("Database " + dbType.name() + ": Cannot update database to KGenV7. Disabling plugin.");
 			Logger.error(e);
 		}
 
@@ -218,7 +218,7 @@ public class SQLDatabase implements IDatabase {
 			stat.close();
 
 			if (!found) {
-				Logger.warn("Database: Updating database to V7.3! That can take a while! Do not stop the server!");
+				Logger.warn("Database " + dbType.name() + ": Updating database to V7.3! That can take a while! Do not stop the server!");
 
 				stat.executeUpdate("ALTER TABLE " + PLACED_TABLE + " ADD last_generated_object INT(8)");
 				stat.close();
@@ -235,19 +235,19 @@ public class SQLDatabase implements IDatabase {
 					stat.executeUpdate();
 				}
 
-				Logger.warn("Database: Updated database with last generated objects!");
+				Logger.warn("Database " + dbType.name() + ": Updated database with last generated objects!");
 			}
 
 		} catch (Exception e) {
 			Main.getInstance().getServer().getPluginManager().disablePlugin(Main.getInstance());
-			Logger.error("Database: Cannot update database to KGenV7.3. Disabling plugin.");
+			Logger.error("Database " + dbType.name() + ": Cannot update database to KGenV7.3. Disabling plugin.");
 			Logger.error(e);
 		}
 		
 		try {
 			if (stat != null && !stat.isClosed()) stat.close();
 			if (conn != null && !conn.isClosed()) conn.close();
-		} catch (SQLException e) {
+		} catch (Exception e) {
 			Logger.error(e);
 		}
 		
@@ -289,8 +289,8 @@ public class SQLDatabase implements IDatabase {
 				stat.setInt(9, gl.getLastGeneratedObjectId());
 				stat.executeUpdate();
 			}
-		} catch (SQLException e) {
-			Logger.error("Database: Cannot save generator " + gl.toString() + " to database");
+		} catch (Exception e) {
+			Logger.error("Database " + dbType.name() + ": Cannot save generator " + gl.toString() + " to database");
 			Logger.error(e);
 		} finally {
 			this.close(stat, conn, res);
@@ -315,8 +315,8 @@ public class SQLDatabase implements IDatabase {
 			res = stat.executeQuery();
 			if (res.next())
 				exists = true;
-		} catch (SQLException e) {
-			Logger.error("Database: Cannot check if generator " + gl.toString() + " exists");
+		} catch (Exception e) {
+			Logger.error("Database " + dbType.name() + ": Cannot check if generator " + gl.toString() + " exists");
 			Logger.error(e);
 		} finally {
 			this.close(stat, conn, res);
@@ -348,8 +348,8 @@ public class SQLDatabase implements IDatabase {
 			if (loader.getAmount() > 0)
 				gl = loader.finish().get(0);
 			stat.close();
-		} catch (SQLException e) {
-			Logger.error("Database: Cannot get generator: " + Main.getPlacedGenerators().locationToString(location));
+		} catch (Exception e) {
+			Logger.error("Database " + dbType.name() + ": Cannot get generator: " + Main.getPlacedGenerators().locationToString(location));
 			Logger.error(e);
 		} finally {
 			this.close(stat, conn, res);
@@ -376,9 +376,38 @@ public class SQLDatabase implements IDatabase {
 			}
 			gl = loader.finish();
 			stat.close();
-		} catch (SQLException e) {
-			Logger.error("Database: Cannot get generators");
+		} catch (Exception e) {
+			Logger.error("Database " + dbType.name() + ": Cannot get generators");
 			Logger.error(e);
+		} finally {
+			this.close(stat, conn, res);
+		}
+		return gl;
+	}
+	
+
+	@Override
+	public ArrayList<GeneratorLocation> getGenerators(int firstRow, int rowAmount) {
+		Connection conn = null;
+		PreparedStatement stat = null;
+		ResultSet res = null;
+		
+		ArrayList<GeneratorLocation> gl = new ArrayList<GeneratorLocation>();
+		try {
+			GeneratorsLoader loader = new GeneratorsLoader();
+
+			conn = dataSource.getConnection();
+			stat = conn.prepareStatement("SELECT * FROM " + PLACED_TABLE + " LIMIT " + rowAmount + " OFFSET " + firstRow);
+			res = stat.executeQuery();
+			while (res.next()) {
+				loader.loadNext(res);
+			}
+			gl = loader.finish();
+			stat.close();
+		} catch (Exception e) {
+			Logger.error("Database " + dbType.name() + ": Cannot get generators");
+			Logger.error(e);
+			gl = null;
 		} finally {
 			this.close(stat, conn, res);
 		}
@@ -413,8 +442,8 @@ public class SQLDatabase implements IDatabase {
 			}
 			gl = loader.finish();
 			stat.close();
-		} catch (SQLException e) {
-			Logger.error("Database: Cannot get generators in range: X:" + minX + "-" + maxX + " Y:" + minY + "-" + maxY
+		} catch (Exception e) {
+			Logger.error("Database " + dbType.name() + ": Cannot get generators in range: X:" + minX + "-" + maxX + " Y:" + minY + "-" + maxY
 					+ " Z:" + minZ + "-" + maxZ);
 			Logger.error(e);
 		} finally {
@@ -442,8 +471,8 @@ public class SQLDatabase implements IDatabase {
 			}
 			gl = loader.finish();
 			stat.close();
-		} catch (SQLException e) {
-			Logger.error("Database: Cannot get generators by owner: " + owner);
+		} catch (Exception e) {
+			Logger.error("Database " + dbType.name() + ": Cannot get generators by owner: " + owner);
 			Logger.error(e);
 		} finally {
 			this.close(stat, conn, res);
@@ -473,8 +502,8 @@ public class SQLDatabase implements IDatabase {
 			gl = loader.finish();
 			stat.close();
 
-		} catch (SQLException e) {
-			Logger.error("Database: Cannot get generators by chunk: " + chunk.toString());
+		} catch (Exception e) {
+			Logger.error("Database " + dbType.name() + ": Cannot get generators by chunk: " + chunk.toString());
 			Logger.error(e);
 		} finally {
 			this.close(stat, conn, res);
@@ -497,8 +526,8 @@ public class SQLDatabase implements IDatabase {
 				amount = res.getInt(1);
 			}
 			stat.close();
-		} catch (SQLException e) {
-			Logger.error("Database: Cannot get generators amount");
+		} catch (Exception e) {
+			Logger.error("Database " + dbType.name() + ": Cannot get generators amount");
 			Logger.error(e);
 		} finally {
 			this.close(stat, conn, res);
@@ -521,8 +550,8 @@ public class SQLDatabase implements IDatabase {
 			stat.setInt(4, l.getBlockZ());
 			stat.executeUpdate();
 			stat.close();
-		} catch (SQLException e) {
-			Logger.error("Database: Cannot remove generator " + Main.getPlacedGenerators().locationToString(l)
+		} catch (Exception e) {
+			Logger.error("Database " + dbType.name() + ": Cannot remove generator " + Main.getPlacedGenerators().locationToString(l)
 					+ " from database");
 			Logger.error(e);
 		} finally {
@@ -546,8 +575,8 @@ public class SQLDatabase implements IDatabase {
 			stat.setLong(5, Instant.now().getEpochSecond());
 			stat.setInt(6, schedule.getTimeLeft());
 			stat.executeUpdate();
-		} catch (SQLException e) {
-			Logger.error("Database: Cannot remove schedule " + gl.toString() + " from database");
+		} catch (Exception e) {
+			Logger.error("Database " + dbType.name() + ": Cannot remove schedule " + gl.toString() + " from database");
 			Logger.error(e);
 		} finally {
 			this.close(stat, conn, null);
@@ -574,8 +603,8 @@ public class SQLDatabase implements IDatabase {
 				schedule = new Schedule(res.getInt("delay_left"), res.getInt("creation_timestamp"));
 			}
 			stat.close();
-		} catch (SQLException e) {
-			Logger.error("Database: Cannot get schedule: " + gl.toString());
+		} catch (Exception e) {
+			Logger.error("Database " + dbType.name() + ": Cannot get schedule: " + gl.toString());
 			Logger.error(e);
 		} finally {
 			this.close(stat, conn, res);
@@ -599,8 +628,8 @@ public class SQLDatabase implements IDatabase {
 			stat.setInt(4, l.getBlockZ());
 			stat.executeUpdate();
 			stat.close();
-		} catch (SQLException e) {
-			Logger.error("Database: Cannot remove schedule " + gl.toString() + " from  database");
+		} catch (Exception e) {
+			Logger.error("Database " + dbType.name() + ": Cannot remove schedule " + gl.toString() + " from  database");
 			Logger.error(e);
 		} finally {
 			this.close(stat, conn, null);
@@ -612,7 +641,7 @@ public class SQLDatabase implements IDatabase {
 			if (stat != null && !stat.isClosed()) stat.close();
 			if (conn != null && !conn.isClosed()) conn.close();
 			if (res != null && !res.isClosed()) res.close();
-		} catch (SQLException e) {
+		} catch (Exception e) {
 			Logger.error(e);
 		}
 		

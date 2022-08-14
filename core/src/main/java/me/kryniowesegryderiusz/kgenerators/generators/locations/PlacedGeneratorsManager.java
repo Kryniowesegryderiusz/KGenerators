@@ -11,12 +11,16 @@ import org.bukkit.Chunk;
 import org.bukkit.Location;
 import org.bukkit.World;
 
+import lombok.Getter;
 import me.kryniowesegryderiusz.kgenerators.Main;
 import me.kryniowesegryderiusz.kgenerators.generators.generator.enums.GeneratorType;
 import me.kryniowesegryderiusz.kgenerators.generators.locations.objects.GeneratorLocation;
+import me.kryniowesegryderiusz.kgenerators.listeners.ChunkLoadListener;
 import me.kryniowesegryderiusz.kgenerators.logger.Logger;
 
 public class PlacedGeneratorsManager {
+	
+	@Getter private LoadedChunksManager loadedChunksManager = new LoadedChunksManager();
 	
 	private HashMap<Chunk, ChunkGeneratorLocations> loadedGenerators = new HashMap<Chunk, ChunkGeneratorLocations>();
 	
@@ -166,12 +170,7 @@ public class PlacedGeneratorsManager {
 					int amount = 0;
 					int chunks = 0;
 					for (Chunk c : e.getValue()) {
-						for (GeneratorLocation gl : Main.getDatabases().getDb().getGenerators(c)) {
-							if (gl.getChunk().isLoaded()) {
-								loadGenerator(gl);
-								amount++;
-							}
-						}
+						ChunkLoadListener.loadChunk(c, 0);
 						chunks++;
 					}
 					Logger.debug("PlacedGenerators: Loaded " + amount + " generators from world " + e.getKey().getName() + " (" + chunks + " chunks)");
@@ -245,6 +244,24 @@ public class PlacedGeneratorsManager {
 			for (Entry<Location, GeneratorLocation> e : this.locations.entrySet())
 				all.add(e.getValue());
 			return all;
+		}
+	}
+	
+	public class LoadedChunksManager {
+		
+		HashMap<World, ArrayList<Chunk>> loadedChunks = new HashMap<World, ArrayList<Chunk>>();
+		
+		public void addChunk(Chunk c) {
+			loadedChunks.putIfAbsent(c.getWorld(), new ArrayList<Chunk>());
+			loadedChunks.get(c.getWorld()).add(c);
+		}
+		
+		public void removeChunk(Chunk c) {
+			loadedChunks.get(c.getWorld()).remove(c);
+		}
+		
+		public boolean isLoaded(Chunk c) {
+			return loadedChunks.containsKey(c.getWorld()) && loadedChunks.get(c.getWorld()).contains(c);
 		}
 	}
 }

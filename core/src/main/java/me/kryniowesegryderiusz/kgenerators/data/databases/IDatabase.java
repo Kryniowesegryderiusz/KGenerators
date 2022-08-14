@@ -9,6 +9,8 @@ import org.bukkit.Chunk;
 import org.bukkit.Location;
 import org.bukkit.World;
 
+import com.zaxxer.hikari.HikariDataSource;
+
 import me.kryniowesegryderiusz.kgenerators.generators.locations.objects.GeneratorLocation;
 import me.kryniowesegryderiusz.kgenerators.generators.schedules.objects.Schedule;
 
@@ -36,6 +38,11 @@ public interface IDatabase {
 	public ArrayList<GeneratorLocation> getGenerators();
 	
 	/**
+	 * Gets all saved generators
+	 */
+	public ArrayList<GeneratorLocation> getGenerators(int firstRow, int rowAmount);
+	
+	/**
 	 * Gets saved generators according to ranges
 	 */
 	public ArrayList<GeneratorLocation> getGenerators(World world, int minX, int minY, int minZ, int maxX, int maxY, int maxZ);
@@ -46,9 +53,10 @@ public interface IDatabase {
 	public ArrayList<GeneratorLocation> getGenerators(String owner);
 	
 	/**
-	 * Gets saved generators according to owner
+	 * Gets saved generators according to chunk
+	 * return null if wasnt properly loaded
 	 */
-	public ArrayList<GeneratorLocation> getGenerators(Chunk chunk);
+	@Nullable public ArrayList<GeneratorLocation> getGenerators(Chunk chunk);
 	
 	/**
 	 * Gets saved generators amount
@@ -66,6 +74,8 @@ public interface IDatabase {
 	 * @param Location
 	 */
 	public void removeGenerator(Location l);
+	
+	public HikariDataSource getDataSource();
 	
 	/*
 	 * Scheduled generators table

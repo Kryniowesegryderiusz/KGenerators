@@ -13,6 +13,8 @@ import me.kryniowesegryderiusz.kgenerators.dependencies.enums.Dependency;
 import me.kryniowesegryderiusz.kgenerators.dependencies.hooks.WorldGuardHook;
 import me.kryniowesegryderiusz.kgenerators.generators.locations.handlers.enums.InteractionType;
 import me.kryniowesegryderiusz.kgenerators.generators.locations.objects.GeneratorLocation;
+import me.kryniowesegryderiusz.kgenerators.lang.Lang;
+import me.kryniowesegryderiusz.kgenerators.lang.enums.Message;
 import me.kryniowesegryderiusz.kgenerators.utils.PlayerUtils;
 import me.kryniowesegryderiusz.kgenerators.xseries.XMaterial;
 
@@ -22,6 +24,12 @@ public class BlockBreakListener implements Listener {
 	public void onBlockBreak(final BlockBreakEvent e)
 	{
 		if (e.isCancelled()) return;
+		
+		if (!Main.getPlacedGenerators().getLoadedChunksManager().isLoaded(e.getBlock().getChunk())) {
+			Lang.getMessageStorage().send(e.getPlayer(), Message.GENERATOR_CHUNK_NOT_LOADED_YET);
+			e.setCancelled(true);
+			return;
+		}
 		
 		Player p = e.getPlayer();
 		

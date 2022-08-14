@@ -38,6 +38,8 @@ public enum Message implements IMessage {
 	
 	GENERATOR_MENU_CANT_OPEN_HERE("generators.menus.cant-open-here", "&cYou cant open this menu here!"),
 	
+	GENERATOR_CHUNK_NOT_LOADED_YET("generators.chunks.not-loaded-yet", "&cDatabase hasnt loaded this chunk yet! Wait a while!"),
+	
 	VAULT_ECONOMY_NOT_AVAILABLE("economy.no-economy-avaible", "&cThere is no economy system avaible!"),
 	VAULT_ECONOMY_NOT_ENOUGH_MONEY("economy.not-enough-money", "&cYou dont have enough money! You need &6<cost>&c!"),
 	
