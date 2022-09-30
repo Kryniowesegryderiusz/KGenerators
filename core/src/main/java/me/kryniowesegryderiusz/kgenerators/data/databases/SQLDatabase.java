@@ -166,12 +166,16 @@ public class SQLDatabase implements IDatabase {
 				}
 			}
 			stat.close();
+			res.close();
 
 			if (!found) {
 				Logger.warn("Database " + dbType.name() + ": Updating database to V7! That can take a while! Do not stop the server!");
 
-				stat.executeUpdate("ALTER TABLE " + PLACED_TABLE + " ADD chunk_x INT(8)");
-				stat.executeUpdate("ALTER TABLE " + PLACED_TABLE + " ADD chunk_z INT(8)");
+				stat = conn.prepareStatement("ALTER TABLE " + PLACED_TABLE + " ADD chunk_x INT(8)");
+				stat.executeUpdate();
+				stat.close();
+				stat = conn.prepareStatement("ALTER TABLE " + PLACED_TABLE + " ADD chunk_z INT(8)");
+				stat.executeUpdate();
 				stat.close();
 
 				
@@ -186,6 +190,7 @@ public class SQLDatabase implements IDatabase {
 					stat.setInt(6, gl.getLocation().getBlockZ());
 					stat.executeUpdate();
 				}
+				stat.close();
 
 				Logger.warn("Database " + dbType.name() + ": Updated database with chunks!");
 			}
@@ -216,14 +221,16 @@ public class SQLDatabase implements IDatabase {
 				}
 			}
 			stat.close();
-
+			res.close();
+			
 			if (!found) {
 				Logger.warn("Database " + dbType.name() + ": Updating database to V7.3! That can take a while! Do not stop the server!");
 
-				stat.executeUpdate("ALTER TABLE " + PLACED_TABLE + " ADD last_generated_object INT(8)");
+				stat = conn.prepareStatement("ALTER TABLE " + PLACED_TABLE + " ADD last_generated_object INT(8)");
+				stat.executeUpdate();
 				stat.close();
 
-				stat = dataSource.getConnection().prepareStatement("UPDATE " + PLACED_TABLE
+				stat = conn.prepareStatement("UPDATE " + PLACED_TABLE
 						+ " SET `chunk_x` = ?, `chunk_z` = ? WHERE `world` = ? AND `x` = ? AND `y` = ? AND `z` = ? AND `last_generated_object` = -1");
 				for (GeneratorLocation gl : this.getGenerators()) {
 					stat.setInt(1, gl.getChunk().getX());
@@ -234,6 +241,8 @@ public class SQLDatabase implements IDatabase {
 					stat.setInt(6, gl.getLocation().getBlockZ());
 					stat.executeUpdate();
 				}
+				
+				stat.close();
 
 				Logger.warn("Database " + dbType.name() + ": Updated database with last generated objects!");
 			}
@@ -250,7 +259,6 @@ public class SQLDatabase implements IDatabase {
 		} catch (Exception e) {
 			Logger.error(e);
 		}
-		
 	}
 
 	@Override
@@ -644,6 +652,5 @@ public class SQLDatabase implements IDatabase {
 		} catch (Exception e) {
 			Logger.error(e);
 		}
-		
 	}
 }

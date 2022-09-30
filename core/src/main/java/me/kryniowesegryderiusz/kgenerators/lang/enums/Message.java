@@ -17,7 +17,7 @@ public enum Message implements IMessage {
 	
 	GENERATORS_CRAFTING_CANT_USE("generators.crafting.cant-use", "&cYou cant craft anything from generator!"),
 	GENERATORS_CRAFTING_NO_PERMISSION("generators.crafting.no-permission", "&cYou dont have permission &8(&7<permission>&8)&c to craft <generator>&c!"),
-
+	
 	GENERATORS_TIME_LEFT_OUTPUT("generators.timeleft.output", "&aThis generator will be regenerated in &e<time>"),
 	
 	GENERATORS_PICK_UP_SUCCESFULL("generators.pick-up.successful", "&e<generator> &apicked up"),
