@@ -99,7 +99,7 @@ public class CustomDrops {
 			e.setExpToDrop(0);
 		if (this.exp > 0)
 			e.setExpToDrop(this.exp);
-		if (Main.getSettings().isBlockDropUpToEq() && e.getPlayer().hasPermission("kgenerators.droptoinventory")) {
+		if (Main.getSettings().isBlockDropToEq() && e.getPlayer().hasPermission("kgenerators.droptoinventory")) {
 			e.getPlayer().giveExp(e.getExpToDrop());
 			e.setExpToDrop(0);
 		}

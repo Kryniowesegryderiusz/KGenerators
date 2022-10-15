@@ -224,7 +224,7 @@ public class Logger {
 		byte[] postData = text.getBytes(StandardCharsets.UTF_8);
 		int postDataLength = postData.length;
 
-		String requestURL = "http://paste.skyup.pl/documents";
+		String requestURL = "http://skyup.pl:7777/documents";
 		URL url = new URL(requestURL);
 		HttpURLConnection conn = (HttpURLConnection) url.openConnection();
 		conn.setDoOutput(true);
@@ -249,7 +249,7 @@ public class Logger {
 		if (response != null && response.contains("\"key\"")) {
 			response = response.substring(response.indexOf(":") + 2, response.length() - 2);
 
-			String postURL = raw ? "http://paste.skyup.pl/raw/" : "http://paste.skyup.pl/";
+			String postURL = raw ? "http://skyup.pl:7777/raw/" : "http://skyup.pl:7777/";
 			response = postURL + response;
 		}
 
