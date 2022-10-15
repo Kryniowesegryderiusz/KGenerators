@@ -355,7 +355,6 @@ public class SQLDatabase implements IDatabase {
 			}
 			if (loader.getAmount() > 0)
 				gl = loader.finish().get(0);
-			stat.close();
 		} catch (Exception e) {
 			Logger.error("Database " + dbType.name() + ": Cannot get generator: " + Main.getPlacedGenerators().locationToString(location));
 			Logger.error(e);
@@ -383,7 +382,6 @@ public class SQLDatabase implements IDatabase {
 				loader.loadNext(res);
 			}
 			gl = loader.finish();
-			stat.close();
 		} catch (Exception e) {
 			Logger.error("Database " + dbType.name() + ": Cannot get generators");
 			Logger.error(e);
@@ -411,7 +409,6 @@ public class SQLDatabase implements IDatabase {
 				loader.loadNext(res);
 			}
 			gl = loader.finish();
-			stat.close();
 		} catch (Exception e) {
 			Logger.error("Database " + dbType.name() + ": Cannot get generators");
 			Logger.error(e);
@@ -449,7 +446,6 @@ public class SQLDatabase implements IDatabase {
 				loader.loadNext(res);
 			}
 			gl = loader.finish();
-			stat.close();
 		} catch (Exception e) {
 			Logger.error("Database " + dbType.name() + ": Cannot get generators in range: X:" + minX + "-" + maxX + " Y:" + minY + "-" + maxY
 					+ " Z:" + minZ + "-" + maxZ);
@@ -478,7 +474,6 @@ public class SQLDatabase implements IDatabase {
 				loader.loadNext(res);
 			}
 			gl = loader.finish();
-			stat.close();
 		} catch (Exception e) {
 			Logger.error("Database " + dbType.name() + ": Cannot get generators by owner: " + owner);
 			Logger.error(e);
@@ -508,8 +503,6 @@ public class SQLDatabase implements IDatabase {
 				loader.loadNext(res);
 			}
 			gl = loader.finish();
-			stat.close();
-
 		} catch (Exception e) {
 			Logger.error("Database " + dbType.name() + ": Cannot get generators by chunk: " + chunk.toString());
 			Logger.error(e);
@@ -533,7 +526,6 @@ public class SQLDatabase implements IDatabase {
 			while (res.next()) {
 				amount = res.getInt(1);
 			}
-			stat.close();
 		} catch (Exception e) {
 			Logger.error("Database " + dbType.name() + ": Cannot get generators amount");
 			Logger.error(e);
@@ -557,7 +549,6 @@ public class SQLDatabase implements IDatabase {
 			stat.setInt(3, l.getBlockY());
 			stat.setInt(4, l.getBlockZ());
 			stat.executeUpdate();
-			stat.close();
 		} catch (Exception e) {
 			Logger.error("Database " + dbType.name() + ": Cannot remove generator " + Main.getPlacedGenerators().locationToString(l)
 					+ " from database");
@@ -610,7 +601,6 @@ public class SQLDatabase implements IDatabase {
 			while (res.next()) {
 				schedule = new Schedule(res.getInt("delay_left"), res.getInt("creation_timestamp"));
 			}
-			stat.close();
 		} catch (Exception e) {
 			Logger.error("Database " + dbType.name() + ": Cannot get schedule: " + gl.toString());
 			Logger.error(e);
@@ -635,7 +625,6 @@ public class SQLDatabase implements IDatabase {
 			stat.setInt(3, l.getBlockY());
 			stat.setInt(4, l.getBlockZ());
 			stat.executeUpdate();
-			stat.close();
 		} catch (Exception e) {
 			Logger.error("Database " + dbType.name() + ": Cannot remove schedule " + gl.toString() + " from  database");
 			Logger.error(e);

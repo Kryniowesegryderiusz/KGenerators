@@ -32,6 +32,9 @@ pick-up-to-eq: true
 #Should block-related drops be added directly to inventory?
 block-drop-to-eq: false
 
+#Should block-related exp drops be added directly to user?
+exp-drop-to-eq: false
+
 #Should "generators" lang section be sent by actionbar instad of chat?
 generators-actionbar-messages: true
 

@@ -44,7 +44,7 @@ public class BlockBreakListener implements Listener {
 				
 				if (gLoc.getLastGeneratedObject() != null && gLoc.getLastGeneratedObject().getCustomDrops() != null) {
 					gLoc.getLastGeneratedObject().getCustomDrops().doCustomDrops(e);
-				} else if (Main.getSettings().isBlockDropUpToEq()) {
+				} else if (Main.getSettings().isBlockDropToEq()) {
 					
 		    		if (!p.hasPermission("kgenerators.droptoinventory"))
 		    			return;
@@ -53,9 +53,11 @@ public class BlockBreakListener implements Listener {
 		    			return;
 		    		}
 		    		
-		    		int exp = e.getExpToDrop();
-		    		e.setExpToDrop(0);
-		    		p.giveExp(exp);
+		    		if (Main.getSettings().isExpDropToEq()) {
+			    		int exp = e.getExpToDrop();
+			    		e.setExpToDrop(0);
+			    		p.giveExp(exp);
+		    		}
 
 		    		if (Main.getMultiVersion().isHigher(11)) {
 			    		for (ItemStack item : e.getBlock().getDrops(p.getItemInHand(), p))

@@ -50,7 +50,10 @@ public class Settings {
 	private boolean pickUpToEq = true;
 	@Setter
 	@Getter
-	private boolean blockDropUpToEq = false;
+	private boolean blockDropToEq = false;
+	@Setter
+	@Getter
+	private boolean expDropToEq = false;
 
 	@Getter
 	private ArrayList<String> disabledWorlds = new ArrayList<String>();
@@ -148,9 +151,12 @@ public class Settings {
 			this.setPickUpToEq(config.getBoolean("pick-up-to-eq"));
 
 		if (config.contains("drop-to-eq"))
-			this.setBlockDropUpToEq(config.getBoolean("drop-to-eq"));
+			this.setBlockDropToEq(config.getBoolean("drop-to-eq"));
 		else if (config.contains("block-drop-to-eq"))
-			this.setBlockDropUpToEq(config.getBoolean("block-drop-to-eq"));
+			this.setBlockDropToEq(config.getBoolean("block-drop-to-eq"));
+		
+		if (config.contains("exp-drop-to-eq"))
+			this.setExpDropToEq(config.getBoolean("exp-drop-to-eq"));
 
 		if (config.contains("disabled-worlds"))
 			this.getDisabledWorlds().addAll((ArrayList<String>) config.getList("disabled-worlds"));
