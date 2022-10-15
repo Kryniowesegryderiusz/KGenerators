@@ -25,6 +25,15 @@ example_generator_id_level_1:
   exp: 100
   #Upgrade cost in exp levels
   exp-levels: 5
+  #Upgrade cost in items
+  #More options for item settings can be found here https://kzone.gitbook.io/docs/kgenerators/configuration-files/configuring-itemstack
+  items:
+    '1':
+      material: stone
+      amount: 5
+    '2':
+      material: emerald
+      amount: 2
   
 #===============================================================
 #=====      Below you can find PRECONFIGURED upgrades.     ===== 

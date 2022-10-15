@@ -12,8 +12,6 @@ import me.kryniowesegryderiusz.kgenerators.dependencies.enums.Dependency;
 import me.kryniowesegryderiusz.kgenerators.dependencies.hooks.WorldGuardHook;
 import me.kryniowesegryderiusz.kgenerators.generators.locations.handlers.enums.InteractionType;
 import me.kryniowesegryderiusz.kgenerators.generators.locations.objects.GeneratorLocation;
-import me.kryniowesegryderiusz.kgenerators.lang.Lang;
-import me.kryniowesegryderiusz.kgenerators.lang.enums.Message;
 import me.kryniowesegryderiusz.kgenerators.utils.PlayerUtils;
 import me.kryniowesegryderiusz.kgenerators.xseries.XMaterial;
 
@@ -44,31 +42,35 @@ public class BlockBreakListener implements Listener {
 				
 				if (gLoc.getLastGeneratedObject() != null && gLoc.getLastGeneratedObject().getCustomDrops() != null) {
 					gLoc.getLastGeneratedObject().getCustomDrops().doCustomDrops(e);
-				} else if (Main.getSettings().isBlockDropToEq()) {
-					
-		    		if (!p.hasPermission("kgenerators.droptoinventory"))
-		    			return;
+				} else {
+					if (Main.getSettings().isBlockDropToEq() || Main.getSettings().isExpDropToEq()) {
+						
+			    		if (!p.hasPermission("kgenerators.droptoinventory"))
+			    			return;
 
-		    		if (Main.getDependencies().isEnabled(Dependency.ITEMS_ADDER)) {
-		    			return;
-		    		}
-		    		
-		    		if (Main.getSettings().isExpDropToEq()) {
-			    		int exp = e.getExpToDrop();
-			    		e.setExpToDrop(0);
-			    		p.giveExp(exp);
-		    		}
-
-		    		if (Main.getMultiVersion().isHigher(11)) {
-			    		for (ItemStack item : e.getBlock().getDrops(p.getItemInHand(), p))
-			    			PlayerUtils.dropToInventory(p, gLoc.getGeneratedBlockLocation(), item);
-		    			e.setDropItems(false);
-		    		} else {
-			    		for (ItemStack item : e.getBlock().getDrops(p.getItemInHand()))
-			    			PlayerUtils.dropToInventory(p, gLoc.getGeneratedBlockLocation(), item);
-		    			Main.getMultiVersion().getBlocksUtils().setBlock(e.getBlock().getLocation(), XMaterial.AIR);
-		    			e.setCancelled(true);
-		    		}
+			    		if (Main.getDependencies().isEnabled(Dependency.ITEMS_ADDER)) {
+			    			return;
+			    		}
+			    		
+			    		if (Main.getSettings().isExpDropToEq()) {
+				    		int exp = e.getExpToDrop();
+				    		e.setExpToDrop(0);
+				    		p.giveExp(exp);
+			    		}
+			    		
+			    		if (Main.getSettings().isBlockDropToEq()) {
+				    		if (Main.getMultiVersion().isHigher(11)) {
+					    		for (ItemStack item : e.getBlock().getDrops(p.getItemInHand(), p))
+					    			PlayerUtils.dropToInventory(p, gLoc.getGeneratedBlockLocation(), item);
+				    			e.setDropItems(false);
+				    		} else {
+					    		for (ItemStack item : e.getBlock().getDrops(p.getItemInHand()))
+					    			PlayerUtils.dropToInventory(p, gLoc.getGeneratedBlockLocation(), item);
+				    			Main.getMultiVersion().getBlocksUtils().setBlock(e.getBlock().getLocation(), XMaterial.AIR);
+				    			e.setCancelled(true);
+				    		}
+			    		}
+					}
 				}
 				
 			} else

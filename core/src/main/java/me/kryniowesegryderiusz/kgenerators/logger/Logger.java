@@ -22,6 +22,8 @@ import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
 
+import javax.net.ssl.HttpsURLConnection;
+
 import org.bukkit.command.CommandSender;
 import org.bukkit.plugin.Plugin;
 
@@ -224,9 +226,9 @@ public class Logger {
 		byte[] postData = text.getBytes(StandardCharsets.UTF_8);
 		int postDataLength = postData.length;
 
-		String requestURL = "http://skyup.pl:7777/documents";
+		String requestURL = "https://hastebin.com/documents";
 		URL url = new URL(requestURL);
-		HttpURLConnection conn = (HttpURLConnection) url.openConnection();
+		HttpsURLConnection conn = (HttpsURLConnection) url.openConnection();
 		conn.setDoOutput(true);
 		conn.setInstanceFollowRedirects(false);
 		conn.setRequestMethod("POST");
@@ -249,7 +251,7 @@ public class Logger {
 		if (response != null && response.contains("\"key\"")) {
 			response = response.substring(response.indexOf(":") + 2, response.length() - 2);
 
-			String postURL = raw ? "http://skyup.pl:7777/raw/" : "http://skyup.pl:7777/";
+			String postURL = raw ? "https://hastebin.com/raw/" : "https://hastebin.com/";
 			response = postURL + response;
 		}
 

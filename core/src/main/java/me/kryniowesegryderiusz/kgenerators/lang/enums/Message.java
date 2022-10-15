@@ -10,6 +10,7 @@ public enum Message implements IMessage {
 	GENERATORS_ANY_DISABLED_WORLD_SPECIFIC("generators.any.disabled-specific", "&c<generator> is disabled in this world!"),
 	GENERATORS_ANY_REPAIRED("generators.any.repaired", "&aGenerator succesfully repaired!"),
 	GENERATORS_ANY_NO_LONGER_THERE("generators.any.no-longer-there", "&cGenerator is no longer there!"),
+	GENERATORS_ANY_OBJECT_AMOUNT("generators.any.object-amount", "<amount> x <object>"),
 	
 	GENERATORS_DIGGING_CANT_HERE("generators.digging.cant-here", "&cYou can't dig generated blocks here!"),
 	GENERATORS_DIGGING_ONLY_GEN("generators.digging.only-gen", "&cYou can only dig generated blocks here!"),
@@ -45,7 +46,7 @@ public enum Message implements IMessage {
 	
 	UPGRADES_UPGRADED("upgrades.upgraded", "&aYou've upgraded &e<number> &agenerators for &e<costs>&a!"),
 	UPGRADES_COST_NOT_FULFILLED("upgrades.gui-upgraded", "&cYou dont have &4<cost>&c!"),
-	UPGRADES_COSTS_SEPARATOR("upgrades.separator", "&7, &e"),
+	UPGRADES_COSTS_SEPARATOR("upgrades.separator", ", "),
 	UPGRADES__NO_NEXT_LEVEL("upgrades.no-next-level", "&cThis is maximum level of that generator!"),
 	UPGRADES__NO_PERMISSION("upgrades.no-permission", "&cYou dont have permission &8(&7<permission>&8)&c to upgrade generator!"),
 	UPGRADES_NOT_A_GENERATOR("upgardes.not-a-generator", "&cYou dont have generator in hand!"),
