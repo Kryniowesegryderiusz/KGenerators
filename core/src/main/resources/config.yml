@@ -16,6 +16,8 @@ database:
   database: database
   username: username
   password: password
+  use-ssl: true
+  pool-size: 10
   
 #By default generator will generate block only on air, otherwise generator will drop. Here you can add blocks, which will be replaced by generated block.
 can-generate-instead:

@@ -22,6 +22,9 @@ public class SQLConfig {
 	@Getter
 	private boolean ssl = false;
 
+	@Getter
+	private int poolSize = 10;
+
 	public SQLConfig(String dbHost, int dbPort, String dbName, String dbUser, String dbPass) {
 		this.dbHost = dbHost;
 		this.dbPort = dbPort;
@@ -41,7 +44,9 @@ public class SQLConfig {
 			this.dbUser = config.getString("database.username");
 		if (config.contains("database.password"))
 			this.dbPass = config.getString("database.password");
-		if (config.contains("database.use-sll"))
+		if (config.contains("database.use-ssl"))
 			this.ssl = config.getBoolean("database.use-ssl");
+		if (config.contains("database.pool-size"))
+			this.poolSize = config.getInt("database.pool-size");
 	}
 }

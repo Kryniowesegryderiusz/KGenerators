@@ -98,7 +98,7 @@ public class SQLDatabase implements IDatabase {
 				config.setPassword(sqlconfig.getDbPass());
 				config.setConnectionTestQuery("SELECT 1");
 				config.setMaxLifetime(60000); // 60 Sec
-				config.setMaximumPoolSize(50); // 50 Connections (including idle connections)
+				config.setMaximumPoolSize(sqlconfig.getPoolSize());
 				config.setLeakDetectionThreshold(20000);
 				
 				dataSource = new HikariDataSource(config);
