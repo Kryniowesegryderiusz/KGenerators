@@ -269,10 +269,8 @@ public class SQLDatabase implements IDatabase {
 		ResultSet res = null;
 
 		try {
-			
-			conn = dataSource.getConnection();
-			
 			if (this.isPlacedGeneratorInDatabase(gl)) {
+				conn = dataSource.getConnection();
 				stat = conn.prepareStatement("UPDATE " + PLACED_TABLE
 						+ " SET `generator_id` = ?, `owner` = ?, `last_generated_object` = ? WHERE `world` = ? AND `x` = ? AND `y` = ? AND  `z` = ?");
 				stat.setString(1, gl.getGenerator().getId());
@@ -284,6 +282,7 @@ public class SQLDatabase implements IDatabase {
 				stat.setInt(7, gl.getLocation().getBlockZ());
 				stat.executeUpdate();
 			} else {
+				conn = dataSource.getConnection();
 				stat = conn.prepareStatement("INSERT INTO " + PLACED_TABLE
 						+ " (world,x,y,z,generator_id,owner,chunk_x,chunk_z,last_generated_object) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?)");
 				stat.setString(1, gl.getLocation().getWorld().getName());
