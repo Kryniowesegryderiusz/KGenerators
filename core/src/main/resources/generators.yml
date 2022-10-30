@@ -115,7 +115,7 @@ example_generator:
 #===== You can freely EDIT/REMOVE them and ADD new ones ^^ =====
 #===============================================================
 
-#This is just standard stone generator
+#This is just predefined, standard stone generator
 #You can get it via /kgen getall or /kgen give <nick> stone_generator_level_1
 stone_generator_level_1:
   generator-item:
@@ -141,7 +141,7 @@ stone_generator_level_1:
   placeholder: RED_SANDSTONE
   allow-piston-push: true
     
-#This generator could be obtained by typing /kgenerators upgrade on stone_generator_level_1
+#This predefined generator could be obtained by typing /kgenerators upgrade on stone_generator_level_1
 #Upgrade tree is avaible in upgrades.yml file!
 stone_generator_level_2:
   generator-item:
@@ -165,7 +165,7 @@ stone_generator_level_2:
   placeholder: RED_SANDSTONE
   allow-piston-push: true
 
-#This generator has only required settings and GENERATES ITEMS! 
+#This predefined generator has only required settings and GENERATES ITEMS! 
 #As you see you dont have to use all of them
 wood_generator:
   generator-item:
@@ -198,9 +198,68 @@ wood_generator:
       chance: 25.0
       item: SPRUCE_LOG
 
+#This predefined generator uses custom-drops option to obtain drops, by mining stone.
+ores_from_stone_generator:
+  generator-item:
+    material: STONE
+    name: '&aOres from stone generator'
+    lore:
+    - '&6This is ores from stone generator!'
+    - '&6It generates ores by mining stone!'
+    enchants:
+    - "DURABILITY:1"
+    item-flags:
+    - HIDE_ENCHANTS
+  delay: 80
+  type: single
+  hologram: true
+  placeholder: BEDROCK
+  generates:
+    #50% stone just dropping cobble
+    - type: block
+      chance: 50.0
+      material: STONE
+    #15% stone dropping coal
+    - type: block
+      chance: 15.0
+      material: STONE
+      custom-drops:
+        remove-defaults: true
+        item: COAL
+    #15% stone dropping iron
+    - type: block
+      chance: 15.0
+      material: STONE
+      custom-drops:
+        remove-defaults: true
+        item: RAW_IRON
+    #10% stone dropping gold
+    - type: block
+      chance: 10.0
+      material: STONE
+      custom-drops:
+        remove-defaults: true
+        item: RAW_GOLD
+    #9% stone dropping diamond
+    - type: block
+      chance: 9.0
+      material: STONE
+      custom-drops:
+        remove-defaults: true
+        item: DIAMOND
+    #1% stone dropping emerald
+    - type: block
+      chance: 1.0
+      material: STONE
+      custom-drops:
+        remove-defaults: true
+        item: EMERALD
+        commands:
+        - "say <player> dropped emerald from Ores from stone generator!"
+
 #Do you want to add new generator? Its simple!
 #Just copy existing one from above and configure it as you want! 
-#Remember to change at least its id, name and lore! Note that you have to keep spaces! 
+#REMEMBER to change at least its id, name and lore! Note that in yml files you have to keep spaces!
 #Just like that:
   
 ores_generator:
