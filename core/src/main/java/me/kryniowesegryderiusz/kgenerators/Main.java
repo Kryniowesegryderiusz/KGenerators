@@ -12,6 +12,7 @@ import dev.lone.itemsadder.api.ItemsAdder;
 import lombok.Getter;
 import me.kryniowesegryderiusz.kgenerators.addons.Addons;
 import me.kryniowesegryderiusz.kgenerators.addons.objects.Addon;
+import me.kryniowesegryderiusz.kgenerators.api.events.EnabledEvent;
 import me.kryniowesegryderiusz.kgenerators.api.events.ReloadEvent;
 import me.kryniowesegryderiusz.kgenerators.data.DatabaseManager;
 import me.kryniowesegryderiusz.kgenerators.dependencies.DependenciesManager;
@@ -225,6 +226,8 @@ public class Main extends JavaPlugin {
 			}));
 			
 			Logger.info("MainManager: KGenerators loaded successfully");
+			
+			this.getServer().getPluginManager().callEvent(new EnabledEvent());
 	        
 		} catch (Exception e) {
 			Logger.error(e);

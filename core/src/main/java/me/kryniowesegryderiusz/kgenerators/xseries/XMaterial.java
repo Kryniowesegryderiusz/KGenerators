@@ -2091,7 +2091,6 @@ public enum XMaterial {
      * @return data of this material, or 0 if none.
      * @since 1.0.0
      */
-    @SuppressWarnings("deprecation")
     public byte getData() {
         return data;
     }

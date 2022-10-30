@@ -47,6 +47,13 @@ explosion-handler: 0
 #Should regeneration delay pass, even if chunk is unloaded?
 count-delay-on-unloaded-chunks: true
 
+#What should determine, wheather item in hand is a generator or not?
+generator-item-matcher:
+  #Custom NBT - the most reliable option to match generator 
+  check-by-nbt: true
+  #Check by item meta - could break on generator item changes
+  check-by-item-meta: false
+
 #This configuration section is for configuring actions needed for particular features
 #Possible modes: BREAK (avaible only for pick-up), LEFT_CLICK, RIGHT_CLICK, NONE (ex. because of gui usage)
 #Item could be "ANY"

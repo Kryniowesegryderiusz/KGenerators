@@ -1,12 +1,10 @@
 package me.kryniowesegryderiusz.kgenerators.settings;
 
 import java.io.File;
-import java.io.IOException;
 import java.util.ArrayList;
 import java.util.HashMap;
 
 import org.bukkit.World;
-import org.bukkit.configuration.InvalidConfigurationException;
 import org.bukkit.inventory.ItemStack;
 
 import lombok.Getter;
@@ -18,6 +16,7 @@ import me.kryniowesegryderiusz.kgenerators.generators.generator.objects.Generato
 import me.kryniowesegryderiusz.kgenerators.generators.locations.handlers.enums.ActionType;
 import me.kryniowesegryderiusz.kgenerators.logger.Logger;
 import me.kryniowesegryderiusz.kgenerators.settings.objects.Actions;
+import me.kryniowesegryderiusz.kgenerators.settings.objects.GeneratorItemMatcher;
 import me.kryniowesegryderiusz.kgenerators.settings.objects.Sound;
 import me.kryniowesegryderiusz.kgenerators.utils.ItemUtils;
 import me.kryniowesegryderiusz.kgenerators.utils.immutable.Config;
@@ -94,7 +93,11 @@ public class Settings {
 
 	@Getter
 	private boolean lazyChunkLoading = false;
+	
+	@Setter @Getter
+	private GeneratorItemMatcher generatorItemMatcher = new GeneratorItemMatcher();
 
+	@SuppressWarnings("unchecked")
 	public Settings() {
 		Logger.debug("Settings: Loading settings");
 
@@ -175,6 +178,8 @@ public class Settings {
 		
 		if (config.contains("lazy-chunk-loading"))
 			this.lazyChunkLoading = config.getBoolean("lazy-chunk-loading");
+		
+		this.generatorItemMatcher.load(config);
 
 		this.setSqlConfig(new SQLConfig(config));
 	}

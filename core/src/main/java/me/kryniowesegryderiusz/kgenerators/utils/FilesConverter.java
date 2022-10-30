@@ -199,6 +199,16 @@ public class FilesConverter {
 			add(file, "  gui-update: 20");
 			Logger.info("FilesConverter: Added intervals settings to config file");
 		}
+		
+		if (!config.contains("generator-item-matcher")) {
+			add(file, "");
+			add(file, "#What should determine, wheather item in hand is a generator or not?");
+			add(file, "generator-item-matcher:");
+			add(file, "  #Custom NBT - the most reliable option to match generator");
+			add(file, "  check-by-nbt: true");
+			add(file, "  #Check by item meta - could break on generator item changes");
+			add(file, "  check-by-item-meta: true");
+		}		  
 	}
 
 	private static void add(File file, String string) {

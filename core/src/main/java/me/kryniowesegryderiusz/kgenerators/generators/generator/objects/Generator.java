@@ -19,11 +19,13 @@ import lombok.Getter;
 import me.kryniowesegryderiusz.kgenerators.Main;
 import me.kryniowesegryderiusz.kgenerators.api.objects.AbstractGeneratedObject;
 import me.kryniowesegryderiusz.kgenerators.dependencies.enums.Dependency;
+import me.kryniowesegryderiusz.kgenerators.dependencies.hooks.NBTAPIHook;
 import me.kryniowesegryderiusz.kgenerators.generators.generator.GeneratorsManager;
 import me.kryniowesegryderiusz.kgenerators.generators.generator.enums.GeneratorType;
 import me.kryniowesegryderiusz.kgenerators.generators.upgrades.objects.Upgrade;
 import me.kryniowesegryderiusz.kgenerators.logger.Logger;
 import me.kryniowesegryderiusz.kgenerators.settings.objects.Actions;
+import me.kryniowesegryderiusz.kgenerators.settings.objects.GeneratorItemMatcher;
 import me.kryniowesegryderiusz.kgenerators.utils.FilesUtils;
 import me.kryniowesegryderiusz.kgenerators.utils.ItemUtils;
 import me.kryniowesegryderiusz.kgenerators.utils.immutable.Config;
@@ -131,6 +133,9 @@ public class Generator {
 			Logger.error("Generator " + generatorID + " is lacking generator-item configuration");
 			error = true;
 		}
+		
+		if (this.generatorItem != null)
+			NBTAPIHook.addNBT(generatorItem, generatorID, GeneratorItemMatcher.GENERATOR_ID_NBT, generatorID);
 
 		/*
 		 * Generates section

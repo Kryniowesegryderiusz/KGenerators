@@ -61,11 +61,7 @@ public class GeneratorsManager {
 
 	@Nullable
 	public Generator get(ItemStack item) {
-		for (Generator g : getAll()) {
-			if (ItemUtils.compareSafe(item, g.getGeneratorItem()))
-				return g;
-		}
-		return null;
+		return Main.getSettings().getGeneratorItemMatcher().getGenerator(item);
 	}
 
 	public Collection<Generator> getAll() {
