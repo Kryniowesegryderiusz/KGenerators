@@ -15,6 +15,8 @@ import org.bukkit.entity.Player;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.Recipe;
 
+import me.kryniowesegryderiusz.kgenerators.addons.Addons;
+import me.kryniowesegryderiusz.kgenerators.addons.objects.Addon;
 import me.kryniowesegryderiusz.kgenerators.data.enums.DatabaseType;
 import me.kryniowesegryderiusz.kgenerators.dependencies.hooks.WorldEditHook;
 import me.kryniowesegryderiusz.kgenerators.generators.generator.objects.Generator;
@@ -289,12 +291,12 @@ public class Commands implements CommandExecutor {
 									if (args.length >= 7)
 										owner = args[6];
 
-									GeneratorLocation gl = new GeneratorLocation(g,
-											Main.getPlacedGenerators().stringToLocation(
-													args[1] + "," + args[2] + "," + args[3] + "," + args[4]),
-											Main.getPlayers().getPlayer(owner));
+									Location l = Main.getPlacedGenerators().stringToLocation(
+											args[1] + "," + args[2] + "," + args[3] + "," + args[4]);
+									
+									GeneratorLocation gl = new GeneratorLocation(-1, g, l, l.getChunk(), Main.getPlayers().getPlayer(owner), null);
 									if (gl.placeGenerator(sender, true))
-										gl.save();
+										gl.saveAndLoad();
 
 									Lang.getMessageStorage().send(sender, Message.COMMANDS_SPAWN_DONE,
 											"<location_info>", gl.toString());
@@ -356,6 +358,12 @@ public class Commands implements CommandExecutor {
 					Lang.getMessageStorage().send(sender, Message.COMMANDS_ANY_ONLY_CONSOLE);
 				break;
 			default:
+				for (Addon addon : Addons.getAddons()) {
+					if (addon.getCommands().containsKey(args[0].toLowerCase())) {
+						addon.getCommands().get(args[0].toLowerCase()).onCommand(sender, args);
+						return false;
+					}
+				}
 				Lang.getMessageStorage().send(sender, Message.COMMANDS_ANY_WRONG);
 				break;
 			}

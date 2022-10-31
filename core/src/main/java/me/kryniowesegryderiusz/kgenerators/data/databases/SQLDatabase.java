@@ -3,6 +3,7 @@ package me.kryniowesegryderiusz.kgenerators.data.databases;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
+import java.sql.SQLException;
 import java.sql.Statement;
 import java.time.Instant;
 import java.util.ArrayList;
@@ -30,8 +31,8 @@ public class SQLDatabase implements IDatabase {
 	
 	@Getter private HikariDataSource dataSource;
 
-	static String PLACED_TABLE = "`kgen_placed`";
-	static String SCHEDULED_TABLE = "`kgen_scheduled`";
+	private static String PLACED_TABLE = "`kgen_placed`";
+	private static String SCHEDULED_TABLE = "`kgen_scheduled`";
 
 	public SQLDatabase(DatabaseType dbType, SQLConfig sqlconfig) {
 		this.dbType = dbType;
@@ -68,9 +69,9 @@ public class SQLDatabase implements IDatabase {
 				Connection conn = dataSource.getConnection();
 				Statement stat = conn.createStatement();
 				stat.executeUpdate("CREATE TABLE IF NOT EXISTS " + PLACED_TABLE
-						+ " (id INTEGER NOT NULL PRIMARY KEY, world VARCHAR(32), x INT(8), y INT(8), z INT(8), chunk_x INT(8), chunk_z INT(8), generator_id VARCHAR(64), owner VARCHAR(16), last_generated_object INT(8))");
+						+ " (id INTEGER NOT NULL PRIMARY KEY AUTOINCREMENT, world VARCHAR(32), x INT(8), y INT(8), z INT(8), chunk_x INT(8), chunk_z INT(8), generator_id VARCHAR(64), owner VARCHAR(16), last_generated_object INT(8))");
 				stat.executeUpdate("CREATE TABLE IF NOT EXISTS " + SCHEDULED_TABLE
-						+ " (id INTEGER NOT NULL PRIMARY KEY, world VARCHAR(32), x INT(8), y INT(8), z INT(8), creation_timestamp INT(8), delay_left INT(8))");
+						+ " (id INTEGER NOT NULL PRIMARY KEY AUTOINCREMENT, world VARCHAR(32), x INT(8), y INT(8), z INT(8), creation_timestamp INT(8), delay_left INT(8))");
 				stat.close();
 				conn.close();
 				
@@ -267,33 +268,43 @@ public class SQLDatabase implements IDatabase {
 		Connection conn = null;
 		PreparedStatement stat = null;
 		ResultSet res = null;
-
+		
 		try {
-			if (this.isPlacedGeneratorInDatabase(gl)) {
+			//No id - new generator
+			if (gl.getId() == -1) {
+					conn = dataSource.getConnection();
+					stat = conn.prepareStatement("INSERT INTO " + PLACED_TABLE
+							+ " (world,x,y,z,generator_id,owner,chunk_x,chunk_z,last_generated_object) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?)", Statement.RETURN_GENERATED_KEYS);
+					stat.setString(1, gl.getLocation().getWorld().getName());
+					stat.setInt(2, gl.getLocation().getBlockX());
+					stat.setInt(3, gl.getLocation().getBlockY());
+					stat.setInt(4, gl.getLocation().getBlockZ());
+					stat.setString(5, gl.getGenerator().getId());
+					stat.setString(6, gl.getOwner().getName());
+					stat.setInt(7, gl.getChunk().getX());
+					stat.setInt(8, gl.getChunk().getZ());
+					stat.setInt(9, gl.getLastGeneratedObjectId());
+					stat.executeUpdate();
+					
+			        try (ResultSet generatedKeys = stat.getGeneratedKeys()) {
+			            if (generatedKeys.next()) {
+			                gl.setId(generatedKeys.getInt(1));
+			            }
+			            else {
+			                throw new SQLException("Creating user failed, no ID obtained.");
+			            }
+			        }
+
+					
+			//has id - just save
+			} else {
 				conn = dataSource.getConnection();
 				stat = conn.prepareStatement("UPDATE " + PLACED_TABLE
-						+ " SET `generator_id` = ?, `owner` = ?, `last_generated_object` = ? WHERE `world` = ? AND `x` = ? AND `y` = ? AND  `z` = ?");
+						+ " SET `generator_id` = ?, `owner` = ?, `last_generated_object` = ? WHERE `id` = ?");
 				stat.setString(1, gl.getGenerator().getId());
 				stat.setString(2, gl.getOwner().getName());
 				stat.setInt(3, gl.getLastGeneratedObjectId());
-				stat.setString(4, gl.getLocation().getWorld().getName());
-				stat.setInt(5, gl.getLocation().getBlockX());
-				stat.setInt(6, gl.getLocation().getBlockY());
-				stat.setInt(7, gl.getLocation().getBlockZ());
-				stat.executeUpdate();
-			} else {
-				conn = dataSource.getConnection();
-				stat = conn.prepareStatement("INSERT INTO " + PLACED_TABLE
-						+ " (world,x,y,z,generator_id,owner,chunk_x,chunk_z,last_generated_object) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?)");
-				stat.setString(1, gl.getLocation().getWorld().getName());
-				stat.setInt(2, gl.getLocation().getBlockX());
-				stat.setInt(3, gl.getLocation().getBlockY());
-				stat.setInt(4, gl.getLocation().getBlockZ());
-				stat.setString(5, gl.getGenerator().getId());
-				stat.setString(6, gl.getOwner().getName());
-				stat.setInt(7, gl.getChunk().getX());
-				stat.setInt(8, gl.getChunk().getZ());
-				stat.setInt(9, gl.getLastGeneratedObjectId());
+				stat.setInt(4, gl.getId());
 				stat.executeUpdate();
 			}
 		} catch (Exception e) {
@@ -303,32 +314,6 @@ public class SQLDatabase implements IDatabase {
 			this.close(stat, conn, res);
 		}
 
-	}
-
-	private boolean isPlacedGeneratorInDatabase(GeneratorLocation gl) {
-		Connection conn = null;
-		PreparedStatement stat = null;
-		ResultSet res = null;
-		
-		boolean exists = false;
-		try {
-			conn = dataSource.getConnection();
-			stat = conn.prepareStatement(
-					"SELECT * FROM " + PLACED_TABLE + " WHERE `world` = ? AND `x` = ? AND `y` = ? AND `z` = ?");
-			stat.setString(1, gl.getLocation().getWorld().getName());
-			stat.setInt(2, gl.getLocation().getBlockX());
-			stat.setInt(3, gl.getLocation().getBlockY());
-			stat.setInt(4, gl.getLocation().getBlockZ());
-			res = stat.executeQuery();
-			if (res.next())
-				exists = true;
-		} catch (Exception e) {
-			Logger.error("Database " + dbType.name() + ": Cannot check if generator " + gl.toString() + " exists");
-			Logger.error(e);
-		} finally {
-			this.close(stat, conn, res);
-		}
-		return exists;
 	}
 
 	@Override
@@ -632,7 +617,7 @@ public class SQLDatabase implements IDatabase {
 		}
 	}
 	
-	private void close(Statement stat, Connection conn, ResultSet res) {
+	public void close(Statement stat, Connection conn, ResultSet res) {
 		try {
 			if (stat != null && !stat.isClosed()) stat.close();
 			if (conn != null && !conn.isClosed()) conn.close();

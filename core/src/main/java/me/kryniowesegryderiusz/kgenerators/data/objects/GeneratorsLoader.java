@@ -38,13 +38,13 @@ public class GeneratorsLoader {
 	 * @throws SQLException
 	 */
 	public void loadNext(ResultSet res) throws SQLException {
-		this.loadNext(res.getString("generator_id"),
+		this.loadNext(res.getInt("id"), res.getString("generator_id"),
 				res.getString("world") + "," + res.getString("x") + "," + res.getString("y") + "," + res.getString("z"),
 				res.getString("world") + "," + res.getString("chunk_x") + "," + res.getString("chunk_z"),
 				res.getString("owner"), res.getInt("last_generated_object"));
 	}
 
-	public void loadNext(String generatorId, String location, String chunk, String owner, int lastGeneratedObjectId) {
+	public void loadNext(int generatorLocationId, String generatorId, String location, String chunk, String owner, int lastGeneratedObjectId) {
 		try {
 			boolean err = false;
 
@@ -78,7 +78,7 @@ public class GeneratorsLoader {
 			}
 
 			if (!err) {
-				this.loadedGenerators.add(new GeneratorLocation(Main.getGenerators().get(generatorId), generatorLocation,
+				this.loadedGenerators.add(new GeneratorLocation(generatorLocationId, Main.getGenerators().get(generatorId), generatorLocation,
 						generatorChunk, Main.getPlayers().createPlayer(owner), ago));
 				amount++;
 			} else {

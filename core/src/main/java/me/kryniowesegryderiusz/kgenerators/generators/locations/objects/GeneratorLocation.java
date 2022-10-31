@@ -1,5 +1,7 @@
 package me.kryniowesegryderiusz.kgenerators.generators.locations.objects;
 
+import java.util.UUID;
+
 import javax.annotation.Nullable;
 
 import org.bukkit.Chunk;
@@ -38,16 +40,21 @@ public class GeneratorLocation implements IGeneratorLocation {
 	private static GeneratorLocationRemoveHandler removeHandler = new GeneratorLocationRemoveHandler();
 	private static GeneratorLocationActionHandler actionHandler = new GeneratorLocationActionHandler();
 
+	@Setter
 	@Getter
-	Generator generator;
+	private int id;
 	@Getter
-	GeneratorPlayer owner;
+	private Generator generator;
 	@Getter
-	Location location;
+	private GeneratorPlayer owner;
 	@Getter
-	Location hologramLocation;
+	private Location location;
+
+	private Location hologramLocation;
+	private UUID hologramUUID = UUID.randomUUID();
+	
 	@Getter
-	Chunk chunk;
+	private Chunk chunk;
 
 	@Setter
 	@Getter
@@ -57,22 +64,23 @@ public class GeneratorLocation implements IGeneratorLocation {
 	 * Creates GeneratorLocation. **Note that you probably should use
 	 * GeneratorLocation#save() method**
 	 * 
+	 * @param id - generatorLocation database id (-1 if not yet in database)
 	 * @param Generator       generator
 	 * @param Location        location
+	 * @param Chunk - chunk, where location
 	 * @param GeneratorPlayer owner - nullable
-	 * @param ago
+	 * @param ago AbstractGeneratedObject - nullable
 	 */
-	public GeneratorLocation(Generator generator, Location location, Chunk chunk, @Nullable GeneratorPlayer owner, @Nullable AbstractGeneratedObject ago) {
+	public GeneratorLocation(int id, Generator generator, Location location, Chunk chunk, @Nullable GeneratorPlayer owner, @Nullable AbstractGeneratedObject ago) {
+		this.id = id;
 		this.generator = generator;
 		this.owner = owner;
 		this.location = location;
 
-		this.hologramLocation = location.clone();
-
-		if (generator.getType() == GeneratorType.SINGLE)
-			this.hologramLocation.add(0.5, 1, 0.5);
-		else if (generator.getType() == GeneratorType.DOUBLE)
-			this.hologramLocation.add(0.5, 2, 0.5);
+		this.hologramLocation = location.clone().add(0.5, 0, 0.5);
+		
+		if (generator.getType() == GeneratorType.DOUBLE)
+			this.hologramLocation.add(0, 1, 0);
 
 		if (getGenerator().getPlaceholder() != null)
 			this.hologramLocation.add(0, 1, 0);
@@ -83,10 +91,6 @@ public class GeneratorLocation implements IGeneratorLocation {
 			this.chunk = chunk;
 		
 		this.setLastGeneratedObject(ago);
-	}
-
-	public GeneratorLocation(Generator generator, Location location, GeneratorPlayer owner) {
-		this(generator, location, null, owner, null);
 	}
 
 	/*
@@ -205,7 +209,7 @@ public class GeneratorLocation implements IGeneratorLocation {
 	/**
 	 * Saves generator to database and loads it
 	 */
-	public void save() {
+	public void saveAndLoad() {
 		Main.getDatabases().getDb().saveGenerator(this);
 		Main.getPlacedGenerators().loadGenerator(this);
 	}
@@ -241,6 +245,18 @@ public class GeneratorLocation implements IGeneratorLocation {
 	public boolean isReadyForRegeneration() {
 		return this.lastGeneratedObject == null ? true : this.lastGeneratedObject.isReady();
 	}
+	
+	/*
+	 * Hologram
+	 */
+	
+	public Location getHologramLocation(int lines) {
+		return this.hologramLocation.clone().add(0, 0.2*(lines+1), 0);
+	}
+	
+	public String getHologramUUID() {
+		return "kgenerators_"+this.hologramUUID.toString();
+	}
 
 	/*
 	 * Other
@@ -249,10 +265,10 @@ public class GeneratorLocation implements IGeneratorLocation {
 	@Override
 	public String toString() {
 		if (this.owner != null)
-			return this.generator.getId() + " owned by " + this.owner.getName() + " placed in " + toStringLocation()
+			return "(" + this.id + ") " + this.generator.getId() + " owned by " + this.owner.getName() + " placed in " + toStringLocation()
 					+ " (" + this.getChunk().getX() + "," + this.getChunk().getZ() + ")";
 		else
-			return this.generator.getId() + " owned by no one" + " placed in " + toStringLocation() + " ("
+			return  "(" + this.id + ") " + this.generator.getId() + " owned by no one" + " placed in " + toStringLocation() + " ("
 					+ this.getChunk().getX() + "," + this.getChunk().getZ() + ")";
 	}
 
