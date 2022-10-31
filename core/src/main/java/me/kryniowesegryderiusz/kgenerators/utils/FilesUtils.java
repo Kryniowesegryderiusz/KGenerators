@@ -178,6 +178,9 @@ public class FilesUtils {
 			    	}
 			    }
 			    
+			    if (map.containsKey("custom-model-data"))
+			    	meta.setCustomModelData((int) map.get("custom-model-data"));
+			    
 			    item.setItemMeta(meta);
 			    
 			    if (map.containsKey("enchants")) {
@@ -206,16 +209,6 @@ public class FilesUtils {
 			    if (map.containsKey("amount"))
 			    	item.setAmount((int) map.get("amount"));
 			    
-			    /*
-			    if (XMaterial.matchXMaterial(item) == XMaterial.PLAYER_HEAD || XMaterial.matchXMaterial(item) == XMaterial.PLAYER_WALL_HEAD)
-			    {
-			    	if (config.contains(".custom-head-value"))
-			    	{
-			    		String value = config.getString(".custom-head-value");
-			    		
-			    	}
-			    }
-			    */
 		} catch (Exception e) {
 			Logger.error("FilesUtils: Cannot parse ItemStack for: " + place);
 			Logger.error(e);
