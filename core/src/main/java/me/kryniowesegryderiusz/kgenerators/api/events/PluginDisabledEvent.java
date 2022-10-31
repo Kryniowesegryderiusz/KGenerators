@@ -4,12 +4,10 @@ import org.bukkit.event.Event;
 import org.bukkit.event.HandlerList;
 
 /**
- * Event is fired after reload command.
- * All lang storage classes should be registered again after it
+ * Event is fired after plugin is fully loaded.
  * @author user
- *
  */
-public class ReloadEvent extends Event {
+public class PluginDisabledEvent extends Event {
 	
     private static final HandlerList HANDLERS = new HandlerList();
 

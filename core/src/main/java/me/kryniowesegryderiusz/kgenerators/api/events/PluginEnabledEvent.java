@@ -7,7 +7,7 @@ import org.bukkit.event.HandlerList;
  * Event is fired after plugin is fully loaded.
  * @author user
  */
-public class EnabledEvent extends Event {
+public class PluginEnabledEvent extends Event {
 	
     private static final HandlerList HANDLERS = new HandlerList();
 

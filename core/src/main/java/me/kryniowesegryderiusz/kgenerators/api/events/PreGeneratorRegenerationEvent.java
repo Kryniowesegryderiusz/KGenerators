@@ -1,18 +1,22 @@
 package me.kryniowesegryderiusz.kgenerators.api.events;
 
+import org.bukkit.event.Cancellable;
 import org.bukkit.event.Event;
 import org.bukkit.event.HandlerList;
 
 import lombok.Getter;
+import lombok.Setter;
 import me.kryniowesegryderiusz.kgenerators.api.interfaces.IGeneratorLocation;
 
-public class PostBlockGenerationEvent extends Event {
+public class PreGeneratorRegenerationEvent extends Event implements Cancellable {
 
     private static final HandlerList HANDLERS = new HandlerList();
     
+    @Setter @Getter private boolean cancelled = false;
+    
     @Getter IGeneratorLocation generatorLocation;
 
-    public PostBlockGenerationEvent(IGeneratorLocation generatorLocation) {
+    public PreGeneratorRegenerationEvent(IGeneratorLocation generatorLocation) {
 		this.generatorLocation = generatorLocation;
 	}
 
