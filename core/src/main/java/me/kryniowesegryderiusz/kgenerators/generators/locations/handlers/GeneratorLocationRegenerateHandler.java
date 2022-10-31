@@ -5,8 +5,8 @@ import org.bukkit.block.Block;
 import org.bukkit.inventory.ItemStack;
 
 import me.kryniowesegryderiusz.kgenerators.Main;
-import me.kryniowesegryderiusz.kgenerators.api.events.PostBlockGenerationEvent;
-import me.kryniowesegryderiusz.kgenerators.api.events.PreBlockGenerationEvent;
+import me.kryniowesegryderiusz.kgenerators.api.events.PostGeneratorRegenerationEvent;
+import me.kryniowesegryderiusz.kgenerators.api.events.PreGeneratorRegenerationEvent;
 import me.kryniowesegryderiusz.kgenerators.api.objects.AbstractGeneratedObject;
 import me.kryniowesegryderiusz.kgenerators.generators.locations.objects.GeneratorLocation;
 import me.kryniowesegryderiusz.kgenerators.xseries.XMaterial;
@@ -17,7 +17,7 @@ public class GeneratorLocationRegenerateHandler {
 	
 	public void handle(GeneratorLocation gLocation) {
 		
-		PreBlockGenerationEvent event = new PreBlockGenerationEvent(gLocation);
+		PreGeneratorRegenerationEvent event = new PreGeneratorRegenerationEvent(gLocation);
 		Main.getInstance().getServer().getPluginManager().callEvent(event);
 		if (event.isCancelled()) return;
 	
@@ -46,6 +46,6 @@ public class GeneratorLocationRegenerateHandler {
 		gLocation.setLastGeneratedObject(ago);
 		ago.regenerate(gLocation);
 		  
-		Main.getInstance().getServer().getPluginManager().callEvent(new PostBlockGenerationEvent(gLocation));
+		Main.getInstance().getServer().getPluginManager().callEvent(new PostGeneratorRegenerationEvent(gLocation));
 	}
 }

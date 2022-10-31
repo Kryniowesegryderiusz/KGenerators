@@ -4,7 +4,10 @@ import javax.annotation.Nullable;
 
 import org.bukkit.Location;
 import org.bukkit.entity.Player;
+import org.bukkit.inventory.ItemStack;
+
 import me.kryniowesegryderiusz.kgenerators.Main;
+import me.kryniowesegryderiusz.kgenerators.api.events.GeneratorRemoveEvent;
 import me.kryniowesegryderiusz.kgenerators.dependencies.hooks.ItemsAdderHook;
 import me.kryniowesegryderiusz.kgenerators.generators.generator.objects.Generator;
 import me.kryniowesegryderiusz.kgenerators.generators.locations.objects.GeneratorLocation;
@@ -25,8 +28,12 @@ public class GeneratorLocationRemoveHandler {
 		
 		gLocation.getOwner().removeGeneratorFromPlayer(gLocation.getGenerator());
 		
+		ItemStack generatorItem = generator.getGeneratorItem();
+		
+		Main.getInstance().getServer().getPluginManager().callEvent(new GeneratorRemoveEvent(gLocation, generatorItem, drop, toWho));
+		
 		if (drop) {
-			PlayerUtils.dropToInventory(toWho, location, generator.getGeneratorItem());
+			PlayerUtils.dropToInventory(toWho, location, generatorItem);
 		}
 		
 		Main.getMultiVersion().getBlocksUtils().setBlock(location, XMaterial.AIR);

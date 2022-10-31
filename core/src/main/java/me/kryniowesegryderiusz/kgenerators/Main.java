@@ -12,8 +12,9 @@ import dev.lone.itemsadder.api.ItemsAdder;
 import lombok.Getter;
 import me.kryniowesegryderiusz.kgenerators.addons.Addons;
 import me.kryniowesegryderiusz.kgenerators.addons.objects.Addon;
-import me.kryniowesegryderiusz.kgenerators.api.events.EnabledEvent;
-import me.kryniowesegryderiusz.kgenerators.api.events.ReloadEvent;
+import me.kryniowesegryderiusz.kgenerators.api.events.PluginDisabledEvent;
+import me.kryniowesegryderiusz.kgenerators.api.events.PluginEnabledEvent;
+import me.kryniowesegryderiusz.kgenerators.api.events.PluginReloadEvent;
 import me.kryniowesegryderiusz.kgenerators.data.DatabaseManager;
 import me.kryniowesegryderiusz.kgenerators.dependencies.DependenciesManager;
 import me.kryniowesegryderiusz.kgenerators.dependencies.enums.Dependency;
@@ -97,9 +98,11 @@ public class Main extends JavaPlugin {
     public void onDisable() {
     	Logger.info("Disabling KGenerators");
     	
+    	instance.getServer().getPluginManager().callEvent(new PluginDisabledEvent());
+    	
     	Logger.info("Saving " + Main.getPlacedGenerators().getAmount() + " running generators.");
     	for (GeneratorLocation gl : Main.getPlacedGenerators().getAll())
-    		Main.getPlacedGenerators().unloadGenerator(gl);
+    		Main.getPlacedGenerators().unloadGenerator(gl, true);
 
     	Logger.info("Safely closing menus.");
     	if (menus != null)
@@ -118,7 +121,7 @@ public class Main extends JavaPlugin {
     	upgrades.reload();
     	limits = new LimitsManager();
     	Lang.loadFromFiles();
-    	this.getServer().getPluginManager().callEvent(new ReloadEvent());
+    	this.getServer().getPluginManager().callEvent(new PluginReloadEvent());
     	Logger.info("Reload: KGenerators reloaded successfully");
     }
     
@@ -227,7 +230,7 @@ public class Main extends JavaPlugin {
 			
 			Logger.info("MainManager: KGenerators loaded successfully");
 			
-			this.getServer().getPluginManager().callEvent(new EnabledEvent());
+			this.getServer().getPluginManager().callEvent(new PluginEnabledEvent());
 	        
 		} catch (Exception e) {
 			Logger.error(e);

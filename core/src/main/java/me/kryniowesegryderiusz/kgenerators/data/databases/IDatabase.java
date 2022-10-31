@@ -1,6 +1,8 @@
 package me.kryniowesegryderiusz.kgenerators.data.databases;
 
 import java.sql.Connection;
+import java.sql.ResultSet;
+import java.sql.Statement;
 import java.util.ArrayList;
 
 import javax.annotation.Nullable;
@@ -22,6 +24,11 @@ public interface IDatabase {
 	public void closeConnection();
 	
 	public void updateTable();
+	
+	/*
+	 * Closes connection objects;
+	 */
+	public void close(Statement stat, Connection conn, ResultSet res);
 	
 	/*
 	 * Placed generators table

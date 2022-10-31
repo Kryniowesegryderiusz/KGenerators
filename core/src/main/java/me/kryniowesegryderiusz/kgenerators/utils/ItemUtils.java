@@ -1,9 +1,12 @@
 package me.kryniowesegryderiusz.kgenerators.utils;
 
+import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.NoSuchElementException;
 import java.util.Optional;
 
 import org.bukkit.inventory.ItemStack;
+import org.bukkit.inventory.meta.ItemMeta;
 
 import me.kryniowesegryderiusz.kgenerators.Main;
 import me.kryniowesegryderiusz.kgenerators.dependencies.hooks.EcoItemsHook;
@@ -79,5 +82,27 @@ public abstract class ItemUtils {
             	s = split[0] + "}}";
         }
 		return s;
+	}
+	
+	public static ItemStack replaceLore(ItemStack item, String... replacables) {
+
+		if (!item.hasItemMeta() || !item.getItemMeta().hasLore()) return item;
+		
+		ArrayList<String> reps = new ArrayList<>(Arrays.asList(replacables));
+		ArrayList<String> newLore = new ArrayList<String>();
+		
+		for (String s : item.getItemMeta().getLore()) {
+			String message = s;
+			for (int i = 0; i < reps.size(); i = i + 2) {
+				message = message.replace(reps.get(i), reps.get(i + 1));
+			}
+			newLore.add(message);
+		}
+		
+		ItemMeta meta = item.getItemMeta();
+		meta.setLore(newLore);
+		item.setItemMeta(meta);
+		
+		return item;
 	}
 }

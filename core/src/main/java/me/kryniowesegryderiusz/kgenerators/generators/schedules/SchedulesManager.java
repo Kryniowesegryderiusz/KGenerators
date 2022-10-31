@@ -11,8 +11,6 @@ import org.bukkit.Bukkit;
 import org.bukkit.Location;
 import org.bukkit.configuration.ConfigurationSection;
 import org.bukkit.configuration.InvalidConfigurationException;
-import org.bukkit.inventory.ItemStack;
-
 import me.kryniowesegryderiusz.kgenerators.Main;
 import me.kryniowesegryderiusz.kgenerators.generators.locations.objects.GeneratorLocation;
 import me.kryniowesegryderiusz.kgenerators.generators.schedules.objects.Schedule;
@@ -77,7 +75,7 @@ public class SchedulesManager {
 			schedules.put(gLocation, new Schedule(gLocation.getGenerator().getDelay()));
 			
 			if (gLocation.getGenerator().isHologram())
-				Main.getHolograms().createHologram(gLocation);
+				Main.getHolograms().createRemainingTimeHologram(gLocation);
 		}
 	}
 	
@@ -100,7 +98,9 @@ public class SchedulesManager {
 		if (schedule == null) return;
 		
 		if (gLocation.getGenerator().isHologram())
-			Main.getHolograms().createHologram(gLocation);
+			Main.getInstance().getServer().getScheduler().runTask(Main.getInstance(), () -> {
+				Main.getHolograms().createRemainingTimeHologram(gLocation);
+			});
 		
 		Main.getDatabases().getDb().removeSchedule(gLocation);
 		
@@ -232,7 +232,7 @@ public class SchedulesManager {
     		Location location = Main.getPlacedGenerators().stringToLocation(generatorLocationString);
     		GeneratorLocation gLocation = Main.getPlacedGenerators().getUnknown(location);
     		schedules.put(gLocation, new Schedule(file.getInt(generatorLocationString + ".delay")));
-    		if (gLocation.getGenerator().isHologram()) Main.getHolograms().createHologram(gLocation);
+    		if (gLocation.getGenerator().isHologram()) Main.getHolograms().createRemainingTimeHologram(gLocation);
     		amount++;
     	}
     	Logger.info("Scheduled generators data file: Loaded " + String.valueOf(amount) + " scheduled generators");

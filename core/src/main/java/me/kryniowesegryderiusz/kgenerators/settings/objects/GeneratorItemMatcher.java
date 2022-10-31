@@ -1,5 +1,6 @@
 package me.kryniowesegryderiusz.kgenerators.settings.objects;
 
+import org.bukkit.Material;
 import org.bukkit.inventory.ItemStack;
 
 import lombok.Getter;
@@ -18,8 +19,10 @@ public class GeneratorItemMatcher {
 	
 	public Generator getGenerator(ItemStack item) {
 		
+		if (item == null) return null;
+		
 		String id = NBTAPIHook.getNBTString(item, "GeneratorItemMatcher", GENERATOR_ID_NBT);
-		if (id != null)
+		if (id != null && item.getType() != Material.AIR)
 			return Main.getGenerators().get(id);
 		else if (itemMetaCheck) {
 			for (Generator generator : Main.getGenerators().getAll()) {

@@ -14,6 +14,8 @@ import org.bukkit.World;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import me.kryniowesegryderiusz.kgenerators.Main;
+import me.kryniowesegryderiusz.kgenerators.api.events.GeneratorLoadEvent;
+import me.kryniowesegryderiusz.kgenerators.api.events.GeneratorUnloadEvent;
 import me.kryniowesegryderiusz.kgenerators.generators.generator.enums.GeneratorType;
 import me.kryniowesegryderiusz.kgenerators.generators.locations.objects.GeneratorLocation;
 import me.kryniowesegryderiusz.kgenerators.listeners.ChunkLoadListener;
@@ -31,13 +33,24 @@ public class PlacedGeneratorsManager {
 		if (gl != null) {
 			this.addLoaded(gl);
 			Main.getSchedules().loadSchedule(gl);
+			Main.getInstance().getServer().getScheduler().runTask(Main.getInstance(), () -> {
+				Main.getInstance().getServer().getPluginManager().callEvent(new GeneratorLoadEvent(gl));
+			});
 		}
 	}
 	
 	public void unloadGenerator(GeneratorLocation gLocation) {
+		this.unloadGenerator(gLocation, false);
+	}
+	
+	public void unloadGenerator(GeneratorLocation gLocation, boolean serverStop) {
 		Main.getDatabases().getDb().saveGenerator(gLocation);
 		this.removeLoaded(gLocation);
 		Main.getSchedules().unloadSchedule(gLocation);
+		if (!serverStop)
+			Main.getInstance().getServer().getScheduler().runTask(Main.getInstance(), () -> {
+				Main.getInstance().getServer().getPluginManager().callEvent(new GeneratorUnloadEvent(gLocation));
+			});
 	}
 	
 	public ArrayList<GeneratorLocation> getAll() {	

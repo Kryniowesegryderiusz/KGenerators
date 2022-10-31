@@ -4,6 +4,8 @@ import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Player;
 
 import me.kryniowesegryderiusz.kgenerators.Main;
+import me.kryniowesegryderiusz.kgenerators.api.events.GeneratorRemoveEvent;
+import me.kryniowesegryderiusz.kgenerators.api.events.PostGeneratorPlaceEvent;
 import me.kryniowesegryderiusz.kgenerators.generators.generator.enums.GeneratorType;
 import me.kryniowesegryderiusz.kgenerators.generators.generator.objects.Generator;
 import me.kryniowesegryderiusz.kgenerators.generators.locations.objects.GeneratorLocation;
@@ -57,7 +59,7 @@ public class GeneratorLocationPlaceHandler {
     	 * Placing
     	 */
 
-    	gLocation.save();
+    	gLocation.saveAndLoad();
     	
     	if (sender instanceof Player) gLocation.getOwner().addGeneratorToPlayer(gLocation.getGenerator());
     	
@@ -77,6 +79,9 @@ public class GeneratorLocationPlaceHandler {
     		gLocation.regenerateGenerator();
     	else
     		Main.getSchedules().schedule(gLocation, true);
+    	
+    	Main.getInstance().getServer().getPluginManager().callEvent(new PostGeneratorPlaceEvent(gLocation, sender));
+    	
 		return true;
 	}
 }

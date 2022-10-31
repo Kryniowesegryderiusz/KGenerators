@@ -4,11 +4,13 @@ import java.io.File;
 import java.io.IOException;
 import java.nio.file.Files;
 
+import org.bukkit.plugin.java.JavaPlugin;
+
 import me.kryniowesegryderiusz.kgenerators.Main;
 
 public class ConfigManager {
 	   
-    private static Main PLUGIN = Main.getInstance();
+    private static JavaPlugin PLUGIN = Main.getInstance();
    
     private static File mainFolder;
    
@@ -21,15 +23,19 @@ public class ConfigManager {
 	}
     
     public static Config getConfig(String fileName, String directory, boolean copyFromResourceIfDidNotCreated, boolean createEmptyConfigurationIfDidNotCreated) throws IOException{
-		return getConfig(fileName, getFolder(directory), copyFromResourceIfDidNotCreated, createEmptyConfigurationIfDidNotCreated);
+		return getConfig(PLUGIN, fileName, getFolder(directory), copyFromResourceIfDidNotCreated, createEmptyConfigurationIfDidNotCreated);
+	}
+    
+    public static Config getConfig(JavaPlugin plugin, String fileName, String directory, boolean copyFromResourceIfDidNotCreated, boolean createEmptyConfigurationIfDidNotCreated) throws IOException{
+		return getConfig(plugin, fileName, getFolder(directory), copyFromResourceIfDidNotCreated, createEmptyConfigurationIfDidNotCreated);
 	}
 	
 	//Returns null if file is null
-	public static Config getConfig(String fileName, File folder, boolean copyFromResourceIfDidNotCreated, boolean createEmptyConfigurationIfDidNotCreated) throws IOException {
+	private static Config getConfig(JavaPlugin plugin, String fileName, File folder, boolean copyFromResourceIfDidNotCreated, boolean createEmptyConfigurationIfDidNotCreated) throws IOException {
 		if(!fileName.endsWith(".yml")) {
 			fileName = fileName + ".yml";
 		}
-		File file = getFile(fileName, folder, copyFromResourceIfDidNotCreated);
+		File file = getFile(plugin, fileName, folder, copyFromResourceIfDidNotCreated);
 		if(file == null && createEmptyConfigurationIfDidNotCreated) {
 			file = createNewFile(fileName, folder);
 		}
@@ -37,11 +43,11 @@ public class ConfigManager {
 	}
 	
 	//Returns null if file does not exist
-	public static File getFile(String fileName, File folder, boolean copyFromResourceIfDidNotCreated) throws IOException {
+	private static File getFile(JavaPlugin plugin, String fileName, File folder, boolean copyFromResourceIfDidNotCreated) throws IOException {
 		File file = new File(folder, fileName);
 		if(!file.exists()){
 			if(copyFromResourceIfDidNotCreated){
-				Files.copy(PLUGIN.getResource(fileName), file.toPath());
+				Files.copy(plugin.getResource(fileName), file.toPath());
 				file = new File(folder, fileName);
 				if(!file.exists()){
 					return null;
@@ -55,8 +61,9 @@ public class ConfigManager {
 		return file;
 	}
 	
-	public static File getFile(String fileName, String directory, boolean copyFromResourceIfDidNotCreated) throws IOException {
-		return getFile(fileName, getFolder(directory), copyFromResourceIfDidNotCreated);
+	@SuppressWarnings("unused")
+	private static File getFile(JavaPlugin plugin, String fileName, String directory, boolean copyFromResourceIfDidNotCreated) throws IOException {
+		return getFile(plugin, fileName, getFolder(directory), copyFromResourceIfDidNotCreated);
 	}
 	
 	public static File createNewFile(String fileName, File folder) throws IOException{
