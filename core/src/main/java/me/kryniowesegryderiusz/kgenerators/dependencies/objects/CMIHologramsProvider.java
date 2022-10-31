@@ -1,42 +1,38 @@
 package me.kryniowesegryderiusz.kgenerators.dependencies.objects;
 
-import org.bukkit.Location;
+import java.util.ArrayList;
 
 import com.Zrips.CMI.CMI;
 import com.Zrips.CMI.Modules.Holograms.CMIHologram;
 
-import me.kryniowesegryderiusz.kgenerators.Main;
 import me.kryniowesegryderiusz.kgenerators.generators.holograms.interfaces.IHologramProvider;
 import me.kryniowesegryderiusz.kgenerators.generators.locations.objects.GeneratorLocation;
 
 public class CMIHologramsProvider implements IHologramProvider {
 
+	@SuppressWarnings("deprecation")
 	@Override
-	public void createHologram(GeneratorLocation gLocation) {
-		if (CMI.getInstance().getHologramManager().getHolograms().get(this.getHoloName(gLocation.getHologramLocation())) == null) {
-			CMIHologram holo = new CMIHologram(this.getHoloName(gLocation.getHologramLocation()), gLocation.getHologramLocation());
-			holo.setLines(Main.getHolograms().getHologramLines(gLocation));
+	public void createHologram(GeneratorLocation gLocation, ArrayList<String> lines) {
+		if (CMI.getInstance().getHologramManager().getHolograms().get(gLocation.getHologramUUID()) == null) {
+			CMIHologram holo = new CMIHologram(gLocation.getHologramUUID(), gLocation.getHologramLocation(lines.size()));
+			holo.setLines(lines);
 			CMI.getInstance().getHologramManager().addHologram(holo);
 			holo.update();
 		} 
 	}
 
 	@Override
-	public void updateHologramLine(GeneratorLocation gLocation, int paramInt, String paramString) {
-		this.createHologram(gLocation);
-		CMIHologram holo = CMI.getInstance().getHologramManager().getHolograms().get(this.getHoloName(gLocation.getHologramLocation()));
-		holo.setLine(paramInt, paramString);
-		holo.refresh();
+	public void updateHologram(GeneratorLocation gLocation, ArrayList<String> lines) {
+		this.createHologram(gLocation, lines);
+		CMIHologram holo = CMI.getInstance().getHologramManager().getHolograms().get(gLocation.getHologramUUID());
+		holo.setLines(lines);
+		holo.update();
 	}
 
 	@Override
 	public void removeHologram(GeneratorLocation gLocation) {
-		CMIHologram holo = CMI.getInstance().getHologramManager().getHolograms().get(this.getHoloName(gLocation.getHologramLocation()));
+		CMIHologram holo = CMI.getInstance().getHologramManager().getHolograms().get(gLocation.getHologramUUID());
 		if (holo != null)
 			holo.remove();		
-	}
-	
-	private String getHoloName(Location loc) {
-		return "kgenerators_" + loc.getWorld().getName() + "_" + loc.getBlockX() + "_" + loc.getBlockY() + "_" + loc.getBlockZ();
 	}
 }

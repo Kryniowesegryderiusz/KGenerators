@@ -1,5 +1,8 @@
 package me.kryniowesegryderiusz.kgenerators.dependencies.objects;
 
+import java.util.ArrayList;
+import java.util.HashMap;
+
 import org.bukkit.plugin.Plugin;
 
 import com.gmail.filoghost.holographicdisplays.api.Hologram;
@@ -10,25 +13,31 @@ import me.kryniowesegryderiusz.kgenerators.generators.holograms.interfaces.IHolo
 import me.kryniowesegryderiusz.kgenerators.generators.locations.objects.GeneratorLocation;
 
 public class HolographicDisplaysProvider implements IHologramProvider {
-	public void createHologram(GeneratorLocation gLocation) {
-		Hologram hologram = HologramsAPI.createHologram((Plugin)Main.getInstance(), gLocation.getHologramLocation());
-		for (String s : Main.getHolograms().getHologramLines(gLocation))
+	
+	HashMap<String, Hologram> holograms = new HashMap<String, Hologram>();
+	
+	public void createHologram(GeneratorLocation gLocation, ArrayList<String> lines) {
+		Hologram hologram = HologramsAPI.createHologram((Plugin)Main.getInstance(), gLocation.getHologramLocation(lines.size()));
+		for (String s : lines)
 			hologram.appendTextLine(s); 
+		holograms.put(gLocation.getHologramUUID(), hologram);
 	}
 	
-	public void updateHologramLine(GeneratorLocation gLocation, int lineNr, String line) {
-		for (Hologram hologram : HologramsAPI.getHolograms((Plugin)Main.getInstance())) {
-			if (hologram.getLocation().equals(gLocation.getHologramLocation())) {
-				hologram.removeLine(lineNr);
-				hologram.insertTextLine(lineNr, line);
-			} 
-		} 
+	public void updateHologram(GeneratorLocation gLocation, ArrayList<String> lines) {
+		Hologram hologram = holograms.get(gLocation.getHologramUUID());
+		if(hologram != null) {
+			hologram.clearLines();
+			for (String s : lines)
+				hologram.appendTextLine(s); 
+		}
 	}
 	
 	public void removeHologram(GeneratorLocation gLocation) {
-		for (Hologram hologram : HologramsAPI.getHolograms((Plugin)Main.getInstance())) {
-			if (hologram.getLocation().equals(gLocation.getHologramLocation()))
-				hologram.delete(); 
-		} 
+		
+		Hologram hologram = holograms.get(gLocation.getHologramUUID());
+		if(hologram != null) {
+			holograms.remove(gLocation.getHologramUUID());
+			hologram.delete();
+		}
 	}
 }

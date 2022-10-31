@@ -138,7 +138,6 @@ messages:
       exp-levels: niveaux xp
 holograms:
   remaining-time:
-  - ''
+  - '<generator_name>'
   - '&6Temps restant:'
   - '&e<time>'
-  - ''
