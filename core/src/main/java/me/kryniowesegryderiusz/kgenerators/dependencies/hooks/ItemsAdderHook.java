@@ -16,6 +16,8 @@ import me.kryniowesegryderiusz.kgenerators.generators.locations.objects.Generato
 
 public class ItemsAdderHook {
 	
+	private static boolean enabled = false;
+	
 	public static void handleGeneratorLocationRemove(GeneratorLocation gLoc) {
 		if (!Main.getDependencies().isEnabled(Dependency.ITEMS_ADDER)) return;
 		CustomBlock.remove(gLoc.getGeneratedBlockLocation());
@@ -55,7 +57,10 @@ public class ItemsAdderHook {
 	public class ItemsAdderHookLoadData implements Listener {
 		@EventHandler
 		public void onItemsAdderLoadDataEvent(ItemsAdderLoadDataEvent e) {
-			Main.getInstance().enable();
+			if (!enabled) {
+				enabled = true;
+				Main.getInstance().enable();
+			}
 		}
 	}
 
