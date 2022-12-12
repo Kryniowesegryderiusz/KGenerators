@@ -19,10 +19,10 @@ public class GeneratorItemMatcher {
 	
 	public Generator getGenerator(ItemStack item) {
 		
-		if (item == null) return null;
+		if (item == null || item.getType() == Material.AIR) return null;
 		
 		String id = NBTAPIHook.getNBTString(item, "GeneratorItemMatcher", GENERATOR_ID_NBT);
-		if (id != null && item.getType() != Material.AIR)
+		if (id != null)
 			return Main.getGenerators().get(id);
 		else if (itemMetaCheck) {
 			for (Generator generator : Main.getGenerators().getAll()) {
