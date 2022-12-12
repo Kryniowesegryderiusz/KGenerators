@@ -222,37 +222,40 @@ public class Logger {
 
 	}
 
-	private static String postHaste(CommandSender sender, String text, boolean raw) throws IOException {
-		byte[] postData = text.getBytes(StandardCharsets.UTF_8);
-		int postDataLength = postData.length;
-
-		String requestURL = "https://hastebin.com/documents";
-		URL url = new URL(requestURL);
-		HttpsURLConnection conn = (HttpsURLConnection) url.openConnection();
-		conn.setDoOutput(true);
-		conn.setInstanceFollowRedirects(false);
-		conn.setRequestMethod("POST");
-		conn.setRequestProperty("User-Agent", "Hastebin Java Api");
-		conn.setRequestProperty("Content-Length", Integer.toString(postDataLength));
-		conn.setUseCaches(false);
-
+	private static String postHaste(CommandSender sender, String text, boolean raw) {
+		
 		String response = null;
-		DataOutputStream wr;
+		
 		try {
+			byte[] postData = text.getBytes(StandardCharsets.UTF_8);
+			int postDataLength = postData.length;
+	
+			String requestURL = "https://hastebin.com/documents";
+			URL url = new URL(requestURL);
+			HttpsURLConnection conn = (HttpsURLConnection) url.openConnection();
+			conn.setDoOutput(true);
+			conn.setInstanceFollowRedirects(false);
+			conn.setRequestMethod("POST");
+			conn.setRequestProperty("User-Agent", "Hastebin Java Api");
+			conn.setRequestProperty("Content-Length", Integer.toString(postDataLength));
+			conn.setUseCaches(false);
+			
+			DataOutputStream wr;
 			wr = new DataOutputStream(conn.getOutputStream());
 			wr.write(postData);
 			BufferedReader reader = new BufferedReader(new InputStreamReader(conn.getInputStream()));
 			response = reader.readLine();
+	
+			if (response != null && response.contains("\"key\"")) {
+				response = response.substring(response.indexOf(":") + 2, response.length() - 2);
+	
+				String postURL = raw ? "https://hastebin.com/raw/" : "https://hastebin.com/";
+				response = postURL + response;
+			}
+		
 		} catch (IOException e) {
 			Lang.getMessageStorage().send(sender, Message.COMMANDS_DEBUG_ERROR);
 			Logger.error(e);
-		}
-
-		if (response != null && response.contains("\"key\"")) {
-			response = response.substring(response.indexOf(":") + 2, response.length() - 2);
-
-			String postURL = raw ? "https://hastebin.com/raw/" : "https://hastebin.com/";
-			response = postURL + response;
 		}
 
 		return response;
