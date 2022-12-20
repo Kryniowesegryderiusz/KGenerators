@@ -33,7 +33,8 @@ public class GeneratorLocationRemoveHandler {
 		Main.getInstance().getServer().getPluginManager().callEvent(new GeneratorRemoveEvent(gLocation, generatorItem, drop, toWho));
 		
 		if (drop) {
-			PlayerUtils.dropToInventory(toWho, location, generatorItem);
+			PlayerUtils.dropToInventory(Main.getSettings().isPickUpToEq() ? toWho : null, location, generatorItem);
+				
 		}
 		
 		Main.getMultiVersion().getBlocksUtils().setBlock(location, XMaterial.AIR);
