@@ -2,17 +2,24 @@ package me.kryniowesegryderiusz.kgenerators.dependencies.hooks;
 
 import java.util.ArrayList;
 
+import org.bukkit.GameMode;
 import org.bukkit.Location;
+import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
+import org.bukkit.event.EventPriority;
 import org.bukkit.event.Listener;
 import org.bukkit.inventory.ItemStack;
 
 import dev.lone.itemsadder.api.CustomBlock;
 import dev.lone.itemsadder.api.CustomStack;
+import dev.lone.itemsadder.api.Events.CustomBlockPlaceEvent;
 import dev.lone.itemsadder.api.Events.ItemsAdderLoadDataEvent;
 import me.kryniowesegryderiusz.kgenerators.Main;
 import me.kryniowesegryderiusz.kgenerators.dependencies.enums.Dependency;
+import me.kryniowesegryderiusz.kgenerators.generators.generator.objects.Generator;
 import me.kryniowesegryderiusz.kgenerators.generators.locations.objects.GeneratorLocation;
+import me.kryniowesegryderiusz.kgenerators.lang.Lang;
+import me.kryniowesegryderiusz.kgenerators.lang.enums.Message;
 
 public class ItemsAdderHook {
 	
@@ -54,7 +61,7 @@ public class ItemsAdderHook {
 		return customStack.getItemStack();
 	}
 	
-	public class ItemsAdderHookLoadData implements Listener {
+	public class ItemsAdderListeners implements Listener {
 		@EventHandler
 		public void onItemsAdderLoadDataEvent(ItemsAdderLoadDataEvent e) {
 			if (!enabled) {
