@@ -56,12 +56,12 @@ example_generator:
     - type: item
       chance: 10.0
       item: DIRT
-    #type: item - generator will spawn more complicated item
+    #type: item - generator will spawn more complicated item. 
     - type: item
       chance: 10.0
       #More options for item settings can be found here https://kzone.gitbook.io/docs/kgenerators/configuration-files/configuring-itemstack
       item:
-        material: STONE
+        material: STONE #only this is required
         amount: 5
         name: "Magic stone"
         lore:
@@ -74,6 +74,13 @@ example_generator:
     - type: entity
       chance: 10.0
       entity: CHICKEN
+    #type: entity - generator will spawn more complicated entity.
+    - type: entity
+      chance: 10.0
+      entity:
+        type: CHICKEN #only this is required
+        amount: 2
+        name: "Chicky"
   #
   # ***            Optional generators settings below.            ***
   # ***   If not specified default values (these) would be used   ***
