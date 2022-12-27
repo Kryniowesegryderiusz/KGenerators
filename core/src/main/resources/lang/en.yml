@@ -6,6 +6,8 @@ messages:
       disabled: '&cGenerators are disabled in this world!'
       repaired: '&aGenerator succesfully repaired!'
       no-longer-there: '&cGenerator is no longer there!'
+      disabled-specific: '&c<generator> is disabled in this world!'
+      object-amount: <amount> x <object>
     digging:
       cant-here: '&cYou can''t dig generated blocks here!'
       only-gen: '&cYou can only dig generated blocks here!'
@@ -38,6 +40,8 @@ messages:
       cant-change-generator-item: '&cYou cant change generator item!'
     menus:
       cant-open-here: '&cYou cant open this menu here!'
+    chunks:
+      not-loaded-yet: '&cDatabase hasnt loaded this chunk yet! Wait a while!'
   economy:
     no-economy-avaible: '&cThere is no economy system avaible!'
     not-enough-money: '&cYou dont have enough money! You need &6<cost>&c!'
@@ -63,6 +67,9 @@ messages:
       generator-doesnt-exist: '&cThat generator doesn''t exist'
       menu-doesnt-exist: '&cThat menu doesn''t exist'
       console-only: '&cThis command can be executed only from console!'
+      not-a-integer: '&c''<variable>'' should be integer!'
+      not-a-floating-point-number: '&c''<variable>'' should be floating point number!'
+      world-doesnt-exist: '&cWorld ''<world>'' doesn''t exist'
     list:
       header: '&aGenerators:'
       list: '&8- <generator> &8(&7ID: <generatorID>&8)'
@@ -129,8 +136,26 @@ messages:
     help:
       label: '&6&lKGenerators &aCommands help:'
       format: '&e/kgenerators <subcommand> &7<help>'
+    spawn:
+      done: '&aGenerator spawned! New generator: &e<location_info>'
+      usage: '&cUsage: &e/kgenerators spawn <world> <x> <y> <z> <generator> [owner]'
+      no-permission: '&cYou dont have permission &8(&7<permission>&8)&c to spawn generator!'
+      help: Spawns generator at location
+    remove:
+      done: '&aRemoved <amount> generators!'
+      usage: '&cUsage: &e/kgenerators remove worldedit'
+      no-permission: '&cYou dont have permission &8(&7<permission>&8)&c to remove
+        generators!'
+      help: Removes generators
+      worldedit-not-found: '&cSelection is not complete!'
+      worldedit-wrong-selection: '&cSelection is not complete!'
+  upgardes:
+    not-a-generator: '&cYou dont have generator in hand!'
+    costs:
+      exp: xp
+      exp-levels: xp levels
 holograms:
   remaining-time:
-  - '<generator_name>'
+  - <generator_name>
   - '&6Time left:'
   - '&e<time>'

@@ -291,6 +291,8 @@ additional-lines:
     - '&6Generates: &eitem'
     block:
     - '&6Generates: &eblock'
+    entity:
+    - '&6Generates: &eentity'
   limits:
     generator-list:
     - '&8- &e<generator_name>'
