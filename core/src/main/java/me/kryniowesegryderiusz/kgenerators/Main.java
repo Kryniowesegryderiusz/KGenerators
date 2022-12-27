@@ -128,6 +128,10 @@ public class Main extends JavaPlugin {
     public void enable() {
     	try {
     		
+			/* Commands setup */
+			this.getServer().getPluginCommand("kgenerators").setExecutor(new Commands());
+			this.getServer().getPluginCommand("kgenerators").setTabCompleter(new CommandTabCompleter());
+    		
 			settings = new Settings();
 			FilesConverter.updateConfig(settings);
     		
@@ -156,10 +160,6 @@ public class Main extends JavaPlugin {
 			placedGenerators.loadFromLoadedChunks();
 			
 			schedules.loadOldSchedulesFile();
-			
-			/* Commands setup */
-			this.getServer().getPluginCommand("kgenerators").setExecutor(new Commands());
-			this.getServer().getPluginCommand("kgenerators").setTabCompleter(new CommandTabCompleter());
 			
 			/* Listeners setup */
 			Logger.debug("MainManager: Loading listeners");
