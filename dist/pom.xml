@@ -7,7 +7,7 @@
 	<parent>
 		<groupId>me.kryniowesegryderiusz</groupId>
 		<artifactId>kgenerators-parent</artifactId>
-		<version>7.2</version>
+		<version>7.3</version>
 	</parent>
 
 	<properties>
@@ -16,7 +16,7 @@
 	</properties>
 
 	<build>
-		<directory>../target</directory>
+		<directory>./target</directory>
 		<finalName>KGenerators-${project.parent.version}-b${env.BUILD_NUMBER}</finalName>
 		<plugins>
 			<plugin>
