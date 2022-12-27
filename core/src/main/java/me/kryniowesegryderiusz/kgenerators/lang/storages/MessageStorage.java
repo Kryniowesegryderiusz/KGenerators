@@ -94,7 +94,6 @@ public class MessageStorage {
 				String mess = s;
 				
 				if (sender instanceof Player) mess = PlaceholderAPIHook.translatePlaceholders((OfflinePlayer) sender, mess);
-				else mess = PlaceholderAPIHook.translatePlaceholders(null, mess);
 
 				if (m.getKey().split("\\.")[0].contains("generators") && Main.getSettings().isActionbarMessages()
 						&& !forceChat) {
