@@ -61,7 +61,7 @@ public class SQLDatabase implements IDatabase {
 				config.setJdbcUrl("jdbc:sqlite:" + Main.getInstance().getDataFolder().getPath() + "/data/database.db");
 				config.setConnectionTestQuery("SELECT 1");
 				config.setMaxLifetime(60000); // 60 Sec
-				config.setMaximumPoolSize(50); // 50 Connections (including idle connections)
+				config.setMaximumPoolSize(1);
 				config.setLeakDetectionThreshold(20000);
 				
 				dataSource = new HikariDataSource(config);
