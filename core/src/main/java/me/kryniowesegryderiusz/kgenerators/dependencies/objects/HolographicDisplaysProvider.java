@@ -12,18 +12,18 @@ import me.kryniowesegryderiusz.kgenerators.Main;
 import me.kryniowesegryderiusz.kgenerators.generators.holograms.interfaces.IHologramProvider;
 import me.kryniowesegryderiusz.kgenerators.generators.locations.objects.GeneratorLocation;
 
-public class HolographicDisplaysProvider implements IHologramProvider {
+public class HolographicDisplaysProvider extends IHologramProvider {
 	
 	HashMap<String, Hologram> holograms = new HashMap<String, Hologram>();
 	
-	public void createHologram(GeneratorLocation gLocation, ArrayList<String> lines) {
+	public void providerCreateHologram(GeneratorLocation gLocation, ArrayList<String> lines) {
 		Hologram hologram = HologramsAPI.createHologram((Plugin)Main.getInstance(), gLocation.getHologramLocation(lines.size()));
 		for (String s : lines)
 			hologram.appendTextLine(s); 
 		holograms.put(gLocation.getHologramUUID(), hologram);
 	}
 	
-	public void updateHologram(GeneratorLocation gLocation, ArrayList<String> lines) {
+	public void providerUpdateHologram(GeneratorLocation gLocation, ArrayList<String> lines) {
 		Hologram hologram = holograms.get(gLocation.getHologramUUID());
 		if(hologram != null) {
 			hologram.clearLines();
@@ -32,7 +32,7 @@ public class HolographicDisplaysProvider implements IHologramProvider {
 		}
 	}
 	
-	public void removeHologram(GeneratorLocation gLocation) {
+	public void providerRemoveHologram(GeneratorLocation gLocation) {
 		
 		Hologram hologram = holograms.get(gLocation.getHologramUUID());
 		if(hologram != null) {
