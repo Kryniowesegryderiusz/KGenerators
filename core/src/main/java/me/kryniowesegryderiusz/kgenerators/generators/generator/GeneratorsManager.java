@@ -123,6 +123,9 @@ public class GeneratorsManager {
 	}
 
 	public void reload() {
+		
+		LinkedHashMap<String, Generator> oldGenerators = new LinkedHashMap<String, Generator>();
+		oldGenerators.putAll(generators);
 
 		generators.clear();
 
@@ -141,10 +144,10 @@ public class GeneratorsManager {
 		ConfigurationSection mainSection = config.getConfigurationSection("");
 		for (String generatorID : mainSection.getKeys(false)) {
 			if (!generatorID.equals("example_generator")) {
-				
-				if (this.generators.containsKey(generatorID)) {
+				if (oldGenerators.containsKey(generatorID)) {
 					Logger.debug("Generators file: " + generatorID + " is already loaded - updating it!");
-					this.generators.get(generatorID).loadConfiguration(this, config, generatorID);
+					oldGenerators.get(generatorID).loadConfiguration(this, config, generatorID);
+					generators.put(generatorID, oldGenerators.get(generatorID));
 				} else
 					new Generator(this, config, generatorID);
 			}
