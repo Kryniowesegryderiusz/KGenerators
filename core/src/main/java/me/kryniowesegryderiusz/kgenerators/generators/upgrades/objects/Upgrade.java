@@ -7,6 +7,8 @@ import org.bukkit.inventory.ItemStack;
 
 import lombok.Getter;
 import me.kryniowesegryderiusz.kgenerators.Main;
+import me.kryniowesegryderiusz.kgenerators.api.events.PostGeneratorUpgradeGeneratorLocationEvent;
+import me.kryniowesegryderiusz.kgenerators.api.events.PostGeneratorUpgradeItemEvent;
 import me.kryniowesegryderiusz.kgenerators.api.exceptions.CannnotLoadUpgradeException;
 import me.kryniowesegryderiusz.kgenerators.api.interfaces.IUpgradeCost;
 import me.kryniowesegryderiusz.kgenerators.generators.generator.objects.Generator;
@@ -21,8 +23,8 @@ import me.kryniowesegryderiusz.kgenerators.utils.immutable.Config;
 
 public class Upgrade {
 
-	@Getter String generatorId;
-	@Getter String nextGeneratorId;	
+	@Getter private String generatorId;
+	@Getter private String nextGeneratorId;	
 	
 	ArrayList<IUpgradeCost> upgradeCosts = new ArrayList<IUpgradeCost>();
 	
@@ -77,6 +79,7 @@ public class Upgrade {
 		
 		if (this.upgrade(p, 1)) {
 			gl.changeTo(getNextGenerator());
+			Main.getInstance().getServer().getPluginManager().callEvent(new PostGeneratorUpgradeGeneratorLocationEvent(this, p, gl));
 		}
 		
 	}
@@ -94,6 +97,7 @@ public class Upgrade {
 			ItemStack newItem = this.getNextGenerator().getGeneratorItem();
 			newItem.setAmount(item.getAmount());
 			p.setItemInHand(newItem);
+			Main.getInstance().getServer().getPluginManager().callEvent(new PostGeneratorUpgradeItemEvent(this, p, newItem));
 		}
 
 	}

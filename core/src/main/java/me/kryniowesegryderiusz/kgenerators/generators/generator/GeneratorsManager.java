@@ -145,9 +145,8 @@ public class GeneratorsManager {
 				if (this.generators.containsKey(generatorID)) {
 					Logger.debug("Generators file: " + generatorID + " is already loaded - updating it!");
 					this.generators.get(generatorID).loadConfiguration(this, config, generatorID);
-				}
-				
-				new Generator(this, config, generatorID);
+				} else
+					new Generator(this, config, generatorID);
 			}
 		}
 
