@@ -17,6 +17,12 @@ public class MinionsHook implements Listener {
 	@EventHandler
 	public void onMinerBreakBlockAttemptEvent(final MinerBreakBlockAttemptEvent e){
 		Location location = e.getBlock().getLocation();
+		
+		if (!Main.getPlacedGenerators().isChunkFullyLoaded(location)) {
+			e.setCancelled(true);
+			return;
+		}
+		
 		GeneratorLocation gLocation = Main.getPlacedGenerators().getLoaded(location);
 		if (gLocation != null) {
 			if (!gLocation.isBlockPossibleToMine(location))
