@@ -92,14 +92,22 @@ public class Settings {
 	private boolean adjustDelayOnUnloadedChunks = true;
 
 	@Getter
-	private boolean lazyChunkLoading = false;
+	private boolean asyncChunkLoading = true;
 	
 	@Setter @Getter
 	private GeneratorItemMatcher generatorItemMatcher = new GeneratorItemMatcher();
+	
+	
+	@Getter
+	private boolean pluginLoadDebug = true;
+	@Getter
+	private boolean playersDebug = true;
+	@Getter
+	private boolean placedGeneratorsManagerDebug = false;
 
 	@SuppressWarnings("unchecked")
 	public Settings() {
-		Logger.debug("Settings: Loading settings");
+		Logger.info("Settings: Loading settings");
 
 		Config config;
 
@@ -176,8 +184,15 @@ public class Settings {
 		if (config.contains("database.dbtype"))
 			this.setDbType(DatabaseType.Functions.getTypeByString(config.getString("database.dbtype")));
 		
-		if (config.contains("lazy-chunk-loading"))
-			this.lazyChunkLoading = config.getBoolean("lazy-chunk-loading");
+		if (config.contains("async-chunk-loading"))
+			this.asyncChunkLoading = config.getBoolean("async-chunk-loading");
+		
+		if (config.contains("debug.plugin-load"))
+			this.pluginLoadDebug = config.getBoolean("debug.plugin-load");
+		if (config.contains("debug.players"))
+			this.playersDebug = config.getBoolean("debug.players");
+		if (config.contains("debug.placed-generators-manager"))
+			this.placedGeneratorsManagerDebug = config.getBoolean("debug.placed-generators-manager");
 		
 		this.generatorItemMatcher.load(config);
 

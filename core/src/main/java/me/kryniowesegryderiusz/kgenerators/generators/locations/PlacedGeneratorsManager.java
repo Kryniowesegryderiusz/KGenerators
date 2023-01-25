@@ -32,6 +32,7 @@ public class PlacedGeneratorsManager {
 	
 	public void loadGenerator(GeneratorLocation gl) {
 		if (gl != null) {
+			Logger.debugPlacedGeneratorsManager("PlacedGeneratorsManager: Loading generator: " + gl.toString());
 			this.addLoaded(gl);
 			Main.getSchedules().loadSchedule(gl);
 			Main.getInstance().getServer().getScheduler().runTask(Main.getInstance(), () -> {
@@ -45,6 +46,9 @@ public class PlacedGeneratorsManager {
 	}
 	
 	public void unloadGenerator(GeneratorLocation gLocation, boolean serverStop) {
+		
+		Logger.debugPlacedGeneratorsManager("PlacedGeneratorsManager: Unloading generator: " + gLocation.toString() + " | serverStop: " + serverStop);
+		
 		Main.getDatabases().getDb().saveGenerator(gLocation);
 		this.removeLoaded(gLocation);
 		Main.getSchedules().unloadSchedule(gLocation);
@@ -56,6 +60,7 @@ public class PlacedGeneratorsManager {
 	
 	
 	public void loadChunk(Chunk c, int delay) {
+		Logger.debugPlacedGeneratorsManager("PlacedGeneratorsManager: Loading chunk: " + c.toString());
 		Main.getInstance().getServer().getScheduler().runTaskLaterAsynchronously(Main.getInstance(), new Runnable() {
 			@Override
 			public void run() {
@@ -63,7 +68,7 @@ public class PlacedGeneratorsManager {
 				ArrayList<GeneratorLocation> generators = Main.getDatabases().getDb().getGenerators(c);
 				
 				if (generators == null) {
-					Logger.error("ChunkManagement: Cant load chunk " + c.getX() + " " + c.getZ() + "! Trying again!");
+					Logger.error("PlacedGeneratorsManager: Cant load chunk " + c.getX() + " " + c.getZ() + "! Trying again!");
 					loadChunk(c, 1*20);
 					return;
 				}
@@ -74,25 +79,32 @@ public class PlacedGeneratorsManager {
 				
 				loadedGenerators.putIfAbsent(c, new ChunkGeneratorLocations());
 				loadedGenerators.get(c).setFullyLoaded(true);
+				Logger.debugPlacedGeneratorsManager("PlacedGeneratorsManager: Chunk loaded: " + c.toString());
 
 			}
 		}, delay);
 	}
 	
 	public void unloadChunk(Chunk c) {
+		Logger.debugPlacedGeneratorsManager("PlacedGeneratorsManager: Unloading chunk: " + c.toString());
 		ArrayList<GeneratorLocation> generatorsToUnload = this.getLoaded(c);
 		
 		Main.getInstance().getServer().getScheduler().runTaskAsynchronously(Main.getInstance(), () -> {
 			for (GeneratorLocation gl : generatorsToUnload) {
 				Main.getPlacedGenerators().unloadGenerator(gl);
 			}
+			
 			if (this.loadedGenerators.get(c).isEmpty())
 				this.loadedGenerators.remove(c);
+			
+			Logger.debugPlacedGeneratorsManager("PlacedGeneratorsManager: Chunk unloaded: " + c.toString() + " | isInManager: " + loadedGenerators.containsKey(c));
 		});
 	}
 	
 	public boolean isChunkFullyLoaded(Location loc) {
-		return loadedGenerators.get(loc.getChunk()) != null && loadedGenerators.get(loc.getChunk()).isFullyLoaded();
+		boolean result = loadedGenerators.get(loc.getChunk()) != null && loadedGenerators.get(loc.getChunk()).isFullyLoaded();
+		Logger.debugPlacedGeneratorsManager("PlacedGeneratorsManager: isChunkFullyLoaded fired with " + result);
+		return result;
 	}
 	
 	public ArrayList<GeneratorLocation> getAll() {	
@@ -201,7 +213,7 @@ public class PlacedGeneratorsManager {
 	 */
 	public void loadFromLoadedChunks() {
 
-		Logger.debug("PlacedGenerators: Loading generators from already loaded chunks");
+		Logger.debugPluginLoad("PlacedGenerators: Loading generators from already loaded chunks");
 
 		HashMap<World, Chunk[]> loadedChunks = new HashMap<World, Chunk[]>();
 		
@@ -219,7 +231,7 @@ public class PlacedGeneratorsManager {
 						loadChunk(c, 0);
 						chunks++;
 					}
-					Logger.debug("PlacedGenerators: Loaded " + amount + " generators from world " + e.getKey().getName() + " (" + chunks + " chunks)");
+					Logger.debugPluginLoad("PlacedGenerators: Loaded " + amount + " generators from world " + e.getKey().getName() + " (" + chunks + " chunks)");
 				}
 			}
 		});

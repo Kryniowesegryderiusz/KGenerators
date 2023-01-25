@@ -36,7 +36,7 @@ public class Lang {
 	
 	public static void loadFromFiles() {
 		
-		Logger.debug("Lang: Loading lang files");
+		Logger.debugPluginLoad("Lang: Loading lang files");
 		
 		Config config;
 		Config configGui;

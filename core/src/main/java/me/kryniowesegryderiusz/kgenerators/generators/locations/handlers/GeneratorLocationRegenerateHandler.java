@@ -9,6 +9,7 @@ import me.kryniowesegryderiusz.kgenerators.api.events.PostGeneratorRegenerationE
 import me.kryniowesegryderiusz.kgenerators.api.events.PreGeneratorRegenerationEvent;
 import me.kryniowesegryderiusz.kgenerators.api.objects.AbstractGeneratedObject;
 import me.kryniowesegryderiusz.kgenerators.generators.locations.objects.GeneratorLocation;
+import me.kryniowesegryderiusz.kgenerators.logger.Logger;
 import me.kryniowesegryderiusz.kgenerators.xseries.XMaterial;
 
 public class GeneratorLocationRegenerateHandler {
@@ -29,10 +30,13 @@ public class GeneratorLocationRegenerateHandler {
 			return;
 		}
 		
-		if (!Main.getPlacedGenerators().isLoaded(gLocation)
-				&& !Main.getMultiVersion().getBlocksUtils().isAir(generatingLocationBlock) 
-				&& !Main.getMultiVersion().getBlocksUtils().isOnWhitelist(generatingLocationBlock)
-				&& !gLocation.isBlockPossibleToMine(generatingLocation)) {
+		boolean isLoaded = Main.getPlacedGenerators().isLoaded(gLocation);
+		boolean isAir = Main.getMultiVersion().getBlocksUtils().isAir(generatingLocationBlock);
+		boolean isOnWhitelist = Main.getMultiVersion().getBlocksUtils().isOnWhitelist(generatingLocationBlock);
+		boolean isBlockPossibleToMine = gLocation.isBlockPossibleToMine(generatingLocation);
+		
+		if (!isLoaded && !isAir	&& !isOnWhitelist && !isBlockPossibleToMine) {
+			Logger.debugPlacedGeneratorsManager("GeneratorLocationRegenerateHandler: Dropping generator " + gLocation.toString() + " | isLoaded: " + isLoaded + " | isAir: " + isAir + " | isOnWhitelist: " + isOnWhitelist + " | isBlockPossibleToMine: " + isBlockPossibleToMine);
 			gLocation.removeGenerator(true, null);
 			return;
 		}

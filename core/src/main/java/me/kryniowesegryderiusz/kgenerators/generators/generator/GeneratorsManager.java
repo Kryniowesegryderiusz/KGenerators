@@ -38,7 +38,7 @@ public class GeneratorsManager {
 	private GeneratedObjectsManager generatedObjectsManager;
 
 	public GeneratorsManager() {
-		Logger.debug("GeneratorsManager: Setting up manager");
+		Logger.debugPluginLoad("GeneratorsManager: Setting up manager");
 		this.generatedObjectsManager = new GeneratedObjectsManager();
 		this.generatedObjectsManager.registerGeneratedObject(GeneratedBlock.class);
 		this.generatedObjectsManager.registerGeneratedObject(GeneratedItem.class);
@@ -145,7 +145,7 @@ public class GeneratorsManager {
 		for (String generatorID : mainSection.getKeys(false)) {
 			if (!generatorID.equals("example_generator")) {
 				if (oldGenerators.containsKey(generatorID)) {
-					Logger.debug("Generators file: " + generatorID + " is already loaded - updating it!");
+					Logger.debugPluginLoad("Generators file: " + generatorID + " is already loaded - updating it!");
 					oldGenerators.get(generatorID).loadConfiguration(this, config, generatorID);
 					generators.put(generatorID, oldGenerators.get(generatorID));
 				} else
@@ -164,7 +164,7 @@ public class GeneratorsManager {
 			try {
 				AbstractGeneratedObject ago = c.newInstance();
 				this.generatedObjects.put(ago.getType(), c);
-				Logger.debug("GeneratedObjectsManager: Loaded " + c.getSimpleName() + " with type " + ago.getType());
+				Logger.debugPluginLoad("GeneratedObjectsManager: Loaded " + c.getSimpleName() + " with type " + ago.getType());
 			} catch (Exception e) {
 				Logger.error("GeneratedObjectsManager: Cannot initialise GeneratedObject: " + c.getSimpleName());
 				Logger.error(e);

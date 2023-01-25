@@ -35,7 +35,7 @@ public class KGeneratorsAddonSuperiorSkyblock2ForceHook extends JavaPlugin imple
    		 IslandPrivilege.register("KGENERATORS_PICKUP_FLAG");
 		 IslandPrivilege.register("KGENERATORS_USE_FLAG");
 		 IslandPrivilege.register("KGENERATORS_OPEN_MENU_FLAG");
-		 Logger.debug("KGeneratorsAddon: SuperiorSkyblock2ForceHook: Initialised SuperiorSkyblock2 permissions");
+		 Logger.debugPluginLoad("KGeneratorsAddon: SuperiorSkyblock2ForceHook: Initialised SuperiorSkyblock2 permissions");
 		 this.getServer().getScheduler().runTask(this, new Runnable() {
 			public void run() {
 				SuperiorSkyblock2Hook.forceHook();

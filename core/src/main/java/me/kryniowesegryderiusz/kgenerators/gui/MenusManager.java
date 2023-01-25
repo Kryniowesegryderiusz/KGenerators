@@ -34,7 +34,7 @@ public class MenusManager implements Listener {
 	
 	public MenusManager() {
 		
-		Logger.debug("MenusManager: Setting up manager");
+		Logger.debugPluginLoad("MenusManager: Setting up manager");
 		
 		Bukkit.getScheduler().scheduleSyncRepeatingTask(Main.getInstance(), new Runnable() {
 		    @Override

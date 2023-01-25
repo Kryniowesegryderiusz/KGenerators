@@ -22,7 +22,7 @@ public class LimitsManager {
 
 	public LimitsManager() {
 		
-		Logger.debug("LimitsManager: Setting up manager");
+		Logger.debugPluginLoad("LimitsManager: Setting up manager");
 		
 		Config config;
 

@@ -1,6 +1,5 @@
 package me.kryniowesegryderiusz.kgenerators.listeners;
 
-import org.bukkit.Chunk;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
 import org.bukkit.event.world.ChunkLoadEvent;
@@ -14,8 +13,6 @@ public class ChunkLoadListener implements Listener {
 		
 		if (Main.getDatabases().isMigratorRunning()) return;
 		
-		Chunk c = e.getChunk();
-		
-		Main.getPlacedGenerators().loadChunk(c, 0);
+		Main.getPlacedGenerators().loadChunk(e.getChunk(), 0);
 	}
 }

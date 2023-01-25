@@ -208,7 +208,17 @@ public class FilesConverter {
 			add(file, "  check-by-nbt: true");
 			add(file, "  #Check by item meta - could break on generator item changes");
 			add(file, "  check-by-item-meta: true");
-		}		  
+		}
+		
+		if (!config.contains("debug")) {
+			add(file, "");
+			add(file, "#Debug related options. Support could be not provided if debug messages are not recorded");
+			add(file, "debug:");
+			add(file, "  #Debug related to plugin loading configuration");
+			add(file, "  plugin-load: true");
+			add(file, "  #Debug related to players actions like picking up, placing, upgrading generators");
+			add(file, "  players: true");
+		}
 	}
 
 	private static void add(File file, String string) {

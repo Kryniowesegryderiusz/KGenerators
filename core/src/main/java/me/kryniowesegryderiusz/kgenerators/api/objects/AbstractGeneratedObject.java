@@ -54,7 +54,7 @@ public abstract class AbstractGeneratedObject {
 			if (cd.loadCustomDrops(generatedObjectConfig))
 				this.customDrops = cd;
 			
-			Logger.debug("Generators file: Loaded GeneratedObject: " + this.toString());
+			Logger.debugPluginLoad("Generators file: Loaded GeneratedObject: " + this.toString());
 			
 		} catch (Exception e) {
 			Logger.error("Generators file: Cant load GeneratedObject: " + this.toStringSimple());

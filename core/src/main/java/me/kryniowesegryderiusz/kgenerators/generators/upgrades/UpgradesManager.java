@@ -85,7 +85,7 @@ public class UpgradesManager {
 
 	public void reload() {
 
-		Logger.debug("UpgradesManager: Setting up manager");
+		Logger.debugPluginLoad("UpgradesManager: Setting up manager");
 
 		upgrades.clear();
 
@@ -130,7 +130,7 @@ public class UpgradesManager {
 		public <T extends IUpgradeCost> void registerUpgradeCost(Class<T> c) {
 			if (!upgradeCosts.contains(c)) {
 				upgradeCosts.add(c);
-				Logger.debug("Upgrades: Loaded UpgradeCost: " + c.getSimpleName());
+				Logger.debugPluginLoad("Upgrades: Loaded UpgradeCost: " + c.getSimpleName());
 			}
 
 		}

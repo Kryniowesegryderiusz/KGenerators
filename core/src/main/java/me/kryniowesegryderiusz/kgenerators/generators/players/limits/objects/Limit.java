@@ -87,7 +87,7 @@ public class Limit {
 			Logger.error("Limits file: Couldnt load " + id + " limit!");
 		} else {
 			limitsManager.add(this);
-			Logger.debug("Limits file: Loaded " + this.toString());
+			Logger.debugPluginLoad("Limits file: Loaded " + this.toString());
 		}
 	}
 

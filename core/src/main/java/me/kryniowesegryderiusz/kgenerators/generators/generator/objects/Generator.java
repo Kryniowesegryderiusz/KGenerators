@@ -211,7 +211,7 @@ public class Generator {
 			Logger.error("Generators file: An error appeared, while loading configuration for " + generatorID);
 			return false;
 		} else {
-			Logger.debug("Generators file: Loaded properly " + type + " " + generatorID + " generating variety of "
+			Logger.debugPluginLoad("Generators file: Loaded properly " + type + " " + generatorID + " generating variety of "
 					+ this.chances.size() + " objects every " + delay + " ticks");
 			return true;
 		}

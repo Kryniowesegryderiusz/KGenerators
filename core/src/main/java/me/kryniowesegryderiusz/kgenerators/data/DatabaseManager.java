@@ -23,7 +23,7 @@ public class DatabaseManager {
 	@Getter boolean isMigratorRunning = false;
 
 	public DatabaseManager(DatabaseType dbType) {
-		Logger.debug("DatabaseManager: Setting up manager");
+		Logger.debugPluginLoad("DatabaseManager: Setting up manager");
 		this.db = this.getDatabase(dbType);
 	}
 

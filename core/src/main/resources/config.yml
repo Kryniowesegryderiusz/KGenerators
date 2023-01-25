@@ -108,3 +108,10 @@ intervals:
   #How often should generators guis be updated?
   #Set -1 to not update GUI
   gui-update: 20
+
+#Debug related options. Support could be not provided if debug messages are not recorded
+debug:
+  #Debug related to plugin loading configuration
+  plugin-load: true
+  #Debug related to players actions like picking up, placing, upgrading generators
+  players: true

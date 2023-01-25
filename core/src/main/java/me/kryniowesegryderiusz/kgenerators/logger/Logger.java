@@ -79,8 +79,19 @@ public class Logger {
 		log(object, LogType.INFO);
 	}
 
-	public static void debug(Object object) {
-		log(object, LogType.DEBUG);
+	public static void debugPlayer(Object object) {
+		if (Main.getSettings().isPlayersDebug())
+			log(object, LogType.DEBUG);
+	}
+	
+	public static void debugPluginLoad(Object object) {
+		if (Main.getSettings().isPluginLoadDebug())
+			log(object, LogType.DEBUG);
+	}
+	
+	public static void debugPlacedGeneratorsManager(Object object) {
+		if (Main.getSettings().isPlacedGeneratorsManagerDebug())
+			log(object, LogType.DEBUG);
 	}
 
 	public static void textToConsole(String message) {

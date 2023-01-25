@@ -54,7 +54,7 @@ public class Upgrade {
 			
 			upgradesManager.addUpgrade(generatorId, this);
 			
-			Logger.debug("Upgrades file: Loaded upgrade " + this.toString());
+			Logger.debugPluginLoad("Upgrades file: Loaded upgrade " + this.toString());
 			
 			
 		}

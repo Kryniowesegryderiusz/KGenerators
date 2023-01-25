@@ -90,7 +90,12 @@ public class Main extends JavaPlugin {
 	@Override
     public void onLoad() {
     	instance = this;
+    	
     	Logger.setup();
+    	
+		settings = new Settings();
+		FilesConverter.updateConfig(settings);
+    	
     	multiVersion = new MultiVersionManager();
     }
     
@@ -132,9 +137,6 @@ public class Main extends JavaPlugin {
 			this.getServer().getPluginCommand("kgenerators").setExecutor(new Commands());
 			this.getServer().getPluginCommand("kgenerators").setTabCompleter(new CommandTabCompleter());
     		
-			settings = new Settings();
-			FilesConverter.updateConfig(settings);
-    		
 			/* Dependencies check */
 			dependencies.standardDependenciesCheck();
 			
@@ -162,7 +164,7 @@ public class Main extends JavaPlugin {
 			schedules.loadOldSchedulesFile();
 			
 			/* Listeners setup */
-			Logger.debug("MainManager: Loading listeners");
+			Logger.debugPluginLoad("MainManager: Loading listeners");
 			this.getServer().getPluginManager().registerEvents(new BlockBreakListener(), this);
 			this.getServer().getPluginManager().registerEvents(new BlockPlaceListener(), this);
 			this.getServer().getPluginManager().registerEvents(new CraftItemListener(), this);
@@ -179,7 +181,7 @@ public class Main extends JavaPlugin {
 			/* 
 			 * Metrix
 			 */
-			Logger.debug("MainManager: Loading Metrix");
+			Logger.debugPluginLoad("MainManager: Loading Metrix");
 			int pluginId = 7871;
 			Metrics metrics = new Metrics(this, pluginId);
 			metrics.addCustomChart(new Metrics.SingleLineChart("configured_generators", () -> Main.getGenerators().getAmount()));

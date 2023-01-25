@@ -28,17 +28,17 @@ public class HologramsManager {
 	
 	public HologramsManager() {
 		
-		Logger.debug("HologramsManager: Setting up manager");
+		Logger.debugPluginLoad("HologramsManager: Setting up manager");
 		
 		if (Main.getDependencies().isEnabled(Dependency.DECENT_HOLOGRAMS)) {
 			hologramProvider = new DecentHologramsProvider();
-			Logger.info("Holograms: Enabling DecentHologramsProvider");
+			Logger.debugPluginLoad("Holograms: Enabling DecentHologramsProvider");
 		} else if (Main.getDependencies().isEnabled(Dependency.HOLOGRAPHIC_DISPLAYS)) {
 			hologramProvider = new HolographicDisplaysProvider();
-			Logger.info("Holograms: Enabling HolographicDisplaysProvider");
+			Logger.debugPluginLoad("Holograms: Enabling HolographicDisplaysProvider");
 		} else if (Main.getDependencies().isEnabled(Dependency.CMI_HOLOGRAMS)) {
 			hologramProvider = new CMIHologramsProvider();
-			Logger.info("Holograms: Enabling CMIHologramsProvider");
+			Logger.debugPluginLoad("Holograms: Enabling CMIHologramsProvider");
 		} else {
         	for (Map.Entry<String, Generator> e : Main.getGenerators().getEntrySet()) {
 				if ((e.getValue()).isHologram())

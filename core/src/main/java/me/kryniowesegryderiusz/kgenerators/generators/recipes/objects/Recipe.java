@@ -66,7 +66,7 @@ public class Recipe {
 	            
 	        	Bukkit.addRecipe(shapedRecipe);
 	        	
-	        	Logger.debug("Recipes file: Loaded recipe for `"+generatorID+"`! Recipe: " + this.toString());
+	        	Logger.debugPluginLoad("Recipes file: Loaded recipe for `"+generatorID+"`! Recipe: " + this.toString());
 			}
 		}
 	}

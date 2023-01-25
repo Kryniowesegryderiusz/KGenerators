@@ -27,7 +27,7 @@ public class SchedulesManager {
 	
 	public SchedulesManager() {
 		
-		Logger.debug("SchedulesManager: Setting up manager");
+		Logger.debugPluginLoad("SchedulesManager: Setting up manager");
 		
 		Bukkit.getScheduler().scheduleSyncRepeatingTask(Main.getInstance(), new Runnable() {
 		    @Override
