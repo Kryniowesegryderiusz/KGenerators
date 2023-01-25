@@ -253,8 +253,7 @@ public class PlacedGeneratorsManager {
 		
 		public ArrayList<GeneratorLocation> getAll() {
 			ArrayList<GeneratorLocation> all = new ArrayList<GeneratorLocation>();
-			for (Entry<Location, GeneratorLocation> e : this.locations.entrySet())
-				all.add(e.getValue());
+			all.addAll(this.locations.values());
 			return all;
 		}
 	}
