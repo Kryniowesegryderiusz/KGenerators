@@ -9,6 +9,7 @@ import org.bukkit.event.EventPriority;
 import org.bukkit.event.Listener;
 import org.bukkit.event.entity.ItemMergeEvent;
 import org.bukkit.inventory.ItemStack;
+import org.bukkit.util.Vector;
 
 import lombok.Getter;
 import me.kryniowesegryderiusz.kgenerators.Main;
@@ -27,6 +28,8 @@ public class GeneratedItem extends AbstractGeneratedObject implements Listener {
 
 	@Getter
 	private boolean waitForPickUp = false;
+	@Getter
+	private boolean disableVelocity = false;
 
 	private Item entity;
 
@@ -41,6 +44,9 @@ public class GeneratedItem extends AbstractGeneratedObject implements Listener {
 
 		if (generatedObjectConfig.containsKey("wait-for-pick-up"))
 			this.waitForPickUp = (boolean) generatedObjectConfig.get("wait-for-pick-up");
+		if (generatedObjectConfig.containsKey("disable-velocity"))
+			this.disableVelocity = (boolean) generatedObjectConfig.get("disable-velocity");
+
 
 		this.item = FilesUtils.loadItemStack((Map<?, ?>) generatedObjectConfig, "item",
 				"Generators file: GeneratedItem", false);
@@ -55,11 +61,13 @@ public class GeneratedItem extends AbstractGeneratedObject implements Listener {
 
 	@Override
 	public void regenerate(IGeneratorLocation generatorLocation) {
-		Location generateLocation = generatorLocation.getGeneratedBlockLocation().clone().add(0.5, 0, 0.5);
+		Location generateLocation = generatorLocation.getGeneratedBlockLocation().clone().add(0.5, 0.5, 0.5);
 		if (!Main.getMultiVersion().getBlocksUtils().isAir(generatorLocation.getGeneratedBlockLocation().getBlock()))
 			generateLocation.add(0, 1, 0);
 		generateLocation.setPitch(-90);
 		this.entity = generatorLocation.getGeneratedBlockLocation().getWorld().dropItem(generateLocation, item);
+		if (this.disableVelocity)
+			entity.setVelocity(new Vector());
 		generatorLocation.scheduleGeneratorRegeneration();
 	}
 

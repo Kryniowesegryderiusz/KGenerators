@@ -70,6 +70,8 @@ example_generator:
           - FORTUNE:1
       #If this option is set to true generator wont regenerate, until item is picked up/despawns/etc.
       wait-for-pick-up: true
+      #If this option is set to true generated items wont have initial velocity (they'll just spawn in a place)
+      disable-velocity: true
     #type: entity - generator will spawn entity
     - type: entity
       chance: 10.0
