@@ -166,7 +166,8 @@ public class PlacedGeneratorsManager {
 	}
 	
 	public void removeLoaded(GeneratorLocation gLocation) {
-		loadedGenerators.get(gLocation.getChunk()).removeLocation(gLocation);
+		if (loadedGenerators.containsKey(gLocation.getChunk()))
+			loadedGenerators.get(gLocation.getChunk()).removeLocation(gLocation);
 	}
 	
 	public int getAmount() {
