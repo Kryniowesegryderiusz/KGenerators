@@ -15,12 +15,14 @@ public class BlockPistonListener implements Listener {
 
 	@EventHandler
 	public void onBlockPistonExtend(final BlockPistonExtendEvent e){
-		e.setCancelled(pistonEvent(e.getBlocks()));
+		if (pistonEvent(e.getBlocks()))
+			e.setCancelled(true);
 	}
 	
 	@EventHandler
 	public void onBlockPistonRetractEvent (final BlockPistonRetractEvent e){
-		e.setCancelled(pistonEvent(e.getBlocks()));
+		if (pistonEvent(e.getBlocks()))
+			e.setCancelled(true);
 	}
 	
 	/* Returns true if cancelled */
