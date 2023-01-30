@@ -94,7 +94,7 @@ public class PlacedGeneratorsManager {
 				Main.getPlacedGenerators().unloadGenerator(gl);
 			}
 			
-			if (this.loadedGenerators.get(c).isEmpty())
+			if (this.loadedGenerators.get(c) != null && this.loadedGenerators.get(c).isEmpty())
 				this.loadedGenerators.remove(c);
 			
 			Logger.debugPlacedGeneratorsManager("PlacedGeneratorsManager: Chunk unloaded: " + c.toString() + " | isInManager: " + loadedGenerators.containsKey(c));
