@@ -45,7 +45,7 @@ public class SchedulesManager {
 				
 				for (GeneratorLocation gl : readyForRegeneration) {
 					remove(gl);
-					if (Main.getPlacedGenerators().isLoaded(gl));
+					if (Main.getPlacedGenerators().isLoaded(gl))
 						gl.regenerateGenerator();
 				}
 		    }
