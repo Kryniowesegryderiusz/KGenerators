@@ -266,10 +266,10 @@ public class GeneratorLocation implements IGeneratorLocation {
 	public String toString() {
 		if (this.owner != null)
 			return "(" + this.id + ") " + this.generator.getId() + " owned by " + this.owner.getName() + " placed in " + toStringLocation()
-					+ " (" + this.getChunk().getX() + "," + this.getChunk().getZ() + ")";
+					+ " (" + this.getChunk().getX() + "," + this.getChunk().getZ() + ") | Loaded: " + Main.getPlacedGenerators().isLoaded(this);
 		else
 			return  "(" + this.id + ") " + this.generator.getId() + " owned by no one" + " placed in " + toStringLocation() + " ("
-					+ this.getChunk().getX() + "," + this.getChunk().getZ() + ")";
+					+ this.getChunk().getX() + "," + this.getChunk().getZ() + ") | Loaded: " + Main.getPlacedGenerators().isLoaded(this);
 	}
 
 	public String toStringLocation() {

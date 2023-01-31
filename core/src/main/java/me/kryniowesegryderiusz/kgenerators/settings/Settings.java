@@ -104,7 +104,9 @@ public class Settings {
 	private boolean playersDebug = true;
 	@Getter
 	private boolean placedGeneratorsManagerDebug = false;
-
+	@Getter
+	private boolean schedulesManagerDebug = false;
+	
 	@SuppressWarnings("unchecked")
 	public Settings() {
 		Logger.info("Settings: Loading settings");
@@ -193,6 +195,8 @@ public class Settings {
 			this.playersDebug = config.getBoolean("debug.players");
 		if (config.contains("debug.placed-generators-manager"))
 			this.placedGeneratorsManagerDebug = config.getBoolean("debug.placed-generators-manager");
+		if (config.contains("debug.schedules"))
+			this.schedulesManagerDebug = config.getBoolean("debug.schedules");
 		
 		this.generatorItemMatcher.load(config);
 

@@ -93,6 +93,11 @@ public class Logger {
 		if (Main.getSettings().isPlacedGeneratorsManagerDebug())
 			log(object, LogType.DEBUG);
 	}
+	
+	public static void debugSchedulessManager(Object object) {
+		if (Main.getSettings().isSchedulesManagerDebug())
+			log(object, LogType.DEBUG);
+	}
 
 	public static void textToConsole(String message) {
 		Main.getInstance().getLogger().info(message);

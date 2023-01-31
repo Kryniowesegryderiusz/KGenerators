@@ -62,6 +62,8 @@ public class SchedulesManager {
 
 	public void schedule(GeneratorLocation gLocation, boolean place) {
 		
+		Logger.debugSchedulessManager("SchedulesManager: Scheduling " + gLocation.toString() + "| place: " + place);
+		
 		if ((place && gLocation.getGenerator().isGenerateImmediatelyAfterPlace()) 
 				|| gLocation.getGenerator().getDelay() <= 0) {
 			Bukkit.getScheduler().runTask(Main.getInstance(), () -> {
@@ -77,6 +79,8 @@ public class SchedulesManager {
 			if (gLocation.getGenerator().isHologram())
 				Main.getHolograms().createRemainingTimeHologram(gLocation);
 		}
+		
+		Logger.debugSchedulessManager("SchedulesManager: Scheduling " + gLocation.getId() + " completed");
 	}
 	
 	public Schedule getSchedule(GeneratorLocation gLocation) {
@@ -84,8 +88,11 @@ public class SchedulesManager {
 	}
 	
 	public void remove(GeneratorLocation gLocation) {
-		Main.getHolograms().removeHologram(gLocation);
+		Logger.debugSchedulessManager("SchedulesManager: Removing " + gLocation.toString());
 		schedules.remove(gLocation);
+		if (gLocation.getGenerator().isHologram())
+			Main.getHolograms().removeHologram(gLocation);
+		Logger.debugSchedulessManager("SchedulesManager: Removing " + gLocation.getId() + " completed");
 	}
 	
 	/*
@@ -95,6 +102,7 @@ public class SchedulesManager {
 	public void loadSchedule(GeneratorLocation gLocation) {
 
 		Schedule schedule = Main.getDatabases().getDb().getSchedule(gLocation);
+		Logger.debugSchedulessManager("SchedulesManager: Loading " + gLocation.toString() + "| isNull: " + (schedule == null));
 		if (schedule == null) return;
 		
 		if (gLocation.getGenerator().isHologram())
@@ -105,14 +113,16 @@ public class SchedulesManager {
 		Main.getDatabases().getDb().removeSchedule(gLocation);
 		
 		schedules.put(gLocation, schedule);
+		Logger.debugSchedulessManager("SchedulesManager: Loading " + gLocation.getId() + " completed");
 	}
 	
 	public void unloadSchedule(GeneratorLocation gl) {
-		if (Main.getSchedules().isScheduled(gl)) {
-			Main.getDatabases().getDb().addSchedule(gl, Main.getSchedules().getSchedule(gl));
+		Schedule schedule = this.getSchedule(gl);
+		Logger.debugSchedulessManager("SchedulesManager: Unloading " + gl.toString() + " | isNull: " + (schedule == null));
+		if (schedule != null) {
+			Main.getDatabases().getDb().addSchedule(gl, schedule);
 			Main.getSchedules().remove(gl);
-			if (gl.getGenerator().isHologram())
-				Main.getHolograms().removeHologram(gl);
+			Logger.debugSchedulessManager("SchedulesManager: Unloading " + gl.getId() + " completed");
 		}
 	}
 	

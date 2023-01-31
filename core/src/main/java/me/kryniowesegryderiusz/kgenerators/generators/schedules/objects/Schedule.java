@@ -29,4 +29,8 @@ public class Schedule {
 		return this.timeLeft <= 0;
 	}
 	
+	public String toString() {
+		return "Time left: " + timeLeft;
+	}
+	
 }
