@@ -137,8 +137,9 @@ public class PlacedGeneratorsManager {
 	 * @return loaded GeneratorLocation related to location or null if none
 	 */
 	@Nullable public GeneratorLocation getLoaded(Location location) {
-		if (loadedGenerators.containsKey(location.getChunk()))
-			return loadedGenerators.get(location.getChunk()).get(location);
+		ChunkGeneratorLocations cgl = loadedGenerators.get(location.getChunk());
+		if (cgl != null)
+			return cgl.get(location);
 		else return null;
 	}
 	
@@ -292,6 +293,7 @@ public class PlacedGeneratorsManager {
 		}
 		
 		public GeneratorLocation get(Location location) {
+			if (location == null) return null;
 			if (locations.containsKey(location))
 				return locations.get(location);
 			else if (locations.containsKey(location.clone().add(0,-1,0))
