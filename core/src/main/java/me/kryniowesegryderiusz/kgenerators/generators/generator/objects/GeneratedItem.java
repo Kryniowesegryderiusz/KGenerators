@@ -90,7 +90,7 @@ public class GeneratedItem extends AbstractGeneratedObject implements Listener {
 
 	@Override
 	public boolean isReady() {
-		return !(this.waitForPickUp && !this.entity.isDead());
+		return !(this.waitForPickUp && this.entity != null && !this.entity.isDead());
 	}
 
 	@EventHandler(priority = EventPriority.MONITOR)
