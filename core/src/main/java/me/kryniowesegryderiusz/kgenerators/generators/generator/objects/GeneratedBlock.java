@@ -19,6 +19,8 @@ public class GeneratedBlock extends AbstractGeneratedObject {
 
 	@Getter private CustomBlockData customBlockData;
 	
+	@Getter private boolean physics = true;
+	
 	@Override
 	protected boolean compareSameType(AbstractGeneratedObject generatedObject) {
 		GeneratedBlock gb = (GeneratedBlock) generatedObject;
@@ -27,6 +29,8 @@ public class GeneratedBlock extends AbstractGeneratedObject {
 
 	@Override
 	protected boolean loadTypeSpecific(Map<?, ?> generatedObjectConfig) {
+		if (generatedObjectConfig.containsKey("physics"))
+			this.physics = (boolean) generatedObjectConfig.get("physics");
 		if (generatedObjectConfig.containsKey("material")) {
 			this.customBlockData = CustomBlockData.load((String) generatedObjectConfig.get("material"), "Generators file: GeneratedBlock:");
 			return true;
@@ -37,7 +41,7 @@ public class GeneratedBlock extends AbstractGeneratedObject {
 	@Override
 	public void regenerate(IGeneratorLocation generatorLocation) {
 		
-		this.customBlockData.setBlock(generatorLocation.getGeneratedBlockLocation());
+		this.customBlockData.setBlock(generatorLocation.getGeneratedBlockLocation(), physics);
 
 		if (Main.getDependencies().isEnabled(Dependency.SUPERIOR_SKYBLOCK_2))
 			  SuperiorSkyblock2Hook.handleBlockPlace(generatorLocation.getGeneratedBlockLocation().getBlock());

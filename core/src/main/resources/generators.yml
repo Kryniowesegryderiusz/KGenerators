@@ -52,6 +52,8 @@ example_generator:
         money: 50.0
         commands:
         - "say <player> digged magic stone and got diamond, 100exp and 50$!"
+      #Should physics be applied to this block?
+      physics: false
     #type: item - generator will spawn simple item
     - type: item
       chance: 10.0

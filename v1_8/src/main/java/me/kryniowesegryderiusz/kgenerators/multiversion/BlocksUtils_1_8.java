@@ -43,6 +43,11 @@ public class BlocksUtils_1_8 implements BlocksUtils {
 	public void setBlock(Location location, XMaterial item) {
 		this.setBlock(location, item.parseItem());
 	}
+	
+	@Override
+	public void setBlock(Location location, XMaterial xmaterial, boolean physics) {
+		location.getBlock().setType(xmaterial.parseMaterial(), false);
+	}
 
 	@Override
 	public void setBlock(Location location, Material material) {

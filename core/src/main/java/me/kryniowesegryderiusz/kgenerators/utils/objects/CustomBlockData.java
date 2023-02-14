@@ -20,6 +20,10 @@ public class CustomBlockData {
 		Main.getMultiVersion().getBlocksUtils().setBlock(location, xMaterial);
 	}
 	
+	public void setBlock(Location location, boolean physics) {
+		Main.getMultiVersion().getBlocksUtils().setBlock(location, xMaterial, physics);
+	}
+	
 	public ItemStack getItem() {
 		return this.xMaterial.parseItem();
 	}
