@@ -3,6 +3,7 @@ package me.kryniowesegryderiusz.kgenerators.generators.locations;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map.Entry;
+import java.util.concurrent.ConcurrentHashMap;
 
 import javax.annotation.Nullable;
 
@@ -24,7 +25,7 @@ import me.kryniowesegryderiusz.kgenerators.logger.Logger;
 
 public class PlacedGeneratorsManager {
 	
-	private HashMap<Chunk, ChunkGeneratorLocations> loadedGenerators = new HashMap<Chunk, ChunkGeneratorLocations>();
+	private ConcurrentHashMap<Chunk, ChunkGeneratorLocations> loadedGenerators = new ConcurrentHashMap<Chunk, ChunkGeneratorLocations>();
 	
 	/*
 	 * Chunk management related methods
