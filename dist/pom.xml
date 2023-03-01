@@ -39,11 +39,8 @@
 							<goal>shade</goal>
 						</goals>
 						<configuration>
-							<configuration>
-								<shadedArtifactAttached>true</shadedArtifactAttached>
-								<shadedClassifierName>shaded</shadedClassifierName> <!-- Any name that makes sense -->
-							</configuration>
-
+							<shadedArtifactAttached>false</shadedArtifactAttached>
+							<shadedClassifierName>shaded</shadedClassifierName> <!-- Any name that makes sense -->
 							<artifactSet>
 								<includes>
 									<include>me.kryniowesegryderiusz:kgenerators-*</include>
