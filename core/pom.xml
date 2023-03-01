@@ -68,7 +68,7 @@
 		<dependency>
 			<groupId>org.spigotmc</groupId>
 			<artifactId>spigot-api</artifactId>
-			<version>1.16.4-R0.1-SNAPSHOT</version>
+			<version>1.19.3-R0.1-SNAPSHOT</version>
 			<scope>provided</scope>
 		</dependency>
 
@@ -216,8 +216,43 @@
 		<dependency>
 			<groupId>com.github.oraxen</groupId>
 			<artifactId>oraxen</artifactId>
-			<version>-SNAPSHOT</version>
+			<version>1.152.1.5</version>
 			<scope>provided</scope>
+			<exclusions>
+				<exclusion>
+					<groupId>com.jeff_media</groupId>
+					<artifactId>CustomBlockData</artifactId>
+				</exclusion>
+				<exclusion>
+					<groupId>com.jeff_media</groupId>
+					<artifactId>MorePersistentDataTypes</artifactId>
+				</exclusion>
+				<exclusion>
+					<groupId>net.kyori</groupId>
+					<artifactId>adventure-text-serializer-gson</artifactId>
+				</exclusion>
+				<exclusion>
+					<groupId>net.kyori</groupId>
+					<artifactId>adventure-text-serializer-legacy</artifactId>
+				</exclusion>
+				<exclusion>
+					<groupId>net.kyori</groupId>
+					<artifactId>adventure-text-serializer-plain</artifactId>
+				</exclusion>
+				<exclusion>
+					<groupId>net.kyori</groupId>
+					<artifactId>adventure-text-minimessage</artifactId>
+				</exclusion>
+				<exclusion>
+					<groupId>gs.mclo</groupId>
+					<artifactId>mclogs</artifactId>
+				</exclusion>
+				<exclusion>
+					<groupId>me.gabytm.util</groupId>
+					<artifactId>actions-spigot</artifactId>
+				</exclusion>
+			</exclusions>
+
 		</dependency>
 
 		<!-- WildStacker -->
