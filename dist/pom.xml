@@ -35,7 +35,7 @@
 									<include>me.kryniowesegryderiusz:kgenerators-*</include>
 								</includes>
 							</artifactSet>
-							<shadedArtifactAttached>false</shadedArtifactAttached>
+							<shadedArtifactAttached>true</shadedArtifactAttached>
 							<shadedClassifierName>kgenall</shadedClassifierName> <!-- Any name that makes sense -->
 						</configuration>
 					</execution>
