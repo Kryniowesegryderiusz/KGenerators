@@ -39,7 +39,6 @@
 							<goal>shade</goal>
 						</goals>
 						<configuration>
-							<finalName>KGenerators-${project.parent.version}-b${env.BUILD_NUMBER}</finalName>
 							<shadedArtifactAttached>true</shadedArtifactAttached>
 							<shadedClassifierName>shaded</shadedClassifierName> <!-- Any name that makes sense -->
 							<artifactSet>
