@@ -105,7 +105,7 @@ public class Main extends JavaPlugin {
     	
     	instance.getServer().getPluginManager().callEvent(new PluginDisabledEvent());
     	
-    	Logger.info("Saving " + Main.getPlacedGenerators().getAmount() + " running generators.");
+    	Logger.info("Saving " + Main.getPlacedGenerators().getLoadedGeneratorsAmount() + " running generators.");
     	for (GeneratorLocation gl : Main.getPlacedGenerators().getAll())
     		Main.getPlacedGenerators().unloadGenerator(gl, true);
 
@@ -186,7 +186,7 @@ public class Main extends JavaPlugin {
 			Metrics metrics = new Metrics(this, pluginId);
 			metrics.addCustomChart(new Metrics.SingleLineChart("configured_generators", () -> Main.getGenerators().getAmount()));
 			metrics.addCustomChart(new Metrics.SingleLineChart("database_generators", () -> Main.getDatabases().getDb().getGeneratorsAmount()));
-			metrics.addCustomChart(new Metrics.SingleLineChart("loaded_generators", () -> Main.getPlacedGenerators().getAmount()));
+			metrics.addCustomChart(new Metrics.SingleLineChart("loaded_generators", () -> Main.getPlacedGenerators().getLoadedGeneratorsAmount()));
 			metrics.addCustomChart(new Metrics.SimplePie("database_type", () -> {return Main.getSettings().getDbType().toString();}));
 			metrics.addCustomChart(new Metrics.AdvancedPie("features", new Callable<Map<String, Integer>>() {
 				@Override

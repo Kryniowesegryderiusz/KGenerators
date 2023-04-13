@@ -172,8 +172,12 @@ public class PlacedGeneratorsManager {
 			loadedGenerators.get(gLocation.getChunk()).removeLocation(gLocation);
 	}
 	
-	public int getAmount() {
-		return this.loadedGenerators.size();
+	public int getLoadedGeneratorsAmount() {
+		int amount = 0;
+		for (ChunkGeneratorLocations chl : loadedGenerators.values()) {
+			amount += chl.locations.size();
+		}
+		return amount;
 	}
 	
 	/*

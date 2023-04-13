@@ -190,7 +190,7 @@ public class Logger {
 
 				fileString += "\n\n";
 
-				fileString += "Loaded generators: " + Main.getPlacedGenerators().getAmount() + "/"
+				fileString += "Loaded generators: " + Main.getPlacedGenerators().getLoadedGeneratorsAmount() + "/"
 						+ Main.getDatabases().getDb().getGeneratorsAmount() + "\n";
 				fileString += "Scheduled generators: " + Main.getSchedules().getAmount() + "\n";
 
@@ -212,7 +212,7 @@ public class Logger {
 						}
 					}
 
-					String url = postHaste(sender, fileString, false);
+					String url = postHaste(sender, fileString);
 					if (url != null) {
 						Lang.getMessageStorage().send(sender, Message.COMMANDS_DEBUG_DONE, "<url>", url);
 					}
@@ -238,7 +238,7 @@ public class Logger {
 
 	}
 
-	private static String postHaste(CommandSender sender, String text, boolean raw) {
+	private static String postHaste(CommandSender sender, String text) {
 		
 		String response = null;
 		
@@ -254,6 +254,8 @@ public class Logger {
 			conn.setRequestMethod("POST");
 			conn.setRequestProperty("User-Agent", "Hastebin Java Api");
 			conn.setRequestProperty("Content-Length", Integer.toString(postDataLength));
+			conn.setRequestProperty("content-type", "text/plain");
+			conn.setRequestProperty("Authorization", "Bearer b9669ab4ea83f533d3c1faa80586fec599ebe87d4be9473a2e63cd33693eb7c57fd29312f683d7e259649e89d42b6a1911bcea1437bbe4ace53ef8a159942711");
 			conn.setUseCaches(false);
 			
 			DataOutputStream wr;
@@ -265,7 +267,7 @@ public class Logger {
 			if (response != null && response.contains("\"key\"")) {
 				response = response.substring(response.indexOf(":") + 2, response.length() - 2);
 	
-				String postURL = raw ? "https://hastebin.com/raw/" : "https://hastebin.com/";
+				String postURL = "https://hastebin.com/share/";
 				response = postURL + response;
 			}
 		
