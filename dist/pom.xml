@@ -17,21 +17,12 @@
 
 	<build>
 		<directory>./target</directory>
+		<finalName>KGenerators-${project.parent.version}-b${env.BUILD_NUMBER}</finalName>
 		<plugins>
 			<plugin>
 				<groupId>org.apache.maven.plugins</groupId>
-				<artifactId>maven-jar-plugin</artifactId>
-				<version>3.0.2</version>
-				<configuration>
-					<configuration>
-						<classifier>jar</classifier>
-					</configuration>
-				</configuration>
-			</plugin>
-			<plugin>
-				<groupId>org.apache.maven.plugins</groupId>
 				<artifactId>maven-shade-plugin</artifactId>
-				<version>3.4.1</version>
+				<version>3.1.1</version>
 				<executions>
 					<execution>
 						<phase>package</phase>
@@ -39,8 +30,6 @@
 							<goal>shade</goal>
 						</goals>
 						<configuration>
-							<shadedArtifactAttached>true</shadedArtifactAttached>
-							<shadedClassifierName>shaded</shadedClassifierName> <!-- Any name that makes sense -->
 							<artifactSet>
 								<includes>
 									<include>me.kryniowesegryderiusz:kgenerators-*</include>
@@ -52,6 +41,7 @@
 			</plugin>
 		</plugins>
 	</build>
+
 	<dependencies>
 		<dependency>
 			<groupId>me.kryniowesegryderiusz</groupId>
