@@ -73,7 +73,7 @@ public class GeneratorsLoader {
 			}
 			
 			AbstractGeneratedObject ago = null;
-			if (lastGeneratedObjectId >= 0) {
+			if (!err && lastGeneratedObjectId >= 0) {
 				ago = Main.getGenerators().get(generatorId).getGeneratedObjectById(lastGeneratedObjectId);
 			}
 
