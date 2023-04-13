@@ -1,6 +1,7 @@
 package me.kryniowesegryderiusz.kgenerators.generators.holograms;
 
 import java.util.ArrayList;
+import java.util.Iterator;
 import java.util.Map;
 import java.util.Map.Entry;
 
@@ -21,15 +22,16 @@ import me.kryniowesegryderiusz.kgenerators.lang.enums.HologramText;
 import me.kryniowesegryderiusz.kgenerators.logger.Logger;
 
 public class HologramsManager {
-	
-	@Getter private IHologramProvider hologramProvider;
-	
+
+	@Getter
+	private IHologramProvider hologramProvider;
+
 	private ArrayList<GeneratorLocation> holograms = new ArrayList<>();
-	
+
 	public HologramsManager() {
-		
+
 		Logger.debugPluginLoad("HologramsManager: Setting up manager");
-		
+
 		if (Main.getDependencies().isEnabled(Dependency.DECENT_HOLOGRAMS)) {
 			hologramProvider = new DecentHologramsProvider();
 			Logger.debugPluginLoad("Holograms: Enabling DecentHologramsProvider");
@@ -40,72 +42,75 @@ public class HologramsManager {
 			hologramProvider = new CMIHologramsProvider();
 			Logger.debugPluginLoad("Holograms: Enabling CMIHologramsProvider");
 		} else {
-        	for (Map.Entry<String, Generator> e : Main.getGenerators().getEntrySet()) {
+			for (Map.Entry<String, Generator> e : Main.getGenerators().getEntrySet()) {
 				if ((e.getValue()).isHologram())
-					Logger.warn("Holograms: Generator " + e.getKey() + " has enabled holograms, but hologram provider was not found! Holograms wont work!"); 
+					Logger.warn("Holograms: Generator " + e.getKey()
+							+ " has enabled holograms, but hologram provider was not found! Holograms wont work!");
 			}
 		}
-		
+
 		Bukkit.getScheduler().scheduleSyncRepeatingTask(Main.getInstance(), new Runnable() {
 			public void run() {
 				if (hologramProvider == null)
-					return; 
-				ArrayList<GeneratorLocation> toRemove = new ArrayList<>();
-				for (GeneratorLocation gLocation : holograms) {
+					return;
+
+				Iterator<GeneratorLocation> iter = holograms.iterator();
+				while (iter.hasNext()) {
+					GeneratorLocation gLocation = iter.next();
+
 					if (Main.getPlacedGenerators().isLoaded(gLocation) && Main.getSchedules().timeLeft(gLocation) > 0) {
-						hologramProvider.updateHologram(gLocation, Main.getHolograms().getHologramRemainingTimeLines(gLocation));
+						hologramProvider.updateHologram(gLocation,
+								Main.getHolograms().getHologramRemainingTimeLines(gLocation));
 					} else {
-						hologramProvider.removeHologram(gLocation);
-						toRemove.add(gLocation);
+						iter.remove();
 					}
-				} 
-				holograms.removeAll(toRemove);
+				}
 			}
-		},	0L, Main.getSettings().getHologramUpdateFrequency() * 1L);
+		}, 0L, Main.getSettings().getHologramUpdateFrequency() * 1L);
 	}
-	
+
 	public void createRemainingTimeHologram(GeneratorLocation gLocation) {
 		this.createHologram(gLocation, this.getHologramRemainingTimeLines(gLocation));
 	}
-	
+
 	public void createHologram(GeneratorLocation gLocation, ArrayList<String> lines) {
 		if (hologramProvider == null)
-			return; 
+			return;
 		if (gLocation == null)
-			return; 
+			return;
 		hologramProvider.createHologram(gLocation, lines);
 		if (!holograms.contains(gLocation))
-			holograms.add(gLocation); 
+			holograms.add(gLocation);
 	}
-	
+
 	public void removeHologram(GeneratorLocation gLocation) {
 		if (hologramProvider == null)
-			return; 
+			return;
 		hologramProvider.removeHologram(gLocation);
 		if (holograms.contains(gLocation))
-			holograms.remove(gLocation); 
+			holograms.remove(gLocation);
 	}
-	
+
 	public ArrayList<String> getHologramRemainingTimeLines(GeneratorLocation gLocation) {
-		
+
 		HologramReplaceLinesEvent e = new HologramReplaceLinesEvent(gLocation, HologramText.REMAINING_TIME);
-		
+
 		Main.getInstance().getServer().getPluginManager().callEvent(e);
-		
+
 		ArrayList<String> lines = new ArrayList<>();
 		String time = Main.getSchedules().timeLeftFormatted(gLocation);
 		for (String s : Lang.getHologramTextStorage().get(HologramText.REMAINING_TIME).getLines()) {
 			if (s.contains("<time>"))
-				s = s.replaceAll("<time>", time); 
+				s = s.replaceAll("<time>", time);
 			if (s.contains("<generator_name>"))
-				s = s.replaceAll("<generator_name>", gLocation.getGenerator().getGeneratorItemName()); 
-			
+				s = s.replaceAll("<generator_name>", gLocation.getGenerator().getGeneratorItemName());
+
 			for (Entry<String, String> en : e.getReplacablesMap().entrySet()) {
 				s = s.replaceAll(en.getKey(), en.getValue());
 			}
-			
+
 			lines.add(s);
-		} 
+		}
 		return lines;
 	}
 }
