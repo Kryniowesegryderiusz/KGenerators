@@ -12,11 +12,10 @@
 </p>
 
 <p align="center">
-  <a href="https://www.spigotmc.org/resources/kgenerators-custom-block-generator-stone-generator-1-8-1-16.79246/"><img src="https://i.imgur.com/oeke5Q2.png"></a>
   <a href="https://kzone.gitbook.io/docs"><img src="https://i.imgur.com/z7wjdOo.png"></a>
   <a href="https://discord.gg/BZRjhpP4Ab"><img src="https://i.imgur.com/Nmk0vCD.png"></a>
   <a href="https://ci.codemc.io/job/Kryniowesegryderiusz/job/KGenerators"><img src="https://i.imgur.com/Ti5oQKs.png"></a>
-  <a href="https://github.com/sponsors/Kryniowesegryderiusz"><img src="https://i.imgur.com/QaByhwi.png"></a>
+  <a href="https://www.spigotmc.org/resources/kgenerators-custom-block-generator-stone-generator-1-8-1-16.79246/"><img src="https://i.imgur.com/oeke5Q2.png"></a>
 </p>
 
 <p align="center">
@@ -26,9 +25,9 @@
 </p>
 
 <p align="center">
-<img src="https://i.imgur.com/d410iha.gif" width="33%">
-<img src="https://i.imgur.com/HIjmXC1.gif" width="33%">
-<img src="https://i.imgur.com/JzkAgXt.gif" width="33%">
+<img src="https://i.imgur.com/d410iha.gif" width="25%">
+<img src="https://i.imgur.com/HIjmXC1.gif" width="25%">
+<img src="https://i.imgur.com/JzkAgXt.gif" width="25%">
 </p>
 
 <img src="https://bstats.org/signatures/bukkit/KGenerators.svg" width="100%">
