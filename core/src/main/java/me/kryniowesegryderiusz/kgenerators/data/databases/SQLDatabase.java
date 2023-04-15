@@ -61,7 +61,10 @@ public class SQLDatabase implements IDatabase {
 				config.setJdbcUrl("jdbc:sqlite:" + Main.getInstance().getDataFolder().getPath() + "/data/database.db");
 				config.setConnectionTestQuery("SELECT 1");
 				config.setMaxLifetime(60000); // 60 Sec
-				config.setMaximumPoolSize(1);
+				config.setMaximumPoolSize(sqlconfig.getPoolSize());
+				if (sqlconfig.getPoolSize() > 1) {
+					Logger.warn("Database " + dbType.name() + ": SQL: The pool size is higher than one! If you dont know what you're doing change database.pool-size in config.yml to one!");
+				}
 				config.setLeakDetectionThreshold(20000);
 				
 				dataSource = new HikariDataSource(config);
@@ -100,6 +103,8 @@ public class SQLDatabase implements IDatabase {
 				config.setConnectionTestQuery("SELECT 1");
 				config.setMaxLifetime(60000); // 60 Sec
 				config.setMaximumPoolSize(sqlconfig.getPoolSize());
+				if (sqlconfig.getPoolSize() <= 1)
+					Logger.warn("Database " + dbType.name() + ": SQL: The pool size is set to one! You probably want to change database.pool-size in config.yml to 3 or higher!");
 				config.setLeakDetectionThreshold(20000);
 				
 				dataSource = new HikariDataSource(config);
@@ -242,8 +247,6 @@ public class SQLDatabase implements IDatabase {
 					stat.setInt(6, gl.getLocation().getBlockZ());
 					stat.executeUpdate();
 				}
-				
-				stat.close();
 
 				Logger.warn("Database " + dbType.name() + ": Updated database with last generated objects!");
 			}
@@ -255,8 +258,7 @@ public class SQLDatabase implements IDatabase {
 		}
 		
 		try {
-			if (stat != null && !stat.isClosed()) stat.close();
-			if (conn != null && !conn.isClosed()) conn.close();
+			this.close(stat, conn, null);
 		} catch (Exception e) {
 			Logger.error(e);
 		}
