@@ -25,9 +25,11 @@
 </p>
 
 <p align="center">
-<img src="https://i.imgur.com/d410iha.gif" width="25%">
-<img src="https://i.imgur.com/HIjmXC1.gif" width="25%">
-<img src="https://i.imgur.com/JzkAgXt.gif" width="25%">
+ <img src="https://i.imgur.com/d410iha.gif" width="32%">
+ <img src="https://i.imgur.com/HIjmXC1.gif" width="32%">
+ <img src="https://i.imgur.com/JzkAgXt.gif" width="32%">
 </p>
 
-<img src="https://bstats.org/signatures/bukkit/KGenerators.svg" width="100%">
+<p align="center">
+ <img src="https://bstats.org/signatures/bukkit/KGenerators.svg" width="97%">
+</p>
