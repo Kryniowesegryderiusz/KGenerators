@@ -621,9 +621,9 @@ public class SQLDatabase implements IDatabase {
 	
 	public void close(Statement stat, Connection conn, ResultSet res) {
 		try {
-			if (stat != null && !stat.isClosed()) stat.close();
-			if (conn != null && !conn.isClosed()) conn.close();
-			if (res != null && !res.isClosed()) res.close();
+			if (stat != null) stat.close();
+			if (conn != null) conn.close();
+			if (res != null) res.close();
 		} catch (Exception e) {
 			Logger.error(e);
 		}
