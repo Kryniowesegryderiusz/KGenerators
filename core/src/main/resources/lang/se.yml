@@ -1,0 +1,128 @@
+messages:
+  prefix: '&8[&6KGenerators&8] '
+  generators:
+    any:
+      owner-none: '&cIngen'
+      disabled: '&cGeneratorer är inaktiverade i den här världen!'
+      repaired: '&aGenerator reparerad framgångsrikt!'
+      no-longer-there: '&cGeneratorn finns inte längre där!'
+    digging:
+      cant-here: '&cDu kan inte gräva genererade block här!'
+      only-gen: '&cDu kan endast gräva genererade block här!'
+      no-permission: '&cDu har inte tillstånd &8(&7<permission>&8)&c att gärva <generator>&c!'
+    crafting:
+      cant-use: '&cDu kan inte tillverka någonting från generator'
+      no-permission: '&cDu har inte tillstånd &8(&7<permission>&8)&c att tillverka <generator>&c!'
+    timeleft:
+      output: '&aDenna generator kommer att regenerera om &e<time>'
+    pick-up:
+      successful: '&e<generator> &aupplockad!'
+      cant-here: '&cDu kan inte plocka upp en generator här!'
+      no-permission: '&cDu har inte tillstånd &8(&7<permission>&8)&c att plocka upp
+        denna typ av generator!'
+    place:
+      cant-here: '&cDu kan inte placera en generator här!'
+      cant-place-block: '&cDu kan inte placera något block i generatorns ställe'
+      cant-place-double-below-block: '&cDu kan inte placera dubbel generator under blocket!'
+      cant-place-double-below-generator: '&cDu kan inte placera dubbel under en generator!'
+      no-permission: '&cDu har inte tillstånd &8(&7<permission>&8)&c att placera denna typ av generator!'
+    limits:
+      cant-place-more-type: '&cDu kan inte placera mer än &6<number> <generator> &cgeneratorer,
+        på grund av &6<limit>&c!'
+      cant-pick-up: '&cDu kan inte plocka upp en generator som  &6<owner>&cäger!'
+      cant-use: '&cDu kan inte använda en generator som &6<owner>&cäger!'
+    protection:
+      cant-change-generator-item: '&cDu kan inte ändra generatorns artikel!'
+    menus:
+      cant-open-here: '&cDu kan inte öppna denna meny här!'
+  economy:
+    no-economy-avaible: '&cDet finns inget ekonomiskt system tillgängligt!'
+    not-enough-money: '&cDu har inte tillräckligt med pengar! Du behöver &6<cost>&c!'
+  upgrades:
+    upgraded: '&aDu uppgraderade &e<number> &agenerator för &e<costs>&a!'
+    gui-upgraded: '&cDu har inte &4<cost>&c!'
+    no-next-level: '&cDetta är max level för denna generator'
+    no-permission: '&cDu har inte tillstånd &8(&7<permission>&8)&c att uppgradera generatorn!'
+    not-a-generator: '&cDu håller inte i en generator!'
+    separator: '&7, &e'
+  hooks:
+    explode-pickaxe:
+      cannot-use-on-double: '&cDu kan inte använda explosions hacka på typen dubbel generator!'
+  database:
+    error: '&cDatabas fel! Vänligen kontakta en Adminstratör'
+  commands:
+    any:
+      wrong: '&cFel kommando! Skriv /kgenerators för hjälp'
+      no-permission: '&cDu har inte tillstånd &8(&7<permission>&8)&c till att använda KGenerators
+        kommandon!'
+      player-not-online: '&cSpelare är inte online'
+      player-doesnt-exist: '&cSpelare existerar inte'
+      generator-doesnt-exist: '&cDenna generator existerar inte'
+      menu-doesnt-exist: '&cDenna meny existerar inte'
+      console-only: '&cDetta kommando kan endast utföras av konsolen!'
+    list:
+      header: '&aGenerators:'
+      list: '&8- <generator> &8(&7ID: <generatorID>&8)'
+      no-permission: '&cDu har inte tillstånd &8(&7<permission>&8)&c att visa generatorer'
+      help: List all generators
+    menu:
+      opened-others: '&aÖppnade &e<generator> <menu> meny &aför &e<player>'
+      error: '&cEtt fel uppstod, medans menyn var öppen! Kontakta en Adminstratör!'
+      no-permission: '&cDu har inte tillstånd &8(&7<permission>&8)&c att öppna meny!'
+      no-permission-others: '&cDu har inte tillstånd &8(&7<permission>&8)&c att öppna menyn för andra spelare!'
+      help: Öppnar menyn
+    give:
+      generator-given: '&e<amount>x &a<generator> &avar given till &e<player>'
+      generator-recieved: '&aDu har mottagit &e<amount>x &a<generator>&a!'
+      usage: '&cAndvändning: &e/kgenerators give <player> <generator> [amount]'
+      no-permission: '&cDu har inte tillstånd &8(&7<permission>&8)&c att ge ut generatorer!'
+      help: Ge en generator till en spelare
+    getall:
+      recieved: '&aGenerator mottagen!'
+      no-permission: '&cDu har inte tillstånd &8(&7<permission>&8)&c att få alla generatorer!'
+      help: Få alla generatorer
+    limits:
+      no-permission: '&cDu har inte tillstånd &8(&7<permission>&8)&c att öpnna begeränsnings menyn!'
+      help: Check limits
+    actions:
+      no-permission: '&cDu har inte tillstånd &8(&7<permission>&8)&c att kolla handlingar!'
+      help: Check possible actions
+      header: '&aPossible actions for generators:'
+      list: '&6<action> &8- &e<sneak><mode><item>'
+      sneak: 'smyg och '
+      break: bryta block
+      left-click: vänster klick
+      right-click: höger klick
+      item: ' med <itemname>'
+      pick-up: Plocka upp
+      gui: Öppna GUI
+      time-left: Tid kvar
+    timeleft:
+      no-generator: '&cDu tittar inte på en generator som väntar på att regenera!'
+      no-permission: '&cDu har inte tillstånd &8(&7<permission>&8)&c att kolla regenerings tid!'
+      help: Kolla hur lång tid det är kvar
+      format:
+        seconds: s
+        minutes: m
+        hours: t
+        days: d
+        none: Ingen
+    upgrade:
+      help: Uppgradera generator
+    reload:
+      done: '&aPlugin omladdad! Kolla konsolen eller log.txt in plugin''''s katalog
+        för möjliga fel!'
+      no-permission: '&cDu har inte tillstånd &8(&7<permission>&8)&c att ladda om plugin!'
+      help: Plugin omladdning
+    debug:
+      done: '&aDin felsöknings URL är: &e<url>'
+      error: '&cEtt fel uppstod, medans en felsökning försökte genereas!'
+      no-permission: '&cDu har inte tillstånd &8(&7<permission>&8)&c att klistra in felsökning'
+    help:
+      label: '&6&lKGenerators &aCommands help:'
+      format: '&e/kgenerators <subcommand> &7<help>'
+holograms:
+  remaining-time:
+  - '<generator_name>'
+  - '&6Tid kvar:'
+  - '&e<time>'

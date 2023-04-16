@@ -3,10 +3,9 @@ messages:
   generators:
     any:
       owner-none: '&cNone'
-      disabled: '&cGenerators are disabled in this world!'
+      disabled-specific: '&c<generator> is disabled in this world!'
       repaired: '&aGenerator succesfully repaired!'
       no-longer-there: '&cGenerator is no longer there!'
-      disabled-specific: '&c<generator> is disabled in this world!'
       object-amount: <amount> x <object>
     digging:
       cant-here: '&cYou can''t dig generated blocks here!'
@@ -48,10 +47,14 @@ messages:
   upgrades:
     upgraded: '&aYou''ve upgraded &e<number> &agenerators for &e<costs>&a!'
     gui-upgraded: '&cYou dont have &4<cost>&c!'
+    separator: ', '
     no-next-level: '&cThis is maximum level of that generator!'
     no-permission: '&cYou dont have permission &8(&7<permission>&8)&c to upgrade generator!'
+  upgardes:
     not-a-generator: '&cYou dont have generator in hand!'
-    separator: '&7, &e'
+    costs:
+      exp: xp
+      exp-levels: xp levels
   hooks:
     explode-pickaxe:
       cannot-use-on-double: '&cYou cannot use explosion pickaxe on type double generator!'
@@ -121,21 +124,6 @@ messages:
         hours: h
         days: d
         none: None
-    upgrade:
-      help: Upgrade generator
-    reload:
-      done: '&aPlugin reloaded! Check console or log.txt in plugin''''s directory
-        for possible errors!'
-      no-permission: '&cYou dont have permission &8(&7<permission>&8)&c to reload
-        plugin'
-      help: Plugin reload
-    debug:
-      done: '&aYour debug URL is: &e<url>'
-      error: '&cAn error occured, while making debug output!'
-      no-permission: '&cYou dont have permission &8(&7<permission>&8)&c to paste debug'
-    help:
-      label: '&6&lKGenerators &aCommands help:'
-      format: '&e/kgenerators <subcommand> &7<help>'
     spawn:
       done: '&aGenerator spawned! New generator: &e<location_info>'
       usage: '&cUsage: &e/kgenerators spawn <world> <x> <y> <z> <generator> [owner]'
@@ -149,11 +137,21 @@ messages:
       help: Removes generators
       worldedit-not-found: '&cSelection is not complete!'
       worldedit-wrong-selection: '&cSelection is not complete!'
-  upgardes:
-    not-a-generator: '&cYou dont have generator in hand!'
-    costs:
-      exp: xp
-      exp-levels: xp levels
+    upgrade:
+      help: Upgrade generator
+    reload:
+      done: '&aPlugin configuration reloaded! Check console or log.txt in plugin''''s
+        directory for possible errors!'
+      no-permission: '&cYou dont have permission &8(&7<permission>&8)&c to reload
+        plugin'
+      help: Plugin configuration reload
+    debug:
+      done: '&aYour debug URL is: &e<url>'
+      error: '&cAn error occured, while making debug output!'
+      no-permission: '&cYou dont have permission &8(&7<permission>&8)&c to paste debug'
+    help:
+      label: '&6&lKGenerators &aCommands help:'
+      format: '&e/kgenerators <subcommand> &7<help>'
 holograms:
   remaining-time:
   - <generator_name>

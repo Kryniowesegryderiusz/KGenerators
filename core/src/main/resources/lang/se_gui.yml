@@ -11,7 +11,7 @@ generator:
   time-left:
     enabled: true
     item: CLOCK
-    name: §aTime left for regeneration
+    name: §aTid kvar för förnyelse
     lore:
     - §a<time>
     slots: '21'
@@ -19,7 +19,7 @@ generator:
   owner:
     enabled: true
     item: BOOK
-    name: §aGenerator owner
+    name: §aGeneratorägare
     lore:
     - §e<owner>
     slots: '22'
@@ -27,52 +27,52 @@ generator:
   pick-up:
     enabled: true
     item: BARRIER
-    name: §aPick up
+    name: §aPlocka upp
     lore:
-    - §eClick here to pick up generator
+    - §eKlicka här för att hämta generatorn
     slots: '23'
     glow: false
   quit:
     enabled: true
     item: ARROW
-    name: §cQuit
+    name: §cAvsluta
     lore:
-    - §6Quit menu
+    - §6Avsluta Menyn
     slots: '40'
     glow: false
   reset:
     enabled: true
     item: MUSIC_DISC_11
-    name: §cReset generator
+    name: §cÅterställ generatorn
     lore:
-    - §6This generator seems to be corrupted!
-    - §6Click here to repair it
+    - §6Denna generator verkar vara skadad!
+    - §6Klicka här för att reparera den
     slots: '13'
     glow: false
   upgrade:
     enabled: true
     item: EXPERIENCE_BOTTLE
-    name: §cUpgrade generator
+    name: §cUppgradera generator
     lore:
-    - §6Click here to upgrade this generator!
+    - §6Klicka här för att uppgradera denna generator!
     - ''
-    - '§6Next stage: §e<next_generator>'
-    - '§6Costs:'
+    - '§6Nästa steg: §e<next_generator>'
+    - '§6Kostnader:'
     - <costs>
     slots: '31'
     glow: false
   upgrade-maxed:
     enabled: true
     item: EXPERIENCE_BOTTLE
-    name: §cMaximum generator level
+    name: §cMaximal generatornivå
     lore:
-    - §6This generator doesnt have
-    - §6any further upgrades!
-    - §aYou've maxed it!
+    - §6Denna generator har inte
+    - §6några ytterligare uppgraderingar!
+    - §aDu har maxat den!
     slots: '31'
     glow: false
 main:
-  name: §9Generators
+  name: §9Generatorer
   slots: 45
   filler:
     enabled: true
@@ -86,47 +86,47 @@ main:
     item: <generator>
     name: §a<generator_name>
     lore:
-    - '§6Left click:'
-    - §eCheck what it generates
+    - '§6Vänster klick:'
+    - §eKolla vad den genererar
     slots: 9,10,11,12,13,14,15,16,17,18,19,20,21,22,23,24,25,26,27,28,29,30,31,32,33,34,35
     glow: false
   limits:
     enabled: true
     item: PLAYER_HEAD
-    name: §aLimits
+    name: §aGränser
     lore:
-    - §eClick here to check limits
+    - §eKlicka här för att kontrollera gränser
     slots: '8'
     glow: false
   quit:
     enabled: true
     item: BARRIER
-    name: §cQuit
+    name: §cAvsluta
     lore:
-    - §6Quit menu
+    - §6Avsluta menyn
     slots: '40'
     glow: false
   page:
     previous:
       enabled: true
       item: ARROW
-      name: §cPrevious page
+      name: §cFöregående sida
       lore:
-      - §6Click to back
-      - §6to previous page
+      - §6Klicka för att gå tillbaka
+      - §6till föregående sida
       slots: '38'
       glow: false
     next:
       enabled: true
       item: ARROW
-      name: §cNext page
+      name: §cNästa sida
       lore:
-      - §6Click to go
-      - §6to next page
+      - §6Klicka för att gå
+      - §6till nästa sida
       slots: '42'
       glow: false
 generated-objects:
-  name: '§9Generates:'
+  name: '§9Genererar:'
   slots: 45
   filler:
     enabled: true
@@ -143,20 +143,20 @@ generated-objects:
     - <generated_object_lore>
     - ''
     - <generated_object_type>
-    - '§6Chance: §e<chance>%'
+    - '§6Chans: §e<chance>%'
     slots: 9,10,11,12,13,14,15,16,17,18,19,20,21,22,23,24,25,26
     glow: false
   back:
     enabled: true
     item: ARROW
-    name: §cBack
+    name: §cTillbaka
     lore:
-    - §6Get back to
-    - §cgenerators list
+    - §6Gå tillbaka till
+    - §cgeneratorlista
     slots: '40'
     glow: false
 recipe:
-  name: §9Recipe
+  name: §9Recept
   slots: 45
   filler:
     enabled: true
@@ -182,21 +182,21 @@ recipe:
   marker:
     enabled: true
     item: CRAFTING_TABLE
-    name: §aCrafting
+    name: §aHantverk
     lore: []
     slots: 14,23,32
     glow: false
   back:
     enabled: true
     item: ARROW
-    name: §cBack
+    name: §cTillbaka
     lore:
-    - §6Get back to
-    - §cgenerators list
+    - §6Gå tillbaka till
+    - §cgeneratorlista
     slots: '40'
     glow: false
 upgrade:
-  name: §9Upgrade
+  name: §9Uppgradera
   slots: 45
   filler:
     enabled: true
@@ -222,28 +222,28 @@ upgrade:
   marker:
     enabled: true
     item: EXPERIENCE_BOTTLE
-    name: §aUpgrade
+    name: §aUppgradera
     lore:
-    - §6To upgrade get
-    - §6generator and type
+    - §6Att uppgradera få
+    - §6generator och typ
     - §e/kgenerators upgrade
-    - §6or use generator menu
+    - §6eller använd generatormenyn
     - ''
-    - '§6Costs:'
+    - '§6Kostnad:'
     - <costs>
     slots: 13,22,31
     glow: false
   back:
     enabled: true
     item: ARROW
-    name: §cBack
+    name: §cTillbaka
     lore:
-    - §6Get back to
-    - §cgenerators list
+    - §6Gå tillbaka till
+    - §cgeneratorlista
     slots: '40'
     glow: false
 limits:
-  name: §9Limits
+  name: §9Gränser
   slots: 45
   filler:
     enabled: true
@@ -257,7 +257,7 @@ limits:
     item: <limit_display_item>
     name: §a<limit_name>
     lore:
-    - §6You've placed §e<amount>§6/§e<limit>§6 of
+    - §6Du har placerat §e<amount>§6/§e<limit>§6 av
     - <generators_list>
     - <is_only_owner_use>
     - <is_only_owner_pick_up>
@@ -266,39 +266,39 @@ limits:
   back:
     enabled: true
     item: ARROW
-    name: §cBack
+    name: §cTillbaka
     lore:
-    - §6Get back to
-    - §cgenerators list
+    - §6Gå tillbaka till
+    - §cgeneratorlista
     slots: '40'
     glow: false
 additional-lines:
   recipe:
     menu-how-to:
     - ''
-    - '&6Right click:'
-    - '&echeck the recipe'
+    - '&6Höger klicka:'
+    - '&ekolla receptet'
   upgrades:
     menu-how-to:
     - ''
-    - '&6Right click:'
-    - '&echeck how to'
-    - '&eget from upgrade'
+    - '&6Höger klicka:'
+    - '&ekolla hur man'
+    - '&efår fram uppgraderingar'
     upgrade-cost:
     - '&8- &7<cost>'
   generated-object-type:
     item:
-    - '&6Generates: &eitem'
+    - '&6Generar: &eitem'
     block:
-    - '&6Generates: &eblock'
+    - '&6Generar: &eblock'
     entity:
-    - '&6Generates: &eentity'
+    - '&6Generar: &eentity'
   limits:
     generator-list:
     - '&8- &e<generator_name>'
     all-generators:
-    - '&eall generators'
+    - '&ealla generatorer'
     only-owner-pick-up:
-    - '&cOnly owners could pick up them.'
+    - '&cEndast ägaren kan plocka upp dem.'
     only-owner-use:
-    - '&cOnly owners could use them.'
+    - '&cEndast ägaren kan använda dem.'

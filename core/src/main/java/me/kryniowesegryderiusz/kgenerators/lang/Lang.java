@@ -44,7 +44,7 @@ public class Lang {
 
     	FilesUtils.mkdir("lang");
 
-    	String[] langs = {"en", "pl", "ro", "vi", "fr"}; 
+    	String[] langs = {"en", "pl", "ro", "vi", "fr", "se"}; 
     	
     	/*
     	 * Adding resource lang files

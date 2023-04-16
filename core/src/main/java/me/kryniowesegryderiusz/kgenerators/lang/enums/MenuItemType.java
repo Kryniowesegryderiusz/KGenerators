@@ -11,7 +11,7 @@ public enum MenuItemType implements IMenuItemType
 	GENERATOR_MENU_OWNER(MenuInventoryType.GENERATOR,"owner", new MenuItem("BOOK", "&aGenerator owner", false, "22", "&e<owner>")),
 	GENERATOR_MENU_PICK_UP(MenuInventoryType.GENERATOR,"pick-up", new MenuItem("BARRIER", "&aPick up", false, "23", "&eClick here to pick up generator")),
 	GENERATOR_MENU_QUIT(MenuInventoryType.GENERATOR,"quit", new  MenuItem("ARROW", "&cQuit", false, "40", "&6Quit menu")),
-	GENERATOR_MENU_RESET(MenuInventoryType.GENERATOR,"reset", new  MenuItem("MUSIC_DISC_11", "&cReset generator", false, "13", "&6This generator seems to be currupted!", "&6Click here to repair him")),
+	GENERATOR_MENU_RESET(MenuInventoryType.GENERATOR,"reset", new  MenuItem("MUSIC_DISC_11", "&cReset generator", false, "13", "&6This generator seems to be corrupted!", "&6Click here to repair it")),
 	GENERATOR_MENU_UPGRADE(MenuInventoryType.GENERATOR,"upgrade", new  MenuItem("EXPERIENCE_BOTTLE", "&cUpgrade generator", false, "31", "&6Click here to upgrade this generator!", "", "&6Next stage: &e<next_generator>", "&6Costs:" ,"<costs>")),
 	GENERATOR_MENU_UPGRADE_MAXED(MenuInventoryType.GENERATOR,"upgrade-maxed", new  MenuItem("EXPERIENCE_BOTTLE", "&cMaximum generator level", false, "31", "&6This generator doesnt have", "&6any further upgrades!","&aYou've maxed it!")),
 	
