@@ -94,8 +94,13 @@ public class Logger {
 			log(object, LogType.DEBUG);
 	}
 	
-	public static void debugSchedulessManager(Object object) {
+	public static void debugSchedulesManager(Object object) {
 		if (Main.getSettings().isSchedulesManagerDebug())
+			log(object, LogType.DEBUG);
+	}
+	
+	public static void debugMultiVersionManager(Object object) {
+		if (Main.getSettings().isMultiVersionManagerDebug())
 			log(object, LogType.DEBUG);
 	}
 
