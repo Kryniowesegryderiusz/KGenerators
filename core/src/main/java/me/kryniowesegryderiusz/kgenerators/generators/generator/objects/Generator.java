@@ -140,7 +140,9 @@ public class Generator {
 		/*
 		 * Generates section
 		 */
-
+		
+		chances.clear();
+		
 		if (config.contains(generatorID + ".generates"))
 			for (Map<?, ?> generatedObjectConfig : (List<Map<?, ?>>) config.getMapList(generatorID + ".generates")) {
 
