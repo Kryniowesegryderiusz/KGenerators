@@ -16,7 +16,7 @@ public abstract class AbstractGeneratedObject {
 	@Getter private String type;
 	@Getter private Double chance = 0.0;
 	
-	@Nullable @Getter CustomDrops customDrops;
+	@Nullable @Getter private CustomDrops customDrops;
 	
 	public AbstractGeneratedObject(String type) {
 		this.type = type;

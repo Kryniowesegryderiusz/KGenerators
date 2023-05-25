@@ -144,7 +144,8 @@ generated-objects:
     - ''
     - <generated_object_type>
     - '§6Chance: §e<chance>%'
-    slots: 9,10,11,12,13,14,15,16,17,18,19,20,21,22,23,24,25,26
+    - <generated_object_custom_drops>
+    slots: 9,10,11,12,13,14,15,16,17,18,19,20,21,22,23,24,25,26,27,28,29,30,31,32,33,34,35
     glow: false
   back:
     enabled: true
@@ -293,6 +294,22 @@ additional-lines:
     - '&6Generates: &eblock'
     entity:
     - '&6Generates: &eentity'
+    custom-drops:
+    - '&6Generates: &ecustom drops'
+  generated-object-custom-drops:
+    custom-drops:
+    - ''
+    - '&6Custom drops:'
+    - '&8- &6Drops from: &e<custom_drops_source>'
+    - <custom_drops_money>
+    - <custom_drops_exp>
+    - <custom_drops_commands>
+    money:
+    - '&8- &6Money: &e<money>'
+    exp:
+    - '&8- &6Exp: &e<exp> xp'
+    command:
+    - '&8- &6Command: &e<command>'
   limits:
     generator-list:
     - '&8- &e<generator_name>'

@@ -59,6 +59,7 @@ public class VaultHook {
     
     public static String formatMoney(double money)
     {
+    	if (econ == null) return String.valueOf(money);
     	return econ.format(money);
     }
     

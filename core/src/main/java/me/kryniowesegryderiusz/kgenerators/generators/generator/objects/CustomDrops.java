@@ -9,6 +9,7 @@ import org.bukkit.entity.Player;
 import org.bukkit.event.block.BlockBreakEvent;
 import org.bukkit.inventory.ItemStack;
 
+import lombok.Getter;
 import me.kryniowesegryderiusz.kgenerators.Main;
 import me.kryniowesegryderiusz.kgenerators.dependencies.enums.Dependency;
 import me.kryniowesegryderiusz.kgenerators.dependencies.hooks.VaultHook;
@@ -19,14 +20,14 @@ import me.kryniowesegryderiusz.kgenerators.xseries.XMaterial;
 
 public class CustomDrops {
 
-	boolean removeDefaults = false;
+	@Getter boolean removeDefaults = false;
 
-	private ItemStack item = null;
-	private boolean itemFortune = true;
+	@Getter private ItemStack item = null;
+	@Getter private boolean itemFortune = true;
 
-	private int exp = 0;
-	private double money = 0.0;
-	private ArrayList<String> commands = new ArrayList<String>();
+	@Getter private int exp = 0;
+	@Getter private double money = 0.0;
+	@Getter private ArrayList<String> commands = new ArrayList<String>();
 
 	/**
 	 * @param generatedObjectConfig

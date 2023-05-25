@@ -23,7 +23,7 @@ public enum MenuItemType implements IMenuItemType
 	MAIN_MENU_PAGE_NEXT(MenuInventoryType.MAIN,"page.next", new  MenuItem("ARROW", "&cNext page", false, "42", "&6Click to go", "&6to next page")),
 	
 	GENERATED_OBJECTS_MENU_FILLER(MenuInventoryType.GENERATED_OBJECTS, "filler", new MenuItem("GRAY_STAINED_GLASS_PANE", "&r", false, "0,1,2,3,4,5,6,7,8,36,37,38,39,40,41,42,43,44")),
-	GENERATED_OBJECTS_MENU_GENERATED_OBJECT(MenuInventoryType.GENERATED_OBJECTS, "generated-object", new MenuItem("<generated_object>", "&a<generated_object_name>", false, "9,10,11,12,13,14,15,16,17,18,19,20,21,22,23,24,25,26", "<generated_object_lore>", "", "<generated_object_type>", "&6Chance: &e<chance>%")),
+	GENERATED_OBJECTS_MENU_GENERATED_OBJECT(MenuInventoryType.GENERATED_OBJECTS, "generated-object", new MenuItem("<generated_object>", "&a<generated_object_name>", false, "9,10,11,12,13,14,15,16,17,18,19,20,21,22,23,24,25,26,27,28,29,30,31,32,33,34,35", "<generated_object_lore>", "", "<generated_object_type>", "&6Chance: &e<chance>%","<generated_object_custom_drops>")),
 	GENERATED_OBJECTS_MENU_BACK(MenuInventoryType.GENERATED_OBJECTS,"back", new  MenuItem("ARROW", "&cBack", false, "40", "&6Get back to", "&cgenerators list")),
 	
 	RECIPE_MENU_FILLER(MenuInventoryType.RECIPE, "filler", new MenuItem("GRAY_STAINED_GLASS_PANE", "&r", false, "0,1,2,3,4,5,6,7,8,36,37,38,39,40,41,42,43,44")),

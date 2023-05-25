@@ -170,7 +170,8 @@ generated-objects:
     - ''
     - <generated_object_type>
     - '§6Șansă: §e<chance>%'
-    slots: 9,10,11,12,13,14,15,16,17,18,19,20,21,22,23,24,25,26
+    - <generated_object_custom_drops>
+    slots: 9,10,11,12,13,14,15,16,17,18,19,20,21,22,23,24,25,26,27,28,29,30,31,32,33,34,35
     glow: false
   back:
     enabled: true
