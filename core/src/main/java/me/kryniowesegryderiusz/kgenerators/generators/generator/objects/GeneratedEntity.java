@@ -1,8 +1,11 @@
 package me.kryniowesegryderiusz.kgenerators.generators.generator.objects;
 
+import java.util.ArrayList;
+import java.util.ListIterator;
 import java.util.Map;
 
 import org.bukkit.Location;
+import org.bukkit.entity.Entity;
 import org.bukkit.inventory.ItemStack;
 
 import lombok.Getter;
@@ -15,6 +18,9 @@ import me.kryniowesegryderiusz.kgenerators.utils.objects.CustomEntityData;
 public class GeneratedEntity extends AbstractGeneratedObject {
 	
 	@Getter private CustomEntityData customEntityData;
+	
+	private int maxEntities = 1;
+	private ArrayList<Entity> entities = new ArrayList<Entity>();
 
 	public GeneratedEntity() {
 		super("entity");
@@ -26,7 +32,7 @@ public class GeneratedEntity extends AbstractGeneratedObject {
 		if (!Main.getMultiVersion().getBlocksUtils().isAir(generatorLocation.getGeneratedBlockLocation().getBlock()))
 			generateLocation.add(0,1,0);
 		generateLocation.setPitch(-90);
-		customEntityData.spawnMob(generateLocation);
+		entities.addAll(customEntityData.spawnEntities(generateLocation));
 		generatorLocation.scheduleGeneratorRegeneration();
 	}
 
@@ -50,11 +56,28 @@ public class GeneratedEntity extends AbstractGeneratedObject {
 
 	@Override
 	protected boolean loadTypeSpecific(Map<?, ?> generatedObjectConfig) {
+		
+		if (generatedObjectConfig.containsKey("max-entities"))
+			this.maxEntities = (int) generatedObjectConfig.get("max-entities");
+		
 		if (generatedObjectConfig.containsKey("entity")) {
 			this.customEntityData = CustomEntityData.load(generatedObjectConfig, "entity");
 			if (this.customEntityData != null)
 				return true;
 		}
 		return false;
+	}
+	
+	@Override
+	public boolean isReady() {
+		
+		ListIterator<Entity> iter = this.entities.listIterator();
+		while(iter.hasNext()) {
+		    if(iter.next().isDead()) {
+		        iter.remove();
+		    }
+		}
+		
+		return this.maxEntities < 0 || this.entities.size() < this.maxEntities;
 	}
 }

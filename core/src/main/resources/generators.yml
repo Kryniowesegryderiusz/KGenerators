@@ -85,6 +85,8 @@ example_generator:
         type: CHICKEN #only this is required
         amount: 2
         name: "Chicky"
+      #How many living entities would stop regeneration
+      max-entities: 1
   #
   # ***            Optional generators settings below.            ***
   # ***   If not specified default values (these) would be used   ***

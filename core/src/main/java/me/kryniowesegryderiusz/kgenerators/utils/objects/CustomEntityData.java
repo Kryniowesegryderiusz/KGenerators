@@ -1,5 +1,6 @@
 package me.kryniowesegryderiusz.kgenerators.utils.objects;
 
+import java.util.ArrayList;
 import java.util.Map;
 
 import org.bukkit.Location;
@@ -27,13 +28,18 @@ public class CustomEntityData {
 		this.entityType = entityType;
 	}
 	
-	public void spawnMob(Location location) {
+	public ArrayList<Entity> spawnEntities(Location location) {
+		
+		ArrayList<Entity> spawnedEntities = new ArrayList<Entity>();
 		
 		for (int i = 0; i < amount; i++) {
 			Entity e = location.getWorld().spawnEntity(location, entityType);
 			if (name != null)
 				e.setCustomName(Main.getMultiVersion().getChatUtils().colorize(name));
+			spawnedEntities.add(e);
 		}
+		
+		return spawnedEntities;
 
 	}
 	
