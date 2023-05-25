@@ -15,6 +15,7 @@ enabled: false
 #=====               Below you can find EXAMPLE-limit.                 ===== 
 #===== IT WONT BE LOADED! Here you can just find all options explained =====
 #===========================================================================
+
 #Unique limit id
 example_limit_group:
   #Name of that group (display purposes)
@@ -28,7 +29,7 @@ example_limit_group:
   - example_generator_id_level_2
   #Default number of placed generators of that type per player
   #Set to -1 to disable that limit
-  #!!! Can be overwritten by permission: kgenerators.placelimit.<limit_id>.<limit>
+  #!!! Can be overwritten by permission: kgenerators.placelimit.<limit_id>.<limit> (limit_id is the first line of limit section ex. global_limits)
   place-limit: 10
   #Should only owner be able to pick up generator?
   only-owner-pickup: true

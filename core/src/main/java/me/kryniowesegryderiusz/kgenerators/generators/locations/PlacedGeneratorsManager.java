@@ -147,9 +147,11 @@ public class PlacedGeneratorsManager {
 	/**
 	 * @return loaded GeneratorLocation list related to location or null if none
 	 */
-	public ArrayList<GeneratorLocation> getLoaded(Chunk c){
-		if (this.loadedGenerators.containsKey(c))
-			return this.loadedGenerators.get(c).getAll();
+	public ArrayList<GeneratorLocation> getLoaded(Chunk c) {
+		ChunkGeneratorLocations cgl = this.loadedGenerators.get(c);
+		if (cgl != null) {
+			return cgl.getAll();
+		}
 		else return new ArrayList<GeneratorLocation>();
 	}
 	
@@ -298,13 +300,18 @@ public class PlacedGeneratorsManager {
 		}
 		
 		public GeneratorLocation get(Location location) {
+			
 			if (location == null) return null;
-			if (locations.containsKey(location))
-				return locations.get(location);
-			else if (locations.containsKey(location.clone().add(0,-1,0))
-					&& locations.get(location.clone().add(0,-1,0)).getGenerator().getType() == GeneratorType.DOUBLE)
-				return locations.get(location.clone().add(0,-1,0));
-			else return null;
+			
+			GeneratorLocation gl = locations.get(location);
+			if (gl != null)
+				return gl;
+			
+			gl = locations.get(location.clone().add(0,-1,0));
+			if (gl != null && gl.getGenerator().getType() == GeneratorType.DOUBLE)
+				return gl;
+				
+			return null;
 		}
 		
 		public ArrayList<GeneratorLocation> getAll() {
