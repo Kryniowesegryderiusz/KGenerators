@@ -286,7 +286,7 @@ public class PlacedGeneratorsManager {
 	public class ChunkGeneratorLocations {
 		
 		@Getter @Setter private boolean fullyLoaded = false;
-		private HashMap<Location, GeneratorLocation> locations = new HashMap<Location, GeneratorLocation>();
+		private ConcurrentHashMap<Location, GeneratorLocation> locations = new ConcurrentHashMap<Location, GeneratorLocation>();
 		
 		public void addLocation(GeneratorLocation gLocation) {
 			this.locations.put(gLocation.getLocation(), gLocation);
@@ -309,8 +309,7 @@ public class PlacedGeneratorsManager {
 		
 		public ArrayList<GeneratorLocation> getAll() {
 			ArrayList<GeneratorLocation> all = new ArrayList<GeneratorLocation>();
-			for (Entry<Location, GeneratorLocation> e : this.locations.entrySet())
-				all.add(e.getValue());
+			all.addAll(this.locations.values());
 			return all;
 		}
 		
