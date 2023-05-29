@@ -21,11 +21,49 @@ import me.kryniowesegryderiusz.kgenerators.api.events.GeneratorUnloadEvent;
 import me.kryniowesegryderiusz.kgenerators.generators.generator.enums.GeneratorType;
 import me.kryniowesegryderiusz.kgenerators.generators.locations.objects.GeneratorLocation;
 import me.kryniowesegryderiusz.kgenerators.listeners.ChunkLoadListener;
+import me.kryniowesegryderiusz.kgenerators.listeners.ChunkUnloadListener;
 import me.kryniowesegryderiusz.kgenerators.logger.Logger;
 
 public class PlacedGeneratorsManager {
 	
 	private ConcurrentHashMap<Chunk, ChunkGeneratorLocations> loadedGenerators = new ConcurrentHashMap<Chunk, ChunkGeneratorLocations>();
+	
+	public PlacedGeneratorsManager() {
+		
+		if (Main.getSettings().getStartupChunkLoadDelay() > 0)
+			Logger.debugPluginLoad("PlacedGenerators: Waiting for startup chunk load for " + Main.getSettings().getStartupChunkLoadDelay() + " ticks.");
+		
+		Main.getInstance().getServer().getScheduler().runTaskLater(Main.getInstance(), () -> {
+			
+			Logger.debugPluginLoad("PlacedGenerators: Loading generators from already loaded chunks");
+
+			HashMap<World, Chunk[]> loadedChunks = new HashMap<World, Chunk[]>();
+			
+			Main.getInstance().getServer().getPluginManager().registerEvents(new ChunkLoadListener(), Main.getInstance());
+			Main.getInstance().getServer().getPluginManager().registerEvents(new ChunkUnloadListener(), Main.getInstance());
+			
+			for (World w : Bukkit.getWorlds()) {
+				loadedChunks.put(w, w.getLoadedChunks());
+			}
+						
+			Main.getInstance().getServer().getScheduler().runTaskAsynchronously(Main.getInstance(), new Runnable() {
+				@Override
+				public void run() {
+					for (Entry<World, Chunk[]> e : loadedChunks.entrySet()) {
+						int amount = 0;
+						int chunks = 0;
+						for (Chunk c : e.getValue()) {
+							loadChunk(c);
+							chunks++;
+						}
+						Logger.debugPluginLoad("PlacedGenerators: Loaded " + amount + " generators from world " + e.getKey().getName() + " (" + chunks + " chunks)");
+					}
+				}
+			});
+			
+		}, Main.getSettings().getStartupChunkLoadDelay());
+		
+	}
 	
 	/*
 	 * Chunk management related methods
@@ -60,34 +98,40 @@ public class PlacedGeneratorsManager {
 	}
 	
 	
-	public void loadChunk(Chunk c, int delay) {
-		Logger.debugPlacedGeneratorsManager("PlacedGeneratorsManager: Loading chunk: " + c.toString());
-		Main.getInstance().getServer().getScheduler().runTaskLaterAsynchronously(Main.getInstance(), new Runnable() {
-			@Override
-			public void run() {
-				
-				ArrayList<GeneratorLocation> generators = Main.getDatabases().getDb().getGenerators(c);
-				
-				if (generators == null) {
-					Logger.error("PlacedGeneratorsManager: Cant load chunk " + c.getX() + " " + c.getZ() + "! Trying again!");
-					loadChunk(c, 1*20);
-					return;
-				}
-				
-				for (GeneratorLocation gl : generators) {
-					Main.getPlacedGenerators().loadGenerator(gl);
-				}
-				
-				loadedGenerators.putIfAbsent(c, new ChunkGeneratorLocations());
-				loadedGenerators.get(c).setFullyLoaded(true);
-				Logger.debugPlacedGeneratorsManager("PlacedGeneratorsManager: Chunk loaded: " + c.toString());
-
-			}
-		}, delay);
+	public void loadChunkAsyncLater(Chunk c) {
+		Main.getInstance().getServer().getScheduler().runTaskLaterAsynchronously(Main.getInstance(), () -> {
+			loadChunk(c);
+		}, 20L);
 	}
 	
-	public void unloadChunk(Chunk c) {
-		Logger.debugPlacedGeneratorsManager("PlacedGeneratorsManager: Unloading chunk: " + c.toString());
+	public void loadChunkAsync(Chunk c) {
+		Main.getInstance().getServer().getScheduler().runTaskAsynchronously(Main.getInstance(), () -> {
+			loadChunk(c);
+		});
+	}
+	
+	private void loadChunk(Chunk c) {
+		Logger.debugPlacedGeneratorsManager("PlacedGeneratorsManager: Loading chunk: " + c.getWorld().getName() + " " + c.toString());
+		ArrayList<GeneratorLocation> generators = Main.getDatabases().getDb().getGenerators(c);
+		
+		if (generators == null) {
+			Logger.error("PlacedGeneratorsManager: Cant load chunk " + c.getWorld().getName() + " " + c.getX() + " " + c.getZ() + "! Trying again!");
+			loadChunkAsyncLater(c);
+			return;
+		}
+		
+		for (GeneratorLocation gl : generators) {
+			Main.getPlacedGenerators().loadGenerator(gl);
+		}
+		
+		loadedGenerators.putIfAbsent(c, new ChunkGeneratorLocations());
+		loadedGenerators.get(c).setFullyLoaded(true);
+		Logger.debugPlacedGeneratorsManager("PlacedGeneratorsManager: Chunk loaded: " + c.getWorld().getName() + " " + c.toString());
+
+	}
+	
+	public void unloadChunkAsync(Chunk c) {
+		Logger.debugPlacedGeneratorsManager("PlacedGeneratorsManager: Unloading chunk: " + c.getWorld().getName() + " " + c.toString());
 		ArrayList<GeneratorLocation> generatorsToUnload = this.getLoaded(c);
 		
 		Main.getInstance().getServer().getScheduler().runTaskAsynchronously(Main.getInstance(), () -> {
@@ -98,7 +142,7 @@ public class PlacedGeneratorsManager {
 			if (this.loadedGenerators.get(c) != null && this.loadedGenerators.get(c).isEmpty())
 				this.loadedGenerators.remove(c);
 			
-			Logger.debugPlacedGeneratorsManager("PlacedGeneratorsManager: Chunk unloaded: " + c.toString() + " | isInManager: " + loadedGenerators.containsKey(c));
+			Logger.debugPlacedGeneratorsManager("PlacedGeneratorsManager: Chunk unloaded: " + c.getWorld().getName() + " " + c.toString() + " | isInManager: " + loadedGenerators.containsKey(c));
 		});
 	}
 	
@@ -209,39 +253,6 @@ public class PlacedGeneratorsManager {
 						}
 					}
 				});
-			}
-		});
-	}
-	
-	/*
-	 * Startup method
-	 */
-	
-	/**
-	 * On startup
-	 */
-	public void loadFromLoadedChunks() {
-
-		Logger.debugPluginLoad("PlacedGenerators: Loading generators from already loaded chunks");
-
-		HashMap<World, Chunk[]> loadedChunks = new HashMap<World, Chunk[]>();
-		
-		for (World w : Bukkit.getWorlds()) {
-			loadedChunks.put(w, w.getLoadedChunks());
-		}
-		
-		Main.getInstance().getServer().getScheduler().runTaskAsynchronously(Main.getInstance(), new Runnable() {
-			@Override
-			public void run() {
-				for (Entry<World, Chunk[]> e : loadedChunks.entrySet()) {
-					int amount = 0;
-					int chunks = 0;
-					for (Chunk c : e.getValue()) {
-						loadChunk(c, 0);
-						chunks++;
-					}
-					Logger.debugPluginLoad("PlacedGenerators: Loaded " + amount + " generators from world " + e.getKey().getName() + " (" + chunks + " chunks)");
-				}
 			}
 		});
 	}

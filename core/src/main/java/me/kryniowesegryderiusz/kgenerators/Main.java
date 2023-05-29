@@ -56,7 +56,7 @@ public class Main extends JavaPlugin {
 	
 	@Getter private static GeneratorsManager generators;
 	@Getter private static HologramsManager holograms;
-	@Getter private static PlacedGeneratorsManager placedGenerators = new PlacedGeneratorsManager();
+	@Getter private static PlacedGeneratorsManager placedGenerators;
 	@Getter private static PlayersManager players = new PlayersManager();
 	@Getter private static LimitsManager limits;
 	@Getter private static RecipesManager recipes;
@@ -78,11 +78,8 @@ public class Main extends JavaPlugin {
     		this.getServer().getPluginManager().registerEvents(new ItemsAdderHook().new ItemsAdderListeners(), this);
     	} else {
     		Logger.warn("KGenerators will be loaded in post init check, check for more informations futher in this log");
-    		this.getServer().getScheduler().runTask(instance, new Runnable() {
-				@Override
-				public void run() {
-					Main.getInstance().enable();
-				}
+    		this.getServer().getScheduler().runTask(instance, () -> {
+    			Main.getInstance().enable();
     		});
     	}
     }
@@ -159,7 +156,7 @@ public class Main extends JavaPlugin {
 			menus = new MenusManager();
 			
 			/* Load from already loaded chunks */
-			placedGenerators.loadFromLoadedChunks();
+			placedGenerators = new PlacedGeneratorsManager();
 			
 			schedules.loadOldSchedulesFile();
 			
@@ -174,9 +171,8 @@ public class Main extends JavaPlugin {
 			this.getServer().getPluginManager().registerEvents(new InventoryClickListener(), this);
 			this.getServer().getPluginManager().registerEvents(new FurnaceSmeltListener(), this);
 			this.getServer().getPluginManager().registerEvents(new PrepareItemCraftListener(), this);
-			this.getServer().getPluginManager().registerEvents(new ChunkLoadListener(), this);
-			this.getServer().getPluginManager().registerEvents(new ChunkUnloadListener(), this);
 			this.getServer().getPluginManager().registerEvents(new LeavesDecayListener(), this);
+			//Chunk listeners were moved to PlacedGeneratorsManager
 			
 			/* 
 			 * Metrix

@@ -13,6 +13,6 @@ public class ChunkLoadListener implements Listener {
 		
 		if (Main.getDatabases().isMigratorRunning()) return;
 		
-		Main.getPlacedGenerators().loadChunk(e.getChunk(), 0);
+		Main.getPlacedGenerators().loadChunkAsync(e.getChunk());
 	}
 }

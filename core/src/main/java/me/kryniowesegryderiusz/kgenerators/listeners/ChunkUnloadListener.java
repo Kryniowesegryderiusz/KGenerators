@@ -13,7 +13,7 @@ public class ChunkUnloadListener implements Listener {
 		
 		if (Main.getDatabases().isMigratorRunning()) return;
 		
-		Main.getPlacedGenerators().unloadChunk(e.getChunk());
+		Main.getPlacedGenerators().unloadChunkAsync(e.getChunk());
 		
 
 	}
