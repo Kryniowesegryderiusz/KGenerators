@@ -1,7 +1,5 @@
 package me.kryniowesegryderiusz.kgenerators.generators.schedules;
 
-import java.io.File;
-import java.io.IOException;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.LinkedHashMap;
@@ -9,21 +7,18 @@ import java.util.Map.Entry;
 
 import org.bukkit.Bukkit;
 import org.bukkit.Location;
-import org.bukkit.configuration.ConfigurationSection;
-import org.bukkit.configuration.InvalidConfigurationException;
+import lombok.Getter;
 import me.kryniowesegryderiusz.kgenerators.Main;
 import me.kryniowesegryderiusz.kgenerators.generators.locations.objects.GeneratorLocation;
 import me.kryniowesegryderiusz.kgenerators.generators.schedules.objects.Schedule;
 import me.kryniowesegryderiusz.kgenerators.lang.Lang;
 import me.kryniowesegryderiusz.kgenerators.lang.enums.Message;
 import me.kryniowesegryderiusz.kgenerators.logger.Logger;
-import me.kryniowesegryderiusz.kgenerators.utils.immutable.Config;
-import me.kryniowesegryderiusz.kgenerators.utils.immutable.ConfigManager;
 import me.kryniowesegryderiusz.kgenerators.utils.objects.CustomBlockData;
 
 public class SchedulesManager {
 	
-	private HashMap<GeneratorLocation, Schedule> schedules = new HashMap<GeneratorLocation, Schedule>();
+	@Getter private HashMap<GeneratorLocation, Schedule> schedules = new HashMap<GeneratorLocation, Schedule>();
 	
 	public SchedulesManager() {
 		
@@ -93,37 +88,6 @@ public class SchedulesManager {
 		if (gLocation.getGenerator().isHologram())
 			Main.getHolograms().removeHologram(gLocation);
 		Logger.debugSchedulesManager("SchedulesManager: Removing " + gLocation.getId() + " completed");
-	}
-	
-	/*
-	 * Methods related to chunk management
-	 */
-	
-	public void loadSchedule(GeneratorLocation gLocation) {
-
-		Schedule schedule = Main.getDatabases().getDb().getSchedule(gLocation);
-		Logger.debugSchedulesManager("SchedulesManager: Loading " + gLocation.toString() + "| isNull: " + (schedule == null));
-		if (schedule == null) return;
-		
-		if (gLocation.getGenerator().isHologram())
-			Main.getInstance().getServer().getScheduler().runTask(Main.getInstance(), () -> {
-				Main.getHolograms().createRemainingTimeHologram(gLocation);
-			});
-		
-		Main.getDatabases().getDb().removeSchedule(gLocation);
-		
-		schedules.put(gLocation, schedule);
-		Logger.debugSchedulesManager("SchedulesManager: Loading " + gLocation.getId() + " completed");
-	}
-	
-	public void unloadSchedule(GeneratorLocation gl) {
-		Schedule schedule = this.getSchedule(gl);
-		Logger.debugSchedulesManager("SchedulesManager: Unloading " + gl.toString() + " | isNull: " + (schedule == null));
-		if (schedule != null) {
-			Main.getDatabases().getDb().addSchedule(gl, schedule);
-			Main.getSchedules().remove(gl);
-			Logger.debugSchedulesManager("SchedulesManager: Unloading " + gl.getId() + " completed");
-		}
 	}
 	
 	public void unloadAllSchedules() {
@@ -213,39 +177,4 @@ public class SchedulesManager {
 		return timeLeftFormatted(generatorLocation, false);
 	}
 
-	/*
-	 * Deprecated
-	 */
-	
-	public void loadOldSchedulesFile() {
-		File f = new File(Main.getInstance().getDataFolder()+"/data", "schedules.yml");
-		
-		if (!f.exists()){
-    		return;
-    	}
-		
-		Config file;
-		
-		try {
-			file = ConfigManager.getConfig("schedules.yml", "/data", false, false);
-			file.loadConfig();
-		} catch (IOException | InvalidConfigurationException e) {
-			Logger.error("Scheduled generators data file: Cant load scheduled generators file. Disabling plugin.");
-			Logger.error(e);
-			Main.getInstance().getServer().getPluginManager().disablePlugin(Main.getInstance());
-			return;
-		}
-    	
-    	ConfigurationSection mainSection = file.getConfigurationSection("");
-		int amount = 0;
-    	for(String generatorLocationString: mainSection.getKeys(false)) {
-    		Location location = Main.getPlacedGenerators().stringToLocation(generatorLocationString);
-    		GeneratorLocation gLocation = Main.getPlacedGenerators().getUnknown(location);
-    		schedules.put(gLocation, new Schedule(file.getInt(generatorLocationString + ".delay")));
-    		if (gLocation.getGenerator().isHologram()) Main.getHolograms().createRemainingTimeHologram(gLocation);
-    		amount++;
-    	}
-    	Logger.info("Scheduled generators data file: Loaded " + String.valueOf(amount) + " scheduled generators");
-    	f.delete();
-	}
 }

@@ -109,9 +109,6 @@ public class Settings {
 	@Getter
 	private boolean multiVersionManagerDebug = false;
 	
-	@Getter
-	private int startupChunkLoadDelay = 60;
-	
 	@SuppressWarnings("unchecked")
 	public Settings() {
 		Logger.info("Settings: Loading settings");
@@ -204,9 +201,6 @@ public class Settings {
 			this.schedulesManagerDebug = config.getBoolean("debug.schedules");
 		if (config.contains("debug.multi-version"))
 			this.multiVersionManagerDebug = config.getBoolean("debug.multi-version");
-		
-		if (config.contains("startup-chunk-load-delay"))
-			this.startupChunkLoadDelay = config.getInt("startup-chunk-load-delay");
 		
 		this.generatorItemMatcher.load(config);
 

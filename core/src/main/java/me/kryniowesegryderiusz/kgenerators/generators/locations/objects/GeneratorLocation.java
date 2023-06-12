@@ -6,11 +6,8 @@ import javax.annotation.Nullable;
 
 import org.bukkit.Chunk;
 import org.bukkit.Location;
-import org.bukkit.Material;
 import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Player;
-import org.bukkit.inventory.ItemStack;
-
 import lombok.Getter;
 import lombok.Setter;
 import me.kryniowesegryderiusz.kgenerators.Main;
@@ -204,14 +201,6 @@ public class GeneratorLocation implements IGeneratorLocation {
 	 */
 	public boolean handleAction(InteractionType usedActionType, Player player) {
 		return actionHandler.handle(this, usedActionType, player);
-	}
-
-	/**
-	 * Saves generator to database and loads it
-	 */
-	public void saveAndLoad() {
-		Main.getDatabases().getDb().saveGenerator(this);
-		Main.getPlacedGenerators().loadGenerator(this);
 	}
 
 	/**

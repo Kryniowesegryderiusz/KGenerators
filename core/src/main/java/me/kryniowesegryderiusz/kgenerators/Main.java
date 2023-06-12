@@ -33,8 +33,6 @@ import me.kryniowesegryderiusz.kgenerators.lang.Lang;
 import me.kryniowesegryderiusz.kgenerators.listeners.BlockBreakListener;
 import me.kryniowesegryderiusz.kgenerators.listeners.BlockPistonListener;
 import me.kryniowesegryderiusz.kgenerators.listeners.BlockPlaceListener;
-import me.kryniowesegryderiusz.kgenerators.listeners.ChunkLoadListener;
-import me.kryniowesegryderiusz.kgenerators.listeners.ChunkUnloadListener;
 import me.kryniowesegryderiusz.kgenerators.listeners.CraftItemListener;
 import me.kryniowesegryderiusz.kgenerators.listeners.ExplosionListener;
 import me.kryniowesegryderiusz.kgenerators.listeners.FurnaceSmeltListener;
@@ -103,8 +101,8 @@ public class Main extends JavaPlugin {
     	instance.getServer().getPluginManager().callEvent(new PluginDisabledEvent());
     	
     	Logger.info("Saving " + Main.getPlacedGenerators().getLoadedGeneratorsAmount() + " running generators.");
-    	for (GeneratorLocation gl : Main.getPlacedGenerators().getAll())
-    		Main.getPlacedGenerators().unloadGenerator(gl, true);
+    	if (placedGenerators != null)
+    		placedGenerators.onDisable();
 
     	Logger.info("Safely closing menus.");
     	if (menus != null)
@@ -113,6 +111,8 @@ public class Main extends JavaPlugin {
     	Logger.info("Safely shutting down database.");
     	if (databases != null && databases.getDb() != null)
     		databases.getDb().closeConnection();
+    	
+    	this.getServer().getScheduler().cancelTasks(this);
     }
     
     public void reload() {
@@ -157,8 +157,6 @@ public class Main extends JavaPlugin {
 			
 			/* Load from already loaded chunks */
 			placedGenerators = new PlacedGeneratorsManager();
-			
-			schedules.loadOldSchedulesFile();
 			
 			/* Listeners setup */
 			Logger.debugPluginLoad("MainManager: Loading listeners");

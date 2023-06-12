@@ -115,3 +115,9 @@ debug:
   plugin-load: true
   #Debug related to players actions like picking up, placing, upgrading generators
   players: true
+  #Debug related to managing placed generators
+  placed-generators-manager: false
+  #Debug related to schedules
+  schedules: false
+  #Debug related to multi-version
+  multi-version: false

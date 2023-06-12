@@ -219,6 +219,8 @@ public class FilesConverter {
 			add(file, "  #Debug related to players actions like picking up, placing, upgrading generators");
 			add(file, "  players: true");
 		}
+		
+		
 	}
 
 	private static void add(File file, String string) {

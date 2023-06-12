@@ -17,6 +17,7 @@ import me.kryniowesegryderiusz.kgenerators.xseries.XMaterial;
 
 public class BlockBreakListener implements Listener {
 	
+	@SuppressWarnings("deprecation")
 	@EventHandler(priority = EventPriority.HIGH)
 	public void onBlockBreak(final BlockBreakEvent e)
 	{

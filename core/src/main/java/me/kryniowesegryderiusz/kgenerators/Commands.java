@@ -295,8 +295,7 @@ public class Commands implements CommandExecutor {
 											args[1] + "," + args[2] + "," + args[3] + "," + args[4]);
 									
 									GeneratorLocation gl = new GeneratorLocation(-1, g, l, l.getChunk(), Main.getPlayers().getPlayer(owner), null);
-									if (gl.placeGenerator(sender, true))
-										gl.saveAndLoad();
+									gl.placeGenerator(sender, true);
 
 									Lang.getMessageStorage().send(sender, Message.COMMANDS_SPAWN_DONE,
 											"<location_info>", gl.toString());

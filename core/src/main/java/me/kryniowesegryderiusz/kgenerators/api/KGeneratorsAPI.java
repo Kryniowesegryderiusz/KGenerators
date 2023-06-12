@@ -25,25 +25,6 @@ public class KGeneratorsAPI {
 	 * 
 	 * Note that it could be upper block of double generator!
 	 * 
-	 * Warning! It would load generator if its not loaded!
-	 * 
-	 * See
-	 * {@link me.kryniowesegryderiusz.kgenerators.api.interfaces.IGeneratorLocation}
-	 * for more information
-	 * 
-	 * @param location Location
-	 * @return IGeneratorLocation or null if doesn't exist
-	 */
-	public static @Nullable IGeneratorLocation getGeneratorLocation(Location location) {
-		return Main.getPlacedGenerators().getUnknown(location);
-	}
-
-	/**
-	 * Get IGeneratorLocation by location. It gives access to all generator-related
-	 * methods
-	 * 
-	 * Note that it could be upper block of double generator!
-	 * 
 	 * See
 	 * {@link me.kryniowesegryderiusz.kgenerators.api.interfaces.IGeneratorLocation}
 	 * for more information
