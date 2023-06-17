@@ -101,7 +101,7 @@ public class GeneratorMenu {
 				Main.getMenus().closeInv(p);
 			}
 		}
-		else if (Main.getMenus().getMenuPlayer(p).getGLocation().getGenerator().getUpgrade() != null && Main.getDependencies().isEnabled(Dependency.VAULT_ECONOMY)
+		else if (Main.getMenus().getMenuPlayer(p).getGLocation().getGenerator().getUpgrade() != null
 				&& Lang.getMenuItemStorage().get(MenuItemType.GENERATOR_MENU_UPGRADE).getSlots().contains(slot) && Lang.getMenuItemStorage().get(MenuItemType.GENERATOR_MENU_UPGRADE).isEnabled())
 		{
 			Main.getMenus().getMenuPlayer(p).getGLocation().getGenerator().getUpgrade().blockUpgrade(Main.getMenus().getMenuPlayer(p).getGLocation(), p);
