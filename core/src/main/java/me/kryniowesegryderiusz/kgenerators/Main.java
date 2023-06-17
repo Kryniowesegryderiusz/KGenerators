@@ -22,7 +22,6 @@ import me.kryniowesegryderiusz.kgenerators.dependencies.hooks.ItemsAdderHook;
 import me.kryniowesegryderiusz.kgenerators.generators.generator.GeneratorsManager;
 import me.kryniowesegryderiusz.kgenerators.generators.holograms.HologramsManager;
 import me.kryniowesegryderiusz.kgenerators.generators.locations.PlacedGeneratorsManager;
-import me.kryniowesegryderiusz.kgenerators.generators.locations.objects.GeneratorLocation;
 import me.kryniowesegryderiusz.kgenerators.generators.players.PlayersManager;
 import me.kryniowesegryderiusz.kgenerators.generators.players.limits.LimitsManager;
 import me.kryniowesegryderiusz.kgenerators.generators.recipes.RecipesManager;

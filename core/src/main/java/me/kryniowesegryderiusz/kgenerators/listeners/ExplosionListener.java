@@ -10,38 +10,53 @@ import org.bukkit.event.entity.EntityExplodeEvent;
 
 import me.kryniowesegryderiusz.kgenerators.Main;
 import me.kryniowesegryderiusz.kgenerators.generators.locations.objects.GeneratorLocation;
+import me.kryniowesegryderiusz.kgenerators.logger.Logger;
 
 public class ExplosionListener implements Listener {
-	
+
 	@EventHandler
 	public void onBlockExplode(final BlockExplodeEvent e) {
-		if(e.isCancelled()){return;}
-		e.setCancelled(this.isExplosionCancelled(e.blockList()));
+
+		try {
+			if (e.isCancelled()) {
+				return;
+			}
+			e.setCancelled(this.isExplosionCancelled(e.blockList()));
+		} catch (Exception exception) {
+			Logger.error(exception);
+		}
 	}
-	
+
 	@EventHandler
 	public void onEntityExplode(final EntityExplodeEvent e) {
-		if(e.isCancelled()){return;}
-		e.setCancelled(this.isExplosionCancelled(e.blockList()));
+		try {
+			if (e.isCancelled()) {
+				return;
+			}
+			e.setCancelled(this.isExplosionCancelled(e.blockList()));
+		} catch (Exception exception) {
+			Logger.error(exception);
+		}
 	}
-	
+
 	/**
-	 * #0 - cancel explosion
-	 * #1 - drop generator
-	 * #2 - remove generator
+	 * #0 - cancel explosion #1 - drop generator #2 - remove generator
+	 * 
 	 * @param blocks
 	 * @return isExplosionCancelled
 	 */
-	private Boolean isExplosionCancelled (List<Block> blocks) {
-		for (Block block : blocks) {	
+	private Boolean isExplosionCancelled(List<Block> blocks) {
+		for (Block block : blocks) {
 			short handler = Main.getSettings().getExplosionHandler();
 			GeneratorLocation gLoc = Main.getPlacedGenerators().getLoaded(block.getLocation());
 			if (gLoc != null) {
-				if(handler == 1 || handler == 2) {
+				if (handler == 1 || handler == 2) {
 					boolean drop = false;
-					if (handler==1) drop = true;
+					if (handler == 1)
+						drop = true;
 					gLoc.removeGenerator(drop, null);
-				} else return true;
+				} else
+					return true;
 			}
 		}
 		return false;

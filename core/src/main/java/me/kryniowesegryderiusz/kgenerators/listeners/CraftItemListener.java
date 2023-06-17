@@ -12,56 +12,62 @@ import me.kryniowesegryderiusz.kgenerators.Main;
 import me.kryniowesegryderiusz.kgenerators.generators.generator.objects.Generator;
 import me.kryniowesegryderiusz.kgenerators.lang.Lang;
 import me.kryniowesegryderiusz.kgenerators.lang.enums.Message;
+import me.kryniowesegryderiusz.kgenerators.logger.Logger;
 
 public class CraftItemListener implements Listener {
-	
-	@EventHandler(priority=EventPriority.HIGHEST)
-	public void onCraftItem(final CraftItemEvent e){
-		
-		if (!(e.getWhoClicked() instanceof Player)){
-			return;
-		}
 
-		Player p = (Player) e.getWhoClicked();
-	
-		for (Generator g : Main.getGenerators().getAll()) {
-			
-			/*
-			 * Check for trying craft something with generator
-			 */
-			for (ItemStack i : e.getInventory().getMatrix()) {
-				if (i != null && i.isSimilar(g.getGeneratorItem()) && e.getCurrentItem() != null && Main.getGenerators().get(e.getCurrentItem()) == null) {
-					Lang.getMessageStorage().send(p, Message.GENERATORS_CRAFTING_CANT_USE);
-					e.setResult(Result.DENY);
-					closeInv(p);
-					return;
+	@EventHandler(priority = EventPriority.HIGHEST)
+	public void onCraftItem(final CraftItemEvent e) {
+
+		try {
+
+			if (!(e.getWhoClicked() instanceof Player)) {
+				return;
+			}
+
+			Player p = (Player) e.getWhoClicked();
+
+			for (Generator g : Main.getGenerators().getAll()) {
+
+				/*
+				 * Check for trying craft something with generator
+				 */
+				for (ItemStack i : e.getInventory().getMatrix()) {
+					if (i != null && i.isSimilar(g.getGeneratorItem()) && e.getCurrentItem() != null
+							&& Main.getGenerators().get(e.getCurrentItem()) == null) {
+						Lang.getMessageStorage().send(p, Message.GENERATORS_CRAFTING_CANT_USE);
+						e.setResult(Result.DENY);
+						closeInv(p);
+						return;
+					}
+				}
+
+				/*
+				 * Permission check
+				 */
+				if (Main.getRecipes().isGeneratorRecipe(g, e.getInventory().getMatrix())) {
+					String permission = "kgenerators.craft." + g.getId();
+					if (!p.hasPermission(permission)) {
+						Lang.getMessageStorage().send(p, Message.GENERATORS_CRAFTING_NO_PERMISSION, "<generator>",
+								g.getGeneratorItem().getItemMeta().getDisplayName(), "<permission>", permission);
+						e.setResult(Result.DENY);
+						closeInv(p);
+						return;
+					}
 				}
 			}
-			
-			/*
-			 * Permission check
-			 */
-			if (Main.getRecipes().isGeneratorRecipe(g, e.getInventory().getMatrix())) {				
-				String permission = "kgenerators.craft."+g.getId();
-				if (!p.hasPermission(permission)) {
-					Lang.getMessageStorage().send(p, Message.GENERATORS_CRAFTING_NO_PERMISSION,
-							"<generator>", g.getGeneratorItem().getItemMeta().getDisplayName(),
-							"<permission>", permission);
-					e.setResult(Result.DENY);
-					closeInv(p);
-					return;
-				}
-			}	
+
+		} catch (Exception exception) {
+			Logger.error(exception);
 		}
 	}
-	
-	void closeInv(Player p)
-	{
+
+	void closeInv(Player p) {
 		Main.getInstance().getServer().getScheduler().scheduleSyncDelayedTask(Main.getInstance(), new Runnable() {
 			@Override
-            public void run() {
+			public void run() {
 				p.closeInventory();
-            }
+			}
 		});
 	}
 }
