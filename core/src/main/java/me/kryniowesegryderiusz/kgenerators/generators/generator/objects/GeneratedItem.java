@@ -30,6 +30,8 @@ public class GeneratedItem extends AbstractGeneratedObject implements Listener {
 	private boolean waitForPickUp = false;
 	@Getter
 	private boolean disableVelocity = false;
+	@Getter
+	private boolean disableGravity = false;
 
 	private Item entity;
 
@@ -46,6 +48,8 @@ public class GeneratedItem extends AbstractGeneratedObject implements Listener {
 			this.waitForPickUp = (boolean) generatedObjectConfig.get("wait-for-pick-up");
 		if (generatedObjectConfig.containsKey("disable-velocity"))
 			this.disableVelocity = (boolean) generatedObjectConfig.get("disable-velocity");
+		if (generatedObjectConfig.containsKey("disable-gravity"))
+			this.disableGravity = (boolean) generatedObjectConfig.get("disable-gravity");
 
 
 		this.item = FilesUtils.loadItemStack((Map<?, ?>) generatedObjectConfig, "item",
@@ -68,6 +72,8 @@ public class GeneratedItem extends AbstractGeneratedObject implements Listener {
 		this.entity = generatorLocation.getGeneratedBlockLocation().getWorld().dropItem(generateLocation, item);
 		if (this.disableVelocity)
 			entity.setVelocity(new Vector());
+		if (this.disableGravity)
+			entity.setGravity(false);
 		generatorLocation.scheduleGeneratorRegeneration();
 	}
 

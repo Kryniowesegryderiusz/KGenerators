@@ -74,6 +74,8 @@ example_generator:
       wait-for-pick-up: true
       #If this option is set to true generated items wont have initial velocity (they'll just spawn in a place)
       disable-velocity: true
+      #If this option is set to true generated items wont be affected by gravity
+      disable-gravity: true
     #type: entity - generator will spawn entity
     - type: entity
       chance: 10.0
