@@ -5,11 +5,8 @@ import java.util.ArrayList;
 import org.bukkit.entity.Player;
 import org.bukkit.inventory.ItemStack;
 
-import me.kryniowesegryderiusz.kgenerators.Main;
 import me.kryniowesegryderiusz.kgenerators.api.exceptions.CannnotLoadUpgradeException;
 import me.kryniowesegryderiusz.kgenerators.api.interfaces.IUpgradeCost;
-import me.kryniowesegryderiusz.kgenerators.dependencies.enums.Dependency;
-import me.kryniowesegryderiusz.kgenerators.dependencies.hooks.VaultHook;
 import me.kryniowesegryderiusz.kgenerators.lang.Lang;
 import me.kryniowesegryderiusz.kgenerators.lang.enums.Message;
 import me.kryniowesegryderiusz.kgenerators.utils.FilesUtils;
@@ -31,7 +28,7 @@ public class UpgradeCostItems implements IUpgradeCost  {
 					found += is.getAmount();
 			}
 			
-			if (found < item.getAmount())
+			if (found < item.getAmount()*amount)
 				return false;
 			
 		}
@@ -42,6 +39,7 @@ public class UpgradeCostItems implements IUpgradeCost  {
 	public void takeRequirements(Player p, int amount) {
 		for(ItemStack item : items) {
 			ItemStack is = item.clone();
+			is.setAmount(is.getAmount()*amount);
 			p.getInventory().removeItem(is);
 		}
 	}
@@ -64,7 +62,7 @@ public class UpgradeCostItems implements IUpgradeCost  {
 		
 		for (ItemStack is : items) {
 			if (!cost.isEmpty()) cost+=Lang.getMessageStorage().get(Message.UPGRADES_COSTS_SEPARATOR, false);
-			cost+= Lang.getMessageStorage().get(Message.GENERATORS_ANY_OBJECT_AMOUNT, false, "<amount>", is.getAmount()+"", "<object>", Lang.getCustomNamesStorage().getItemTypeName(is));
+			cost+= Lang.getMessageStorage().get(Message.GENERATORS_ANY_OBJECT_AMOUNT, false, "<amount>", is.getAmount()*amount+"", "<object>", Lang.getCustomNamesStorage().getItemTypeName(is));
 		}
 		
 		return cost;	

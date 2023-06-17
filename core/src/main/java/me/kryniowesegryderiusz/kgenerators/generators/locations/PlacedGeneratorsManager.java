@@ -35,6 +35,8 @@ public class PlacedGeneratorsManager {
 	private BukkitTask managementTask;
 	@Getter private LinkedBlockingQueue<ManagementTask> managementQueue = new LinkedBlockingQueue<ManagementTask>();
 	
+	private boolean stopping = false;
+	
 	public PlacedGeneratorsManager() {
 		
 		Logger.debugPluginLoad("PlacedGenerators: Starting chunk management task");
@@ -67,17 +69,26 @@ public class PlacedGeneratorsManager {
 	private void nextManagementTick() {
 		managementTask = Main.getInstance().getServer().getScheduler().runTaskLaterAsynchronously(Main.getInstance(), () -> {
 			while(managementQueue.size() > 0) {
+				if (stopping) break;
 				ManagementTask r = managementQueue.poll();
 				if (r != null) {
 					r.doTask();
 				} else break;
 			}
-			nextManagementTick();
+			if (!stopping)
+				nextManagementTick();
 		}, 5L);
 	}
 	
 	public void onDisable() {
+		stopping = true;
 		managementTask.cancel();
+		while(managementQueue.size() > 0) {
+			ManagementTask r = managementQueue.poll();
+			if (r != null) {
+				r.doTask();
+			} else break;
+		}
 		Main.getSchedules().unloadAllSchedules();
 		for (GeneratorLocation gl : this.getAll()) {
 			Main.getDatabases().getDb().saveGenerator(gl);
