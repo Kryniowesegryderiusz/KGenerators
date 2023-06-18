@@ -153,12 +153,10 @@ public class PlacedGeneratorsManager {
 							Main.getHolograms().createRemainingTimeHologram(gl);
 						Main.getSchedules().getSchedules().put(gl, schedule);
 					} else {
-						/*
 						if (gl.isBroken()) {
 							gl.scheduleGeneratorRegeneration();
 							Logger.error("PlacedGeneratorsManager: Broken generator found on chunk load. Automatically fixing it: " + gl.toString());
 						}
-						*/
 					}
 					
 					Main.getInstance().getServer().getPluginManager().callEvent(new GeneratorLoadEvent(gl));
