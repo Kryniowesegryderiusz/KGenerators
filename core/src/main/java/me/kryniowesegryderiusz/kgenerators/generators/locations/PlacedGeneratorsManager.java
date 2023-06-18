@@ -3,6 +3,7 @@ package me.kryniowesegryderiusz.kgenerators.generators.locations;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map.Entry;
+import java.util.Objects;
 import java.util.concurrent.CompletableFuture;
 import java.util.concurrent.ExecutionException;
 import java.util.concurrent.LinkedBlockingQueue;
@@ -30,7 +31,7 @@ import me.kryniowesegryderiusz.kgenerators.logger.Logger;
 
 public class PlacedGeneratorsManager {
 	
-	@Getter private HashMap<Chunk, ChunkGeneratorLocations> loadedGenerators = new HashMap<Chunk, ChunkGeneratorLocations>();
+	@Getter private HashMap<ChunkInfo, ChunkGeneratorLocations> loadedGenerators = new HashMap<ChunkInfo, ChunkGeneratorLocations>();
 	
 	private BukkitTask managementTask;
 	@Getter private LinkedBlockingQueue<ManagementTask> managementQueue = new LinkedBlockingQueue<ManagementTask>();
@@ -110,25 +111,25 @@ public class PlacedGeneratorsManager {
 	
 	public class ChunkLoadTask extends ManagementTask {
 		
-		private Chunk c;
+		private ChunkInfo ci;
 		
 		public ChunkLoadTask(Chunk c) {
-			this.c = c;
+			this.ci = getChunkInfo(c);
 		}
 
 		@Override
 		public void doTask() {
-			Logger.debugPlacedGeneratorsManager("PlacedGeneratorsManager: Loading chunk: " + c.getWorld().getName() + " " + c.toString());
+			Logger.debugPlacedGeneratorsManager("PlacedGeneratorsManager: Loading chunk: " + ci.toString());
 			
-			ArrayList<GeneratorLocation> generators = Main.getDatabases().getDb().getGenerators(c);
+			ArrayList<GeneratorLocation> generators = Main.getDatabases().getDb().getGenerators(ci);
 			
 			if (generators == null) {
-				Logger.error("PlacedGeneratorsManager: Cant load chunk " + c.getWorld().getName() + " " + c.getX() + " " + c.getZ() + "! Trying again!");
+				Logger.error("PlacedGeneratorsManager: Cant load chunk " + ci.toString() + "! Trying again!");
 				managementQueue.add(this);
 				return;
 			}
 			
-			Main.getPlacedGenerators().getLoadedGenerators().putIfAbsent(c, new ChunkGeneratorLocations());
+			Main.getPlacedGenerators().getLoadedGenerators().putIfAbsent(ci, new ChunkGeneratorLocations());
 			
 			for (GeneratorLocation gl : generators) {
 				
@@ -147,6 +148,13 @@ public class PlacedGeneratorsManager {
 						if (gl.getGenerator().isHologram())
 							Main.getHolograms().createRemainingTimeHologram(gl);
 						Main.getSchedules().getSchedules().put(gl, schedule);
+					} else {
+						/*
+						if (gl.isBroken()) {
+							gl.scheduleGeneratorRegeneration();
+							Logger.error("PlacedGeneratorsManager: Broken generator found on chunk load. Automatically fixing it: " + gl.toString());
+						}
+						*/
 					}
 					
 					Main.getInstance().getServer().getPluginManager().callEvent(new GeneratorLoadEvent(gl));
@@ -157,33 +165,36 @@ public class PlacedGeneratorsManager {
 					future.get();
 				} catch (InterruptedException | ExecutionException e) {
 					Logger.error("PlacedGeneratorsManager: Load: " + gl.toString() + " CompleteFuture interrupted");
-					Logger.error(c);
+					Logger.error(e);
 				}
 				
 				if (schedule != null) Main.getDatabases().getDb().removeSchedule(gl);
 			}
 			
-			loadedGenerators.get(c).setFullyLoaded(true);
-			Logger.debugPlacedGeneratorsManager("PlacedGeneratorsManager: Chunk loaded: " + c.getWorld().getName() + " " + c.toString());
+			loadedGenerators.get(ci).setFullyLoaded(true);
+			Logger.debugPlacedGeneratorsManager("PlacedGeneratorsManager: Chunk loaded: " + ci.toString());
 		}
 		
 	}
 	
 	public class ChunkUnloadTask extends ManagementTask {
 		
-		private Chunk c;
+		private ChunkInfo ci;
 		
 		public ChunkUnloadTask(Chunk c) {
-			this.c = c;
+			this.ci = getChunkInfo(c);
 		}
 
 		@Override
 		public void doTask() {
-			Logger.debugPlacedGeneratorsManager("PlacedGeneratorsManager: Unloading chunk: " + c.getWorld().getName() + " " + c.toString());
-			ArrayList<GeneratorLocation> generatorsToUnload = getLoaded(c);
+			Logger.debugPlacedGeneratorsManager("PlacedGeneratorsManager: Unloading chunk: " + ci.toString());
+			
+			
+			
+			ArrayList<GeneratorLocation> generatorsToUnload = getLoaded(ci);
 			
 			for (GeneratorLocation gl : generatorsToUnload) {
-				
+
 				Logger.debugPlacedGeneratorsManager("PlacedGeneratorsManager: Unloading generator: " + gl.toString());
 				
 				Main.getDatabases().getDb().saveGenerator(gl);
@@ -193,6 +204,8 @@ public class PlacedGeneratorsManager {
 					Logger.debugSchedulesManager("PlacedGeneratorsManager: Unloading schedule " + gl.toString());	
 					Main.getDatabases().getDb().addSchedule(gl, schedule);
 				}
+				
+			
 				
 				CompletableFuture<Boolean> future = new CompletableFuture<Boolean>();
 				
@@ -211,21 +224,28 @@ public class PlacedGeneratorsManager {
 					future.get();
 				} catch (InterruptedException | ExecutionException e) {
 					Logger.error("PlacedGeneratorsManager: Unload: " + gl.toString() + " CompleteFuture interrupted");
-					Logger.error(c);
+					Logger.error(e);
 				}
 				
+				
+				
 			}
-			
-			if (loadedGenerators.get(c) != null && loadedGenerators.get(c).isEmpty())
-				loadedGenerators.remove(c);
-			
-			Logger.debugPlacedGeneratorsManager("PlacedGeneratorsManager: Chunk unloaded: " + c.getWorld().getName() + " " + c.toString() + " | isInManager: " + loadedGenerators.containsKey(c));
+
+			if (loadedGenerators.get(ci) != null && loadedGenerators.get(ci).isEmpty())
+				loadedGenerators.remove(ci);
+				
+			Logger.debugPlacedGeneratorsManager("PlacedGeneratorsManager: Chunk unloaded: " + ci.toString() + " | isInManager: " + loadedGenerators.containsKey(ci));
 
 		}
 	}
 	
+	/**
+	 * This will load chunk
+	 * @param loc
+	 * @return
+	 */
 	public boolean isChunkFullyLoaded(Location loc) {
-		boolean result = loadedGenerators.get(loc.getChunk()) != null && loadedGenerators.get(loc.getChunk()).isFullyLoaded();
+		boolean result = loadedGenerators.get(getChunkInfo(loc.getChunk())) != null && loadedGenerators.get(getChunkInfo(loc.getChunk())).isFullyLoaded();
 		Logger.debugPlacedGeneratorsManager("PlacedGeneratorsManager: isChunkFullyLoaded fired with " + result);
 		return result;
 	}
@@ -238,13 +258,13 @@ public class PlacedGeneratorsManager {
 	}
 	
 	public void removeLoaded(GeneratorLocation gLocation) {
-		if (loadedGenerators.containsKey(gLocation.getChunk()))
-			loadedGenerators.get(gLocation.getChunk()).removeLocation(gLocation);
+		if (loadedGenerators.containsKey(gLocation.getChunkInfo()))
+			loadedGenerators.get(gLocation.getChunkInfo()).removeLocation(gLocation);
 	}
 	
 	public void addLoaded(GeneratorLocation gLocation) {
-		loadedGenerators.putIfAbsent(gLocation.getChunk(), new ChunkGeneratorLocations());
-		loadedGenerators.get(gLocation.getChunk()).addLocation(gLocation);
+		loadedGenerators.putIfAbsent(gLocation.getChunkInfo(), new ChunkGeneratorLocations());
+		loadedGenerators.get(gLocation.getChunkInfo()).addLocation(gLocation);
 	}
 	
 	/*
@@ -252,10 +272,11 @@ public class PlacedGeneratorsManager {
 	 */
 	
 	/**
+	 * This will load chunk if its not loaded
 	 * @return loaded GeneratorLocation related to location or null if none
 	 */
 	@Nullable public GeneratorLocation getLoaded(Location location) {
-		ChunkGeneratorLocations cgl = loadedGenerators.get(location.getChunk());
+		ChunkGeneratorLocations cgl = loadedGenerators.get(this.getChunkInfo(location.getChunk()));
 		if (cgl != null)
 			return cgl.get(location);
 		else return null;
@@ -264,8 +285,8 @@ public class PlacedGeneratorsManager {
 	/**
 	 * @return loaded GeneratorLocation list related to location or null if none
 	 */
-	public ArrayList<GeneratorLocation> getLoaded(Chunk c) {
-		ChunkGeneratorLocations cgl = this.loadedGenerators.get(c);
+	public ArrayList<GeneratorLocation> getLoaded(ChunkInfo ci) {
+		ChunkGeneratorLocations cgl = this.loadedGenerators.get(ci);
 		if (cgl != null) {
 			return cgl.getAll();
 		}
@@ -395,28 +416,65 @@ public class PlacedGeneratorsManager {
 		}
 	}
 	
+	public ChunkInfo getChunkInfo(Chunk c) {
+		ChunkInfo ci = new ChunkInfo(c);
+		/*
+		for (ChunkInfo cii : this.loadedGenerators.keySet()) {
+			if (ci.equals(cii)) {
+				ci = cii;
+				break;
+			}
+		}*/
+		return ci;
+	}
+	
 	@AllArgsConstructor
 	public class ChunkInfo {
+		
+		@Override
+		public int hashCode() {
+			final int prime = 31;
+			int result = 1;
+			result = prime * result + getEnclosingInstance().hashCode();
+			result = prime * result + Objects.hash(world, x, z);
+			return result;
+		}
+
+		@Override
+		public boolean equals(Object obj) {
+			if (this == obj)
+				return true;
+			if (obj == null)
+				return false;
+			if (getClass() != obj.getClass())
+				return false;
+			ChunkInfo other = (ChunkInfo) obj;
+			if (!getEnclosingInstance().equals(other.getEnclosingInstance()))
+				return false;
+			return Objects.equals(world, other.world) && x == other.x && z == other.z;
+		}
+
+		@Getter World world;
 		@Getter int x;
 		@Getter int z;
 		
 		public ChunkInfo(Chunk c) {
 			this.x = c.getX();
 			this.z = c.getZ();
+			this.world = c.getWorld();
 		}
 		
-		@Override
-		public boolean equals(Object obj) {
-	        if(obj == null || obj.getClass()!= this.getClass())
-	            return false;
-	        
-	        ChunkInfo ci = (ChunkInfo) obj;	        
-			return x == ci.getX() && z == ci.getZ();
-		}
+
 		
 		@Override
 		public String toString() {
-			return "ChunkInfo:"+x+"-"+z;
+			return "ChunkInfo:"+world.getName()+"-"+x+"-"+z;
+		}
+
+
+
+		private PlacedGeneratorsManager getEnclosingInstance() {
+			return PlacedGeneratorsManager.this;
 		}
 	}
 

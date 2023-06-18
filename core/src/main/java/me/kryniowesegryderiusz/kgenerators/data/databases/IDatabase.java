@@ -7,12 +7,12 @@ import java.util.ArrayList;
 
 import javax.annotation.Nullable;
 
-import org.bukkit.Chunk;
 import org.bukkit.Location;
 import org.bukkit.World;
 
 import com.zaxxer.hikari.HikariDataSource;
 
+import me.kryniowesegryderiusz.kgenerators.generators.locations.PlacedGeneratorsManager.ChunkInfo;
 import me.kryniowesegryderiusz.kgenerators.generators.locations.objects.GeneratorLocation;
 import me.kryniowesegryderiusz.kgenerators.generators.schedules.objects.Schedule;
 
@@ -63,7 +63,7 @@ public interface IDatabase {
 	 * Gets saved generators according to chunk
 	 * return null if wasnt properly loaded
 	 */
-	@Nullable public ArrayList<GeneratorLocation> getGenerators(Chunk chunk);
+	@Nullable public ArrayList<GeneratorLocation> getGenerators(ChunkInfo chunkInfo);
 	
 	/**
 	 * Gets saved generators amount

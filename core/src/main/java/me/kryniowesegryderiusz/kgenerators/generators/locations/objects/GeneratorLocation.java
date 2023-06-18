@@ -8,6 +8,7 @@ import org.bukkit.Chunk;
 import org.bukkit.Location;
 import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Player;
+
 import lombok.Getter;
 import lombok.Setter;
 import me.kryniowesegryderiusz.kgenerators.Main;
@@ -17,6 +18,7 @@ import me.kryniowesegryderiusz.kgenerators.dependencies.hooks.BentoBoxHook;
 import me.kryniowesegryderiusz.kgenerators.dependencies.hooks.SuperiorSkyblock2Hook;
 import me.kryniowesegryderiusz.kgenerators.generators.generator.enums.GeneratorType;
 import me.kryniowesegryderiusz.kgenerators.generators.generator.objects.Generator;
+import me.kryniowesegryderiusz.kgenerators.generators.locations.PlacedGeneratorsManager.ChunkInfo;
 import me.kryniowesegryderiusz.kgenerators.generators.locations.handlers.GeneratorLocationActionHandler;
 import me.kryniowesegryderiusz.kgenerators.generators.locations.handlers.GeneratorLocationPickUpHandler;
 import me.kryniowesegryderiusz.kgenerators.generators.locations.handlers.GeneratorLocationPlaceHandler;
@@ -51,7 +53,7 @@ public class GeneratorLocation implements IGeneratorLocation {
 	private UUID hologramUUID = UUID.randomUUID();
 	
 	@Getter
-	private Chunk chunk;
+	private ChunkInfo chunkInfo;
 
 	@Setter
 	@Getter
@@ -83,9 +85,9 @@ public class GeneratorLocation implements IGeneratorLocation {
 			this.hologramLocation.add(0, 1, 0);
 
 		if (chunk == null)
-			this.chunk = this.location.getChunk();
+			this.chunkInfo = Main.getPlacedGenerators().getChunkInfo(this.location.getChunk());
 		else
-			this.chunk = chunk;
+			this.chunkInfo = Main.getPlacedGenerators().getChunkInfo(chunk);
 		
 		this.setLastGeneratedObject(ago);
 	}
@@ -255,10 +257,10 @@ public class GeneratorLocation implements IGeneratorLocation {
 	public String toString() {
 		if (this.owner != null)
 			return "(" + this.id + ") " + this.generator.getId() + " owned by " + this.owner.getName() + " placed in " + toStringLocation()
-					+ " (" + this.getChunk().getX() + "," + this.getChunk().getZ() + ") | Loaded: " + Main.getPlacedGenerators().isLoaded(this);
+					+ " (" + this.getChunkInfo().toString() + ")";
 		else
 			return  "(" + this.id + ") " + this.generator.getId() + " owned by no one" + " placed in " + toStringLocation() + " ("
-					+ this.getChunk().getX() + "," + this.getChunk().getZ() + ") | Loaded: " + Main.getPlacedGenerators().isLoaded(this);
+					+ this.getChunkInfo().toString() + ")";
 	}
 
 	public String toStringLocation() {

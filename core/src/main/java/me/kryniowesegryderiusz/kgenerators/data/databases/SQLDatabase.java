@@ -8,7 +8,6 @@ import java.sql.Statement;
 import java.time.Instant;
 import java.util.ArrayList;
 
-import org.bukkit.Chunk;
 import org.bukkit.Location;
 import org.bukkit.World;
 
@@ -20,6 +19,7 @@ import me.kryniowesegryderiusz.kgenerators.Main;
 import me.kryniowesegryderiusz.kgenerators.data.enums.DatabaseType;
 import me.kryniowesegryderiusz.kgenerators.data.objects.GeneratorsLoader;
 import me.kryniowesegryderiusz.kgenerators.data.objects.SQLConfig;
+import me.kryniowesegryderiusz.kgenerators.generators.locations.PlacedGeneratorsManager.ChunkInfo;
 import me.kryniowesegryderiusz.kgenerators.generators.locations.objects.GeneratorLocation;
 import me.kryniowesegryderiusz.kgenerators.generators.schedules.objects.Schedule;
 import me.kryniowesegryderiusz.kgenerators.logger.Logger;
@@ -139,6 +139,7 @@ public class SQLDatabase implements IDatabase {
 		Logger.info("Database " + dbType.name() + ": Connection closed");
 	}
 
+	@SuppressWarnings("resource")
 	@Override
 	public void updateTable() {
 
@@ -188,8 +189,8 @@ public class SQLDatabase implements IDatabase {
 				stat = dataSource.getConnection().prepareStatement("UPDATE " + PLACED_TABLE
 						+ " SET `chunk_x` = ?, `chunk_z` = ? WHERE `world` = ? AND `x` = ? AND `y` = ? AND `z` = ?");
 				for (GeneratorLocation gl : this.getGenerators()) {
-					stat.setInt(1, gl.getChunk().getX());
-					stat.setInt(2, gl.getChunk().getZ());
+					stat.setInt(1, gl.getChunkInfo().getX());
+					stat.setInt(2, gl.getChunkInfo().getZ());
 					stat.setString(3, gl.getLocation().getWorld().getName());
 					stat.setInt(4, gl.getLocation().getBlockX());
 					stat.setInt(5, gl.getLocation().getBlockY());
@@ -239,8 +240,8 @@ public class SQLDatabase implements IDatabase {
 				stat = conn.prepareStatement("UPDATE " + PLACED_TABLE
 						+ " SET `chunk_x` = ?, `chunk_z` = ? WHERE `world` = ? AND `x` = ? AND `y` = ? AND `z` = ? AND `last_generated_object` = -1");
 				for (GeneratorLocation gl : this.getGenerators()) {
-					stat.setInt(1, gl.getChunk().getX());
-					stat.setInt(2, gl.getChunk().getZ());
+					stat.setInt(1, gl.getChunkInfo().getX());
+					stat.setInt(2, gl.getChunkInfo().getZ());
 					stat.setString(3, gl.getLocation().getWorld().getName());
 					stat.setInt(4, gl.getLocation().getBlockX());
 					stat.setInt(5, gl.getLocation().getBlockY());
@@ -283,8 +284,8 @@ public class SQLDatabase implements IDatabase {
 					stat.setInt(4, gl.getLocation().getBlockZ());
 					stat.setString(5, gl.getGenerator().getId());
 					stat.setString(6, gl.getOwner().getName());
-					stat.setInt(7, gl.getChunk().getX());
-					stat.setInt(8, gl.getChunk().getZ());
+					stat.setInt(7, gl.getChunkInfo().getX());
+					stat.setInt(8, gl.getChunkInfo().getZ());
 					stat.setInt(9, gl.getLastGeneratedObjectId());
 					stat.executeUpdate();
 					
@@ -470,7 +471,7 @@ public class SQLDatabase implements IDatabase {
 	}
 
 	@Override
-	public ArrayList<GeneratorLocation> getGenerators(Chunk chunk) {
+	public ArrayList<GeneratorLocation> getGenerators(ChunkInfo chunkInfo) {
 		Connection conn = null;
 		PreparedStatement stat = null;
 		ResultSet res = null;
@@ -481,16 +482,16 @@ public class SQLDatabase implements IDatabase {
 
 			conn = dataSource.getConnection();
 			stat = conn.prepareStatement("SELECT * FROM " + PLACED_TABLE + " WHERE `world` = ? AND `chunk_x` = ? AND `chunk_z` = ?");
-			stat.setString(1, chunk.getWorld().getName());
-			stat.setInt(2, chunk.getX());
-			stat.setInt(3, chunk.getZ());
+			stat.setString(1, chunkInfo.getWorld().getName());
+			stat.setInt(2, chunkInfo.getX());
+			stat.setInt(3, chunkInfo.getZ());
 			res = stat.executeQuery();
 			while (res.next()) {
 				loader.loadNext(res);
 			}
 			gl = loader.finish();
 		} catch (Exception e) {
-			Logger.error("Database " + dbType.name() + ": Cannot get generators by chunk: " + chunk.toString());
+			Logger.error("Database " + dbType.name() + ": Cannot get generators by chunk: " + chunkInfo.toString());
 			Logger.error(e);
 		} finally {
 			this.close(stat, conn, res);
