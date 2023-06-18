@@ -73,7 +73,11 @@ public class PlacedGeneratorsManager {
 				if (stopping) break;
 				ManagementTask r = managementQueue.poll();
 				if (r != null) {
-					r.doTask();
+					try {
+						r.doTask();
+					} catch (Exception e) {
+						Logger.error(e);
+					}
 				} else break;
 			}
 			if (!stopping)
@@ -205,8 +209,6 @@ public class PlacedGeneratorsManager {
 					Main.getDatabases().getDb().addSchedule(gl, schedule);
 				}
 				
-			
-				
 				CompletableFuture<Boolean> future = new CompletableFuture<Boolean>();
 				
 				Main.getInstance().getServer().getScheduler().runTask(Main.getInstance(), () -> {
@@ -226,8 +228,6 @@ public class PlacedGeneratorsManager {
 					Logger.error("PlacedGeneratorsManager: Unload: " + gl.toString() + " CompleteFuture interrupted");
 					Logger.error(e);
 				}
-				
-				
 				
 			}
 
