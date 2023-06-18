@@ -5,7 +5,6 @@ import java.util.Map;
 import org.bukkit.inventory.ItemStack;
 
 import io.th0rgal.oraxen.api.OraxenBlocks;
-import io.th0rgal.oraxen.mechanics.MechanicsManager;
 import io.th0rgal.oraxen.mechanics.provided.gameplay.block.BlockMechanicFactory;
 import io.th0rgal.oraxen.mechanics.provided.gameplay.noteblock.NoteBlockMechanicFactory;
 import io.th0rgal.oraxen.mechanics.provided.gameplay.stringblock.StringBlockMechanicFactory;

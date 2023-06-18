@@ -8,7 +8,6 @@ import java.util.Map.Entry;
 import java.util.Random;
 import java.util.Set;
 
-import org.bukkit.OfflinePlayer;
 import org.bukkit.World;
 import org.bukkit.enchantments.Enchantment;
 import org.bukkit.inventory.ItemFlag;
@@ -18,7 +17,6 @@ import org.bukkit.inventory.meta.ItemMeta;
 import lombok.Getter;
 import me.kryniowesegryderiusz.kgenerators.Main;
 import me.kryniowesegryderiusz.kgenerators.api.objects.AbstractGeneratedObject;
-import me.kryniowesegryderiusz.kgenerators.dependencies.enums.Dependency;
 import me.kryniowesegryderiusz.kgenerators.dependencies.hooks.NBTAPIHook;
 import me.kryniowesegryderiusz.kgenerators.generators.generator.GeneratorsManager;
 import me.kryniowesegryderiusz.kgenerators.generators.generator.enums.GeneratorType;
@@ -63,7 +61,6 @@ public class Generator {
 	@Getter
 	boolean loaded = false;
 
-	@SuppressWarnings("unchecked")
 	public Generator(GeneratorsManager generatorsManager, Config config, String generatorID) {
 		if (!this.loadConfiguration(generatorsManager, config, generatorID)) {
 			Logger.error("Generators file: Couldnt load " + generatorID);
@@ -78,6 +75,7 @@ public class Generator {
 	 * @param generatorID
 	 * @return true if generator loaded properly
 	 */
+	@SuppressWarnings("unchecked")
 	public boolean loadConfiguration(GeneratorsManager generatorsManager, Config config, String generatorID) {
 		
 		Boolean error = false;

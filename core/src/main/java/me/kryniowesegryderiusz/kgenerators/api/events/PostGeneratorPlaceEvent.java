@@ -3,6 +3,7 @@ package me.kryniowesegryderiusz.kgenerators.api.events;
 import org.bukkit.command.CommandSender;
 import org.bukkit.event.Event;
 import org.bukkit.event.HandlerList;
+
 import lombok.Getter;
 import me.kryniowesegryderiusz.kgenerators.api.interfaces.IGeneratorLocation;
 import me.kryniowesegryderiusz.kgenerators.generators.locations.objects.GeneratorLocation;

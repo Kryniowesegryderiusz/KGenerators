@@ -54,7 +54,7 @@ public class NBTAPIHook {
 		try {
 			NBTItem nbti = new NBTItem(item);
 			
-			if (nbti.hasKey(key))
+			if (nbti.hasTag(key))
 				return nbti.getString(key);
 			else return null;
 			
@@ -71,7 +71,7 @@ public class NBTAPIHook {
 		try {
 			NBTItem nbti = new NBTItem(item);
 			
-			if (nbti.hasKey(key))
+			if (nbti.hasTag(key))
 				return nbti.getInteger(key);
 			else return null;
 			
@@ -88,7 +88,7 @@ public class NBTAPIHook {
 		try {
 			NBTItem nbti = new NBTItem(item);
 			
-			if (nbti.hasKey(key))
+			if (nbti.hasTag(key))
 				return nbti.getDouble(key);
 			else return null;
 			

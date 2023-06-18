@@ -1,6 +1,5 @@
 package me.kryniowesegryderiusz.kgenerators.generators.generator;
 
-import java.io.IOException;
 import java.util.Collection;
 import java.util.HashMap;
 import java.util.LinkedHashMap;
@@ -10,7 +9,6 @@ import java.util.Set;
 import javax.annotation.Nullable;
 
 import org.bukkit.configuration.ConfigurationSection;
-import org.bukkit.configuration.InvalidConfigurationException;
 import org.bukkit.inventory.ItemStack;
 
 import lombok.Getter;
@@ -25,10 +23,8 @@ import me.kryniowesegryderiusz.kgenerators.generators.generator.objects.Generate
 import me.kryniowesegryderiusz.kgenerators.generators.generator.objects.GeneratedItem;
 import me.kryniowesegryderiusz.kgenerators.generators.generator.objects.Generator;
 import me.kryniowesegryderiusz.kgenerators.logger.Logger;
-import me.kryniowesegryderiusz.kgenerators.utils.ItemUtils;
 import me.kryniowesegryderiusz.kgenerators.utils.immutable.Config;
 import me.kryniowesegryderiusz.kgenerators.utils.immutable.ConfigManager;
-import me.kryniowesegryderiusz.kgenerators.xseries.XMaterial;
 
 public class GeneratorsManager {
 

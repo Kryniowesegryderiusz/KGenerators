@@ -33,6 +33,7 @@ public class CustomDrops {
 	 * @param generatedObjectConfig
 	 * @return null if object doesnt have custom drops configured
 	 */
+	
 	public boolean loadCustomDrops(Map<?, ?> generatedObjectConfig) {
 		if (generatedObjectConfig.containsKey("custom-drops")) {
 
@@ -53,8 +54,9 @@ public class CustomDrops {
 			if (customDropsConfig.containsKey("money"))
 				this.money = (double) customDropsConfig.get("money");
 			
-			if (customDropsConfig.containsKey("commands"))
+			if (customDropsConfig.containsKey("commands")) {
 				this.commands = (ArrayList<String>) customDropsConfig.get("commands");
+			}
 
 			return true;
 		} else

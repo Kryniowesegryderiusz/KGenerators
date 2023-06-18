@@ -2,7 +2,6 @@ package me.kryniowesegryderiusz.kgenerators.data;
 
 import java.io.File;
 import java.util.ArrayList;
-import java.util.concurrent.TimeUnit;
 
 import javax.annotation.Nullable;
 

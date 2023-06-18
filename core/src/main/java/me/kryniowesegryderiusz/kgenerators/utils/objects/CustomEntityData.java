@@ -15,7 +15,6 @@ import lombok.Setter;
 import me.kryniowesegryderiusz.kgenerators.Main;
 import me.kryniowesegryderiusz.kgenerators.utils.EntityUtils;
 import me.kryniowesegryderiusz.kgenerators.utils.ItemUtils;
-import me.kryniowesegryderiusz.kgenerators.xseries.XMaterial;
 
 @AllArgsConstructor
 public class CustomEntityData {

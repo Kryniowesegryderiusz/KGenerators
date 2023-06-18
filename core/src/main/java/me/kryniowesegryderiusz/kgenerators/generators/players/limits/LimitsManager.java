@@ -1,13 +1,11 @@
 package me.kryniowesegryderiusz.kgenerators.generators.players.limits;
 
-import java.io.IOException;
 import java.util.Collection;
 import java.util.LinkedHashMap;
 import java.util.Map.Entry;
 import java.util.Set;
 
 import org.bukkit.configuration.ConfigurationSection;
-import org.bukkit.configuration.InvalidConfigurationException;
 
 import me.kryniowesegryderiusz.kgenerators.Main;
 import me.kryniowesegryderiusz.kgenerators.generators.generator.objects.Generator;

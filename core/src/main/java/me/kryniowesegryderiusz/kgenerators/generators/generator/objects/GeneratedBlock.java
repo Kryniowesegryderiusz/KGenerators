@@ -1,6 +1,7 @@
 package me.kryniowesegryderiusz.kgenerators.generators.generator.objects;
 
 import java.util.Map;
+
 import org.bukkit.inventory.ItemStack;
 
 import lombok.Getter;

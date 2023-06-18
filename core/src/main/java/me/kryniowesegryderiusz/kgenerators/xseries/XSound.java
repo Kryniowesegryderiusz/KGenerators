@@ -21,8 +21,21 @@
  */
 package me.kryniowesegryderiusz.kgenerators.xseries;
 
-import com.google.common.base.Enums;
-import com.google.common.base.Strings;
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.Collections;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
+import java.util.Objects;
+import java.util.Optional;
+import java.util.WeakHashMap;
+import java.util.concurrent.CompletableFuture;
+import java.util.stream.Collectors;
+
+import javax.annotation.Nonnull;
+import javax.annotation.Nullable;
+
 import org.bukkit.Instrument;
 import org.bukkit.Location;
 import org.bukkit.Note;
@@ -33,11 +46,8 @@ import org.bukkit.plugin.Plugin;
 import org.bukkit.scheduler.BukkitRunnable;
 import org.bukkit.scheduler.BukkitTask;
 
-import javax.annotation.Nonnull;
-import javax.annotation.Nullable;
-import java.util.*;
-import java.util.concurrent.CompletableFuture;
-import java.util.stream.Collectors;
+import com.google.common.base.Enums;
+import com.google.common.base.Strings;
 
 /**
  * <b>XSound</b> - Universal Minecraft Sound Support<br>

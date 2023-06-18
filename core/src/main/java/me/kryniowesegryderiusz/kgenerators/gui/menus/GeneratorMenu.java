@@ -7,7 +7,6 @@ import org.bukkit.inventory.Inventory;
 import org.bukkit.inventory.ItemStack;
 
 import me.kryniowesegryderiusz.kgenerators.Main;
-import me.kryniowesegryderiusz.kgenerators.dependencies.enums.Dependency;
 import me.kryniowesegryderiusz.kgenerators.generators.generator.enums.GeneratorType;
 import me.kryniowesegryderiusz.kgenerators.generators.locations.objects.GeneratorLocation;
 import me.kryniowesegryderiusz.kgenerators.generators.upgrades.objects.Upgrade;

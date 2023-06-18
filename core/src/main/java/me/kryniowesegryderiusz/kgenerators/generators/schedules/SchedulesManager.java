@@ -7,6 +7,7 @@ import java.util.Map.Entry;
 
 import org.bukkit.Bukkit;
 import org.bukkit.Location;
+
 import lombok.Getter;
 import me.kryniowesegryderiusz.kgenerators.Main;
 import me.kryniowesegryderiusz.kgenerators.generators.locations.objects.GeneratorLocation;
