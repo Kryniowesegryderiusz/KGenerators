@@ -102,6 +102,11 @@ public class Logger {
 		if (Main.getSettings().isMultiVersionManagerDebug())
 			log(object, LogType.DEBUG);
 	}
+	
+
+	public static void debug(Object object) {
+		log(object, LogType.DEBUG);
+	}
 
 	public static void textToConsole(String message) {
 		Main.getInstance().getLogger().info(message);
