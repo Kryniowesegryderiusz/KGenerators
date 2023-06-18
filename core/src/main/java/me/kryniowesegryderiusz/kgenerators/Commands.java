@@ -21,6 +21,7 @@ import me.kryniowesegryderiusz.kgenerators.data.enums.DatabaseType;
 import me.kryniowesegryderiusz.kgenerators.dependencies.hooks.WorldEditHook;
 import me.kryniowesegryderiusz.kgenerators.generators.generator.objects.Generator;
 import me.kryniowesegryderiusz.kgenerators.generators.generator.objects.GeneratorAction;
+import me.kryniowesegryderiusz.kgenerators.generators.locations.PlacedGeneratorsManager.ChunkInfo;
 import me.kryniowesegryderiusz.kgenerators.generators.locations.handlers.enums.ActionType;
 import me.kryniowesegryderiusz.kgenerators.generators.locations.handlers.enums.InteractionType;
 import me.kryniowesegryderiusz.kgenerators.generators.locations.objects.GeneratorLocation;
@@ -294,7 +295,7 @@ public class Commands implements CommandExecutor {
 									Location l = Main.getPlacedGenerators().stringToLocation(
 											args[1] + "," + args[2] + "," + args[3] + "," + args[4]);
 									
-									GeneratorLocation gl = new GeneratorLocation(-1, g, l, l.getChunk(), Main.getPlayers().getPlayer(owner), null);
+									GeneratorLocation gl = new GeneratorLocation(-1, g, l, Main.getPlacedGenerators().new ChunkInfo(l.getChunk()), Main.getPlayers().getPlayer(owner), null);
 									gl.placeGenerator(sender, true);
 
 									Lang.getMessageStorage().send(sender, Message.COMMANDS_SPAWN_DONE,

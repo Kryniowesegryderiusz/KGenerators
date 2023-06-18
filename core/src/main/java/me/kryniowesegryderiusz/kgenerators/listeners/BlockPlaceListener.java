@@ -32,7 +32,7 @@ public class BlockPlaceListener implements Listener {
 			Generator generator = Main.getGenerators().get(e.getItemInHand());
 			if (generator != null) {
 				e.setCancelled(!new GeneratorLocation(-1, generator, e.getBlock().getLocation(),
-						e.getBlock().getChunk(), Main.getPlayers().getPlayer(player), null).placeGenerator(player));
+						Main.getPlacedGenerators().new ChunkInfo(e.getBlock().getChunk()), Main.getPlayers().getPlayer(player), null).placeGenerator(player));
 			}
 		} catch (Exception exception) {
 			Logger.error(exception);

@@ -116,14 +116,20 @@ public class PlacedGeneratorsManager {
 	public class ChunkLoadTask extends ManagementTask {
 		
 		private ChunkInfo ci;
+		private long taskScheduleTime = System.currentTimeMillis();
 		
 		public ChunkLoadTask(Chunk c) {
 			this.ci = getChunkInfo(c);
+			Logger.debugPlacedGeneratorsManager("PlacedGeneratorsManager: Scheduling chunk load: " + ci.toString());
 		}
 
 		@Override
 		public void doTask() {
-			Logger.debugPlacedGeneratorsManager("PlacedGeneratorsManager: Loading chunk: " + ci.toString());
+			long timeTaken = System.currentTimeMillis()-taskScheduleTime;
+			Logger.debugPlacedGeneratorsManager("PlacedGeneratorsManager: Loading chunk: " + ci.toString() + " (After " + timeTaken + "ms)");
+			if (timeTaken > 100) {
+				Logger.warn("PlacedGeneratorsManager: Waiting for chunk load " + ci.toString() + " took more than 100ms! ("+timeTaken+"ms) Is the server overloaded?");
+			}
 			
 			ArrayList<GeneratorLocation> generators = Main.getDatabases().getDb().getGenerators(ci);
 			
@@ -140,6 +146,14 @@ public class PlacedGeneratorsManager {
 				Logger.debugPlacedGeneratorsManager("PlacedGeneratorsManager: Loading generator: " + gl.toString());
 
 				Schedule schedule = Main.getDatabases().getDb().getSchedule(gl);
+				if (schedule == null) {
+					 schedule = Main.getDatabases().getDb().getSchedule(gl);
+					 if (schedule != null) {
+						 Logger.error("PlacedGeneratorsManager: Generator schedule loaded at second attempt: " + gl.toString());
+					 }
+				}
+				
+				Schedule finalSchedule = schedule;
 				
 				CompletableFuture<Boolean> future = new CompletableFuture<Boolean>();
 				
@@ -147,11 +161,11 @@ public class PlacedGeneratorsManager {
 
 					Main.getPlacedGenerators().addLoaded(gl);
 					
-					if (schedule != null) {
-						Logger.debugSchedulesManager("PlacedGeneratorsManager: Loading schedule " + gl.toString() + "| isNull: " + (schedule == null));					
+					if (finalSchedule != null) {
+						Logger.debugSchedulesManager("PlacedGeneratorsManager: Loading schedule " + gl.toString() + "| isNull: " + (finalSchedule == null));					
 						if (gl.getGenerator().isHologram())
 							Main.getHolograms().createRemainingTimeHologram(gl);
-						Main.getSchedules().getSchedules().put(gl, schedule);
+						Main.getSchedules().getSchedules().put(gl, finalSchedule);
 					} else {
 						if (gl.isBroken()) {
 							gl.scheduleGeneratorRegeneration();
@@ -182,16 +196,21 @@ public class PlacedGeneratorsManager {
 	public class ChunkUnloadTask extends ManagementTask {
 		
 		private ChunkInfo ci;
+		private long taskScheduleTime = System.currentTimeMillis();
 		
 		public ChunkUnloadTask(Chunk c) {
 			this.ci = getChunkInfo(c);
+			
+			Logger.debugPlacedGeneratorsManager("PlacedGeneratorsManager: Scheduling chunk unload: " + ci.toString());
 		}
 
 		@Override
 		public void doTask() {
-			Logger.debugPlacedGeneratorsManager("PlacedGeneratorsManager: Unloading chunk: " + ci.toString());
-			
-			
+			long timeTaken = System.currentTimeMillis()-taskScheduleTime;
+			Logger.debugPlacedGeneratorsManager("PlacedGeneratorsManager: Unloading chunk: " + ci.toString() + " (After " + timeTaken + "ms)");
+			if (timeTaken > 100) {
+				Logger.warn("PlacedGeneratorsManager: Waiting for chunk unload " + ci.toString() + " took more than 100ms! ("+timeTaken+"ms) Is the server overloaded?");
+			}
 			
 			ArrayList<GeneratorLocation> generatorsToUnload = getLoaded(ci);
 			
@@ -360,14 +379,14 @@ public class PlacedGeneratorsManager {
         return new Location(w, x, y, z);
 	}
 	
-	public Chunk stringToChunk (String string) {
+	public ChunkInfo stringToChunkInfo (String string) {
 		String[] parts = string.split(",");
 
         final World w = Bukkit.getServer().getWorld(parts[0]);
         final int x = Integer.parseInt(parts[1]);
         final int z = Integer.parseInt(parts[2]);
 
-        return w.getChunkAt(x, z);
+        return new ChunkInfo(w, x, z);
 	}
 	
 	/*
@@ -466,7 +485,7 @@ public class PlacedGeneratorsManager {
 		
 		@Override
 		public String toString() {
-			return "ChunkInfo:"+world.getName()+"-"+x+"-"+z;
+			return "ChunkInfo: "+world.getName()+", "+x+", "+z;
 		}
 
 

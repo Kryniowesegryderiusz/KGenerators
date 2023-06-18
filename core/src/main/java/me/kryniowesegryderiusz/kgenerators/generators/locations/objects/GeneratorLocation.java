@@ -4,7 +4,6 @@ import java.util.UUID;
 
 import javax.annotation.Nullable;
 
-import org.bukkit.Chunk;
 import org.bukkit.Location;
 import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Player;
@@ -70,7 +69,7 @@ public class GeneratorLocation implements IGeneratorLocation {
 	 * @param GeneratorPlayer owner - nullable
 	 * @param ago AbstractGeneratedObject - nullable
 	 */
-	public GeneratorLocation(int id, Generator generator, Location location, Chunk chunk, @Nullable GeneratorPlayer owner, @Nullable AbstractGeneratedObject ago) {
+	public GeneratorLocation(int id, Generator generator, Location location, ChunkInfo chunkInfo, @Nullable GeneratorPlayer owner, @Nullable AbstractGeneratedObject ago) {
 		this.id = id;
 		this.generator = generator;
 		this.owner = owner;
@@ -84,10 +83,7 @@ public class GeneratorLocation implements IGeneratorLocation {
 		if (getGenerator().getPlaceholder() != null)
 			this.hologramLocation.add(0, 1, 0);
 
-		if (chunk == null)
-			this.chunkInfo = Main.getPlacedGenerators().getChunkInfo(this.location.getChunk());
-		else
-			this.chunkInfo = Main.getPlacedGenerators().getChunkInfo(chunk);
+		this.chunkInfo = chunkInfo;
 		
 		this.setLastGeneratedObject(ago);
 	}

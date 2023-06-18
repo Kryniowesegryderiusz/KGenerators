@@ -14,6 +14,7 @@ import lombok.Getter;
 import me.kryniowesegryderiusz.kgenerators.Main;
 import me.kryniowesegryderiusz.kgenerators.api.objects.AbstractGeneratedObject;
 import me.kryniowesegryderiusz.kgenerators.generators.generator.objects.Generator;
+import me.kryniowesegryderiusz.kgenerators.generators.locations.PlacedGeneratorsManager.ChunkInfo;
 import me.kryniowesegryderiusz.kgenerators.generators.locations.objects.GeneratorLocation;
 import me.kryniowesegryderiusz.kgenerators.logger.Logger;
 
@@ -56,9 +57,9 @@ public class GeneratorsLoader {
 			}
 			Location generatorLocation = Main.getPlacedGenerators().stringToLocation(location);
 
-			Chunk generatorChunk = null;
+			ChunkInfo generatorChunkInfo = null;
 			if (!chunk.contains("null") && !chunk.equals(","))
-				generatorChunk = Main.getPlacedGenerators().stringToChunk(chunk);
+				generatorChunkInfo = Main.getPlacedGenerators().stringToChunkInfo(chunk);
 
 			if (generatorId != null) {
 				if (!Main.getGenerators().exists(generatorId)) {
@@ -79,7 +80,7 @@ public class GeneratorsLoader {
 
 			if (!err) {
 				this.loadedGenerators.add(new GeneratorLocation(generatorLocationId, Main.getGenerators().get(generatorId), generatorLocation,
-						generatorChunk, Main.getPlayers().createPlayer(owner), ago));
+						generatorChunkInfo, Main.getPlayers().createPlayer(owner), ago));
 				amount++;
 			} else {
 				notLoaded++;
