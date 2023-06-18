@@ -127,8 +127,8 @@ public class PlacedGeneratorsManager {
 		public void doTask() {
 			long timeTaken = System.currentTimeMillis()-taskScheduleTime;
 			Logger.debugPlacedGeneratorsManager("PlacedGeneratorsManager: Loading chunk: " + ci.toString() + " (After " + timeTaken + "ms)");
-			if (timeTaken > 100) {
-				Logger.warn("PlacedGeneratorsManager: Waiting for chunk load " + ci.toString() + " took more than 100ms! ("+timeTaken+"ms) Is the server overloaded?");
+			if (timeTaken > 500) {
+				Logger.warn("PlacedGeneratorsManager: Waiting for chunk load " + ci.toString() + " took more than 500ms! ("+timeTaken+"ms) Is the server overloaded?");
 			}
 			
 			ArrayList<GeneratorLocation> generators = Main.getDatabases().getDb().getGenerators(ci);
@@ -208,8 +208,8 @@ public class PlacedGeneratorsManager {
 		public void doTask() {
 			long timeTaken = System.currentTimeMillis()-taskScheduleTime;
 			Logger.debugPlacedGeneratorsManager("PlacedGeneratorsManager: Unloading chunk: " + ci.toString() + " (After " + timeTaken + "ms)");
-			if (timeTaken > 100) {
-				Logger.warn("PlacedGeneratorsManager: Waiting for chunk unload " + ci.toString() + " took more than 100ms! ("+timeTaken+"ms) Is the server overloaded?");
+			if (timeTaken > 500) {
+				Logger.warn("PlacedGeneratorsManager: Waiting for chunk unload " + ci.toString() + " took more than 500ms! ("+timeTaken+"ms) Is the server overloaded?");
 			}
 			
 			ArrayList<GeneratorLocation> generatorsToUnload = getLoaded(ci);
