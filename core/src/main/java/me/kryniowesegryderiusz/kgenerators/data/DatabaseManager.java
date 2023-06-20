@@ -78,7 +78,7 @@ public class DatabaseManager {
 					ArrayList<GeneratorLocation> next = db.getGenerators(i, amountAtOnce);
 					Logger.info("DatabaseHandler: Obtained " + next.size() + " from old database");
 					for (GeneratorLocation gl : next) {
-						newDb.saveGenerator(gl);
+						newDb.saveGenerator(gl, true);
 						migratorInfo.increment();
 					}
 				}

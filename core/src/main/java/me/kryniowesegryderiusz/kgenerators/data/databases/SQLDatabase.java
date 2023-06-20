@@ -264,9 +264,14 @@ public class SQLDatabase implements IDatabase {
 			Logger.error(e);
 		}
 	}
-
+	
 	@Override
 	public void saveGenerator(GeneratorLocation gl) {
+		this.saveGenerator(gl, false);
+	}
+
+	@Override
+	public void saveGenerator(GeneratorLocation gl, boolean migrate) {
 		
 		Connection conn = null;
 		PreparedStatement stat = null;
@@ -274,7 +279,7 @@ public class SQLDatabase implements IDatabase {
 		
 		try {
 			//No id - new generator
-			if (gl.getId() == -1) {
+			if (gl.getId() == -1 || migrate) {
 					conn = dataSource.getConnection();
 					stat = conn.prepareStatement("INSERT INTO " + PLACED_TABLE
 							+ " (world,x,y,z,generator_id,owner,chunk_x,chunk_z,last_generated_object) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?)", Statement.RETURN_GENERATED_KEYS);

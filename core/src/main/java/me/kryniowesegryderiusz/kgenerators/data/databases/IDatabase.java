@@ -77,6 +77,12 @@ public interface IDatabase {
 	public void saveGenerator(GeneratorLocation gl);
 	
 	/**
+	 * Saves generator location info to database
+	 * @param GeneratorLocation
+	 */
+	public void saveGenerator(GeneratorLocation gl, boolean migrate);
+	
+	/**
 	 * Removes location from database
 	 * @param Location
 	 */
