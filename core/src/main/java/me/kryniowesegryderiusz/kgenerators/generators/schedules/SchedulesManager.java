@@ -1,9 +1,9 @@
 package me.kryniowesegryderiusz.kgenerators.generators.schedules;
 
 import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.LinkedHashMap;
 import java.util.Map.Entry;
+import java.util.concurrent.ConcurrentHashMap;
 
 import org.bukkit.Bukkit;
 import org.bukkit.Location;
@@ -19,7 +19,7 @@ import me.kryniowesegryderiusz.kgenerators.utils.objects.CustomBlockData;
 
 public class SchedulesManager {
 	
-	@Getter private HashMap<GeneratorLocation, Schedule> schedules = new HashMap<GeneratorLocation, Schedule>();
+	@Getter private ConcurrentHashMap<GeneratorLocation, Schedule> schedules = new ConcurrentHashMap<GeneratorLocation, Schedule>();
 	
 	public SchedulesManager() {
 		

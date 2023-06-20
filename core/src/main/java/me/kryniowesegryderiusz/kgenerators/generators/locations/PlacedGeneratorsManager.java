@@ -4,8 +4,7 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map.Entry;
 import java.util.Objects;
-import java.util.concurrent.CompletableFuture;
-import java.util.concurrent.ExecutionException;
+import java.util.concurrent.ConcurrentHashMap;
 import java.util.concurrent.LinkedBlockingQueue;
 
 import javax.annotation.Nullable;
@@ -31,7 +30,7 @@ import me.kryniowesegryderiusz.kgenerators.logger.Logger;
 
 public class PlacedGeneratorsManager {
 	
-	@Getter private HashMap<ChunkInfo, ChunkGeneratorLocations> loadedGenerators = new HashMap<ChunkInfo, ChunkGeneratorLocations>();
+	@Getter private ConcurrentHashMap<ChunkInfo, ChunkGeneratorLocations> loadedGenerators = new ConcurrentHashMap<ChunkInfo, ChunkGeneratorLocations>();
 	
 	private BukkitTask managementTask;
 	@Getter private LinkedBlockingQueue<ManagementTask> managementQueue = new LinkedBlockingQueue<ManagementTask>();
@@ -82,7 +81,7 @@ public class PlacedGeneratorsManager {
 			}
 			if (!stopping)
 				nextManagementTick();
-		}, 5L);
+		}, 1L);
 	}
 	
 	public void onDisable() {
@@ -145,46 +144,28 @@ public class PlacedGeneratorsManager {
 				
 				Logger.debugPlacedGeneratorsManager("PlacedGeneratorsManager: Loading generator: " + gl.toString());
 
-				Schedule schedule = Main.getDatabases().getDb().getSchedule(gl);
-				if (schedule == null) {
-					 schedule = Main.getDatabases().getDb().getSchedule(gl);
-					 if (schedule != null) {
-						 Logger.error("PlacedGeneratorsManager: Generator schedule loaded at second attempt: " + gl.toString());
-					 }
-				}
+				Schedule finalSchedule = Main.getDatabases().getDb().getSchedule(gl);
 				
-				Schedule finalSchedule = schedule;
+				Main.getPlacedGenerators().addLoaded(gl);
 				
-				CompletableFuture<Boolean> future = new CompletableFuture<Boolean>();
-				
-				Main.getInstance().getServer().getScheduler().runTask(Main.getInstance(), () -> {
-
-					Main.getPlacedGenerators().addLoaded(gl);
-					
-					if (finalSchedule != null) {
-						Logger.debugSchedulesManager("PlacedGeneratorsManager: Loading schedule " + gl.toString() + "| isNull: " + (finalSchedule == null));					
-						if (gl.getGenerator().isHologram())
-							Main.getHolograms().createRemainingTimeHologram(gl);
-						Main.getSchedules().getSchedules().put(gl, finalSchedule);
-					} else {
-						if (gl.isBroken()) {
-							gl.scheduleGeneratorRegeneration();
-							Logger.error("PlacedGeneratorsManager: Broken generator found on chunk load. Automatically fixing it: " + gl.toString());
-						}
+				if (finalSchedule != null) {
+					Logger.debugSchedulesManager("PlacedGeneratorsManager: Loading schedule " + gl.toString() + "| isNull: " + (finalSchedule == null));					
+					if (gl.getGenerator().isHologram())
+						Main.getHolograms().createRemainingTimeHologram(gl);
+					Main.getSchedules().getSchedules().put(gl, finalSchedule);
+				} else {
+					if (gl.isBroken()) {
+						gl.scheduleGeneratorRegeneration();
+						Logger.error("PlacedGeneratorsManager: Broken generator found on chunk load. Automatically fixing it: " + gl.toString());
 					}
-					
-					Main.getInstance().getServer().getPluginManager().callEvent(new GeneratorLoadEvent(gl));
-					future.complete(true);
-				});
-				
-				try {
-					future.get();
-				} catch (InterruptedException | ExecutionException e) {
-					Logger.error("PlacedGeneratorsManager: Load: " + gl.toString() + " CompleteFuture interrupted");
-					Logger.error(e);
 				}
+					
+				Main.getInstance().getServer().getScheduler().runTask(Main.getInstance(), () -> {
+					Main.getInstance().getServer().getPluginManager().callEvent(new GeneratorLoadEvent(gl));
+				});
+
 				
-				if (schedule != null) Main.getDatabases().getDb().removeSchedule(gl);
+				if (finalSchedule != null) Main.getDatabases().getDb().removeSchedule(gl);
 			}
 			
 			loadedGenerators.get(ci).setFullyLoaded(true);
@@ -218,6 +199,10 @@ public class PlacedGeneratorsManager {
 
 				Logger.debugPlacedGeneratorsManager("PlacedGeneratorsManager: Unloading generator: " + gl.toString());
 				
+				/*
+				 * Database
+				 */
+				
 				Main.getDatabases().getDb().saveGenerator(gl);
 				
 				Schedule schedule = Main.getSchedules().getSchedule(gl);
@@ -226,25 +211,18 @@ public class PlacedGeneratorsManager {
 					Main.getDatabases().getDb().addSchedule(gl, schedule);
 				}
 				
-				CompletableFuture<Boolean> future = new CompletableFuture<Boolean>();
-				
-				Main.getInstance().getServer().getScheduler().runTask(Main.getInstance(), () -> {
-					
-					removeLoaded(gl);
+				/*
+				 * Game
+				 */
 
-					if (schedule != null)
-						Main.getSchedules().remove(gl);
+				removeLoaded(gl);
+
+				if (schedule != null)
+					Main.getSchedules().remove(gl);
 					
+				Main.getInstance().getServer().getScheduler().runTask(Main.getInstance(), () -> {
 					Main.getInstance().getServer().getPluginManager().callEvent(new GeneratorUnloadEvent(gl));
-					future.complete(true);
 				});
-				
-				try {
-					future.get();
-				} catch (InterruptedException | ExecutionException e) {
-					Logger.error("PlacedGeneratorsManager: Unload: " + gl.toString() + " CompleteFuture interrupted");
-					Logger.error(e);
-				}
 				
 			}
 
@@ -396,7 +374,7 @@ public class PlacedGeneratorsManager {
 	public class ChunkGeneratorLocations {
 		
 		@Getter @Setter private boolean fullyLoaded = false;
-		private HashMap<Location, GeneratorLocation> locations = new HashMap<Location, GeneratorLocation>();
+		private ConcurrentHashMap<Location, GeneratorLocation> locations = new ConcurrentHashMap<Location, GeneratorLocation>();
 		
 		public void addLocation(GeneratorLocation gLocation) {
 			this.locations.put(gLocation.getLocation(), gLocation);
@@ -481,14 +459,10 @@ public class PlacedGeneratorsManager {
 			this.world = c.getWorld();
 		}
 		
-
-		
 		@Override
 		public String toString() {
 			return "ChunkInfo: "+world.getName()+", "+x+", "+z;
 		}
-
-
 
 		private PlacedGeneratorsManager getEnclosingInstance() {
 			return PlacedGeneratorsManager.this;
