@@ -130,7 +130,7 @@ public class SchedulesManager {
 			else
 				agLocation = Main.getPlacedGenerators().getLoaded(aLocation);
 			
-			if (schedules.containsKey(agLocation) && Main.getMultiVersion().getBlocksUtils().isAir(aLocation.getBlock()))
+			if (agLocation != null && schedules.containsKey(agLocation) && Main.getMultiVersion().getBlocksUtils().isAir(aLocation.getBlock()))
 				return schedules.get(agLocation).getTimeLeft();
 			else
 				return -1;

@@ -111,6 +111,9 @@ public class Main extends JavaPlugin {
     	if (databases != null && databases.getDb() != null)
     		databases.getDb().closeConnection();
     	
+    	if (dependencies != null)
+    		dependencies.onDisable();
+    	
     	this.getServer().getScheduler().cancelTasks(this);
     }
     

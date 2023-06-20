@@ -15,11 +15,14 @@ import me.kryniowesegryderiusz.kgenerators.dependencies.hooks.SlimefunHook;
 import me.kryniowesegryderiusz.kgenerators.dependencies.hooks.SuperiorSkyblock2Hook;
 import me.kryniowesegryderiusz.kgenerators.dependencies.hooks.VaultHook;
 import me.kryniowesegryderiusz.kgenerators.dependencies.hooks.WildStackerHook;
+import me.kryniowesegryderiusz.kgenerators.dependencies.objects.PlaceholdersAPIExpansion;
 import me.kryniowesegryderiusz.kgenerators.logger.Logger;
 
 public class DependenciesManager {
 	
 	@Getter private ArrayList<Dependency> dependencies = new ArrayList<Dependency>();
+	
+	private PlaceholdersAPIExpansion papiExpansion;
 	
 	public void standardDependenciesCheck() {
 		
@@ -103,6 +106,8 @@ public class DependenciesManager {
 
 		if (Bukkit.getPluginManager().isPluginEnabled("PlaceholderAPI")) {
 			Logger.debugPluginLoad("Dependencies: Detected plugin PlaceholderAPI. Hooking into it.");
+			papiExpansion = new PlaceholdersAPIExpansion();
+			papiExpansion.register();
 			dependencies.add(Dependency.PLACEHOLDERAPI);
 		}
 
@@ -139,5 +144,10 @@ public class DependenciesManager {
 	
 	public boolean isEnabled(Dependency dep) {
 		return this.dependencies.contains(dep);
+	}
+	
+	public void onDisable() {
+		if (this.papiExpansion != null)
+			this.papiExpansion.unregister();
 	}
 }
