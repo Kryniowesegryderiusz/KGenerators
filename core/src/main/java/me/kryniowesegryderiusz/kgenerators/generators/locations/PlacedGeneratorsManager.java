@@ -149,10 +149,10 @@ public class PlacedGeneratorsManager {
 				Main.getPlacedGenerators().addLoaded(gl);
 				
 				if (finalSchedule != null) {
-					Logger.debugSchedulesManager("PlacedGeneratorsManager: Loading schedule " + gl.toString() + "| isNull: " + (finalSchedule == null));					
+					Logger.debugSchedulesManager("PlacedGeneratorsManager: Loading schedule " + gl.toString() + "| isNull: " + (finalSchedule == null));	
+					Main.getSchedules().getSchedules().put(gl, finalSchedule);
 					if (gl.getGenerator().isHologram())
 						Main.getHolograms().createRemainingTimeHologram(gl);
-					Main.getSchedules().getSchedules().put(gl, finalSchedule);
 				} else {
 					if (gl.isBroken()) {
 						gl.scheduleGeneratorRegeneration();

@@ -70,10 +70,16 @@ public class HologramsManager {
 	}
 
 	public void createRemainingTimeHologram(GeneratorLocation gLocation) {
-		this.createHologram(gLocation, this.getHologramRemainingTimeLines(gLocation));
+		if (Bukkit.isPrimaryThread()) {
+			this.createHologram(gLocation, this.getHologramRemainingTimeLines(gLocation));
+		} else {
+			Main.getInstance().getServer().getScheduler().runTask(Main.getInstance(), () -> {
+				this.createHologram(gLocation, this.getHologramRemainingTimeLines(gLocation));
+			});
+		}
 	}
 
-	public void createHologram(GeneratorLocation gLocation, ArrayList<String> lines) {
+	private void createHologram(GeneratorLocation gLocation, ArrayList<String> lines) {
 		if (hologramProvider == null)
 			return;
 		if (gLocation == null)
