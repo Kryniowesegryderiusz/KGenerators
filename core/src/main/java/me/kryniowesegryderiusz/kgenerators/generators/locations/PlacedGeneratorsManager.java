@@ -153,6 +153,7 @@ public class PlacedGeneratorsManager {
 					Main.getSchedules().getSchedules().put(gl, finalSchedule);
 					if (gl.getGenerator().isHologram())
 						Main.getHolograms().createRemainingTimeHologram(gl);
+					Main.getDatabases().getDb().removeSchedule(gl);
 				} else {
 					if (gl.isBroken()) {
 						gl.scheduleGeneratorRegeneration();
@@ -164,8 +165,6 @@ public class PlacedGeneratorsManager {
 					Main.getInstance().getServer().getPluginManager().callEvent(new GeneratorLoadEvent(gl));
 				});
 
-				
-				if (finalSchedule != null) Main.getDatabases().getDb().removeSchedule(gl);
 			}
 			
 			loadedGenerators.get(ci).setFullyLoaded(true);

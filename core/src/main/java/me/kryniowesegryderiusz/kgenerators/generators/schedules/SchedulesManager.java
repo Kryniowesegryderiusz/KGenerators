@@ -41,8 +41,10 @@ public class SchedulesManager {
 				
 				for (GeneratorLocation gl : readyForRegeneration) {
 					remove(gl);
-					if (Main.getPlacedGenerators().isLoaded(gl))
+					if (Main.getPlacedGenerators().isLoaded(gl)) {
+						Logger.debugSchedulesManager("SchedulesManager: Regenerating " + gl.getId());
 						gl.regenerateGenerator();
+					}
 				}
 		    }
 		}, 0L, Main.getSettings().getGenerationCheckFrequency()*1L);
