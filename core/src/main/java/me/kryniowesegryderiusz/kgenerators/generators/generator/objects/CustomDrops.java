@@ -31,7 +31,7 @@ public class CustomDrops {
 
 	/**
 	 * @param generatedObjectConfig
-	 * @return null if object doesnt have custom drops configured
+	 * @return null if object doesn't have custom drops configured
 	 */
 
 	public boolean loadCustomDrops(Map<?, ?> generatedObjectConfig) {
@@ -86,61 +86,36 @@ public class CustomDrops {
 
 		if (!this.commands.isEmpty()) {
 			for (String cmd : this.commands) {
-				if(cmd.contains("<x")) {
-					double x = location.getX()+0.5;
-					if (cmd.contains("<x")) {
-						String[] split = cmd.split("<x");
-						String[] split2 = split[1].split(">");
-						if (cmd.contains("<x-")) {
-							split2[0] = split2[0].replace("-", "");
-							x = x - Double.parseDouble(split2[0]);
-							cmd = cmd.replace("<x-" + split2[0] + ">", "" + x);
-						} else if (cmd.contains("<x+")) {
-							split2[0] = split2[0].replace("+", "");
-							x = x + Double.parseDouble(split2[0]);
-							cmd = cmd.replace("<x+" + split2[0] + ">", "" + x);
-						} else
-							cmd = cmd.replace("<x>", "" + x);
-					}
-				}
-				if(cmd.contains("<y")){
-					double y = location.getY()+1;
-					if (cmd.contains("<y")) {
-						String[] split = cmd.split("<y");
-						String[] split2 = split[1].split(">");
-						if (cmd.contains("<y-")) {
-							split2[0] = split2[0].replace("-", "");
-							y = y - Double.parseDouble(split2[0]);
-							cmd = cmd.replace("<y-" + split2[0] + ">", "" + y);
-						} else if (cmd.contains("<y+")) {
-							split2[0] = split2[0].replace("+", "");
-							y = y + Double.parseDouble(split2[0]);
-							cmd = cmd.replace("<y+" + split2[0] + ">", "" + y);
-						} else
-							cmd = cmd.replace("<y>", "" + y);
-					}
-				}
-				if(cmd.contains("<z")){
-					double z = location.getZ()+0.5;
-					if (cmd.contains("<z")) {
-						String[] split = cmd.split("<z");
-						String[] split2 = split[1].split(">");
-						if (cmd.contains("<z-")) {
-							split2[0] = split2[0].replace("-", "");
-							z = z - Double.parseDouble(split2[0]);
-							cmd = cmd.replace("<z-" + split2[0] + ">", "" + z);
-						} else if (cmd.contains("<z+")) {
-							split2[0] = split2[0].replace("+", "");
-							z = z + Double.parseDouble(split2[0]);
-							cmd = cmd.replace("<z+" + split2[0] + ">", "" + z);
-						} else
-							cmd = cmd.replace("<z>", "" + z);
-					}
-				}
+				cmd = CoordControl(cmd, location, "<x");
+				cmd = CoordControl(cmd, location, "<y");
+				cmd = CoordControl(cmd, location, "<z");
 				Main.getInstance().getServer().dispatchCommand(Main.getInstance().getServer().getConsoleSender(), cmd.replace("<player>", p.getName()));
 			}
 		}
+	}
 
+	public String CoordControl(String cmd, Location loc, String coord){
+		double coordValue = getCoordVal(coord, loc);
+		if(cmd.contains(coord)) {
+			String[] split = cmd.split(coord);
+			String[] split2 = split[1].split(">");
+			if (cmd.contains(coord + "-")||cmd.contains(coord + "+"))
+				return cmd.replace((coord + split2[0] + ">"), String.valueOf(coordValue + Double.parseDouble(split2[0])));
+		}
+		return cmd.replace(coord + ">", String.valueOf(coordValue));
+	}
+
+	public double getCoordVal(String coord, Location loc) {
+		switch (coord) {
+			case "<x":
+				return (loc.getX()+0.5);
+			case "<y":
+				return (loc.getY()+1);
+			case "<z":
+				return (loc.getZ()+0.5);
+			default:
+				return 0;
+		}
 	}
 
 
