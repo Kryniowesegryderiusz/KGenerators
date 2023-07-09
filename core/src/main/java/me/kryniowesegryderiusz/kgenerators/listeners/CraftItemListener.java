@@ -21,7 +21,7 @@ public class CraftItemListener implements Listener {
 
 		try {
 
-			if (!(e.getWhoClicked() instanceof Player)) {
+			if (!(e.getWhoClicked() instanceof Player) || e.isCancelled()) {
 				return;
 			}
 
@@ -30,7 +30,7 @@ public class CraftItemListener implements Listener {
 			Generator resultGenerator = Main.getGenerators().get(e.getRecipe().getResult());
 			
 			/*
-			 * Check for trying craft something with generator
+			 * Check for crafting something with generator
 			 */
 			for (ItemStack i : e.getInventory().getMatrix()) {
 				if (i != null 
@@ -64,7 +64,7 @@ public class CraftItemListener implements Listener {
 		}
 	}
 
-	void closeInv(Player p) {
+	private void closeInv(Player p) {
 		Main.getInstance().getServer().getScheduler().scheduleSyncDelayedTask(Main.getInstance(), new Runnable() {
 			@Override
 			public void run() {

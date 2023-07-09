@@ -211,6 +211,11 @@ public class GeneratorLocation implements IGeneratorLocation {
 		Logger.info("Generator " + this.generator.getId() + " placed in " + this.toStringLocation()
 				+ " was transformed to " + generator.getId());
 		Main.getSchedules().remove(this);
+		
+		if (this.owner != null) {
+			this.getOwner().removeGeneratorFromPlayer(this.getGenerator());
+			this.getOwner().addGeneratorToPlayer(generator);
+		}
 
 		this.generator = generator;
 		if (this.getGenerator().getType() == GeneratorType.SINGLE) {
@@ -223,6 +228,7 @@ public class GeneratorLocation implements IGeneratorLocation {
 		Main.getDatabases().getDb().saveGenerator(this);
 
 		this.regenerateGenerator();
+		
 	}
 	
 	public int getLastGeneratedObjectId() {
