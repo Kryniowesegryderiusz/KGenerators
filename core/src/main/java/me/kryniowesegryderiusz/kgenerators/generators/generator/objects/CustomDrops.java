@@ -31,9 +31,9 @@ public class CustomDrops {
 
 	/**
 	 * @param generatedObjectConfig
-	 * @return null if object doesnt have custom drops configured
+	 * @return null if object doesn't have custom drops configured
 	 */
-	
+
 	public boolean loadCustomDrops(Map<?, ?> generatedObjectConfig) {
 		if (generatedObjectConfig.containsKey("custom-drops")) {
 
@@ -53,7 +53,7 @@ public class CustomDrops {
 
 			if (customDropsConfig.containsKey("money"))
 				this.money = (double) customDropsConfig.get("money");
-			
+
 			if (customDropsConfig.containsKey("commands")) {
 				this.commands = (ArrayList<String>) customDropsConfig.get("commands");
 			}
@@ -64,10 +64,10 @@ public class CustomDrops {
 	}
 
 	private void doCustomDrops(Player p, Location location) {
-		
+
 		if (this.item != null) {
 			ItemStack is = this.item.clone();
-			
+
 			if (this.itemFortune) {
 				int level = is.getEnchantmentLevel(XEnchantment.LOOT_BONUS_BLOCKS.getEnchant());
 				if (level > 0) {
@@ -75,29 +75,56 @@ public class CustomDrops {
 					is.setAmount(randomNum);
 				}
 			}
-			
+
 			PlayerUtils.dropBlockToInventory(p, location, is);
 
 		}
-		
+
 		if (this.money > 0.0 && Main.getDependencies().isEnabled(Dependency.VAULT_ECONOMY)) {
 			VaultHook.giveMoney(p, money);
 		}
-		
+
 		if (!this.commands.isEmpty()) {
 			for (String cmd : this.commands) {
+				cmd = CoordControl(cmd, location, "<x");
+				cmd = CoordControl(cmd, location, "<y");
+				cmd = CoordControl(cmd, location, "<z");
 				Main.getInstance().getServer().dispatchCommand(Main.getInstance().getServer().getConsoleSender(), cmd.replace("<player>", p.getName()));
 			}
 		}
-
 	}
 
+	public String CoordControl(String cmd, Location loc, String coord){
+		double coordValue = getCoordVal(coord, loc);
+		if(cmd.contains(coord)) {
+			String[] split = cmd.split(coord);
+			String[] split2 = split[1].split(">");
+			if (cmd.contains(coord + "-")||cmd.contains(coord + "+"))
+				return cmd.replace((coord + split2[0] + ">"), String.valueOf(coordValue + Double.parseDouble(split2[0])));
+		}
+		return cmd.replace(coord + ">", String.valueOf(coordValue));
+	}
+
+	public double getCoordVal(String coord, Location loc) {
+		switch (coord) {
+			case "<x":
+				return (loc.getX()+0.5);
+			case "<y":
+				return (loc.getY()+1);
+			case "<z":
+				return (loc.getZ()+0.5);
+			default:
+				return 0;
+		}
+	}
+
+
 	public void doCustomDrops(BlockBreakEvent e) {
-		
+
 		/*
 		 * Exp (event dependent) 
 		 */
-		
+
 		if (this.removeDefaults)
 			e.setExpToDrop(0);
 		if (this.exp > 0)
@@ -106,11 +133,11 @@ public class CustomDrops {
 			e.getPlayer().giveExp(e.getExpToDrop());
 			e.setExpToDrop(0);
 		}
-			
+
 		/*
 		 * Version dependent
 		 */
-		
+
 		if (this.removeDefaults) {
 			if (Main.getMultiVersion().isHigher(11)) e.setDropItems(false);
 			else {
@@ -118,17 +145,17 @@ public class CustomDrops {
 				e.setCancelled(true);
 			}
 		}
-		
+
 		/*
 		 * Other
 		 */
-		
+
 		this.doCustomDrops(e.getPlayer(), e.getBlock().getLocation());
 	}
-	
+
 	public String toString() {
 		String s = "RemoveDefaults: " + this.removeDefaults;
-		
+
 		if (this.item != null) s += ", Item: " + this.item.toString() + " ItemFortune: " + this.itemFortune;
 		if (this.money > 0) s += ", Money:" + this.money;
 		if (this.exp > 0) s += ", Exp: " + this.exp;
