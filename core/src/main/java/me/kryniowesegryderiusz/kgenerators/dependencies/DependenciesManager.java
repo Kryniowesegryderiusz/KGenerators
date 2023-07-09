@@ -19,15 +19,16 @@ import me.kryniowesegryderiusz.kgenerators.dependencies.objects.PlaceholdersAPIE
 import me.kryniowesegryderiusz.kgenerators.logger.Logger;
 
 public class DependenciesManager {
-	
-	@Getter private ArrayList<Dependency> dependencies = new ArrayList<Dependency>();
-	
+
+	@Getter
+	private ArrayList<Dependency> dependencies = new ArrayList<Dependency>();
+
 	private PlaceholdersAPIExpansion papiExpansion;
-	
+
 	public void standardDependenciesCheck() {
-		
+
 		Logger.debugPluginLoad("Dependencies: Setting up dependencies");
-    	
+
 		/*
 		 * Delayed checks
 		 */
@@ -42,20 +43,16 @@ public class DependenciesManager {
 			dependencies.add(Dependency.ECO_ITEMS);
 		}
 
-		if (VaultHook.setupEconomy())
-		{
+		if (VaultHook.setupEconomy()) {
 			Logger.debugPluginLoad("Dependencies: Detected Vault economy. Hooked into it.");
 			dependencies.add(Dependency.VAULT_ECONOMY);
-		}
-		else
+		} else
 			Logger.warn("Dependencies: Vault economy was not found! Some features could not work!");
 
-		if (VaultHook.setupPermissions())
-		{
+		if (VaultHook.setupPermissions()) {
 			Logger.debugPluginLoad("Dependencies: Detected Vault permissions. Hooked into it.");
 			dependencies.add(Dependency.VAULT_PERMISSIONS);
-		}
-		else
+		} else
 			Logger.warn("Dependencies: Vault permissions was not found! Some features could not work!");
 
 		if (Bukkit.getPluginManager().isPluginEnabled("BentoBox")) {
@@ -110,15 +107,20 @@ public class DependenciesManager {
 			papiExpansion.register();
 			dependencies.add(Dependency.PLACEHOLDERAPI);
 		}
-
-		if (Main.getMultiVersion().getWorldGuardUtils() != null && Main.getMultiVersion().getWorldGuardUtils().isWorldGuardHooked()) {
-				Logger.debugPluginLoad("Dependencies: Detected plugin WorldGuard. Hooked into it.");
-				dependencies.add(Dependency.WORLD_GUARD);
+		
+		if (Bukkit.getPluginManager().isPluginEnabled("MMOItems")) {
+			Logger.debugPluginLoad("Dependencies: Detected plugin MMOItems. Hooking into it.");
+			dependencies.add(Dependency.MMOITEMS);
 		}
-		else if (Main.getMultiVersion().getWorldGuardUtils() != null)
-		{
+
+		if (Main.getMultiVersion().getWorldGuardUtils() != null
+				&& Main.getMultiVersion().getWorldGuardUtils().isWorldGuardHooked()) {
+			Logger.debugPluginLoad("Dependencies: Detected plugin WorldGuard. Hooked into it.");
+			dependencies.add(Dependency.WORLD_GUARD);
+		} else if (Main.getMultiVersion().getWorldGuardUtils() != null) {
 			if (Bukkit.getPluginManager().isPluginEnabled("WorldGuard")) {
-				Logger.error("Dependencies: Detected plugin WorldGuard, but couldnt hook into it! Search console log above for errors!");
+				Logger.error(
+						"Dependencies: Detected plugin WorldGuard, but couldnt hook into it! Search console log above for errors!");
 			}
 		}
 
@@ -133,7 +135,7 @@ public class DependenciesManager {
 			dependencies.add(Dependency.CMI_HOLOGRAMS);
 		}
 	}
-	
+
 	public void onEnableDependenciesCheck() {
 		if (Bukkit.getPluginManager().getPlugin("SuperiorSkyblock2") != null) {
 			Logger.info("Dependencies: Detected plugin SuperiorSkyblock2. Hooking into it.");
@@ -141,11 +143,11 @@ public class DependenciesManager {
 			SuperiorSkyblock2Hook.setup();
 		}
 	}
-	
+
 	public boolean isEnabled(Dependency dep) {
 		return this.dependencies.contains(dep);
 	}
-	
+
 	public void onDisable() {
 		if (this.papiExpansion != null)
 			this.papiExpansion.unregister();

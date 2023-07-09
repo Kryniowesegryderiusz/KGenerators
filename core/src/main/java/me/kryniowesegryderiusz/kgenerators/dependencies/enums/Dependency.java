@@ -20,4 +20,5 @@ public enum Dependency
 	WILDSTACKER,
 	CMI_HOLOGRAMS,
 	PLACEHOLDERAPI,
+	MMOITEMS,
 }
