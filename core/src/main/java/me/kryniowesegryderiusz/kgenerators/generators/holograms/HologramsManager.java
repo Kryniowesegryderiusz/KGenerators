@@ -26,7 +26,7 @@ public class HologramsManager {
 	@Getter
 	private IHologramProvider hologramProvider;
 
-	private ArrayList<GeneratorLocation> holograms = new ArrayList<>();
+	private ArrayList<GeneratorLocation> holograms = new ArrayList<GeneratorLocation>();
 
 	public HologramsManager() {
 
@@ -62,7 +62,9 @@ public class HologramsManager {
 						hologramProvider.updateHologram(gLocation,
 								Main.getHolograms().getHologramRemainingTimeLines(gLocation));
 					} else {
-						iter.remove();
+						try {
+							iter.remove();
+						} finally {}
 					}
 				}
 			}

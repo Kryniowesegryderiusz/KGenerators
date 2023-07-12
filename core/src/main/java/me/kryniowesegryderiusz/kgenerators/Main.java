@@ -99,13 +99,13 @@ public class Main extends JavaPlugin {
     	
     	instance.getServer().getPluginManager().callEvent(new PluginDisabledEvent());
     	
-    	Logger.info("Saving " + Main.getPlacedGenerators().getLoadedGeneratorsAmount() + " running generators.");
-    	if (placedGenerators != null)
-    		placedGenerators.onDisable();
-
     	Logger.info("Safely closing menus.");
     	if (menus != null)
     		menus.closeAll();
+    	
+    	Logger.info("Saving " + Main.getPlacedGenerators().getLoadedGeneratorsAmount() + " running generators.");
+    	if (placedGenerators != null)
+    		placedGenerators.onDisable();
     	
     	Logger.info("Safely shutting down database.");
     	if (databases != null && databases.getDb() != null)

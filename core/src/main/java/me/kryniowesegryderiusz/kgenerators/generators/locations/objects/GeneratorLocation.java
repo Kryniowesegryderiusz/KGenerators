@@ -7,6 +7,7 @@ import javax.annotation.Nullable;
 import org.bukkit.Location;
 import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Player;
+import org.bukkit.inventory.ItemStack;
 
 import lombok.Getter;
 import lombok.Setter;
@@ -16,6 +17,7 @@ import me.kryniowesegryderiusz.kgenerators.api.objects.AbstractGeneratedObject;
 import me.kryniowesegryderiusz.kgenerators.dependencies.hooks.BentoBoxHook;
 import me.kryniowesegryderiusz.kgenerators.dependencies.hooks.SuperiorSkyblock2Hook;
 import me.kryniowesegryderiusz.kgenerators.generators.generator.enums.GeneratorType;
+import me.kryniowesegryderiusz.kgenerators.generators.generator.objects.GeneratedBlock;
 import me.kryniowesegryderiusz.kgenerators.generators.generator.objects.Generator;
 import me.kryniowesegryderiusz.kgenerators.generators.locations.PlacedGeneratorsManager.ChunkInfo;
 import me.kryniowesegryderiusz.kgenerators.generators.locations.handlers.GeneratorLocationActionHandler;
@@ -143,8 +145,20 @@ public class GeneratorLocation implements IGeneratorLocation {
 			return false;
 
 		if (!Main.getSchedules().isScheduled(this)) {
-			if (Main.getMultiVersion().getBlocksUtils().isAir(this.getGeneratedBlockLocation().getBlock()))
+			if (Main.getMultiVersion().getBlocksUtils().isAir(this.getGeneratedBlockLocation().getBlock())) {
 				return true;
+			} else {
+				if (this.getGenerator().getPlaceholder() != null) {
+					ItemStack itemBlock = Main.getMultiVersion().getBlocksUtils().getItemStackByBlock(this.getGeneratedBlockLocation().getBlock());
+					if (itemBlock.isSimilar(this.getGenerator().getPlaceholder().getItem())) {
+						for (AbstractGeneratedObject ago : this.getGenerator().getGeneratedObjects()) {
+							if (ago.isBlockSimilar(itemBlock))
+								return false;
+						}
+						return true;
+					}
+				}
+			}
 		}
 		return false;
 	}

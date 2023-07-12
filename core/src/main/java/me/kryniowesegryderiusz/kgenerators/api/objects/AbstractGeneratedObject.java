@@ -108,10 +108,19 @@ public abstract class AbstractGeneratedObject {
 	
 	
 	/**
-	 * Determines, wheather generator is able to regenerate
+	 * Determines, whether generator is able to regenerate
 	 * @return true if GeneratedObject is fully collected
 	 */
 	public boolean isReady() {
 		return true;
+	}
+	
+	/**
+	 * Determines, whether some block is similar to this generated object
+	 * @param itemStack
+	 * @return
+	 */
+	public boolean isBlockSimilar(ItemStack itemStackBlock) {
+		return false;
 	}
 }

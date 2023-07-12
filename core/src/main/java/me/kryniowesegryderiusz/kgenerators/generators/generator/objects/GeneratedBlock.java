@@ -57,4 +57,9 @@ public class GeneratedBlock extends AbstractGeneratedObject {
 	protected String toStringSpecific() {
 		return this.getCustomBlockData().toString();
 	}
+	
+	@Override
+	public boolean isBlockSimilar(ItemStack itemStackBlock) {
+		return this.customBlockData.isSimilar(itemStackBlock);
+	}
 }

@@ -244,6 +244,10 @@ public class Generator {
 	public Set<Entry<AbstractGeneratedObject, Double>> getChancesEntryset() {
 		return this.chances.entrySet();
 	}
+	
+	public Set<AbstractGeneratedObject> getGeneratedObjects() {
+		return this.chances.keySet();
+	}
 
 	public AbstractGeneratedObject drawGeneratedObject() {
 		RandomSelector<AbstractGeneratedObject> selector = RandomSelector.weighted(this.chances.keySet(),
