@@ -15,6 +15,7 @@ import lombok.Getter;
 import me.kryniowesegryderiusz.kgenerators.Main;
 import me.kryniowesegryderiusz.kgenerators.api.interfaces.IGeneratorLocation;
 import me.kryniowesegryderiusz.kgenerators.api.objects.AbstractGeneratedObject;
+import me.kryniowesegryderiusz.kgenerators.logger.Logger;
 import me.kryniowesegryderiusz.kgenerators.utils.FilesUtils;
 
 public class GeneratedItem extends AbstractGeneratedObject implements Listener {
@@ -52,8 +53,13 @@ public class GeneratedItem extends AbstractGeneratedObject implements Listener {
 			this.disableGravity = (boolean) generatedObjectConfig.get("disable-gravity");
 
 
-		this.item = FilesUtils.loadItemStack((Map<?, ?>) generatedObjectConfig, "item",
-				"Generators file: GeneratedItem", false);
+		if (generatedObjectConfig.containsKey("item")) {
+			this.item = FilesUtils.loadItemStack((Map<?, ?>) generatedObjectConfig, "item",
+					"Generators file: GeneratedItem", false);
+		} else {
+			Logger.error("Generators file: Generator type indicates item, but item configuration wasnt found.");
+			return false;
+		}
 
 		if (this.item != null) {
 			if (this.waitForPickUp)

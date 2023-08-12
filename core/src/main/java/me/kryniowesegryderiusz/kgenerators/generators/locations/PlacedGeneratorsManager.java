@@ -157,7 +157,7 @@ public class PlacedGeneratorsManager {
 				} else {
 					if (gl.isBroken()) {
 						gl.scheduleGeneratorRegeneration();
-						Logger.error("PlacedGeneratorsManager: Broken generator found on chunk load. Automatically fixing it: " + gl.toString());
+						Logger.debug("PlacedGeneratorsManager: Broken generator found on chunk load. Automatically fixing it: " + gl.toString());
 					}
 				}
 					
