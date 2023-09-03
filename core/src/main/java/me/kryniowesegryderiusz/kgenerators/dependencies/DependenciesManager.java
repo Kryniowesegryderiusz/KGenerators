@@ -10,6 +10,7 @@ import me.kryniowesegryderiusz.kgenerators.dependencies.enums.Dependency;
 import me.kryniowesegryderiusz.kgenerators.dependencies.hooks.BentoBoxHook;
 import me.kryniowesegryderiusz.kgenerators.dependencies.hooks.IridiumSkyblockHook;
 import me.kryniowesegryderiusz.kgenerators.dependencies.hooks.JetsMinionsHook;
+import me.kryniowesegryderiusz.kgenerators.dependencies.hooks.LitMinionsHook;
 import me.kryniowesegryderiusz.kgenerators.dependencies.hooks.MinionsHook;
 import me.kryniowesegryderiusz.kgenerators.dependencies.hooks.SlimefunHook;
 import me.kryniowesegryderiusz.kgenerators.dependencies.hooks.SuperiorSkyblock2Hook;
@@ -71,6 +72,12 @@ public class DependenciesManager {
 			Logger.debugPluginLoad("Dependencies: Detected plugin JetsMinions. Hooking into it.");
 			Main.getInstance().getServer().getPluginManager().registerEvents(new JetsMinionsHook(), Main.getInstance());
 			dependencies.add(Dependency.JETS_MINIONS);
+		}
+		
+		if (Bukkit.getPluginManager().isPluginEnabled("LitMinions")) {
+			Logger.debugPluginLoad("Dependencies: Detected plugin LitMinions. Hooking into it.");
+			Main.getInstance().getServer().getPluginManager().registerEvents(new LitMinionsHook(), Main.getInstance());
+			dependencies.add(Dependency.LIT_MINIONS);
 		}
 
 		if (Bukkit.getPluginManager().isPluginEnabled("Minions-Revamped")) {

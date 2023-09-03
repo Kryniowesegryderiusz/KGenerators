@@ -21,4 +21,5 @@ public enum Dependency
 	CMI_HOLOGRAMS,
 	PLACEHOLDERAPI,
 	MMOITEMS,
+	LIT_MINIONS,
 }
