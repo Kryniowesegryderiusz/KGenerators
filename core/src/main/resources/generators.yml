@@ -52,6 +52,10 @@ example_generator:
         money: 50.0
         commands:
         - "say <player> digged magic stone and got diamond, 100exp and 50$!"
+        #Use generation coordinates
+        - "summon minecraft:item <x> <y> <z> {Item:{id:\"minecraft:emerald\",Count:1b}}"
+        #Use altered generation coordinates
+        - "summon minecraft:item <x+1> <y+5> <z-1> {Item:{id:\"minecraft:emerald\",Count:1b}}"
       #Should physics be applied to this block?
       physics: false
     #type: item - generator will spawn simple item
