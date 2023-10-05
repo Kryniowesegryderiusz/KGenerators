@@ -40,9 +40,17 @@ public abstract class AbstractGeneratedObject {
 	public boolean load(Map<?, ?> generatedObjectConfig) {
 		
 		try {
-			if (generatedObjectConfig.get("chance") != null)
-				this.chance = (Double) generatedObjectConfig.get("chance");
-			else {
+			if (generatedObjectConfig.get("chance") != null) {
+				Object obj = generatedObjectConfig.get("chance");
+				if (obj instanceof Double)
+					this.chance = (Double) obj;
+				else if (obj instanceof Integer)
+					this.chance = (double) ((Integer) obj);
+				else {
+					Logger.error("Generators file: Cant load chance (" + obj + ") for one generation! Using 0%");
+					return false;
+				}
+			} else {
 				Logger.error("Generators file: Cant load chance for one generation! Using 0%");
 				return false;
 			}
