@@ -30,7 +30,7 @@ public class PlayerUtils {
 	public static void dropToInventory(Player p, Location alternativeLocation, ArrayList<ItemStack> items) {
 		if (p != null) {
 			for (ItemStack item : items) {
-		    	HashMap<Integer, ItemStack> left = p.getInventory().addItem(item);
+		    	HashMap<Integer, ItemStack> left = p.getInventory().addItem(item.clone());
 				if (!left.isEmpty()) {
 					for (ItemStack i : left.values()) {
 						p.getLocation().getWorld().dropItem(p.getLocation(), i);
