@@ -75,10 +75,13 @@ public class GeneratorLocationPlaceHandler {
     	
     	Main.getMultiVersion().getBlocksUtils().setBlock(gLocation.getGeneratedBlockLocation(), XMaterial.AIR);
     	
+    	/*
     	if (gLocation.getGenerator().isGenerateImmediatelyAfterPlace())
     		gLocation.regenerateGenerator();
     	else
-    		Main.getSchedules().schedule(gLocation, true);
+    	*/
+    	
+    	Main.getSchedules().schedule(gLocation, true);
     	
     	Main.getInstance().getServer().getPluginManager().callEvent(new PostGeneratorPlaceEvent(gLocation, sender));
     	

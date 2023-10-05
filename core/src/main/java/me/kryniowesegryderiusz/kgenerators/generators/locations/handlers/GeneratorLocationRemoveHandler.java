@@ -6,8 +6,11 @@ import org.bukkit.Location;
 import org.bukkit.entity.Player;
 import org.bukkit.inventory.ItemStack;
 
+import dev.lone.itemsadder.api.CustomBlock;
+import dev.lone.itemsadder.api.ItemsAdder;
 import me.kryniowesegryderiusz.kgenerators.Main;
 import me.kryniowesegryderiusz.kgenerators.api.events.GeneratorRemoveEvent;
+import me.kryniowesegryderiusz.kgenerators.dependencies.enums.Dependency;
 import me.kryniowesegryderiusz.kgenerators.dependencies.hooks.ItemsAdderHook;
 import me.kryniowesegryderiusz.kgenerators.generators.generator.objects.Generator;
 import me.kryniowesegryderiusz.kgenerators.generators.locations.objects.GeneratorLocation;
@@ -35,6 +38,12 @@ public class GeneratorLocationRemoveHandler {
 		if (drop) {
 			PlayerUtils.dropToInventory(Main.getSettings().isPickUpToEq() ? toWho : null, location, generatorItem);
 				
+		}
+		
+		if (Main.getDependencies().isEnabled(Dependency.ITEMS_ADDER)) {
+			CustomBlock cb = CustomBlock.byAlreadyPlaced(gLocation.getGeneratedBlockLocation().getBlock());
+			if (cb != null)
+				cb.remove();
 		}
 		
 		Main.getMultiVersion().getBlocksUtils().setBlock(location, XMaterial.AIR);
