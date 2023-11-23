@@ -70,12 +70,13 @@ public class Logger {
 		log(object, LogType.ERROR);
 	}
 
-	public static void warn(Object object) {
-		log(object, LogType.WARNING);
-	}
-
 	public static void info(Object object) {
 		log(object, LogType.INFO);
+	}
+	
+	public static void warn(Object object) {
+		if (Main.getSettings().isWarnings())
+			log(object, LogType.WARNING);
 	}
 
 	public static void debugPlayer(Object object) {
@@ -102,7 +103,6 @@ public class Logger {
 		if (Main.getSettings().isMultiVersionManagerDebug())
 			log(object, LogType.DEBUG);
 	}
-	
 
 	public static void debug(Object object) {
 		log(object, LogType.DEBUG);

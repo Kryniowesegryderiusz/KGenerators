@@ -109,6 +109,9 @@ public class Settings {
 	@Getter
 	private boolean multiVersionManagerDebug = false;
 	
+	@Getter
+	private boolean warnings = true;
+	
 	@SuppressWarnings("unchecked")
 	public Settings() {
 		Logger.info("Settings: Loading settings");
@@ -201,6 +204,8 @@ public class Settings {
 			this.schedulesManagerDebug = config.getBoolean("debug.schedules");
 		if (config.contains("debug.multi-version"))
 			this.multiVersionManagerDebug = config.getBoolean("debug.multi-version");
+		if (config.contains("debug.warnings"))
+			this.warnings = config.getBoolean("debug.warnings");
 		
 		this.generatorItemMatcher.load(config);
 

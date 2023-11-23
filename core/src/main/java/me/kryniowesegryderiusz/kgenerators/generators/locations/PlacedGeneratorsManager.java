@@ -127,7 +127,7 @@ public class PlacedGeneratorsManager {
 			long timeTaken = System.currentTimeMillis()-taskScheduleTime;
 			Logger.debugPlacedGeneratorsManager("PlacedGeneratorsManager: Loading chunk: " + ci.toString() + " (After " + timeTaken + "ms)");
 			if (timeTaken > 500) {
-				Logger.debug("PlacedGeneratorsManager: Waiting for chunk load " + ci.toString() + " took more than 500ms! ("+timeTaken+"ms) Is the server overloaded?");
+				Logger.debugPlacedGeneratorsManager("PlacedGeneratorsManager: Waiting for chunk load " + ci.toString() + " took more than 500ms! ("+timeTaken+"ms) Is the server overloaded?");
 			}
 			
 			ArrayList<GeneratorLocation> generators = Main.getDatabases().getDb().getGenerators(ci);
@@ -157,7 +157,7 @@ public class PlacedGeneratorsManager {
 				} else {
 					if (gl.isBroken()) {
 						gl.scheduleGeneratorRegeneration();
-						Logger.debug("PlacedGeneratorsManager: Broken generator found on chunk load. Automatically fixing it: " + gl.toString());
+						Logger.debugPlacedGeneratorsManager("PlacedGeneratorsManager: Broken generator found on chunk load. Automatically fixing it: " + gl.toString());
 					}
 				}
 					
@@ -189,7 +189,7 @@ public class PlacedGeneratorsManager {
 			long timeTaken = System.currentTimeMillis()-taskScheduleTime;
 			Logger.debugPlacedGeneratorsManager("PlacedGeneratorsManager: Unloading chunk: " + ci.toString() + " (After " + timeTaken + "ms)");
 			if (timeTaken > 500) {
-				Logger.debug("PlacedGeneratorsManager: Waiting for chunk unload " + ci.toString() + " took more than 500ms! ("+timeTaken+"ms) Is the server overloaded?");
+				Logger.debugPlacedGeneratorsManager("PlacedGeneratorsManager: Waiting for chunk unload " + ci.toString() + " took more than 500ms! ("+timeTaken+"ms) Is the server overloaded?");
 			}
 			
 			ArrayList<GeneratorLocation> generatorsToUnload = getLoaded(ci);

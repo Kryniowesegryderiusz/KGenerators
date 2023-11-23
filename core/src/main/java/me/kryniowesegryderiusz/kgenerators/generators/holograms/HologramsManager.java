@@ -48,11 +48,12 @@ public class HologramsManager {
 							+ " has enabled holograms, but hologram provider was not found! Holograms wont work!");
 			}
 		}
+		
+		if (hologramProvider == null)
+			return;
 
 		Bukkit.getScheduler().scheduleSyncRepeatingTask(Main.getInstance(), new Runnable() {
 			public void run() {
-				if (hologramProvider == null)
-					return;
 
 				Iterator<GeneratorLocation> iter = holograms.iterator();
 				while (iter.hasNext()) {

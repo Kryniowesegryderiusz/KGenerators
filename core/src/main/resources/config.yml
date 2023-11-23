@@ -111,6 +111,8 @@ intervals:
 
 #Debug related options. Support could be not provided if debug messages are not recorded
 debug:
+  #All warnings that are displayed in console.
+  warnings: true
   #Debug related to plugin loading configuration
   plugin-load: true
   #Debug related to players actions like picking up, placing, upgrading generators
