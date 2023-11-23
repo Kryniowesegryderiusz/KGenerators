@@ -21,6 +21,8 @@ public enum Message implements IMessage {
 	
 	GENERATORS_TIME_LEFT_OUTPUT("generators.timeleft.output", "&aThis generator will be regenerated in &e<time>"),
 	
+	GENERATORS_ACTION_CANT_HERE("generators.action.cant-here", "&cYou cant interact with generator here!"),
+	
 	GENERATORS_PICK_UP_SUCCESFULL("generators.pick-up.successful", "&e<generator> &apicked up"),
 	GENERATORS_PICK_UP_CANT_HERE("generators.pick-up.cant-here", "&cYou cant pick up generator here!"),
 	GENERATORS_PICK_UP_NO_PERMISSION("generators.pick-up.no-permission", "&cYou dont have permission &8(&7<permission>&8)&c to pick up that type generator"),

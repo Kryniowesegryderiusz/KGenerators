@@ -6,6 +6,8 @@ import java.util.Set;
 import org.bukkit.entity.Player;
 
 import me.kryniowesegryderiusz.kgenerators.Main;
+import me.kryniowesegryderiusz.kgenerators.dependencies.enums.WGFlag;
+import me.kryniowesegryderiusz.kgenerators.dependencies.hooks.WorldGuardHook;
 import me.kryniowesegryderiusz.kgenerators.generators.generator.objects.GeneratorAction;
 import me.kryniowesegryderiusz.kgenerators.generators.locations.handlers.enums.ActionType;
 import me.kryniowesegryderiusz.kgenerators.generators.locations.handlers.enums.InteractionType;
@@ -19,6 +21,12 @@ public class GeneratorLocationActionHandler {
 	 * @return true if event should be cancelled
 	 */
 	public boolean handle(GeneratorLocation gLocation, InteractionType usedActionType, Player player) {
+		
+		if (!WorldGuardHook.isPlayerAllowedToInteract(player, gLocation.getLocation())) {
+			Lang.getMessageStorage().send(player, Message.GENERATORS_ACTION_CANT_HERE);
+			return true;
+		}
+		
 		Set<Entry<ActionType, GeneratorAction>> entryset = Main.getSettings().getActions().getEntrySet();
 
 		if (gLocation.getGenerator().getActions() != null)

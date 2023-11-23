@@ -26,5 +26,12 @@ public class WorldGuardHook {
 					|| Main.getMultiVersion().getWorldGuardUtils().isWorldGuardFlagAllow(location, player, WGFlag.PICK_UP);
 		} else return true;
 	}
+	
+	public static boolean isPlayerAllowedToInteract(Player player, Location location) {
+		if (Main.getDependencies().isEnabled(Dependency.WORLD_GUARD)) {
+			return player.hasPermission("kgenerators.bypass.worldguard") 
+					|| Main.getMultiVersion().getWorldGuardUtils().isWorldGuardFlagAllow(location, player, WGFlag.INTERACT);
+		} else return true;
+	}
 
 }
