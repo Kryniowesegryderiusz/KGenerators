@@ -22,4 +22,5 @@ public enum Dependency
 	PLACEHOLDERAPI,
 	MMOITEMS,
 	LIT_MINIONS,
+	PLOT_SQUARED,
 }

@@ -119,6 +119,11 @@ public class DependenciesManager {
 			Logger.debugPluginLoad("Dependencies: Detected plugin MMOItems. Hooking into it.");
 			dependencies.add(Dependency.MMOITEMS);
 		}
+		
+		if (Bukkit.getPluginManager().isPluginEnabled("PlotSquared")) {
+			Logger.debugPluginLoad("Dependencies: Detected plugin PlotSquared. Hooking into it.");
+			dependencies.add(Dependency.PLOT_SQUARED);
+		}
 
 		if (Main.getMultiVersion().getWorldGuardUtils() != null
 				&& Main.getMultiVersion().getWorldGuardUtils().isWorldGuardHooked()) {

@@ -4,6 +4,7 @@ import org.bukkit.entity.Player;
 
 import me.kryniowesegryderiusz.kgenerators.Main;
 import me.kryniowesegryderiusz.kgenerators.dependencies.hooks.BentoBoxHook;
+import me.kryniowesegryderiusz.kgenerators.dependencies.hooks.PlotSquaredHook;
 import me.kryniowesegryderiusz.kgenerators.dependencies.hooks.SuperiorSkyblock2Hook;
 import me.kryniowesegryderiusz.kgenerators.dependencies.hooks.WorldGuardHook;
 import me.kryniowesegryderiusz.kgenerators.generators.generator.objects.Generator;
@@ -40,7 +41,8 @@ public class GeneratorLocationPickUpHandler {
 		
 		if (!WorldGuardHook.isPlayerAllowedToPickUp(p, gLocation.getLocation())
 				|| !BentoBoxHook.isAllowed(p, BentoBoxHook.Type.PICKUP_FLAG, gLocation.getLocation()) 
-				|| !SuperiorSkyblock2Hook.isAllowed(p, SuperiorSkyblock2Hook.Type.PICKUP_FLAG, gLocation.getLocation())) {
+				|| !SuperiorSkyblock2Hook.isAllowed(p, SuperiorSkyblock2Hook.Type.PICKUP_FLAG, gLocation.getLocation())
+				|| !PlotSquaredHook.isPlayerAllowedToPickUp(p, gLocation.getLocation())) {
 			Lang.getMessageStorage().send(p, Message.GENERATORS_PICK_UP_CANT_HERE);
 			return;
 		}

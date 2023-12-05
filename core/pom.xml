@@ -65,8 +65,26 @@
 			<url>https://nexus.phoenixdevt.fr/repository/maven-public/</url>
 		</repository>
 
+		<repository>
+			<id>papermc</id>
+			<url>https://repo.papermc.io/repository/maven-public/</url>
+		</repository>
+
 
 	</repositories>
+
+	<dependencyManagement>
+		<dependencies>
+			<!-- PltoSquared -->
+			<dependency>
+				<groupId>com.intellectualsites.bom</groupId>
+				<artifactId>bom-newest</artifactId>
+				<version>1.39</version>
+				<scope>import</scope>
+				<type>pom</type>
+			</dependency>
+		</dependencies>
+	</dependencyManagement>
 
 	<dependencies>
 
@@ -330,6 +348,25 @@
 			<groupId>com.github.WaterArchery</groupId>
 			<artifactId>LitMinionsAPI</artifactId>
 			<version>2.34</version>
+		</dependency>
+
+		<!-- PlotSquared -->
+		<dependency>
+			<groupId>com.intellectualsites.plotsquared</groupId>
+			<artifactId>plotsquared-core</artifactId>
+			<scope>provided</scope>
+		</dependency>
+
+		<dependency>
+			<groupId>com.intellectualsites.plotsquared</groupId>
+			<artifactId>plotsquared-bukkit</artifactId>
+			<scope>provided</scope>
+			<exclusions>
+				<exclusion>
+					<artifactId>plotsquared-core</artifactId>
+					<groupId>*</groupId>
+				</exclusion>
+			</exclusions>
 		</dependency>
 
 	</dependencies>
