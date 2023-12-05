@@ -34,7 +34,7 @@ public class PlotSquaredHook {
 		if (p.hasPermission("kgenerators.bypass.plotsquared"))
 			return true;   
         
-        Location pl = Location.at(l.getWorld().getName(), l.getBlockX(), l.getBlockX(), l.getBlockX());
+        Location pl = Location.at(l.getWorld().getName(), l.getBlockX(), l.getBlockY(), l.getBlockZ());
         
         if (!pl.isPlotArea())
         	return false;
