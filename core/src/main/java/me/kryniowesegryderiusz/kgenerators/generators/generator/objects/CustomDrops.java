@@ -51,8 +51,12 @@ public class CustomDrops {
 			if (customDropsConfig.containsKey("exp"))
 				this.exp = (int) customDropsConfig.get("exp");
 
-			if (customDropsConfig.containsKey("money"))
-				this.money = (double) customDropsConfig.get("money");
+			if (customDropsConfig.containsKey("money")) {
+				if (customDropsConfig.get("money") instanceof Integer) {
+					this.money = Double.valueOf((Integer) customDropsConfig.get("money"));
+				} else
+					this.money = (double) customDropsConfig.get("money");
+			}
 
 			if (customDropsConfig.containsKey("commands")) {
 				this.commands = (ArrayList<String>) customDropsConfig.get("commands");

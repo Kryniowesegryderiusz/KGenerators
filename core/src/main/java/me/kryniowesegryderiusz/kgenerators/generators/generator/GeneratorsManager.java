@@ -9,6 +9,7 @@ import java.util.Set;
 import javax.annotation.Nullable;
 
 import org.bukkit.configuration.ConfigurationSection;
+import org.bukkit.configuration.InvalidConfigurationException;
 import org.bukkit.inventory.ItemStack;
 
 import lombok.Getter;
@@ -130,6 +131,11 @@ public class GeneratorsManager {
 		try {
 			config = ConfigManager.getConfig("generators.yml", (String) null, true, false);
 			config.loadConfig();
+		} catch (InvalidConfigurationException e) {
+			Logger.error("Generators file: You've missconfigured generators.yml file. Check your spaces! More info below. Disabling plugin.");
+			Logger.error(e);
+			Main.getInstance().getServer().getPluginManager().disablePlugin(Main.getInstance());
+			return;
 		} catch (Exception e) {
 			Logger.error("Generators file: Cant load generators config. Disabling plugin.");
 			Logger.error(e);

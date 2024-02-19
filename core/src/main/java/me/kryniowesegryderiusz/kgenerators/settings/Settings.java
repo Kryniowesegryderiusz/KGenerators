@@ -5,6 +5,7 @@ import java.util.ArrayList;
 import java.util.HashMap;
 
 import org.bukkit.World;
+import org.bukkit.configuration.InvalidConfigurationException;
 import org.bukkit.inventory.ItemStack;
 
 import lombok.Getter;
@@ -125,6 +126,11 @@ public class Settings {
 		try {
 			config = ConfigManager.getConfig("config.yml", (String) null, false, false);
 			config.loadConfig();
+		} catch (InvalidConfigurationException e) {
+			Logger.error("Generators file: You've missconfigured config.yml file. Check your spaces! More info below. Disabling plugin.");
+			Logger.error(e);
+			Main.getInstance().getServer().getPluginManager().disablePlugin(Main.getInstance());
+			return;
 		} catch (Exception e) {
 			Logger.error("Config file: Cant load config. Disabling plugin.");
 			Logger.error(e);

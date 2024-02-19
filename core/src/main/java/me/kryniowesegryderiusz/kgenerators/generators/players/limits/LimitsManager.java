@@ -6,6 +6,7 @@ import java.util.Map.Entry;
 import java.util.Set;
 
 import org.bukkit.configuration.ConfigurationSection;
+import org.bukkit.configuration.InvalidConfigurationException;
 
 import me.kryniowesegryderiusz.kgenerators.Main;
 import me.kryniowesegryderiusz.kgenerators.generators.generator.objects.Generator;
@@ -27,6 +28,11 @@ public class LimitsManager {
 		try {
 			config = ConfigManager.getConfig("limits.yml", (String) null, true, false);
 			config.loadConfig();
+		} catch (InvalidConfigurationException e) {
+			Logger.error("Generators file: You've missconfigured config.yml file. Check your spaces! More info below. Disabling plugin.");
+			Logger.error(e);
+			Main.getInstance().getServer().getPluginManager().disablePlugin(Main.getInstance());
+			return;
 		} catch (Exception e) {
 			Logger.error("Limits file: Cant load limits. Disabling plugin.");
 			Logger.error(e);

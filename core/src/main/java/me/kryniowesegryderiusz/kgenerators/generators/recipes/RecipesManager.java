@@ -5,6 +5,7 @@ import java.util.Collection;
 import java.util.HashMap;
 
 import org.bukkit.Material;
+import org.bukkit.configuration.InvalidConfigurationException;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.ShapedRecipe;
 import org.bukkit.inventory.ShapelessRecipe;
@@ -32,6 +33,11 @@ public class RecipesManager {
 		try {
 			file = ConfigManager.getConfig("recipes.yml", (String) null, true, false);
 			file.loadConfig();
+		} catch (InvalidConfigurationException e) {
+			Logger.error("Generators file: You've missconfigured recipes.yml file. Check your spaces! More info below. Disabling plugin.");
+			Logger.error(e);
+			Main.getInstance().getServer().getPluginManager().disablePlugin(Main.getInstance());
+			return;
 		} catch (Exception e) {
 			Logger.error("Recipes file: Cant load recipes config. Disabling plugin.");
 			Logger.error(e);

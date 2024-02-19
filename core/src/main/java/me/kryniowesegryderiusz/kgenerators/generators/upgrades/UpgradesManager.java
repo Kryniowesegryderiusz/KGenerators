@@ -7,6 +7,7 @@ import java.util.Map.Entry;
 import javax.annotation.Nullable;
 
 import org.bukkit.configuration.ConfigurationSection;
+import org.bukkit.configuration.InvalidConfigurationException;
 import org.bukkit.inventory.ItemStack;
 
 import lombok.Getter;
@@ -94,6 +95,11 @@ public class UpgradesManager {
 		try {
 			config = ConfigManager.getConfig("upgrades.yml", (String) null, true, false);
 			config.loadConfig();
+		} catch (InvalidConfigurationException e) {
+			Logger.error("Generators file: You've missconfigured upgrades.yml file. Check your spaces! More info below. Disabling plugin.");
+			Logger.error(e);
+			Main.getInstance().getServer().getPluginManager().disablePlugin(Main.getInstance());
+			return;
 		} catch (Exception e) {
 			Logger.error("Upgrades file: Cant load upgrades. Disabling plugin.");
 			Logger.error(e);
