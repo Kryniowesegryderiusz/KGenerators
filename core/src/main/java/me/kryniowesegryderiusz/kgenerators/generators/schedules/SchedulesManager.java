@@ -28,24 +28,30 @@ public class SchedulesManager {
 		Bukkit.getScheduler().scheduleSyncRepeatingTask(Main.getInstance(), new Runnable() {
 		    @Override
 		    public void run() {
-				int freq = Main.getSettings().getGenerationCheckFrequency();
-				
-				ArrayList<GeneratorLocation> readyForRegeneration = new ArrayList<GeneratorLocation>();
-				
-				for (Entry<GeneratorLocation, Schedule> e : schedules.entrySet()) {
-					e.getValue().decreaseDelay(freq);
-					if (e.getValue().isReadyForRegeneration()) {
-						readyForRegeneration.add(e.getKey());
+		    	try {
+					int freq = Main.getSettings().getGenerationCheckFrequency();
+					
+					ArrayList<GeneratorLocation> readyForRegeneration = new ArrayList<GeneratorLocation>();
+					
+					for (Entry<GeneratorLocation, Schedule> e : schedules.entrySet()) {
+						e.getValue().decreaseDelay(freq);
+						if (e.getValue().isReadyForRegeneration()) {
+							readyForRegeneration.add(e.getKey());
+						}
 					}
-				}
-				
-				for (GeneratorLocation gl : readyForRegeneration) {
-					remove(gl);
-					if (Main.getPlacedGenerators().isLoaded(gl)) {
-						Logger.debugSchedulesManager("SchedulesManager: Regenerating " + gl.getId());
-						gl.regenerateGenerator();
+					
+					for (GeneratorLocation gl : readyForRegeneration) {
+						remove(gl);
+						if (Main.getPlacedGenerators().isLoaded(gl)) {
+							Logger.debugSchedulesManager("SchedulesManager: Regenerating " + gl.getId());
+							gl.regenerateGenerator();
+						}
 					}
-				}
+		    	} catch (Exception e) {
+		    		Logger.error("SchedulesManager: An error occured at scheduler task");
+		    		Logger.error(e);
+		    	}
+
 		    }
 		}, 0L, Main.getSettings().getGenerationCheckFrequency()*1L);
 	}

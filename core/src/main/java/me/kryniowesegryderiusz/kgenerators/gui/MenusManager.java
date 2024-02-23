@@ -39,17 +39,21 @@ public class MenusManager implements Listener {
 		Bukkit.getScheduler().scheduleSyncRepeatingTask(Main.getInstance(), new Runnable() {
 		    @Override
 		    public void run() {
-				ArrayList<Player> toRemove = new ArrayList<Player>();
-				for (Entry<Player, MenuPlayer> e : guis.entrySet())
-				{
-					if (!e.getValue().update())
-						toRemove.add(e.getKey());
-				}
-				
-				for (Player p : toRemove)
-				{
-					guis.remove(p);
-				}
+		    	try {
+					ArrayList<Player> toRemove = new ArrayList<Player>();
+					for (Entry<Player, MenuPlayer> e : guis.entrySet()) {
+						if (!e.getValue().update())
+							toRemove.add(e.getKey());
+					}
+
+					for (Player p : toRemove) {
+						guis.remove(p);
+					}
+		    	} catch (Exception e) {
+		    		Logger.error("MenusManager: An error occured at menus task");
+		    		Logger.error(e);
+		    	}
+
 		    }
 		}, 0L, Main.getSettings().getGuiUpdateFrequency()*1L);
 	}

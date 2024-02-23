@@ -55,19 +55,25 @@ public class HologramsManager {
 		Bukkit.getScheduler().scheduleSyncRepeatingTask(Main.getInstance(), new Runnable() {
 			public void run() {
 
-				Iterator<GeneratorLocation> iter = holograms.iterator();
-				while (iter.hasNext()) {
-					GeneratorLocation gLocation = iter.next();
+				try {
+					Iterator<GeneratorLocation> iter = holograms.iterator();
+					while (iter.hasNext()) {
+						GeneratorLocation gLocation = iter.next();
 
-					if (Main.getPlacedGenerators().isLoaded(gLocation) && Main.getSchedules().timeLeft(gLocation) > 0) {
-						hologramProvider.updateHologram(gLocation,
-								Main.getHolograms().getHologramRemainingTimeLines(gLocation));
-					} else {
-						try {
-							iter.remove();
-						} finally {}
+						if (Main.getPlacedGenerators().isLoaded(gLocation) && Main.getSchedules().timeLeft(gLocation) > 0) {
+							hologramProvider.updateHologram(gLocation,
+									Main.getHolograms().getHologramRemainingTimeLines(gLocation));
+						} else {
+							try {
+								iter.remove();
+							} finally {}
+						}
 					}
-				}
+		    	} catch (Exception e) {
+		    		Logger.error("Holograms: An error occured at holograms task");
+		    		Logger.error(e);
+		    	}
+
 			}
 		}, 0L, Main.getSettings().getHologramUpdateFrequency() * 1L);
 	}
