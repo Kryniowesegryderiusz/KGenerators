@@ -1,6 +1,7 @@
 package me.kryniowesegryderiusz.kgenerators.generators.holograms;
 
 import java.util.ArrayList;
+import java.util.ConcurrentModificationException;
 import java.util.Iterator;
 import java.util.Map;
 import java.util.Map.Entry;
@@ -58,16 +59,21 @@ public class HologramsManager {
 				try {
 					Iterator<GeneratorLocation> iter = holograms.iterator();
 					while (iter.hasNext()) {
-						GeneratorLocation gLocation = iter.next();
+						try {
+							GeneratorLocation gLocation = iter.next();
 
-						if (Main.getPlacedGenerators().isLoaded(gLocation) && Main.getSchedules().timeLeft(gLocation) > 0) {
-							hologramProvider.updateHologram(gLocation,
-									Main.getHolograms().getHologramRemainingTimeLines(gLocation));
-						} else {
-							try {
-								iter.remove();
-							} finally {}
+							if (Main.getPlacedGenerators().isLoaded(gLocation) && Main.getSchedules().timeLeft(gLocation) > 0) {
+								hologramProvider.updateHologram(gLocation,
+										Main.getHolograms().getHologramRemainingTimeLines(gLocation));
+							} else {
+								try {
+									iter.remove();
+								} finally {}
+							}
+						} catch (ConcurrentModificationException eme) {
+							Logger.debugSchedulesManager(eme);
 						}
+
 					}
 		    	} catch (Exception e) {
 		    		Logger.error("Holograms: An error occured at holograms task");
