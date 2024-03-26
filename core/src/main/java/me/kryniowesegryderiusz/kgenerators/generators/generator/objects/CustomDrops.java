@@ -73,7 +73,9 @@ public class CustomDrops {
 			ItemStack is = this.item.clone();
 
 			if (this.itemFortune) {
-				int level = is.getEnchantmentLevel(XEnchantment.LOOT_BONUS_BLOCKS.getEnchant());
+				int level = 0;
+				if (p.getInventory().getItemInMainHand() != null)
+					level = p.getInventory().getItemInMainHand().getEnchantmentLevel(XEnchantment.LOOT_BONUS_BLOCKS.getEnchant());
 				if (level > 0) {
 					int randomNum = ThreadLocalRandom.current().nextInt(1, level + 2);
 					is.setAmount(randomNum);
