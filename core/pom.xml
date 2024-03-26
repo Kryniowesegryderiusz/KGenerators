@@ -67,6 +67,12 @@
 			<url>https://mvn.lumine.io/repository/maven-public/</url>
 		</repository>
 
+		<!-- FactionsUUID -->
+		<repository>
+			<id>factionsuuid</id>
+			<name>FactionsUUID</name>
+			<url>https://ci.ender.zone/plugin/repository/everything/</url>
+		</repository>
 
 		<repository>
 			<id>phoenix</id>
@@ -382,6 +388,14 @@
 			<groupId>io.lumine</groupId>
 			<artifactId>Mythic-Dist</artifactId>
 			<version>5.6.1</version>
+			<scope>provided</scope>
+		</dependency>
+		
+		<!-- FactionsUUID -->
+		<dependency>
+			<groupId>com.massivecraft</groupId>
+			<artifactId>Factions</artifactId>
+			<version>1.6.9.5-U0.6.33</version>
 			<scope>provided</scope>
 		</dependency>
 

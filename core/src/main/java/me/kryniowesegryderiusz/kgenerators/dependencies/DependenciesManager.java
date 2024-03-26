@@ -96,6 +96,11 @@ public class DependenciesManager {
 			Logger.debugPluginLoad("Dependencies: Detected plugin MythicMobs. Hooking into it.");
 			dependencies.add(Dependency.MYTHIC_MOBS);
 		}
+		
+		if (Bukkit.getPluginManager().isPluginEnabled("FactionsUUID")) {
+			Logger.debugPluginLoad("Dependencies: Detected plugin FactionsUUID. Hooking into it.");
+			dependencies.add(Dependency.FACTIONSUUID);
+		}
 
 		if (Bukkit.getPluginManager().isPluginEnabled("WorldEdit")) {
 			Logger.debugPluginLoad("Dependencies: Detected plugin WorldEdit. Hooking into it.");

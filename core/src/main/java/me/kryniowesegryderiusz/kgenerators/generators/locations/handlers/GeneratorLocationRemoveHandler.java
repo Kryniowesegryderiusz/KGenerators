@@ -7,7 +7,6 @@ import org.bukkit.entity.Player;
 import org.bukkit.inventory.ItemStack;
 
 import dev.lone.itemsadder.api.CustomBlock;
-import dev.lone.itemsadder.api.ItemsAdder;
 import me.kryniowesegryderiusz.kgenerators.Main;
 import me.kryniowesegryderiusz.kgenerators.api.events.GeneratorRemoveEvent;
 import me.kryniowesegryderiusz.kgenerators.dependencies.enums.Dependency;

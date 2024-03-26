@@ -15,10 +15,10 @@ import me.kryniowesegryderiusz.kgenerators.Main;
 import me.kryniowesegryderiusz.kgenerators.api.interfaces.IGeneratorLocation;
 import me.kryniowesegryderiusz.kgenerators.api.objects.AbstractGeneratedObject;
 import me.kryniowesegryderiusz.kgenerators.dependencies.hooks.BentoBoxHook;
+import me.kryniowesegryderiusz.kgenerators.dependencies.hooks.FactionsUUIDHook;
 import me.kryniowesegryderiusz.kgenerators.dependencies.hooks.PlotSquaredHook;
 import me.kryniowesegryderiusz.kgenerators.dependencies.hooks.SuperiorSkyblock2Hook;
 import me.kryniowesegryderiusz.kgenerators.generators.generator.enums.GeneratorType;
-import me.kryniowesegryderiusz.kgenerators.generators.generator.objects.GeneratedBlock;
 import me.kryniowesegryderiusz.kgenerators.generators.generator.objects.Generator;
 import me.kryniowesegryderiusz.kgenerators.generators.locations.PlacedGeneratorsManager.ChunkInfo;
 import me.kryniowesegryderiusz.kgenerators.generators.locations.handlers.GeneratorLocationActionHandler;
@@ -127,7 +127,8 @@ public class GeneratorLocation implements IGeneratorLocation {
 		if (!BentoBoxHook.isAllowed(player, BentoBoxHook.Type.USE_FLAG, this.getGeneratedBlockLocation())
 				|| !SuperiorSkyblock2Hook.isAllowed(player, SuperiorSkyblock2Hook.Type.USE_FLAG,
 						this.getGeneratedBlockLocation())
-				|| !PlotSquaredHook.isPlayerAllowedToMine(player, this.getGeneratedBlockLocation())) {
+				|| !PlotSquaredHook.isPlayerAllowedToMine(player, this.getGeneratedBlockLocation())
+				|| !FactionsUUIDHook.isPlayerAllowedToMine(player, this.getGeneratedBlockLocation())) {
 			Lang.getMessageStorage().send(player, Message.GENERATORS_DIGGING_CANT_HERE);
 			return false;
 		}

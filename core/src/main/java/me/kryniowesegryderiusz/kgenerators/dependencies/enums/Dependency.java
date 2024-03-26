@@ -24,4 +24,5 @@ public enum Dependency
 	LIT_MINIONS,
 	PLOT_SQUARED,
 	MYTHIC_MOBS,
+	FACTIONSUUID,
 }
