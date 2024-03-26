@@ -12,6 +12,7 @@ import me.kryniowesegryderiusz.kgenerators.Main;
 import me.kryniowesegryderiusz.kgenerators.dependencies.hooks.EcoItemsHook;
 import me.kryniowesegryderiusz.kgenerators.dependencies.hooks.ItemsAdderHook;
 import me.kryniowesegryderiusz.kgenerators.dependencies.hooks.MMOItemsHook;
+import me.kryniowesegryderiusz.kgenerators.dependencies.hooks.MythicMobsHook;
 import me.kryniowesegryderiusz.kgenerators.dependencies.hooks.OraxenHook;
 import me.kryniowesegryderiusz.kgenerators.logger.Logger;
 import me.kryniowesegryderiusz.kgenerators.utils.immutable.PlayerHeadUtils;
@@ -41,6 +42,10 @@ public abstract class ItemUtils {
         	else if (splitted[0].equals("mmoitems")
         			&& MMOItemsHook.getItemStack(splitted[1]) != null)
         		return MMOItemsHook.getItemStack(splitted[1]);
+        	else if (splitted[0].equals("mythicmobs")
+        			&& MythicMobsHook.getItemStack(splitted[1]) != null)
+        		return MythicMobsHook.getItemStack(splitted[1]);
+        	
     	}
 		return getXMaterial(material, place, isBlockCheck).parseItem();
     }

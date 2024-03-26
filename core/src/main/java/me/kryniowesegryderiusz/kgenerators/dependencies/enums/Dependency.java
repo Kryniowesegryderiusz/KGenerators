@@ -23,4 +23,5 @@ public enum Dependency
 	MMOITEMS,
 	LIT_MINIONS,
 	PLOT_SQUARED,
+	MYTHIC_MOBS,
 }

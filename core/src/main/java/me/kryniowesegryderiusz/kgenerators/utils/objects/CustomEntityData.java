@@ -13,6 +13,7 @@ import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.Setter;
 import me.kryniowesegryderiusz.kgenerators.Main;
+import me.kryniowesegryderiusz.kgenerators.dependencies.hooks.MythicMobsHook;
 import me.kryniowesegryderiusz.kgenerators.utils.EntityUtils;
 import me.kryniowesegryderiusz.kgenerators.utils.ItemUtils;
 
@@ -20,11 +21,21 @@ import me.kryniowesegryderiusz.kgenerators.utils.ItemUtils;
 public class CustomEntityData {
 
 	@Getter private EntityType entityType;
+	@Getter private String entityTypeString;
 	@Getter @Setter private int amount = 1;
 	@Getter @Setter private String name;
 	
-	public CustomEntityData(EntityType entityType) {
-		this.entityType = entityType;
+	public CustomEntityData(String entityTypeString) {
+		this.entityTypeString = entityTypeString;
+		if (!entityTypeString.contains(":"))
+            this.entityType = EntityUtils.getEntityType(entityTypeString, "CustomEntityData");
+		else {
+			String[] splitted = entityTypeString.split(":");
+			if(splitted[0].equalsIgnoreCase("mythicmobs")) {
+				this.entityType = MythicMobsHook.getEntityType(splitted[1]);
+			}
+		}
+		
 	}
 	
 	public ArrayList<Entity> spawnEntities(Location location) {
@@ -32,10 +43,15 @@ public class CustomEntityData {
 		ArrayList<Entity> spawnedEntities = new ArrayList<Entity>();
 		
 		for (int i = 0; i < amount; i++) {
-			Entity e = location.getWorld().spawnEntity(location, entityType);
-			if (name != null)
-				e.setCustomName(Main.getMultiVersion().getChatUtils().colorize(name));
-			spawnedEntities.add(e);
+			if (this.entityTypeString.contains("mythicmobs")) {
+				Entity e = MythicMobsHook.spawnMythicMob(this.entityTypeString.split(":")[1], location);
+				spawnedEntities.add(e);
+			} else {
+				Entity e = location.getWorld().spawnEntity(location, entityType);
+				if (name != null)
+					e.setCustomName(Main.getMultiVersion().getChatUtils().colorize(name));
+				spawnedEntities.add(e);
+			}
 		}
 		
 		return spawnedEntities;
@@ -47,7 +63,7 @@ public class CustomEntityData {
 	}
 	
 	public String toString() {
-		return "Entity: " + this.entityType.name() + "[" + String.valueOf(amount) + " " + name + "]";
+		return "Entity: " + this.entityTypeString + "[" + String.valueOf(amount) + " " + name + "]";
 	}
 	
 	/**
@@ -56,14 +72,15 @@ public class CustomEntityData {
 	 * @return true if xMaterials are same
 	 */
 	public boolean isSimilar(CustomEntityData customEntityData) {
-		return entityType == customEntityData.getEntityType();
+		return entityTypeString.equals(customEntityData.getEntityTypeString());
 	}
 	
 	public static CustomEntityData load(Map<?, ?> configMap, String keyName) {
 		
 		if (configMap.containsKey(keyName)) {
 			if (configMap.get(keyName) instanceof String) {
-				return new CustomEntityData(EntityUtils.getEntityType((String) configMap.get(keyName), "CustomEntityData"));
+				//return new CustomEntityData(EntityUtils.getEntityType((String) configMap.get(keyName), "CustomEntityData"));
+				return new CustomEntityData((String) configMap.get(keyName));
 			} else {
 				Map<?, ?> map;
 				
@@ -72,7 +89,8 @@ public class CustomEntityData {
 				else map = (Map<?, ?>) configMap.get(keyName);
 				
 				if (map != null && map.containsKey("type")) {
-					CustomEntityData e = new CustomEntityData(EntityUtils.getEntityType((String) map.get("type"), "CustomEntityData"));
+					//CustomEntityData e = new CustomEntityData(EntityUtils.getEntityType((String) map.get("type"), "CustomEntityData"));
+					CustomEntityData e = new CustomEntityData((String) map.get("type"));
 					if (map.containsKey("amount"))
 						e.setAmount((int) map.get("amount"));
 					if (map.containsKey("name"))

@@ -91,6 +91,11 @@ public class DependenciesManager {
 			Main.getInstance().getServer().getPluginManager().registerEvents(new SlimefunHook(), Main.getInstance());
 			dependencies.add(Dependency.SLIMEFUN);
 		}
+		
+		if (Bukkit.getPluginManager().isPluginEnabled("MythicMobs")) {
+			Logger.debugPluginLoad("Dependencies: Detected plugin MythicMobs. Hooking into it.");
+			dependencies.add(Dependency.MYTHIC_MOBS);
+		}
 
 		if (Bukkit.getPluginManager().isPluginEnabled("WorldEdit")) {
 			Logger.debugPluginLoad("Dependencies: Detected plugin WorldEdit. Hooking into it.");

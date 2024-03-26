@@ -60,6 +60,14 @@
 				https://repo.extendedclip.com/content/repositories/placeholderapi/</url>
 		</repository>
 
+		<!-- MythicMobs -->
+		<repository>
+			<id>nexus</id>
+			<name>Lumine Releases</name>
+			<url>https://mvn.lumine.io/repository/maven-public/</url>
+		</repository>
+
+
 		<repository>
 			<id>phoenix</id>
 			<url>https://nexus.phoenixdevt.fr/repository/maven-public/</url>
@@ -368,6 +376,15 @@
 				</exclusion>
 			</exclusions>
 		</dependency>
+
+		<!-- MythicMobs -->
+		<dependency>
+			<groupId>io.lumine</groupId>
+			<artifactId>Mythic-Dist</artifactId>
+			<version>5.6.1</version>
+			<scope>provided</scope>
+		</dependency>
+
 
 	</dependencies>
 
