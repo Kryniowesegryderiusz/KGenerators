@@ -44,7 +44,7 @@ public class PlotSquaredHook {
         if (plot == null)
         	return false;
         
-        if (plot.isOwner(p.getUniqueId()) || plot.getMembers().contains(p.getUniqueId()))
+        if (plot.isOwner(p.getUniqueId()) || plot.getMembers().contains(p.getUniqueId()) || plot.getTrusted().contains(p.getUniqueId()))
         	return true;
 		
 		return false;
