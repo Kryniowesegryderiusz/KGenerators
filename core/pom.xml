@@ -254,43 +254,54 @@
 		<dependency>
 			<groupId>com.github.oraxen</groupId>
 			<artifactId>oraxen</artifactId>
-			<version>1.152.1.5</version>
+			<version>1.173.0</version>
 			<scope>provided</scope>
 			<exclusions>
 				<exclusion>
-					<groupId>com.jeff_media</groupId>
-					<artifactId>CustomBlockData</artifactId>
+					<groupId>me.gabytm.util</groupId>
+					<artifactId>actions-spigot</artifactId>
+				</exclusion>
+				<exclusion>
+					<groupId>org.jetbrains</groupId>
+					<artifactId>annotations</artifactId>
+				</exclusion>
+				<exclusion>
+					<groupId>com.ticxo</groupId>
+					<artifactId>PlayerAnimator</artifactId>
+				</exclusion>
+				<exclusion>
+					<groupId>com.github.stefvanschie.inventoryframework</groupId>
+					<artifactId>IF</artifactId>
+				</exclusion>
+				<exclusion>
+					<groupId>io.th0rgal</groupId>
+					<artifactId>protectionlib</artifactId>
+				</exclusion>
+				<exclusion>
+					<groupId>dev.triumphteam</groupId>
+					<artifactId>triumph-gui</artifactId>
+				</exclusion>
+				<exclusion>
+					<groupId>org.bstats</groupId>
+					<artifactId>bstats-bukkit</artifactId>
+				</exclusion>
+				<exclusion>
+					<groupId>com.jeff-media</groupId>
+					<artifactId>custom-block-data</artifactId>
+				</exclusion>
+				<exclusion>
+					<groupId>com.jeff-media</groupId>
+					<artifactId>persistent-data-serializer</artifactId>
 				</exclusion>
 				<exclusion>
 					<groupId>com.jeff_media</groupId>
 					<artifactId>MorePersistentDataTypes</artifactId>
 				</exclusion>
 				<exclusion>
-					<groupId>net.kyori</groupId>
-					<artifactId>adventure-text-serializer-gson</artifactId>
-				</exclusion>
-				<exclusion>
-					<groupId>net.kyori</groupId>
-					<artifactId>adventure-text-serializer-legacy</artifactId>
-				</exclusion>
-				<exclusion>
-					<groupId>net.kyori</groupId>
-					<artifactId>adventure-text-serializer-plain</artifactId>
-				</exclusion>
-				<exclusion>
-					<groupId>net.kyori</groupId>
-					<artifactId>adventure-text-minimessage</artifactId>
-				</exclusion>
-				<exclusion>
 					<groupId>gs.mclo</groupId>
-					<artifactId>mclogs</artifactId>
-				</exclusion>
-				<exclusion>
-					<groupId>me.gabytm.util</groupId>
-					<artifactId>actions-spigot</artifactId>
+					<artifactId>java</artifactId>
 				</exclusion>
 			</exclusions>
-
 		</dependency>
 
 		<!-- WildStacker -->
@@ -390,7 +401,7 @@
 			<version>5.6.1</version>
 			<scope>provided</scope>
 		</dependency>
-		
+
 		<!-- FactionsUUID -->
 		<dependency>
 			<groupId>com.massivecraft</groupId>

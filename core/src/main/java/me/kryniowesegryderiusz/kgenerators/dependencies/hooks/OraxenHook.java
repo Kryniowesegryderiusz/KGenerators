@@ -2,7 +2,7 @@ package me.kryniowesegryderiusz.kgenerators.dependencies.hooks;
 
 import org.bukkit.inventory.ItemStack;
 
-import io.th0rgal.oraxen.items.OraxenItems;
+import io.th0rgal.oraxen.api.OraxenItems;
 import me.kryniowesegryderiusz.kgenerators.Main;
 import me.kryniowesegryderiusz.kgenerators.dependencies.enums.Dependency;
 
