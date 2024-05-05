@@ -25,4 +25,5 @@ public enum Dependency
 	PLOT_SQUARED,
 	MYTHIC_MOBS,
 	FACTIONSUUID,
+	LANDS,
 }

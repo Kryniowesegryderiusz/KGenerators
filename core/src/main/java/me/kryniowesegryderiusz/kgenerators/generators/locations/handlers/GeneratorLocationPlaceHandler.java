@@ -6,6 +6,7 @@ import org.bukkit.entity.Player;
 import me.kryniowesegryderiusz.kgenerators.Main;
 import me.kryniowesegryderiusz.kgenerators.api.events.PostGeneratorPlaceEvent;
 import me.kryniowesegryderiusz.kgenerators.dependencies.hooks.FactionsUUIDHook;
+import me.kryniowesegryderiusz.kgenerators.dependencies.hooks.LandsHook;
 import me.kryniowesegryderiusz.kgenerators.dependencies.hooks.PlotSquaredHook;
 import me.kryniowesegryderiusz.kgenerators.generators.generator.enums.GeneratorType;
 import me.kryniowesegryderiusz.kgenerators.generators.generator.objects.Generator;
@@ -58,6 +59,7 @@ public class GeneratorLocationPlaceHandler {
     	
     	if (sender instanceof Player)
     		if (!PlotSquaredHook.isPlayerAllowedToPlace((Player) sender, gLocation.getLocation())
+    			|| !LandsHook.isPlayerAllowedToPlace((Player) sender, gLocation.getLocation())
     			|| !FactionsUUIDHook.isPlayerAllowedToPlace((Player) sender, gLocation.getLocation())) {
     			Lang.getMessageStorage().send(sender, Message.GENERATORS_PLACE_CANT_HERE);
     			return false;

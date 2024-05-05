@@ -16,6 +16,7 @@ import me.kryniowesegryderiusz.kgenerators.api.interfaces.IGeneratorLocation;
 import me.kryniowesegryderiusz.kgenerators.api.objects.AbstractGeneratedObject;
 import me.kryniowesegryderiusz.kgenerators.dependencies.hooks.BentoBoxHook;
 import me.kryniowesegryderiusz.kgenerators.dependencies.hooks.FactionsUUIDHook;
+import me.kryniowesegryderiusz.kgenerators.dependencies.hooks.LandsHook;
 import me.kryniowesegryderiusz.kgenerators.dependencies.hooks.PlotSquaredHook;
 import me.kryniowesegryderiusz.kgenerators.dependencies.hooks.SuperiorSkyblock2Hook;
 import me.kryniowesegryderiusz.kgenerators.generators.generator.enums.GeneratorType;
@@ -128,6 +129,7 @@ public class GeneratorLocation implements IGeneratorLocation {
 				|| !SuperiorSkyblock2Hook.isAllowed(player, SuperiorSkyblock2Hook.Type.USE_FLAG,
 						this.getGeneratedBlockLocation())
 				|| !PlotSquaredHook.isPlayerAllowedToMine(player, this.getGeneratedBlockLocation())
+				|| !LandsHook.isPlayerAllowedToMine(player, this.getGeneratedBlockLocation())
 				|| !FactionsUUIDHook.isPlayerAllowedToMine(player, this.getGeneratedBlockLocation())) {
 			Lang.getMessageStorage().send(player, Message.GENERATORS_DIGGING_CANT_HERE);
 			return false;

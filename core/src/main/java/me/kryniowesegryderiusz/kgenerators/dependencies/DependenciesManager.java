@@ -134,6 +134,11 @@ public class DependenciesManager {
 			Logger.debugPluginLoad("Dependencies: Detected plugin PlotSquared. Hooking into it.");
 			dependencies.add(Dependency.PLOT_SQUARED);
 		}
+		
+		if (Bukkit.getPluginManager().isPluginEnabled("Lands")) {
+			Logger.debugPluginLoad("Dependencies: Detected plugin Lands. Hooking into it.");
+			dependencies.add(Dependency.LANDS);
+		}
 
 		if (Main.getMultiVersion().getWorldGuardUtils() != null
 				&& Main.getMultiVersion().getWorldGuardUtils().isWorldGuardHooked()) {

@@ -394,6 +394,15 @@
 			</exclusions>
 		</dependency>
 
+		<!-- Lands -->
+		<dependency>
+			<groupId>com.github.angeschossen</groupId>
+			<artifactId>LandsAPI</artifactId>
+			<version>7.0.2</version>
+			<scope>provided</scope>
+		</dependency>
+
+
 		<!-- MythicMobs -->
 		<dependency>
 			<groupId>io.lumine</groupId>
