@@ -23,7 +23,7 @@
 			<url>https://hub.spigotmc.org/nexus/content/repositories/snapshots/</url>
 		</repository>
 
-		<!-- SuperiorSkyblockAPI -->
+		<!-- jitpack -->
 		<repository>
 			<id>jitpack.io</id>
 			<url>https://jitpack.io</url>
@@ -41,7 +41,7 @@
 			<url>https://maven.enginehub.org/repo/</url>
 		</repository>
 
-		<!-- WildStacker -->
+		<!-- WildStacker SuperiorSkyblock2 -->
 		<repository>
 			<id>bg-repo</id>
 			<url>https://repo.bg-software.com/repository/api/</url>
@@ -84,7 +84,6 @@
 			<url>https://repo.papermc.io/repository/maven-public/</url>
 		</repository>
 
-
 	</repositories>
 
 	<dependencyManagement>
@@ -112,9 +111,10 @@
 
 		<!-- SuperiorSkyblockAPI -->
 		<dependency>
-			<groupId>com.github.OmerBenGera</groupId>
+			<groupId>com.bgsoftware</groupId>
 			<artifactId>SuperiorSkyblockAPI</artifactId>
-			<version>b18</version> <!-- b18 now -->
+			<version>2024.1</version>
+			<scope>provided</scope>
 		</dependency>
 
 		<dependency>

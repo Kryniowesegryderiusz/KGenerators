@@ -1,6 +1,7 @@
 package me.kryniowesegryderiusz.kgenerators.dependencies.hooks;
 
 import org.bukkit.Location;
+import org.bukkit.World.Environment;
 import org.bukkit.block.Block;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
@@ -61,6 +62,7 @@ public class SuperiorSkyblock2Hook implements Listener {
 
 	@EventHandler
 	public void onDeleteEvent(IslandDisbandEvent e) {
+		
 		Location min = e.getIsland().getMinimum();
 		Location max = e.getIsland().getMaximum();
 
@@ -69,6 +71,17 @@ public class SuperiorSkyblock2Hook implements Listener {
 				+ max.getBlockZ());
 		Main.getPlacedGenerators().bulkRemoveGenerators(min.getWorld(), min.getBlockX(), 0, min.getBlockZ(),
 				max.getBlockX(), min.getWorld().getMaxHeight(), max.getBlockZ(), false);
+		
+		if (e.getIsland().isNetherEnabled()) {
+			Main.getPlacedGenerators().bulkRemoveGenerators(SuperiorSkyblockAPI.getIslandsWorld(e.getIsland(), Environment.NETHER), min.getBlockX(), 0, min.getBlockZ(),
+					max.getBlockX(), min.getWorld().getMaxHeight(), max.getBlockZ(), false);
+		}
+		
+		if (e.getIsland().isEndEnabled()) {
+			Main.getPlacedGenerators().bulkRemoveGenerators(
+					SuperiorSkyblockAPI.getIslandsWorld(e.getIsland(), Environment.THE_END), min.getBlockX(), 0,
+					min.getBlockZ(), max.getBlockX(), min.getWorld().getMaxHeight(), max.getBlockZ(), false);
+		}
 
 	}
 
