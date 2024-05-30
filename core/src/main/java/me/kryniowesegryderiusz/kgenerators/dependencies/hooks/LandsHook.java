@@ -14,18 +14,26 @@ public class LandsHook {
 	private static LandsIntegration api;
 	
 	public static boolean isPlayerAllowedToMine(Player player, org.bukkit.Location location) {
+		if (!Main.getDependencies().isEnabled(Dependency.LANDS))
+			return true;
 		return canHere(player, location, Flags.BLOCK_BREAK);
 	}
 	
 	public static boolean isPlayerAllowedToPickUp(Player player, org.bukkit.Location location) {
+		if (!Main.getDependencies().isEnabled(Dependency.LANDS))
+			return true;
 		return canHere(player, location, Flags.INTERACT_GENERAL);
 	}
 	
 	public static boolean isPlayerAllowedToInteract(Player player, org.bukkit.Location location) {
+		if (!Main.getDependencies().isEnabled(Dependency.LANDS))
+			return true;
 		return canHere(player, location, Flags.INTERACT_GENERAL);
 	}
 	
 	public static boolean isPlayerAllowedToPlace(Player player, org.bukkit.Location location) {
+		if (!Main.getDependencies().isEnabled(Dependency.LANDS))
+			return true;
 		return canHere(player, location,Flags.BLOCK_PLACE);
 	}
 	
