@@ -23,6 +23,10 @@ public class CommandTabCompleter implements TabCompleter {
 			if (args[0].equals("give")) {
 				return this.getGenerators(args[2]);
 			}
+			
+			if (args[1].equals("owner")) {
+				return this.getPlayers(args[2]);
+			}
 		}
 
 		if (args.length == 2) {

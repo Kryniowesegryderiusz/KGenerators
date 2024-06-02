@@ -122,7 +122,8 @@ public enum Message implements IMessage {
 	COMMANDS_SPAWN_HELP("commands.spawn.help", "Spawns generator at location"),
 	
 	COMMANDS_REMOVE_DONE("commands.remove.done", "&aRemoved <amount> generators!"),
-	COMMANDS_REMOVE_USAGE("commands.remove.usage", "&cUsage: &e/kgenerators remove worldedit"),
+	COMMANDS_REMOVE_USAGE_WORLDEDIT("commands.remove.usage.worldedit", "&cUsage: &e/kgenerators remove worldedit"),
+	COMMANDS_REMOVE_USAGE_OWNER("commands.remove.usage.owner", "&cUsage: &e/kgenerators remove owner <owner>"),
 	COMMANDS_REMOVE_NO_PERMISSION("commands.remove.no-permission", "&cYou dont have permission &8(&7<permission>&8)&c to remove generators!"),
 	COMMANDS_REMOVE_HELP("commands.remove.help", "Removes generators"),
 	COMMANDS_REMOVE_WORLDEDIT_NOT_FOUND("commands.remove.worldedit-not-found", "&cSelection is not complete!"),

@@ -292,10 +292,12 @@ public class Commands implements CommandExecutor {
 									if (args.length >= 7)
 										owner = args[6];
 
-									Location l = Main.getPlacedGenerators().stringToLocation(
-											args[1] + "," + args[2] + "," + args[3] + "," + args[4]);
-									
-									GeneratorLocation gl = new GeneratorLocation(-1, g, l, Main.getPlacedGenerators().new ChunkInfo(l.getChunk()), Main.getPlayers().getPlayer(owner), null);
+									Location l = Main.getPlacedGenerators()
+											.stringToLocation(args[1] + "," + args[2] + "," + args[3] + "," + args[4]);
+
+									GeneratorLocation gl = new GeneratorLocation(-1, g, l,
+											Main.getPlacedGenerators().new ChunkInfo(l.getChunk()),
+											Main.getPlayers().getPlayer(owner), null);
 									gl.placeGenerator(sender, true);
 
 									Lang.getMessageStorage().send(sender, Message.COMMANDS_SPAWN_DONE,
@@ -319,29 +321,61 @@ public class Commands implements CommandExecutor {
 							"kgenerators.spawn");
 				break;
 			case "remove":
-				if (sender instanceof Player) {
-					Player p = (Player) sender;
-					if (p.hasPermission("kgenerators.remove")) {
-						if (args.length >= 2) {
-							if (args[1].toLowerCase().equals("worldedit")) {
-								ArrayList<GeneratorLocation> gls = WorldEditHook.getGeneratorsInRange(p);
-								if (gls != null) {
-									int amount = gls.size();
-									for (GeneratorLocation gl : gls) {
-										gl.removeGenerator(false, null);
-									}
-									Lang.getMessageStorage().send(sender, Message.COMMANDS_REMOVE_DONE, "<amount>",
-											String.valueOf(amount));
-								}
-							} else
-								Lang.getMessageStorage().send(sender, Message.COMMANDS_REMOVE_USAGE);
-						} else
-							Lang.getMessageStorage().send(sender, Message.COMMANDS_REMOVE_USAGE);
-					} else
-						Lang.getMessageStorage().send(sender, Message.COMMANDS_REMOVE_NO_PERMISSION, "<permission>",
-								"kgenerators.remove");
-				} else
+				if (!(sender instanceof Player)) {
 					System.out.println("[KGenerators] Use that command as player!");
+					return false;
+				}
+				Player p = (Player) sender;
+				if (!p.hasPermission("kgenerators.remove")) {
+					Lang.getMessageStorage().send(sender, Message.COMMANDS_REMOVE_NO_PERMISSION, "<permission>",
+							"kgenerators.remove");
+					return false;
+				}
+				
+				if (args.length < 2) {
+					Lang.getMessageStorage().send(sender, Message.COMMANDS_REMOVE_USAGE_WORLDEDIT);
+					Lang.getMessageStorage().send(sender, Message.COMMANDS_REMOVE_USAGE_OWNER);
+					return false;
+				}
+
+				if (args[1].toLowerCase().equals("worldedit")) {
+					ArrayList<GeneratorLocation> gls = WorldEditHook.getGeneratorsInRange(p);
+					if (gls != null) {
+						int amount = gls.size();
+						for (GeneratorLocation gl : gls) {
+							gl.removeGenerator(false, null);
+						}
+						Lang.getMessageStorage().send(sender, Message.COMMANDS_REMOVE_DONE, "<amount>",
+								String.valueOf(amount));
+					}
+				} else if (args[1].equalsIgnoreCase("owner")) {
+					if (args.length < 3) {
+						Lang.getMessageStorage().send(sender, Message.COMMANDS_REMOVE_USAGE_OWNER);
+						return false;
+					}
+					
+					int amount = 0;
+					
+					for (GeneratorLocation gl : Main.getPlacedGenerators().getAll()) {
+						if (gl.getOwner() != null && gl.getOwner().getName().equalsIgnoreCase(args[2])) {
+                            gl.removeGenerator(false, null);
+                            amount++;
+                        }
+					}
+					
+					ArrayList<GeneratorLocation> gls = Main.getDatabases().getDb().getGenerators(args[2]);
+					if (gls != null) {
+						for (GeneratorLocation gl : gls) {
+							gl.removeGenerator(false, null);
+							amount++;
+						}
+					}
+					
+					Lang.getMessageStorage().send(sender, Message.COMMANDS_REMOVE_DONE, "<amount>",
+							String.valueOf(amount));
+					
+				}
+
 				break;
 			case "convertdbto":
 				if (sender instanceof ConsoleCommandSender) {
