@@ -321,12 +321,8 @@ public class Commands implements CommandExecutor {
 							"kgenerators.spawn");
 				break;
 			case "remove":
-				if (!(sender instanceof Player)) {
-					System.out.println("[KGenerators] Use that command as player!");
-					return false;
-				}
-				Player p = (Player) sender;
-				if (!p.hasPermission("kgenerators.remove")) {
+
+				if (!sender.hasPermission("kgenerators.remove")) {
 					Lang.getMessageStorage().send(sender, Message.COMMANDS_REMOVE_NO_PERMISSION, "<permission>",
 							"kgenerators.remove");
 					return false;
@@ -339,6 +335,13 @@ public class Commands implements CommandExecutor {
 				}
 
 				if (args[1].toLowerCase().equals("worldedit")) {
+					
+					if (!(sender instanceof Player)) {
+						System.out.println("[KGenerators] Use that command as player!");
+						return false;
+					}
+					Player p = (Player) sender;
+					
 					ArrayList<GeneratorLocation> gls = WorldEditHook.getGeneratorsInRange(p);
 					if (gls != null) {
 						int amount = gls.size();
