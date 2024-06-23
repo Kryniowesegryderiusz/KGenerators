@@ -55,7 +55,7 @@ public class GeneratorPlayer {
 	 * Limits
 	 */
 
-	private HashMap<Generator, Integer> playersGenerators = new HashMap<Generator, Integer>();
+	private HashMap<String, Integer> playersGenerators = new HashMap<String, Integer>();
 
 	public void loadPlayer() {
 
@@ -76,12 +76,12 @@ public class GeneratorPlayer {
 	}
 	
 	private void increaseGeneratorsAmount(Generator generator) {
-		if (playersGenerators.containsKey(generator)) {
-			int nr = playersGenerators.get(generator);
+		if (playersGenerators.containsKey(generator.getId())) {
+			int nr = playersGenerators.get(generator.getId());
 			nr++;
-			playersGenerators.put(generator, nr);
+			playersGenerators.put(generator.getId(), nr);
 		} else {
-			playersGenerators.put(generator, 1);
+			playersGenerators.put(generator.getId(), 1);
 		}
 	}
 
@@ -92,10 +92,10 @@ public class GeneratorPlayer {
 		if (!this.isLoaded())
 			this.loadPlayer();
 
-		if (playersGenerators.containsKey(generator)) {
-			int nr = playersGenerators.get(generator);
+		if (playersGenerators.containsKey(generator.getId())) {
+			int nr = playersGenerators.get(generator.getId());
 			nr--;
-			playersGenerators.put(generator, nr);
+			playersGenerators.put(generator.getId(), nr);
 		}
 	}
 
@@ -107,7 +107,7 @@ public class GeneratorPlayer {
 			this.loadPlayer();
 
 		int nr = 0;
-		for (Entry<Generator, Integer> e : playersGenerators.entrySet()) {
+		for (Entry<String, Integer> e : playersGenerators.entrySet()) {
 			nr = nr + e.getValue();
 		}
 		return nr;
@@ -120,8 +120,8 @@ public class GeneratorPlayer {
 		if (!this.isLoaded())
 			this.loadPlayer();
 
-		if (playersGenerators.containsKey(generator))
-			return playersGenerators.get(generator);
+		if (playersGenerators.containsKey(generator.getId()))
+			return playersGenerators.get(generator.getId());
 		else
 			return 0;
 	}

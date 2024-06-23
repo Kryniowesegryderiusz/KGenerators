@@ -51,6 +51,7 @@ public class LimitsManager {
 				new Limit(this, config, id);
 			}
 		}
+		
 		Logger.info("Limits file: Loaded " + this.limits.size() + " limits");
 	}
 
