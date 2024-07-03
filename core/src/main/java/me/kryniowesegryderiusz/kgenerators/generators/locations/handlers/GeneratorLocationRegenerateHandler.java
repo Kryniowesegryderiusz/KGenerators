@@ -35,13 +35,12 @@ public class GeneratorLocationRegenerateHandler {
 			return;
 		}
 		
-		boolean isLoaded = Main.getPlacedGenerators().isLoaded(gLocation);
 		boolean isAir = Main.getMultiVersion().getBlocksUtils().isAir(generatingLocationBlock);
 		boolean isOnWhitelist = Main.getMultiVersion().getBlocksUtils().isOnWhitelist(generatingLocationBlock);
-		boolean isBlockPossibleToMine = gLocation.isBlockPossibleToMine(generatingLocation);
+		boolean isPlaceholder = gLocation.getGenerator().getPlaceholder() == null ? isAir : gLocation.getGenerator().getPlaceholder().getItem().equals(Main.getMultiVersion().getBlocksUtils().getItemStackByBlock(generatingLocationBlock));
 		
-		if (!isLoaded && !isAir	&& !isOnWhitelist && !isBlockPossibleToMine) {
-			Logger.debugPlacedGeneratorsManager("GeneratorLocationRegenerateHandler: Dropping generator " + gLocation.toString() + " | isLoaded: " + isLoaded + " | isAir: " + isAir + " | isOnWhitelist: " + isOnWhitelist + " | isBlockPossibleToMine: " + isBlockPossibleToMine);
+		if (!isAir && !isOnWhitelist && !isPlaceholder) {
+			Logger.debugPlacedGeneratorsManager("GeneratorLocationRegenerateHandler: Dropping generator " + gLocation.toString() + " | isAir: " + isAir + " | isOnWhitelist: " + isOnWhitelist + " | isPlaceholder: " + isPlaceholder);
 			gLocation.removeGenerator(true, null);
 			return;
 		}

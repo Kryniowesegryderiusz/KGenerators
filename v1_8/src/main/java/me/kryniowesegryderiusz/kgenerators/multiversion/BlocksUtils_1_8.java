@@ -65,8 +65,7 @@ public class BlocksUtils_1_8 implements BlocksUtils {
 			if (Main.getSettings().getGeneratingWhitelist().contains(XMaterial.LAVA)) {
 				return true;
 			}
-		} else
-		{
+		} else {
 			if (Main.getSettings().getGeneratingWhitelist().contains(XMaterial.matchXMaterial(block.getType()))) {
 				return true;
 			}
