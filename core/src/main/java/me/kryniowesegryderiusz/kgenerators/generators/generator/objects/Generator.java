@@ -15,6 +15,7 @@ import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.meta.ItemMeta;
 
 import lombok.Getter;
+import lombok.Setter;
 import me.kryniowesegryderiusz.kgenerators.Main;
 import me.kryniowesegryderiusz.kgenerators.api.objects.AbstractGeneratedObject;
 import me.kryniowesegryderiusz.kgenerators.dependencies.hooks.NBTAPIHook;
@@ -36,7 +37,7 @@ public class Generator {
 	@Getter
 	private String id;
 	private ItemStack generatorItem;
-	@Getter
+	@Getter @Setter
 	private int delay;
 	@Getter
 	private GeneratorType type = GeneratorType.SINGLE;

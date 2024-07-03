@@ -18,9 +18,14 @@ public class GeneratorLocationRegenerateHandler {
 	
 	public void handle(GeneratorLocation gLocation) {
 		
-		PreGeneratorRegenerationEvent event = new PreGeneratorRegenerationEvent(gLocation);
-		Main.getInstance().getServer().getPluginManager().callEvent(event);
-		if (event.isCancelled()) return;
+		if (!gLocation.isReadyForRegeneration()) {
+			if (gLocation.getGenerator().getDelay() == 0) {
+				gLocation.getGenerator().setDelay(10);
+				Logger.warn("GeneratorLocationRegenerateHandler: Generator " + gLocation.getGenerator().getId() + " has delay set to 0 and is not ready for regeneration. Changing generator delay to 10 to prevent infinite loop crashes.");
+			}
+			gLocation.scheduleGeneratorRegeneration();
+			return;
+		}
 	
 		Location generatingLocation = gLocation.getGeneratedBlockLocation();
 		Block generatingLocationBlock = generatingLocation.getBlock();
@@ -41,10 +46,9 @@ public class GeneratorLocationRegenerateHandler {
 			return;
 		}
 		
-		if (!gLocation.isReadyForRegeneration()) {
-			gLocation.scheduleGeneratorRegeneration();
-			return;
-		}
+		PreGeneratorRegenerationEvent event = new PreGeneratorRegenerationEvent(gLocation);
+		Main.getInstance().getServer().getPluginManager().callEvent(event);
+		if (event.isCancelled()) return;
 		
 		AbstractGeneratedObject ago = gLocation.getGenerator().drawGeneratedObject();
 		gLocation.setLastGeneratedObject(ago);
