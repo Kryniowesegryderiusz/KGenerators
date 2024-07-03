@@ -40,7 +40,7 @@ public class BlocksUtils_1_13 implements BlocksUtils {
 	@Override
 	public boolean isOnWhitelist(Block block) {
 
-		if (Main.getSettings().getGeneratingWhitelist().contains(getItemStackByBlock(block))) {
+		if (Main.getSettings().getGeneratingWhitelist().contains(XMaterial.matchXMaterial(block.getType()))) {
 			return true;
 		}
 		return false;

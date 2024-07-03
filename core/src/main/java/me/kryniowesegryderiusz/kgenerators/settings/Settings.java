@@ -6,8 +6,6 @@ import java.util.HashMap;
 
 import org.bukkit.World;
 import org.bukkit.configuration.InvalidConfigurationException;
-import org.bukkit.inventory.ItemStack;
-
 import lombok.Getter;
 import lombok.Setter;
 import me.kryniowesegryderiusz.kgenerators.Main;
@@ -22,13 +20,14 @@ import me.kryniowesegryderiusz.kgenerators.settings.objects.Sound;
 import me.kryniowesegryderiusz.kgenerators.utils.ItemUtils;
 import me.kryniowesegryderiusz.kgenerators.utils.immutable.Config;
 import me.kryniowesegryderiusz.kgenerators.utils.immutable.ConfigManager;
+import me.kryniowesegryderiusz.kgenerators.xseries.XMaterial;
 import me.kryniowesegryderiusz.kgenerators.xseries.XSound;
 
 public class Settings {
 
 	@Setter
 	@Getter
-	private ArrayList<ItemStack> generatingWhitelist = new ArrayList<ItemStack>();
+	private ArrayList<XMaterial> generatingWhitelist = new ArrayList<XMaterial>();
 
 	@Setter
 	@Getter
@@ -140,12 +139,12 @@ public class Settings {
 
 		if (config.contains("can-generate-instead")) {
 			ArrayList<String> tempListString = new ArrayList<String>();
-			ArrayList<ItemStack> generatingWhitelist = new ArrayList<ItemStack>();
+			ArrayList<XMaterial> generatingWhitelist = new ArrayList<XMaterial>();
 			tempListString = (ArrayList<String>) config.getList("can-generate-instead");
 
 			for (String s : tempListString) {
-				ItemStack m = ItemUtils.parseItemStack(s, "Config file", true);
-				generatingWhitelist.add(m);
+				XMaterial xm = ItemUtils.getXMaterial(s, "config.yml can-generate-instead", true);
+				generatingWhitelist.add(xm);
 			}
 			this.setGeneratingWhitelist(generatingWhitelist);
 		}

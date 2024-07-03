@@ -12,6 +12,7 @@ import me.kryniowesegryderiusz.kgenerators.logger.Logger;
 import me.kryniowesegryderiusz.kgenerators.settings.Settings;
 import me.kryniowesegryderiusz.kgenerators.utils.immutable.Config;
 import me.kryniowesegryderiusz.kgenerators.utils.immutable.ConfigManager;
+import me.kryniowesegryderiusz.kgenerators.xseries.XMaterial;
 
 public class FilesConverter {
 
@@ -59,8 +60,8 @@ public class FilesConverter {
 			add(file,
 					"#By default generator will generate block only on air. Here you can add blocks, which will be replaced by generated block.");
 			add(file, "can-generate-instead:");
-			for (ItemStack i : settings.getGeneratingWhitelist()) {
-				add(file, "  - " + i.getType().toString());
+			for (XMaterial i : settings.getGeneratingWhitelist()) {
+				add(file, "  - " + i.name());
 			}
 			Logger.info("FilesConverter: Added can-generate-instead settings to config file");
 		}

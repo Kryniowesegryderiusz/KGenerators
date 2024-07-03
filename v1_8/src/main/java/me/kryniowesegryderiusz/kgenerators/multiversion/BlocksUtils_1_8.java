@@ -58,16 +58,16 @@ public class BlocksUtils_1_8 implements BlocksUtils {
 	@Override
 	public boolean isOnWhitelist(Block block) {
 		if (block.getType().equals(Material.WATER) || block.getType().equals(Material.STATIONARY_WATER)) {
-			if (Main.getSettings().getGeneratingWhitelist().contains(XMaterial.WATER.parseItem())) {
+			if (Main.getSettings().getGeneratingWhitelist().contains(XMaterial.WATER)) {
 				return true;
 			}
 		} else if (block.getType().equals(Material.LAVA) || block.getType().equals(Material.STATIONARY_LAVA)) {
-			if (Main.getSettings().getGeneratingWhitelist().contains(XMaterial.LAVA.parseItem())) {
+			if (Main.getSettings().getGeneratingWhitelist().contains(XMaterial.LAVA)) {
 				return true;
 			}
 		} else
 		{
-			if (Main.getSettings().getGeneratingWhitelist().contains(getItemStackByBlock(block))) {
+			if (Main.getSettings().getGeneratingWhitelist().contains(XMaterial.matchXMaterial(block.getType()))) {
 				return true;
 			}
 		}
