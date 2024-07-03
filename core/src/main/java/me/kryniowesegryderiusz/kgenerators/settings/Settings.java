@@ -113,7 +113,7 @@ public class Settings {
 	private boolean warnings = true;
 	
 	@SuppressWarnings("unchecked")
-	public Settings() {
+	public void reload() {
 		Logger.info("Settings: Loading settings");
 
 		Config config;
@@ -136,6 +136,19 @@ public class Settings {
 			Main.getInstance().getServer().getPluginManager().disablePlugin(Main.getInstance());
 			return;
 		}
+		
+		if (config.contains("debug.plugin-load"))
+			this.pluginLoadDebug = config.getBoolean("debug.plugin-load");
+		if (config.contains("debug.players"))
+			this.playersDebug = config.getBoolean("debug.players");
+		if (config.contains("debug.placed-generators-manager"))
+			this.placedGeneratorsManagerDebug = config.getBoolean("debug.placed-generators-manager");
+		if (config.contains("debug.schedules"))
+			this.schedulesManagerDebug = config.getBoolean("debug.schedules");
+		if (config.contains("debug.multi-version"))
+			this.multiVersionManagerDebug = config.getBoolean("debug.multi-version");
+		if (config.contains("debug.warnings"))
+			this.warnings = config.getBoolean("debug.warnings");
 
 		if (config.contains("can-generate-instead")) {
 			ArrayList<String> tempListString = new ArrayList<String>();
@@ -198,19 +211,6 @@ public class Settings {
 		
 		if (config.contains("async-chunk-loading"))
 			this.asyncChunkLoading = config.getBoolean("async-chunk-loading");
-		
-		if (config.contains("debug.plugin-load"))
-			this.pluginLoadDebug = config.getBoolean("debug.plugin-load");
-		if (config.contains("debug.players"))
-			this.playersDebug = config.getBoolean("debug.players");
-		if (config.contains("debug.placed-generators-manager"))
-			this.placedGeneratorsManagerDebug = config.getBoolean("debug.placed-generators-manager");
-		if (config.contains("debug.schedules"))
-			this.schedulesManagerDebug = config.getBoolean("debug.schedules");
-		if (config.contains("debug.multi-version"))
-			this.multiVersionManagerDebug = config.getBoolean("debug.multi-version");
-		if (config.contains("debug.warnings"))
-			this.warnings = config.getBoolean("debug.warnings");
 		
 		this.generatorItemMatcher.load(config);
 

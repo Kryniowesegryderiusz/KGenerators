@@ -88,6 +88,7 @@ public class Main extends JavaPlugin {
     	Logger.setup();
     	
 		settings = new Settings();
+		settings.reload();
 		FilesConverter.updateConfig(settings);
     	
     	multiVersion = new MultiVersionManager();
@@ -119,7 +120,7 @@ public class Main extends JavaPlugin {
     
     public void reload() {
     	Logger.info("Reload: KGenerators reload started");
-    	settings = new Settings();
+    	settings.reload();
     	generators.reload();
     	//players.clear();
     	upgrades.reload();

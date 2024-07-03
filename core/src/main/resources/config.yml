@@ -76,6 +76,11 @@ actions:
     mode: RIGHT_CLICK
     item: ANY
     sneak: false
+  #Action, which will be used for upgrading generator
+  upgrade:
+    mode: RIGHT_CLICK
+    item: GOLDEN_SHOVEL
+    sneak: false
 
 #Here you can choose which sounds should be played on each action.
 #ALWAYS use names from https://hub.spigotmc.org/javadocs/bukkit/org/bukkit/Sound.html

@@ -106,6 +106,7 @@ public enum Message implements IMessage {
 	COMMANDS_ACTIONS_PICK_UP("commands.actions.pick-up", "Pick up"),
 	COMMANDS_ACTIONS_OPEN_GUI("commands.actions.gui", "Open GUI"),
 	COMMANDS_ACTIONS_TIME_LEFT("commands.actions.time-left", "Time left"),
+	COMMANDS_ACTIONS_UPGRADE("commands.actions.upgrade", "Upgrade"),
 	
 	COMMANDS_TIME_LEFT_NO_GENERATOR("commands.timeleft.no-generator", "&cYou are not looking at generator waiting for regeneration!"),
 	COMMANDS_TIME_LEFT_NO_PERMISSION("commands.timeleft.no-permission", "&cYou dont have permission &8(&7<permission>&8)&c to check generation remaining time"),

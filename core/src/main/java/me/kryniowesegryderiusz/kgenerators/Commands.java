@@ -110,6 +110,8 @@ public class Commands implements CommandExecutor {
 								action = Lang.getMessageStorage().get(Message.COMMANDS_ACTIONS_OPEN_GUI, false);
 							else if (e.getKey() == ActionType.TIMELEFT)
 								action = Lang.getMessageStorage().get(Message.COMMANDS_ACTIONS_TIME_LEFT, false);
+							else if (e.getKey() == ActionType.UPGRADE)
+								action = Lang.getMessageStorage().get(Message.COMMANDS_ACTIONS_UPGRADE, false);
 
 							if (e.getValue().isSneak())
 								sneak = Lang.getMessageStorage().get(Message.COMMANDS_ACTIONS_SNEAK, false);

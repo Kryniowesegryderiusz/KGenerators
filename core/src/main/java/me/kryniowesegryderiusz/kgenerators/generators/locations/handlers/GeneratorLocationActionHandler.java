@@ -54,6 +54,12 @@ public class GeneratorLocationActionHandler {
 								Main.getSchedules().timeLeftFormatted(gLocation));
 					}
 					break;
+				case UPGRADE:
+					if (gLocation.getGenerator().getUpgrade() != null)
+						gLocation.getGenerator().getUpgrade().blockUpgrade(gLocation, player);
+					else
+						Lang.getMessageStorage().send(player, Message.UPGRADES__NO_NEXT_LEVEL);
+					break;
 				}
 			}
 		}

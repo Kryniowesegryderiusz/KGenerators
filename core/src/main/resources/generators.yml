@@ -128,6 +128,10 @@ example_generator:
       mode: RIGHT_CLICK
       item: ANY
       sneak: false
+    upgrade:
+      mode: RIGHT_CLICK
+      item: GOLDEN_SHOVEL
+      sneak: false
 
 #===============================================================
 #=====    Below you can find PRECONFIGURED generators.     ===== 

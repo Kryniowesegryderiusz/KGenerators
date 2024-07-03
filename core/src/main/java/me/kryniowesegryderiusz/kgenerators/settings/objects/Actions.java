@@ -35,10 +35,9 @@ public class Actions {
 			path = path + ".actions";
 
 		this.addGeneratorAction(ActionType.PICKUP, new GeneratorAction(ActionType.PICKUP, config, path + ".pick-up"));
-		this.addGeneratorAction(ActionType.OPENGUI,
-				new GeneratorAction(ActionType.OPENGUI, config, path + ".open-gui"));
-		this.addGeneratorAction(ActionType.TIMELEFT,
-				new GeneratorAction(ActionType.TIMELEFT, config, path + ".time-left-check"));
+		this.addGeneratorAction(ActionType.OPENGUI, new GeneratorAction(ActionType.OPENGUI, config, path + ".open-gui"));
+		this.addGeneratorAction(ActionType.TIMELEFT, new GeneratorAction(ActionType.TIMELEFT, config, path + ".time-left-check"));
+		this.addGeneratorAction(ActionType.UPGRADE, new GeneratorAction(ActionType.UPGRADE, config, path + ".upgrade"));
 	}
 
 	public Set<Entry<ActionType, GeneratorAction>> getEntrySet() {
