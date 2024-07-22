@@ -1,9 +1,8 @@
 package me.kryniowesegryderiusz.kgenerators.generators.locations.handlers;
 
 import org.bukkit.Location;
+import org.bukkit.Material;
 import org.bukkit.block.Block;
-import org.bukkit.inventory.ItemStack;
-
 import me.kryniowesegryderiusz.kgenerators.Main;
 import me.kryniowesegryderiusz.kgenerators.api.events.PostGeneratorRegenerationEvent;
 import me.kryniowesegryderiusz.kgenerators.api.events.PreGeneratorRegenerationEvent;
@@ -14,7 +13,7 @@ import me.kryniowesegryderiusz.kgenerators.xseries.XMaterial;
 
 public class GeneratorLocationRegenerateHandler {
 	
-	static ItemStack pistonHead = XMaterial.PISTON_HEAD.parseItem();
+	static Material pistonHead = XMaterial.PISTON_HEAD.parseMaterial();
 	
 	public void handle(GeneratorLocation gLocation) {
 		
@@ -30,7 +29,7 @@ public class GeneratorLocationRegenerateHandler {
 		Location generatingLocation = gLocation.getGeneratedBlockLocation();
 		Block generatingLocationBlock = generatingLocation.getBlock();
 		
-		if (generatingLocationBlock.getType().equals(pistonHead.getType())) {
+		if (generatingLocationBlock.getType() == pistonHead) {
 			gLocation.scheduleGeneratorRegeneration();
 			return;
 		}
