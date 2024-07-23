@@ -219,7 +219,7 @@ public class Commands implements CommandExecutor {
 					if (Main.getUpgrades().getUpgrade(p.getItemInHand()) != null) {
 						Main.getUpgrades().getUpgrade(p.getItemInHand()).handUpgrade(p);
 					} else {
-						Lang.getMessageStorage().send(p, Message.UPGRADES__NO_NEXT_LEVEL);
+						Lang.getMessageStorage().send(p, Message.UPGRADES_NO_NEXT_LEVEL);
 					}
 				} else {
 					Logger.textToConsole("Use that command as player!");

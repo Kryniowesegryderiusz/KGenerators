@@ -16,6 +16,8 @@ messages:
       no-permission: '&cYou dont have permission &8(&7<permission>&8)&c to craft <generator>&c!'
     timeleft:
       output: '&aThis generator will be regenerated in &e<time>'
+    action:
+      cant-here: '&cYou cant interact with generator here!'
     pick-up:
       successful: '&e<generator> &apicked up'
       cant-here: '&cYou cant pick up generator here!'
@@ -50,7 +52,6 @@ messages:
     separator: ', '
     no-next-level: '&cThis is maximum level of that generator!'
     no-permission: '&cYou dont have permission &8(&7<permission>&8)&c to upgrade generator!'
-  upgardes:
     not-a-generator: '&cYou dont have generator in hand!'
     costs:
       exp: xp
@@ -113,6 +114,7 @@ messages:
       pick-up: Pick up
       gui: Open GUI
       time-left: Time left
+      upgrade: Upgrade
     timeleft:
       no-generator: '&cYou are not looking at generator waiting for regeneration!'
       no-permission: '&cYou dont have permission &8(&7<permission>&8)&c to check generation
@@ -131,7 +133,9 @@ messages:
       help: Spawns generator at location
     remove:
       done: '&aRemoved <amount> generators!'
-      usage: '&cUsage: &e/kgenerators remove worldedit'
+      usage:
+        worldedit: '&cUsage: &e/kgenerators remove worldedit'
+        owner: '&cUsage: &e/kgenerators remove owner <owner>'
       no-permission: '&cYou dont have permission &8(&7<permission>&8)&c to remove
         generators!'
       help: Removes generators

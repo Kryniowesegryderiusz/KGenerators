@@ -58,7 +58,7 @@ public class GeneratorLocationActionHandler {
 					if (gLocation.getGenerator().getUpgrade() != null)
 						gLocation.getGenerator().getUpgrade().blockUpgrade(gLocation, player);
 					else
-						Lang.getMessageStorage().send(player, Message.UPGRADES__NO_NEXT_LEVEL);
+						Lang.getMessageStorage().send(player, Message.UPGRADES_NO_NEXT_LEVEL);
 					break;
 				}
 			}

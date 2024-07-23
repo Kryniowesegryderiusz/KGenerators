@@ -49,11 +49,11 @@ public enum Message implements IMessage {
 	UPGRADES_UPGRADED("upgrades.upgraded", "&aYou've upgraded &e<number> &agenerators for &e<costs>&a!"),
 	UPGRADES_COST_NOT_FULFILLED("upgrades.gui-upgraded", "&cYou dont have &4<cost>&c!"),
 	UPGRADES_COSTS_SEPARATOR("upgrades.separator", ", "),
-	UPGRADES__NO_NEXT_LEVEL("upgrades.no-next-level", "&cThis is maximum level of that generator!"),
-	UPGRADES__NO_PERMISSION("upgrades.no-permission", "&cYou dont have permission &8(&7<permission>&8)&c to upgrade generator!"),
-	UPGRADES_NOT_A_GENERATOR("upgardes.not-a-generator", "&cYou dont have generator in hand!"),
-	UPGRADES_COST_EXP("upgardes.costs.exp","xp"),
-	UPGRADES_COST_EXP_LEVELS("upgardes.costs.exp-levels","xp levels"),
+	UPGRADES_NO_NEXT_LEVEL("upgrades.no-next-level", "&cThis is maximum level of that generator!"),
+	UPGRADES_NO_PERMISSION("upgrades.no-permission", "&cYou dont have permission &8(&7<permission>&8)&c to upgrade generator!"),
+	UPGRADES_NOT_A_GENERATOR("upgrades.not-a-generator", "&cYou dont have generator in hand!"),
+	UPGRADES_COST_EXP("upgrades.costs.exp","xp"),
+	UPGRADES_COST_EXP_LEVELS("upgrades.costs.exp-levels","xp levels"),
 	
 	HOOKS_EXPLODE_PICKAXE_CANNOT_USE_ON_DOUBLE("hooks.explode-pickaxe.cannot-use-on-double", "&cYou cannot use explosion pickaxe on type double generator!"),
 	

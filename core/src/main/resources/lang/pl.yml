@@ -1,6 +1,6 @@
-#Przetumaczone przez autora pluginu
-#Aktualne tłumaczenie znajdziesz zawsze na:
-#https://github.com/Kryniowesegryderiusz/KGenerators/blob/main/core/src/main/resources/lang/pl.yml
+# Przetumaczone przez autora pluginu (dla wersji 7.3-b186)
+# Aktualne tłumaczenie znajdziesz zawsze na:
+# https://github.com/Kryniowesegryderiusz/KGenerators/blob/main/core/src/main/resources/lang/pl.yml
 
 messages:
   prefix: '&8[&6KGenerators&8] '
@@ -10,33 +10,45 @@ messages:
       disabled: '&cGeneratory są wyłączone na tym świecie!'
       repaired: '&aGenerator naprawiony!'
       no-longer-there: '&cW tym miejscu nie istnieje już generator!'
+      disabled-specific: '&c<generator> jest niedostępny na tym świecie!'
+      object-amount: <amount> x <object>
     digging:
       cant-here: '&cNie możesz tutaj kopać bloków z generatora!'
       only-gen: '&cW tym miejscu możesz kopać tylko wygenerowane bloki!'
       no-permission: '&cNie masz uprawnienia &8(&7<permission>&8)&c, żeby kopać <generator>&c!'
     crafting:
       cant-use: '&cNie możesz nic wytworzyć z generatora!'
-      no-permission: '&cNie masz uprawnienia &8(&7<permission>&8)&c, żeby wytworzyć <generator>&c!'
+      no-permission: '&cNie masz uprawnienia &8(&7<permission>&8)&c, żeby wytworzyć
+        <generator>&c!'
     timeleft:
       output: '&aRegeneracja nastąpi za &e<time>'
     pick-up:
       successful: '&aPodniesiono &e<generator>'
       cant-here: '&cNie możesz tutaj podnieść generatora!'
-      no-permission: '&cNie masz uprawnień &8(&7<permission>&8)&c, żeby podnieść generator tego typu'
+      no-permission: '&cNie masz uprawnień &8(&7<permission>&8)&c, żeby podnieść generator
+        tego typu'
     place:
       cant-here: '&cNie możesz tutaj postawić generatora!'
       cant-place-block: '&cNie możesz nic postawić w miejscu generatora'
-      cant-place-double-below-block: '&cNie możesz postawić podwójnego generatora pod innym blokiem!'
-      cant-place-double-below-generator: '&cNie możesz postawić podwójnego generatora pod innym generatorem!'
-      no-permission: '&cNie masz uprawnień &8(&7<permission>&8)&c, żeby postawić generator tego typu'
+      cant-place-double-below-block: '&cNie możesz postawić podwójnego generatora
+        pod innym blokiem!'
+      cant-place-double-below-generator: '&cNie możesz postawić podwójnego generatora
+        pod innym generatorem!'
+      no-permission: '&cNie masz uprawnień &8(&7<permission>&8)&c, żeby postawić generator
+        tego typu'
     limits:
-      cant-place-more-type: '&cNie możesz postawić więcej niż &6<number> generatorów <generator>&c, ze względu na limit &6<limit>&c!'
+      cant-place-more-type: '&cNie możesz postawić więcej niż &6<number> generatorów
+        <generator>&c, ze względu na limit &6<limit>&c!'
       cant-pick-up: '&cNie możesz podnieść generatora należącego do &6<owner>&c!'
       cant-use: '&cNie możesz używać generatora należącego do &6<owner>&c!'
     protection:
       cant-change-generator-item: '&cNie możesz edytować generatora!'
     menus:
       cant-open-here: '&cNie możesz tutaj używać tego menu!!'
+    action:
+      cant-here: '&cNie możesz tego tutaj zrobić!'
+    chunks:
+      not-loaded-yet: '&cChunk nie został w pełni załadowany! Zaczekaj chwilę!'
   economy:
     no-economy-avaible: '&cEkonomia nie jest dostępna na serwerze!'
     not-enough-money: '&cNie masz wystarczająco dużo pieniędzy! Potrzebujesz &6<cost>&c!'
@@ -44,15 +56,21 @@ messages:
   commands:
     any:
       wrong: '&cNie ma takiej komendy! Wpisz /kgenerators, by wyświetlić pomoc'
-      no-permission: '&cNie masz uprawnienia &8(&7<permission>&8)&c, żeby używać komend generatorów'
+      no-permission: '&cNie masz uprawnienia &8(&7<permission>&8)&c, żeby używać komend
+        generatorów'
       player-not-online: '&cGracz nie jest online!'
       player-doesnt-exist: '&cGracz nie istnieje!'
       generator-doesnt-exist: '&cTen generator nie istnieje!'
       menu-doesnt-exist: '&cTo menu nie istnieje!'
+      console-only: '&cTej komendy można użyć wyłącznie z konsoli!'
+      not-a-integer: '&c''<variable>'' powinno być liczbą!'
+      not-a-floating-point-number: '&c''<variable>'' powinno być liczbą zmiennoprzecinkową!'
+      world-doesnt-exist: '&cŚwiat ''<world>'' nie istnieje'
     list:
       header: '&aGeneratory:'
       list: '&8- <generator> &8(&7ID: <generatorID>&8)'
-      no-permission: '&cNie masz uprawnienia &8(&7<permission>&8)&c, żeby wyświetlić listę generatorów'
+      no-permission: '&cNie masz uprawnienia &8(&7<permission>&8)&c, żeby wyświetlić
+        listę generatorów'
       help: Wyświetla listę generatorów
     give:
       generator-given: '&aDałeś <amount>x <generator>&a graczowi &e<player>'
@@ -65,10 +83,12 @@ messages:
       no-permission: '&cNie masz uprawnienia &8(&7<permission>&8)&c, żeby wziąć generatory'
       help: Bierze wszystkie generatory
     limits:
-      no-permission: '&cNie masz uprawnień &8(&7<permission>&8)&c, żeby otworzyć menu limitów!'
+      no-permission: '&cNie masz uprawnień &8(&7<permission>&8)&c, żeby otworzyć menu
+        limitów!'
       help: Sprawdza limity
     actions:
-      no-permission: '&cNie masz uprawnienia &8(&7<permission>&8)&c, żeby sprawdzić akcje!'
+      no-permission: '&cNie masz uprawnienia &8(&7<permission>&8)&c, żeby sprawdzić
+        akcje!'
       help: Sprawdza dostępne akcje
       header: '&aDostępne akcje:'
       list: '&6<action> &8- &e<sneak><mode><item>'
@@ -80,9 +100,11 @@ messages:
       pick-up: Podniesienie generatora
       gui: Otwarcie menu
       time-left: Pozostały czas
+      upgrade: Ulepsz
     timeleft:
       no-generator: '&cNie patrzysz na generator oczekujący na regeneracje!'
-      no-permission: '&cNie masz uprawnienia &8(&7<permission>&8)&c, żeby sprawdzić pozostały czas generatora'
+      no-permission: '&cNie masz uprawnienia &8(&7<permission>&8)&c, żeby sprawdzić
+        pozostały czas generatora'
       help: Sprawdza pozostały czas generatora
       format:
         seconds: s
@@ -93,27 +115,60 @@ messages:
     menu:
       opened-others: '&aOtwarto menu generatora &e<generator> <menu> &agraczowi &e<player>'
       error: '&cPodczas używania menu wystąpił błąd! Skontaktuj się z administratorem'
-      no-permission: '&cNie masz uprawnienia &8(&7<permission>&8)&c, żeby otworzyć menu!'
-      no-permission-others: '&cNie masz uprawnienień &8(&7<permission>&8)&c, żeby otwierać menu generatora innym graczom!'
+      no-permission: '&cNie masz uprawnienia &8(&7<permission>&8)&c, żeby otworzyć
+        menu!'
+      no-permission-others: '&cNie masz uprawnienień &8(&7<permission>&8)&c, żeby
+        otwierać menu generatora innym graczom!'
       help: Otwiera menu generatorów
-    upgrade:
-      no-next-level: '&cTen generator osiągnął już maksymalny poziom!'
-      no-permission: '&cNie masz uprawnienia &8(&7<permission>&8)&c, żeby ulepszyć generator'
-      no-a-generator: '&cNie masz generatora w ręce!'
-      help: Ulepsza generator
     reload:
-      done: '&aPrzeładowano plugin! Sprawdź konsolę lub plik log.txt w folderze pluginu, żeby sprawdzić ewentualne błedy!'
-      no-permission: '&cNie masz uprawnienia &8(&7<permission>&8)&c, żeby przeładować plugin'
+      done: '&aPrzeładowano plugin! Sprawdź konsolę lub plik log.txt w folderze pluginu,
+        żeby sprawdzić ewentualne błedy!'
+      no-permission: '&cNie masz uprawnienia &8(&7<permission>&8)&c, żeby przeładować
+        plugin'
       help: Przeładowuje plugin
     debug:
       done: '&aTwój url pomocy to: &e<url>'
       error: '&cWystąpił błąd podczas generowania url pomocy!'
-      no-permission: '&cNie masz uprawnienia &8(&7<permission>&8)&c, żeby pobierać url pomocy'
+      no-permission: '&cNie masz uprawnienia &8(&7<permission>&8)&c, żeby pobierać
+        url pomocy'
     help:
       label: '&6&lKGenerators &aPomoc:'
       format: '&e/kgenerators <subcommand> &7<help>'
+    spawn:
+      done: '&aGenerator spawned! New generator: &e<location_info>'
+      usage: '&cUsage: &e/kgenerators spawn <world> <x> <y> <z> <generator> [owner]'
+      no-permission: '&cYou dont have permission &8(&7<permission>&8)&c to spawn generator!'
+      help: Spawns generator at location
+    remove:
+      done: '&aRemoved <amount> generators!'
+      usage:
+        worldedit: '&cUsage: &e/kgenerators remove worldedit'
+        owner: '&cUsage: &e/kgenerators remove owner <owner>'
+      no-permission: '&cYou dont have permission &8(&7<permission>&8)&c to remove
+        generators!'
+      help: Removes generators
+      worldedit-not-found: '&cSelection is not complete!'
+      worldedit-wrong-selection: '&cSelection is not complete!'
+    upgrade:
+      help: Ulepsz generator
+  upgrades:
+    upgraded: '&aUlepszono &e<number> &ageneratorów za &e<costs>&a!'
+    gui-upgraded: '&cNie posiadasz &4<cost>&c!'
+    separator: ', '
+    no-next-level: '&cTen generator osiągnął już maksymalny poziom!'
+    no-permission: '&cNie masz uprawnienia &8(&7<permission>&8)&c, żeby ulepszyć generator'
+    no-a-generator: '&cNie masz generatora w ręce!'
+    costs:
+      exp: xp
+      exp-levels: poziomów exp
+    not-a-generator: '&cYou dont have generator in hand!'
+  hooks:
+    explode-pickaxe:
+      cannot-use-on-double: '&cNie możesz używać wybuchowego kilofa na podwójnym generatorze!'
+  database:
+    error: '&cWystąpił problem z bazą danych! Skontaktuj się z administratorem!'
 holograms:
   remaining-time:
-  - '<generator_name>'
+  - <generator_name>
   - '&6Czas:'
   - '&e<time>'

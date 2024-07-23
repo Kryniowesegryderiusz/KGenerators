@@ -105,7 +105,7 @@ public class Upgrade {
 	private boolean upgrade(Player p, int amount) {
 		
 		if (!p.hasPermission("kgenerators.upgrade")) {
-			Lang.getMessageStorage().send(p, Message.UPGRADES__NO_PERMISSION,
+			Lang.getMessageStorage().send(p, Message.UPGRADES_NO_PERMISSION,
 					"<permission>", "kgenerators.upgrade");
 			return false;
 		}
