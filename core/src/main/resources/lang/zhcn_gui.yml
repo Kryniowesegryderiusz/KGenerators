@@ -1,0 +1,312 @@
+generator:
+  name: §9<generator_name>
+  slots: 45
+  filler:
+    enabled: true
+    item: GRAY_STAINED_GLASS_PANE
+    name: §r
+    lore: []
+    slots: 0,1,2,3,4,5,6,7,8,9,17,18,26,27,35,36,37,38,39,40,41,42,43,44
+    glow: false
+  time-left:
+    enabled: true
+    item: CLOCK
+    name: §a生成剩余时间
+    lore:
+    - §a<time>
+    slots: '21'
+    glow: false
+  owner:
+    enabled: true
+    item: BOOK
+    name: §a生成器拥有者
+    lore:
+    - §e<owner>
+    slots: '22'
+    glow: false
+  pick-up:
+    enabled: true
+    item: BARRIER
+    name: §a拾起生成器
+    lore:
+    - §e点此拾起生成器
+    slots: '23'
+    glow: false
+  quit:
+    enabled: true
+    item: ARROW
+    name: §c退出
+    lore:
+    - §6关闭本界面
+    slots: '40'
+    glow: false
+  reset:
+    enabled: true
+    item: MUSIC_DISC_11
+    name: §c重置生成器
+    lore:
+    - §6这个生成器像是坏掉了!
+    - §6点此将其修复
+    slots: '13'
+    glow: false
+  upgrade:
+    enabled: true
+    item: EXPERIENCE_BOTTLE
+    name: §c升级生成器
+    lore:
+    - §6点此升级生成器!
+    - ''
+    - '§6下一阶段: §e<next_generator>'
+    - '§6升级费用:'
+    - <costs>
+    slots: '31'
+    glow: false
+  upgrade-maxed:
+    enabled: true
+    item: EXPERIENCE_BOTTLE
+    name: §c生成器已满级
+    lore:
+    - §6生成器已经满级, 没有下一等级!
+    - §a你不需要为其升级了!
+    slots: '31'
+    glow: false
+main:
+  name: §9生成器
+  slots: 45
+  filler:
+    enabled: true
+    item: GRAY_STAINED_GLASS_PANE
+    name: §r
+    lore: []
+    slots: 0,1,2,3,4,5,6,7,8,36,37,38,39,40,41,42,43,44
+    glow: false
+  generator:
+    enabled: true
+    item: <generator>
+    name: §a<generator_name>
+    lore:
+    - '§6左键:'
+    - §e浏览生成物品
+    slots: 9,10,11,12,13,14,15,16,17,18,19,20,21,22,23,24,25,26,27,28,29,30,31,32,33,34,35
+    glow: false
+  limits:
+    enabled: true
+    item: PLAYER_HEAD
+    name: §a限制
+    lore:
+    - §e点此浏览限制
+    slots: '8'
+    glow: false
+  quit:
+    enabled: true
+    item: BARRIER
+    name: §c退出
+    lore:
+    - §6离开本界面
+    slots: '40'
+    glow: false
+  page:
+    previous:
+      enabled: true
+      item: ARROW
+      name: §c上一页
+      lore:
+      - §6点击返回上一页
+      slots: '38'
+      glow: false
+    next:
+      enabled: true
+      item: ARROW
+      name: §c下一页
+      lore:
+      - §6点击前往下一页
+      slots: '42'
+      glow: false
+generated-objects:
+  name: '§9生成内容:'
+  slots: 45
+  filler:
+    enabled: true
+    item: GRAY_STAINED_GLASS_PANE
+    name: §r
+    lore: []
+    slots: 0,1,2,3,4,5,6,7,8,36,37,38,39,40,41,42,43,44
+    glow: false
+  generated-object:
+    enabled: true
+    item: <generated_object>
+    name: §a<generated_object_name>
+    lore:
+    - <generated_object_lore>
+    - ''
+    - <generated_object_type>
+    - '§6几率: §e<chance>%'
+    - <generated_object_custom_drops>
+    slots: 9,10,11,12,13,14,15,16,17,18,19,20,21,22,23,24,25,26,27,28,29,30,31,32,33,34,35
+    glow: false
+  back:
+    enabled: true
+    item: ARROW
+    name: §c返回
+    lore:
+    - §6回到&c生成器列表
+    slots: '40'
+    glow: false
+recipe:
+  name: §9配方
+  slots: 45
+  filler:
+    enabled: true
+    item: GRAY_STAINED_GLASS_PANE
+    name: §r
+    lore: []
+    slots: 0,1,2,3,4,5,6,7,8,36,37,38,39,40,41,42,43,44
+    glow: false
+  ingredients:
+    enabled: true
+    item: <block>
+    name: §a<block_name>
+    lore: []
+    slots: 10,11,12,19,20,21,28,29,30
+    glow: false
+  result:
+    enabled: true
+    item: <generator>
+    name: §a<generator_name>
+    lore: []
+    slots: '25'
+    glow: false
+  marker:
+    enabled: true
+    item: CRAFTING_TABLE
+    name: §a合成
+    lore: []
+    slots: 14,23,32
+    glow: false
+  back:
+    enabled: true
+    item: ARROW
+    name: §c返回
+    lore:
+    - §6回到&c生成器列表
+    slots: '40'
+    glow: false
+upgrade:
+  name: §9升级
+  slots: 45
+  filler:
+    enabled: true
+    item: GRAY_STAINED_GLASS_PANE
+    name: §r
+    lore: []
+    slots: 0,1,2,3,4,5,6,7,8,36,37,38,39,40,41,42,43,44
+    glow: false
+  ingredient:
+    enabled: true
+    item: <generator>
+    name: §a<generator_name>
+    lore: []
+    slots: '20'
+    glow: false
+  result:
+    enabled: true
+    item: <generator>
+    name: §a<generator_name>
+    lore: []
+    slots: '24'
+    glow: false
+  marker:
+    enabled: true
+    item: EXPERIENCE_BOTTLE
+    name: §a升级
+    lore:
+    - §6若要升级, 获取生成器后输入命令
+    - §e/kgenerators upgrade
+    - §6或打开升级菜单即可进行升级.
+    - ''
+    - '§6费用:'
+    - <costs>
+    slots: 13,22,31
+    glow: false
+  back:
+    enabled: true
+    item: ARROW
+    name: §c返回
+    lore:
+    - §6回到&c生成器列表
+    slots: '40'
+    glow: false
+limits:
+  name: §9Limits
+  slots: 45
+  filler:
+    enabled: true
+    item: GRAY_STAINED_GLASS_PANE
+    name: §r
+    lore: []
+    slots: 0,1,2,3,4,5,6,7,8,36,37,38,39,40,41,42,43,44
+    glow: false
+  limit:
+    enabled: true
+    item: <limit_display_item>
+    name: §a<limit_name>
+    lore:
+    - §6你已经放置了 §e<amount>§6/§e<limit>§6 个
+    - <generators_list>
+    - <is_only_owner_use>
+    - <is_only_owner_pick_up>
+    slots: 9,10,11,12,13,14,15,16,17,18,19,20,21,22,23,24,25,26
+    glow: false
+  back:
+    enabled: true
+    item: ARROW
+    name: §c返回
+    lore:
+    - §6回到&c生成器列表
+    slots: '40'
+    glow: false
+additional-lines:
+  recipe:
+    menu-how-to:
+    - ''
+    - '&6右键:'
+    - '&e浏览配方'
+  upgrades:
+    menu-how-to:
+    - ''
+    - '&6右键:'
+    - '&e浏览升级方法'
+    upgrade-cost:
+    - '&8- &7<cost>'
+  generated-object-type:
+    item:
+    - '&6生成: &e物品'
+    block:
+    - '&6生成: &e方块'
+    entity:
+    - '&6生成: &e实体'
+    custom-drops:
+    - '&6生成: &e自定义掉落'
+  generated-object-custom-drops:
+    custom-drops:
+    - ''
+    - '&6自定义掉落:'
+    - '&8- &6掉落自: &e<custom_drops_source>'
+    - <custom_drops_money>
+    - <custom_drops_exp>
+    - <custom_drops_commands>
+    money:
+    - '&8- &6金币: &e<money>'
+    exp:
+    - '&8- &6经验: &e<exp> 点'
+    command:
+    - '&8- &6命令: &e<command>'
+  limits:
+    generator-list:
+    - '&8- &e<generator_name>'
+    all-generators:
+    - '&e所有生成器'
+    only-owner-pick-up:
+    - '&c仅拥有者可拾起该生成器.'
+    only-owner-use:
+    - '&c仅拥有者可以使用.'
