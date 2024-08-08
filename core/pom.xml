@@ -86,13 +86,13 @@
 
 	</repositories>
 
+
 	<dependencyManagement>
 		<dependencies>
-			<!-- PltoSquared -->
 			<dependency>
 				<groupId>com.intellectualsites.bom</groupId>
 				<artifactId>bom-newest</artifactId>
-				<version>1.39</version>
+				<version>1.47</version>
 				<scope>import</scope>
 				<type>pom</type>
 			</dependency>
@@ -167,7 +167,7 @@
 		<dependency>
 			<groupId>com.github.MilkBowl</groupId>
 			<artifactId>VaultAPI</artifactId>
-			<version>1.7</version>
+			<version>1.7.1</version>
 			<scope>provided</scope>
 		</dependency>
 
