@@ -2,6 +2,7 @@ package me.kryniowesegryderiusz.kgenerators.generators.generator.objects;
 
 import java.util.Map;
 
+import lombok.Setter;
 import org.bukkit.inventory.ItemStack;
 
 import lombok.Getter;
@@ -18,7 +19,8 @@ public class GeneratedBlock extends AbstractGeneratedObject {
 		super("block");
 	}
 
-	@Getter private CustomBlockData customBlockData;
+	@Getter @Setter
+	private CustomBlockData customBlockData;
 	
 	@Getter private boolean physics = true;
 	

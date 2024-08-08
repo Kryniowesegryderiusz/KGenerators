@@ -162,7 +162,7 @@ public class Main extends JavaPlugin {
 			placedGenerators = new PlacedGeneratorsManager();
 			
 			/* Listeners setup */
-			Logger.debugPluginLoad("MainManager: Loading listeners");
+			Logger.debugPluginLoad("MainManager: Loading listeners here!");
 			this.getServer().getPluginManager().registerEvents(new BlockBreakListener(), this);
 			this.getServer().getPluginManager().registerEvents(new BlockPlaceListener(), this);
 			this.getServer().getPluginManager().registerEvents(new CraftItemListener(), this);

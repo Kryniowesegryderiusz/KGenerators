@@ -2,6 +2,7 @@ package me.kryniowesegryderiusz.kgenerators.dependencies.objects;
 
 import java.util.Map;
 
+import lombok.Setter;
 import org.bukkit.inventory.ItemStack;
 
 import io.th0rgal.oraxen.api.OraxenBlocks;
@@ -16,7 +17,8 @@ import me.kryniowesegryderiusz.kgenerators.logger.Logger;
 
 public class GeneratedOraxenBlock extends AbstractGeneratedObject {
 	
-	@Getter private String material;
+	@Getter @Setter
+	private String material;
 
 	public GeneratedOraxenBlock() {
 		super("oraxen_block");

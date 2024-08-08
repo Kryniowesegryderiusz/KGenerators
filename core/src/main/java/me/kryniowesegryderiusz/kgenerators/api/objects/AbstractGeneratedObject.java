@@ -70,7 +70,6 @@ public abstract class AbstractGeneratedObject {
 			return false;
 		}
 		return true;
-
 	}
 	
 	public String toStringSimple() {

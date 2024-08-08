@@ -78,7 +78,7 @@ public class SchedulesManager {
 				this.generatePlaceholder(gLocation);
 			});
 			
-			schedules.put(gLocation, new Schedule(gLocation.getGenerator().getDelay()));
+			schedules.put(gLocation, new Schedule(gLocation.getGenerationDelay()));
 			
 			if (gLocation.getGenerator().isHologram())
 				Main.getHolograms().createRemainingTimeHologram(gLocation);

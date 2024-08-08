@@ -158,6 +158,6 @@ messages:
       format: '&e/kgenerators <subcommand> &7<help>'
 holograms:
   remaining-time:
-  - <generator_name>
+  - '<generated_block>'
   - '&6Time left:'
   - '&e<time>'

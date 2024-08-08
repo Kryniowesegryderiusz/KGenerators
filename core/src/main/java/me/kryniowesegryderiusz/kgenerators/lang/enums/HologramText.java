@@ -5,7 +5,7 @@ import me.kryniowesegryderiusz.kgenerators.lang.interfaces.IHologramText;
 import me.kryniowesegryderiusz.kgenerators.lang.objects.StringContent;
 
 public enum HologramText implements IHologramText {
-	REMAINING_TIME("remaining-time", new StringContent("<generator_name>", "&6Time left:", "&e<time>"));
+	REMAINING_TIME("remaining-time", new StringContent("<generated_block>", "&6Time left:", "&e<time>"));
 
 	@Getter
 	String key;
