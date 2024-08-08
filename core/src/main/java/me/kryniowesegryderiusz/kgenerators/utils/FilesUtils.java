@@ -143,6 +143,19 @@ public class FilesUtils {
 				item = ItemUtils.parseItemStack((String) map.get("type"), place, isBlockCheck);
 			else if (map.containsKey("material"))
 				item = ItemUtils.parseItemStack((String) map.get("material"), place, isBlockCheck);
+			
+			if (map.containsKey("enchants")) {
+				for (String s : (ArrayList<String>) map.get("enchants")) {
+					if (s != null) {
+						String[] splitted = s.split(":");
+						Optional<XEnchantment> xeo = XEnchantment.matchXEnchantment(splitted[0]);
+						if (xeo.isPresent()) {
+							item.addUnsafeEnchantment(xeo.get().getEnchant(), Integer.valueOf(splitted[1]));
+						} else
+							Logger.error(place + ": Cannot load enchantment! " + splitted[0] + " doesnt exist!");
+					}
+				}
+			}
 
 			ItemMeta meta = null;
 			if (item.getItemMeta() != null) {
@@ -179,19 +192,6 @@ public class FilesUtils {
 				meta.setCustomModelData((int) map.get("custom-model-data"));
 
 			item.setItemMeta(meta);
-
-			if (map.containsKey("enchants")) {
-				for (String s : (ArrayList<String>) map.get("enchants")) {
-					if (s != null) {
-						String[] splitted = s.split(":");
-						Optional<XEnchantment> xeo = XEnchantment.matchXEnchantment(splitted[0]);
-						if (xeo.isPresent()) {
-							item.addUnsafeEnchantment(xeo.get().getEnchant(), Integer.valueOf(splitted[1]));
-						} else
-							Logger.error(place + ": Cannot load enchantment! " + splitted[0] + " doesnt exist!");
-					}
-				}
-			}
 
 			if (map.containsKey("custom-nbt")) {
 				for (String s : (ArrayList<String>) map.get("custom-nbt")) {
