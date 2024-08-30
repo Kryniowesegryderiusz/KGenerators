@@ -144,7 +144,7 @@
 		<dependency>
 			<groupId>com.github.Slimefun</groupId>
 			<artifactId>Slimefun4</artifactId>
-			<version>RC-22</version>
+			<version>RC-37</version>
 		</dependency>
 
 		<!-- Project Lombok -->
