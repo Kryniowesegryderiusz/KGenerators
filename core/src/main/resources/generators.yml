@@ -16,7 +16,7 @@ example_generator:
   #More options for item settings can be found here https://kzone.gitbook.io/docs/kgenerators/configuration-files/configuring-itemstack
   generator-item:
     material: GRASS
-    name: '&aExample generator'
+    name: '&aExample #4fff47generator' #Hex colors are available only for 1.16+
     lore:
     - '&6This is example generator!'
     enchants:
@@ -58,6 +58,11 @@ example_generator:
         - "summon minecraft:item <x+1> <y+5> <z-1> {Item:{id:\"minecraft:emerald\",Count:1b}}"
       #Should physics be applied to this block?
       physics: false
+    #type: block - generator will spawn aged crops
+    - type: block
+      chance: 10.0
+      material: WHEAT
+      age: 7
     #type: item - generator will spawn simple item
     - type: item
       chance: 10.0
@@ -187,6 +192,33 @@ stone_generator_level_2:
   generate-immediately-after-place: true
   placeholder: RED_SANDSTONE
   allow-piston-push: true
+ 
+#This predefined generator can generate crops
+crops_generator:
+  generator-item:
+    material: FARMLAND
+    name: '&aCrops generator'
+    lore:
+    - '&6This is grown crops generator!'
+    enchants:
+    - "DURABILITY:1"
+    item-flags:
+    - HIDE_ENCHANTS
+  delay: 20
+  type: double
+  generates:
+    - type: block
+      chance: 50.0
+      material: WHEAT
+      age: 7
+    - type: block
+      chance: 50.0
+      material: POTATOES
+      age: 7
+    - type: block
+      chance: 50.0
+      material: CARROTS
+      age: 7
 
 #This predefined generator has only required settings and GENERATES ITEMS! 
 #As you see you dont have to use all of them

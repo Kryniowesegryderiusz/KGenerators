@@ -7,26 +7,44 @@ import org.bukkit.inventory.ItemStack;
 
 import me.kryniowesegryderiusz.kgenerators.Main;
 import me.kryniowesegryderiusz.kgenerators.multiversion.interfaces.BlocksUtils;
+import me.kryniowesegryderiusz.kgenerators.xseries.XBlock;
 import me.kryniowesegryderiusz.kgenerators.xseries.XMaterial;
 
 public class BlocksUtils_1_13 implements BlocksUtils {
 
 	@Override
 	public ItemStack getItemStackByBlock(Block block) {
-		return XMaterial.matchXMaterial(block.getType()).parseItem();
+		XMaterial xm = XMaterial.matchXMaterial(block.getType());
+		if (XBlock.isCrop(xm)) {
+			switch (xm) {
+				case CARROTS:
+					return new ItemStack(Material.CARROT);
+				case POTATOES:
+					return new ItemStack(Material.POTATO);
+				case BEETROOTS:
+					return new ItemStack(Material.BEETROOT);
+				case PUMPKIN_STEM:
+					return new ItemStack(Material.PUMPKIN_SEEDS);
+				case MELON_STEM:
+					return new ItemStack(Material.MELON_SEEDS);
+				default:
+					break;
+			}
+		}
+		return xm.parseItem();
 	}
 
 	@Override
 	public void setBlock(Location location, ItemStack item) {
 		location.getBlock().setType(item.getType());
 	}
-	
+
 	@Override
 	public void setBlock(Location location, XMaterial xmaterial) {
 		location.getBlock().setType(xmaterial.parseMaterial());
-		
+
 	}
-	
+
 	@Override
 	public void setBlock(Location location, XMaterial xmaterial, boolean physics) {
 		location.getBlock().setType(xmaterial.parseMaterial(), false);
@@ -48,7 +66,8 @@ public class BlocksUtils_1_13 implements BlocksUtils {
 
 	@Override
 	public boolean isAir(Block block) {
-		if (block.getType() == Material.AIR || block.getType() == Material.CAVE_AIR) return true;
+		if (block.getType() == Material.AIR || block.getType() == Material.CAVE_AIR)
+			return true;
 		return false;
 	}
 }
