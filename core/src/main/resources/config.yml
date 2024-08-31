@@ -2,7 +2,7 @@
 #https://www.spigotmc.org/resources/79246/
 #Need help? Join KGenerators discord: https://discord.gg/BZRjhpP4Ab
 
-#Choose lang file. Default possibilities are en, pl, ro, vi, fr, se
+#Choose lang file. Built in possibilities are en, fr, pl, ro, se, vi, zhcn
 #If you want to add your own language contact us on Discord
 lang: en
 
