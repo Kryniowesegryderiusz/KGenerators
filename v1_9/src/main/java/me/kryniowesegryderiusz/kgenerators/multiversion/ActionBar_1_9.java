@@ -8,6 +8,6 @@ import net.md_5.bungee.api.chat.TextComponent;
 
 public class ActionBar_1_9 implements ActionBar {
   public void sendActionBar(Player player, String msg) {
-	  player.spigot().sendMessage(ChatMessageType.ACTION_BAR, new TextComponent(msg));
+	  player.spigot().sendMessage(ChatMessageType.ACTION_BAR, TextComponent.fromLegacyText(msg));
   }
 }
