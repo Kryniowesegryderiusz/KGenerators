@@ -2,11 +2,16 @@
 messages:
   prefix: '&8[&6KGenerators&8] '
   generators:
+    action:
+      cant-here: '&cBạn không thể tương tác với máy quặng ở đây!'
     any:
       owner-none: '&cKhông'
-      disabled: '&cTái tạo bị cấm ở thế giới này!'
+      disabled-specific: '&cTái tạo bị cấm ở thế giới này!'
       repaired: '&aĐã sửa máy quặng thành công!'
       no-longer-there: '&cMáy quặng không còn ở đây!'
+      object-amount: <amount> x <object>
+    chunks:
+      not-loaded-yet: '&cDữ liệu chưa tải xong chunk này! Vui lòng đợi!'
     digging:
       cant-here: '&cBạn không thể đào các máy quặng ở đây!'
       only-gen: '&cBạn chỉ có thể đào các máy quặng ở đây'
@@ -38,6 +43,9 @@ messages:
     no-economy-avaible: '&cHệ thống tiền tệ không tồn tại!'
     not-enough-money: '&cBạn không đủ tiền! Bạn cần &6<cost>$&c!'
   upgrades:
+    costs:
+      exp: xp
+      exp-levels: xp levels
     upgraded: '&aBạn đã nâng cấp máy quặng lên cấp độ &e<number> &avới giá &e<cost>$&a!'
     gui-upgraded: '&cBạn không có đủ &4<cost>&c!'
     no-next-level: '&cĐây là cấp độ tối đa của máy quặng!'
@@ -53,6 +61,9 @@ messages:
     any:
       wrong: '&cSai lệnh! Dùng /kgenerators để được giúp đỡ'
       no-permission: '&cBạn không có quyền &8(&7<permission>&8)&c để dùng kGenerator lệnh'
+      not-a-floating-point-number: '&c''<variable>'' phải là số có dấu phẩy!'
+      not-a-integer: '&c''<variable>'' phải là số nguyên!'
+      world-doesnt-exist: '&cWorld ''<world>'' không tồn tại'
       player-not-online: '&cNgười chơi không hoạt động'
       player-doesnt-exist: '&cNgười chơi không tồn tại'
       generator-doesnt-exist: '&cMáy quặng không tồn tại'
@@ -79,11 +90,6 @@ messages:
       recieved: '&aĐã Nhận Máy Quặng'
       no-permission: '&cBạn không có quyền &8(&7<permission>&8)&c để lấy máy quặng'
       help: Lấy máy quặng
-    check:
-      header: '&aNgười chơi &e<player> &ađã sử dụng:'
-      list: '&8- &e<number> <generator>'
-      no-permission-own: '&cBạn không có quyền &8(&7<permission>&8)&c để kiểm tra người khác!'
-      help: Kiểm tra giới hạn của người chơi
     limits:
       no-permission: '&cBạn không có quyền &8(&7<permission>&8)&c để kiểm tra giới hạn!'
       help: Kiểm tra giới hạn
@@ -100,22 +106,37 @@ messages:
       pick-up: Nhặt
       gui: Mở GUI
       time-left: Thời gian còn lại
+      upgrade: Nâng cấp
     timeleft:
       no-generator: '&cBạn không nhìn vào máy quặng đang tái tạo!'
       no-permission: '&cBạn không có quyền &8(&7<permission>&8)&c để kiểm tra thời gian tái tạo'
       help: Kiểm tra thời gian tái tạo
       format:
-        seconds: giây
-        minutes: phút
-        hours: giờ
-        days: ngày
-        none: không
+        seconds: " giây"
+        minutes: " phút"
+        hours: " giờ"
+        days: " ngày"
+        none: "không"
     upgrade:
       help: Nâng cấp máy quặng
     reload:
       done: '&aĐã tải lại plugins. Hãy kiểm tra console/logs nếu có lỗi!'
       no-permission: '&cBạn không có quyền &8(&7<permission>&8)&c tải lại plugins'
       help: Tải lại plugins
+    remove:
+      done: '&aĐã xóa <amount> máy quặng!'
+      help: Xóa máy quặng
+      no-permission: '&cBạn không có quyền &8(&7<permission>&8)&c để xóa máy quặng!'
+      usage:
+        owner: '&cDùng: &e/kgenerators remove owner <owner>'
+        worldedit: '&cDùng: &e/kgenerators remove worldedit'
+      worldedit-not-found: '&cKhu vực chọn chưa hoàn tất!'
+      worldedit-wrong-selection: '&cKhu vực chọn bị lỗi!'
+    spawn:
+      done: '&aĐã triệu hồi máy quặng, vị trí: &e<location_info>'
+      help: Triệu hồi máy quặng tại vị trí
+      no-permission: '&cBạn không có quyền &8(&7<permission>&8)&c để triệu hồi máy quặng!'
+      usage: '&cDùng: &e/kgenerators spawn <world> <x> <y> <z> <generator> [owner]'
     debug:
       done: '&Debug link: &e<url>'
       error: '&cXuất hiện lỗi khi làm debug output!'
