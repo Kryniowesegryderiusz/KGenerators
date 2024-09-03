@@ -286,11 +286,29 @@ additional-lines:
     - '&eđể nâng cấp'
     upgrade-cost:
     - '&8- &7<cost>'
+  generated-object-custom-drops:
+    command:
+      - '&8- &6Lệnh: &e<command>'
+    custom-drops:
+      - ''
+      - '&6Custom drops:'
+      - '&8- &6Rơi từ: &e<custom_drops_source>'
+      - <custom_drops_money>
+      - <custom_drops_exp>
+      - <custom_drops_commands>
+    exp:
+      - '&8- &6Exp: &e<exp> xp'
+    money:
+      - '&8- &6Money: &e<money>'
   generated-object-type:
     item:
     - '&6Tái tạo: &evật phẩm'
     block:
     - '&6Tái tạo: &ekhối'
+    custom-drops:
+    - '&6Tái tạo: &ecustom drops'
+    entity:
+    - '&6Tái tạo: &econ vật'
   limits:
     generator-list:
     - '&8- &e<generator_name>'
