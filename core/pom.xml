@@ -74,6 +74,13 @@
 			<url>https://ci.ender.zone/plugin/repository/everything/</url>
 		</repository>
 
+		<!-- IridiumSkyblock -->
+		<repository>
+			<id>iridiumdevelopment</id>
+			<url>https://nexus.iridiumdevelopment.net/repository/maven-releases/</url>
+		</repository>
+
+
 		<repository>
 			<id>phoenix</id>
 			<url>https://nexus.phoenixdevt.fr/repository/maven-public/</url>
@@ -182,12 +189,11 @@
 		<!-- IridiumSkyblock -->
 		<dependency>
 			<groupId>com.iridium</groupId>
-			<artifactId>iridiumskyblock</artifactId>
-			<version>3.0.7</version>
-			<scope>system</scope>
-			<systemPath>${project.basedir}/libs/IridiumSkyblock-3.2.8.jar</systemPath>
+			<artifactId>IridiumSkyblock</artifactId>
+			<version>4.0.9.1</version>
 		</dependency>
 
+		<!-- DecentHolograms -->
 		<dependency>
 			<groupId>com.github.decentsoftware-eu</groupId>
 			<artifactId>decentholograms</artifactId>
@@ -199,7 +205,7 @@
 		<dependency>
 			<groupId>com.github.LoneDev6</groupId>
 			<artifactId>api-itemsadder</artifactId>
-			<version>3.0.0</version>
+			<version>3.6.1</version>
 			<scope>provided</scope>
 		</dependency>
 
@@ -362,7 +368,7 @@
 		<dependency>
 			<groupId>com.github.WaterArchery</groupId>
 			<artifactId>LitMinionsAPI</artifactId>
-			<version>2.34</version>
+			<version>3.1.7</version>
 		</dependency>
 
 		<!-- PlotSquared -->
