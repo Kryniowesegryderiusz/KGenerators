@@ -39,7 +39,7 @@ public class GeneratorLocationRegenerateHandler {
 		boolean isPlaceholder = gLocation.getGenerator().getPlaceholder() == null ? isAir : gLocation.getGenerator().getPlaceholder().getItem().equals(Main.getMultiVersion().getBlocksUtils().getItemStackByBlock(generatingLocationBlock));
 		
 		if (!isAir && !isOnWhitelist && !isPlaceholder) {
-			Logger.debugPlacedGeneratorsManager("GeneratorLocationRegenerateHandler: Dropping generator " + gLocation.toString() + " | isAir: " + isAir + " | isOnWhitelist: " + isOnWhitelist + " | isPlaceholder: " + isPlaceholder);
+			Logger.debug("GeneratorLocationRegenerateHandler: Dropping generator " + gLocation.toString() + " | isAir: " + isAir + " | isOnWhitelist: " + isOnWhitelist + " | isPlaceholder: " + isPlaceholder + " | block: " + generatingLocationBlock.getType().toString());
 			gLocation.removeGenerator(true, null);
 			return;
 		}
