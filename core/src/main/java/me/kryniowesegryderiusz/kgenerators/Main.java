@@ -104,9 +104,10 @@ public class Main extends JavaPlugin {
     	if (menus != null)
     		menus.closeAll();
     	
-    	Logger.info("Saving " + Main.getPlacedGenerators().getLoadedGeneratorsAmount() + " running generators.");
-    	if (placedGenerators != null)
+    	if (placedGenerators != null) {
+    		Logger.info("Saving " + placedGenerators.getLoadedGeneratorsAmount() + " running generators.");
     		placedGenerators.onDisable();
+    	}
     	
     	Logger.info("Safely shutting down database.");
     	if (databases != null && databases.getDb() != null)
