@@ -26,18 +26,20 @@ public class JetsMinionsHook implements Listener {
 				e.setCancelled(true);
 			else {
 				if (gLocation.getLastGeneratedObject() != null && gLocation.getLastGeneratedObject().getCustomDrops() != null) {
+					
 					if (gLocation.getLastGeneratedObject().getCustomDrops().isRemoveDefaults()) {
 						e.setCancelled(true);
 						Main.getMultiVersion().getBlocksUtils().setBlock(location, Material.AIR);
 						e.getMinion().setTotalActionsProcessed(e.getMinion().getTotalActionsProcessed()+1);
 						e.getMinion().setActionsProcessedSinceHealthDrop(e.getMinion().getActionsProcessedSinceHealthDrop()+1);
 					}
+					
 					if (!e.getMinion().addItemToChest(gLocation.getLastGeneratedObject().getCustomDrops().getItem().clone()).isEmpty())
 						gLocation.getLastGeneratedObject().getCustomDrops().doItemDrops(null, location);
 
 					e.getMinion().setExp(e.getMinion().getExp() + gLocation.getLastGeneratedObject().getCustomDrops().getExp());
 					
-					gLocation.getLastGeneratedObject().getCustomDrops().doCommandDrops(e.getMinion().getAuthor(), location);
+					gLocation.getLastGeneratedObject().getCustomDrops().doCommandDrops(Main.getInstance().getServer().getOfflinePlayer(e.getMinion().getPlayerUUID()).getName(), location);
 				}
 				gLocation.scheduleGeneratorRegeneration();
 			}
