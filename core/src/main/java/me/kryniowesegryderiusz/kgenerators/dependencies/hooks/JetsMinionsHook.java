@@ -1,6 +1,7 @@
 package me.kryniowesegryderiusz.kgenerators.dependencies.hooks;
 
 import org.bukkit.Location;
+import org.bukkit.Material;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
 
@@ -23,8 +24,23 @@ public class JetsMinionsHook implements Listener {
 		if (gLocation != null) {
 			if (!gLocation.isBlockPossibleToMine(location))
 				e.setCancelled(true);
-			else
+			else {
+				if (gLocation.getLastGeneratedObject() != null && gLocation.getLastGeneratedObject().getCustomDrops() != null) {
+					if (gLocation.getLastGeneratedObject().getCustomDrops().isRemoveDefaults()) {
+						e.setCancelled(true);
+						Main.getMultiVersion().getBlocksUtils().setBlock(location, Material.AIR);
+						e.getMinion().setTotalActionsProcessed(e.getMinion().getTotalActionsProcessed()+1);
+						e.getMinion().setActionsProcessedSinceHealthDrop(e.getMinion().getActionsProcessedSinceHealthDrop()+1);
+					}
+					if (!e.getMinion().addItemToChest(gLocation.getLastGeneratedObject().getCustomDrops().getItem().clone()).isEmpty())
+						gLocation.getLastGeneratedObject().getCustomDrops().doItemDrops(null, location);
+
+					e.getMinion().setExp(e.getMinion().getExp() + gLocation.getLastGeneratedObject().getCustomDrops().getExp());
+					
+					gLocation.getLastGeneratedObject().getCustomDrops().doCommandDrops(e.getMinion().getAuthor(), location);
+				}
 				gLocation.scheduleGeneratorRegeneration();
+			}
 		}
 	}
 }

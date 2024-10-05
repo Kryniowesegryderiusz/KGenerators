@@ -10,7 +10,8 @@ import me.kryniowesegryderiusz.kgenerators.Main;
 import me.kryniowesegryderiusz.kgenerators.generators.locations.objects.GeneratorLocation;
 
 /**
- * This minions hook: https://www.mc-market.org/resources/17454/
+ * This minions hook: https://www.spigotmc.org/resources/minions-revamped.84755/
+ * This miner addon: https://www.mc-market.org/resources/17454/
  */
 public class MinionsHook implements Listener {
 	

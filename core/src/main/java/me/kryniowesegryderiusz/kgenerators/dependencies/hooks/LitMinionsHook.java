@@ -23,8 +23,16 @@ public class LitMinionsHook implements Listener {
 		if (gLocation != null) {
 			if (!gLocation.isBlockPossibleToMine(location))
 				e.setCancelled(true);
-			else
+			else {
+				if (gLocation.getLastGeneratedObject() != null && gLocation.getLastGeneratedObject().getCustomDrops() != null) {
+					if (gLocation.getLastGeneratedObject().getCustomDrops().isRemoveDefaults())
+						e.getDrops().clear();
+					e.getDrops().add(gLocation.getLastGeneratedObject().getCustomDrops().getItem().clone());
+					e.getMinion().setExp(e.getMinion().getExp() + gLocation.getLastGeneratedObject().getCustomDrops().getExp());
+					gLocation.getLastGeneratedObject().getCustomDrops().doCommandDrops(e.getMinion().getOwnerName(), location);
+				}
 				gLocation.scheduleGeneratorRegeneration();
+			}
 		}
 	}
 }

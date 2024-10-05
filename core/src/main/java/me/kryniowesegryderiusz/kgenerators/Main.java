@@ -69,7 +69,6 @@ public class Main extends JavaPlugin {
     public void onEnable() {
     	
     	dependencies.onEnableDependenciesCheck();
-    	
     	if (Bukkit.getPluginManager().getPlugin("ItemsAdder") != null && !ItemsAdder.areItemsLoaded()) {
     		Logger.warn("ItemsAdder is enabled, KGenerators loading postponed until IA is loaded");
     		this.getServer().getPluginManager().registerEvents(new ItemsAdderHook().new ItemsAdderListeners(), this);

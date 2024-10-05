@@ -51,7 +51,7 @@ public class PlayerUtils {
 	 * @param items
 	 */
 	public static void dropBlockToInventory(Player p, Location location, ItemStack... items) {
-		if (Main.getSettings().isBlockDropToEq() && p.hasPermission("kgenerators.droptoinventory"))
+		if (p != null && Main.getSettings().isBlockDropToEq() && p.hasPermission("kgenerators.droptoinventory"))
 			dropToInventory(p, location, items);
 		else
 			dropToInventory(null, location, items);
