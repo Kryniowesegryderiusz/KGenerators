@@ -1,8 +1,0 @@
-main: me.kryniowesegryderiusz.kgenerators.addons.superiorskyblock2forcehook.KGeneratorsAddonSuperiorSkyblock2ForceHook
-name: KGeneratorsAddon-SuperiorSkyblock2ForceHook
-version: "${project.version}-#${BUILD_NUMBER}"
-author: Kryniowesegryderiusz (Krynio_ on spigot)
-website: https://www.spigotmc.org/resources/79246/
-description: Addon for KGenerators
-loadbefore: [SuperiorSkyblock2, KGenerators]
-api-version: 1.13

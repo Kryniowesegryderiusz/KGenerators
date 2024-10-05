@@ -22,7 +22,6 @@
 		<module>v1_13</module>
 		<module>v1_16</module>
 		<module>dist</module>
-		<module>addon-superiorskyblock2forcehook</module>
 	</modules>
 
 	<distributionManagement>
