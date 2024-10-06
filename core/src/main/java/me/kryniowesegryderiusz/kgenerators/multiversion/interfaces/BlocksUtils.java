@@ -19,5 +19,7 @@ public interface BlocksUtils {
 	public boolean isOnWhitelist(Block block);
 	
 	public boolean isAir(Block block);
+	
+	public boolean isWater(Block block);
 
 }

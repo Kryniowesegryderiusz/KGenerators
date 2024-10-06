@@ -78,5 +78,10 @@ public class BlocksUtils_1_8 implements BlocksUtils {
 		if (block.getType() == Material.AIR) return true;
 		return false;
 	}
+
+	@Override
+	public boolean isWater(Block block) {
+		return block.getType().equals(Material.WATER) || block.getType().equals(Material.STATIONARY_WATER);
+	}
 	
 }

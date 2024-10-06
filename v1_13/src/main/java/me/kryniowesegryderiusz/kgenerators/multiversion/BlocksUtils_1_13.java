@@ -70,4 +70,9 @@ public class BlocksUtils_1_13 implements BlocksUtils {
 			return true;
 		return false;
 	}
+
+	@Override
+	public boolean isWater(Block block) {
+		return block.getType() == Material.WATER;
+	}
 }
