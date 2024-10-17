@@ -1,5 +1,9 @@
 package me.kryniowesegryderiusz.kgenerators.multiversion;
 
+import java.util.Collections;
+import java.util.EnumSet;
+import java.util.Set;
+
 import org.bukkit.Location;
 import org.bukkit.Material;
 import org.bukkit.block.Block;
@@ -7,15 +11,24 @@ import org.bukkit.inventory.ItemStack;
 
 import me.kryniowesegryderiusz.kgenerators.Main;
 import me.kryniowesegryderiusz.kgenerators.multiversion.interfaces.BlocksUtils;
-import me.kryniowesegryderiusz.kgenerators.xseries.XBlock;
 import me.kryniowesegryderiusz.kgenerators.xseries.XMaterial;
 
 public class BlocksUtils_1_13 implements BlocksUtils {
+	
+    public static final Set<XMaterial> CROPS = Collections.unmodifiableSet(EnumSet.of(
+            XMaterial.CARROT, XMaterial.CARROTS, XMaterial.POTATO, XMaterial.POTATOES,
+            XMaterial.NETHER_WART, XMaterial.PUMPKIN_SEEDS, XMaterial.WHEAT_SEEDS, XMaterial.WHEAT,
+            XMaterial.MELON_SEEDS, XMaterial.BEETROOT_SEEDS, XMaterial.BEETROOTS, XMaterial.SUGAR_CANE,
+            XMaterial.BAMBOO_SAPLING, XMaterial.BAMBOO, XMaterial.CHORUS_PLANT,
+            XMaterial.KELP, XMaterial.KELP_PLANT, XMaterial.SEA_PICKLE, XMaterial.BROWN_MUSHROOM, XMaterial.RED_MUSHROOM,
+            XMaterial.MELON_STEM, XMaterial.PUMPKIN_STEM, XMaterial.COCOA, XMaterial.COCOA_BEANS
+
+    ));
 
 	@Override
 	public ItemStack getItemStackByBlock(Block block) {
 		XMaterial xm = XMaterial.matchXMaterial(block.getType());
-		if (XBlock.isCrop(xm)) {
+		if (CROPS.contains(xm)) {
 			switch (xm) {
 				case CARROTS:
 					return new ItemStack(Material.CARROT);
