@@ -11,6 +11,7 @@ import me.kryniowesegryderiusz.kgenerators.Main;
 import me.kryniowesegryderiusz.kgenerators.api.events.GeneratorRemoveEvent;
 import me.kryniowesegryderiusz.kgenerators.dependencies.enums.Dependency;
 import me.kryniowesegryderiusz.kgenerators.dependencies.hooks.ItemsAdderHook;
+import me.kryniowesegryderiusz.kgenerators.dependencies.hooks.SuperiorSkyblock2Hook;
 import me.kryniowesegryderiusz.kgenerators.generators.generator.objects.Generator;
 import me.kryniowesegryderiusz.kgenerators.generators.locations.objects.GeneratorLocation;
 import me.kryniowesegryderiusz.kgenerators.utils.PlayerUtils;
@@ -36,7 +37,6 @@ public class GeneratorLocationRemoveHandler {
 		
 		if (drop) {
 			PlayerUtils.dropToInventory(Main.getSettings().isPickUpToEq() ? toWho : null, location, generatorItem);
-				
 		}
 		
 		if (Main.getDependencies().isEnabled(Dependency.ITEMS_ADDER)) {
@@ -45,9 +45,12 @@ public class GeneratorLocationRemoveHandler {
 				cb.remove();
 		}
 		
+		SuperiorSkyblock2Hook.handleGeneratorLocationRemove(gLocation);
+		
 		Main.getMultiVersion().getBlocksUtils().setBlock(location, XMaterial.AIR);
 		Main.getMultiVersion().getBlocksUtils().setBlock(gLocation.getGeneratedBlockLocation(), XMaterial.AIR);
 		
 		ItemsAdderHook.handleGeneratorLocationRemove(gLocation);
+		
 	}
 }

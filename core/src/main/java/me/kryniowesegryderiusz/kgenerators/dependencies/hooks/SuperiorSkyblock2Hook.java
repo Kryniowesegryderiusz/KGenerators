@@ -17,6 +17,7 @@ import com.bgsoftware.superiorskyblock.api.island.IslandPrivilege;
 
 import me.kryniowesegryderiusz.kgenerators.Main;
 import me.kryniowesegryderiusz.kgenerators.dependencies.enums.Dependency;
+import me.kryniowesegryderiusz.kgenerators.generators.locations.objects.GeneratorLocation;
 import me.kryniowesegryderiusz.kgenerators.logger.Logger;
 
 public class SuperiorSkyblock2Hook implements Listener {
@@ -62,7 +63,7 @@ public class SuperiorSkyblock2Hook implements Listener {
 
 	@EventHandler
 	public void onDeleteEvent(IslandDisbandEvent e) {
-		
+
 		Location min = e.getIsland().getMinimum();
 		Location max = e.getIsland().getMaximum();
 
@@ -71,12 +72,13 @@ public class SuperiorSkyblock2Hook implements Listener {
 				+ max.getBlockZ());
 		Main.getPlacedGenerators().bulkRemoveGenerators(min.getWorld(), min.getBlockX(), 0, min.getBlockZ(),
 				max.getBlockX(), min.getWorld().getMaxHeight(), max.getBlockZ(), false);
-		
+
 		if (e.getIsland().isNetherEnabled()) {
-			Main.getPlacedGenerators().bulkRemoveGenerators(SuperiorSkyblockAPI.getIslandsWorld(e.getIsland(), Environment.NETHER), min.getBlockX(), 0, min.getBlockZ(),
-					max.getBlockX(), min.getWorld().getMaxHeight(), max.getBlockZ(), false);
+			Main.getPlacedGenerators().bulkRemoveGenerators(
+					SuperiorSkyblockAPI.getIslandsWorld(e.getIsland(), Environment.NETHER), min.getBlockX(), 0,
+					min.getBlockZ(), max.getBlockX(), min.getWorld().getMaxHeight(), max.getBlockZ(), false);
 		}
-		
+
 		if (e.getIsland().isEndEnabled()) {
 			Main.getPlacedGenerators().bulkRemoveGenerators(
 					SuperiorSkyblockAPI.getIslandsWorld(e.getIsland(), Environment.THE_END), min.getBlockX(), 0,
@@ -125,5 +127,13 @@ public class SuperiorSkyblock2Hook implements Listener {
 				return false;
 		}
 		return true;
+	}
+
+	public static void handleGeneratorLocationRemove(GeneratorLocation gLocation) {
+		if (!Main.getDependencies().isEnabled(Dependency.SUPERIOR_SKYBLOCK_2)) return;
+		Island island = SuperiorSkyblockAPI.getGrid().getIslandAt(gLocation.getLocation());
+		if (island != null) {
+			island.handleBlockBreak(gLocation.getLocation().getBlock());
+		}
 	}
 }
