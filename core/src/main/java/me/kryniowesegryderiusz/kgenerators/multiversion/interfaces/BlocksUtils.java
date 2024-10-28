@@ -22,4 +22,9 @@ public interface BlocksUtils {
 	
 	public boolean isWater(Block block);
 
+	public boolean isAgeable(Block block);
+	public int getMaximumAge(Block block);
+	public int getAge(Block block);
+	public void setAge(Block block, int age);
+
 }

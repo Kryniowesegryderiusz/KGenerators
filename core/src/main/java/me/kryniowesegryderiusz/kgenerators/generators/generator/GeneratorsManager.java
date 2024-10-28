@@ -170,6 +170,9 @@ public class GeneratorsManager {
 			} catch (Exception e) {
 				Logger.error("GeneratedObjectsManager: Cannot initialise GeneratedObject: " + c.getSimpleName());
 				Logger.error(e);
+			} catch (Error e) {
+				Logger.error("GeneratedObjectsManager: Cannot initialise GeneratedObject: " + c.getSimpleName());
+				Logger.error(e);
 			}
 		}
 

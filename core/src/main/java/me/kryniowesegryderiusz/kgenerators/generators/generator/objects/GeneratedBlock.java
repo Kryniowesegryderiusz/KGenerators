@@ -2,7 +2,6 @@ package me.kryniowesegryderiusz.kgenerators.generators.generator.objects;
 
 import java.util.Map;
 
-import org.bukkit.block.data.Ageable;
 import org.bukkit.inventory.ItemStack;
 
 import lombok.Getter;
@@ -48,18 +47,18 @@ public class GeneratedBlock extends AbstractGeneratedObject {
 		
 		this.customBlockData.setBlock(generatorLocation.getGeneratedBlockLocation(), physics);
 		
-		if (generatorLocation.getGeneratedBlockLocation().getBlock().getBlockData() instanceof Ageable) {
-			Ageable ageable = (Ageable) generatorLocation.getGeneratedBlockLocation().getBlock().getBlockData();
-			if (age > ageable.getMaximumAge())
-				age = ageable.getMaximumAge();
+		if (Main.getMultiVersion().getBlocksUtils().isAgeable(generatorLocation.getGeneratedBlockLocation().getBlock())) {
+			int maxAge = Main.getMultiVersion().getBlocksUtils().getMaximumAge(generatorLocation.getGeneratedBlockLocation().getBlock());
+			if (age > maxAge)
+				age = maxAge;
 			else if (age < 0)
                 age = 0;
-			ageable.setAge(age);
-			generatorLocation.getGeneratedBlockLocation().getBlock().setBlockData(ageable);
+			Main.getMultiVersion().getBlocksUtils().setAge(generatorLocation.getGeneratedBlockLocation().getBlock(), age);
 		}
 
 		if (Main.getDependencies().isEnabled(Dependency.SUPERIOR_SKYBLOCK_2))
 			  SuperiorSkyblock2Hook.handleBlockPlace(generatorLocation.getGeneratedBlockLocation().getBlock());
+		
 	}
 
 	@Override
