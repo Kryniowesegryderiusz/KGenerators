@@ -47,7 +47,9 @@ public class GeneratorLocationPlaceHandler {
 	    	return false;
 	    }
     	
-    	if (generator.getType() == GeneratorType.DOUBLE && !Main.getMultiVersion().getBlocksUtils().isAir(gLocation.getGeneratedBlockLocation().getBlock())) {
+    	if (generator.getType() == GeneratorType.DOUBLE 
+    			&& !Main.getMultiVersion().getBlocksUtils().isAir(gLocation.getGeneratedBlockLocation().getBlock())
+    			&& !Main.getMultiVersion().getBlocksUtils().isOnWhitelist(gLocation.getGeneratedBlockLocation().getBlock())) {
     		Lang.getMessageStorage().send(sender, Message.GENERATORS_PLACE_CANT_PLACE_DOUBLE_BELOW_BLOCK);
     		return false;
     	}
