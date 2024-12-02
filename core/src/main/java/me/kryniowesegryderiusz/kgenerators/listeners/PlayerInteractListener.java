@@ -33,6 +33,10 @@ public class PlayerInteractListener implements Listener {
 			GeneratorLocation gLocation = Main.getPlacedGenerators().getLoaded(location);
 			if (gLocation == null)
 				gLocation = Main.getPlacedGenerators().getLoaded(upperLocation);
+			else if (e.getAction() == Action.RIGHT_CLICK_BLOCK && Main.getMultiVersion().isHigher(12)
+					&& e.getClickedBlock().getType().isInteractable())
+				e.setUseInteractedBlock(Event.Result.DENY);
+			
 			if (gLocation == null)
 				return;
 
@@ -40,10 +44,6 @@ public class PlayerInteractListener implements Listener {
 				e.setCancelled(gLocation.handleAction(InteractionType.LEFT_CLICK, e.getPlayer()));
 			else if (e.getAction() == Action.RIGHT_CLICK_BLOCK)
 				e.setCancelled(gLocation.handleAction(InteractionType.RIGHT_CLICK, e.getPlayer()));
-
-			if (e.getAction() == Action.RIGHT_CLICK_BLOCK && Main.getMultiVersion().isHigher(12)
-					&& e.getClickedBlock().getType().isInteractable())
-				e.setUseInteractedBlock(Event.Result.DENY);
 
 		} catch (Exception exception) {
 			Logger.error(exception);
