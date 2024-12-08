@@ -10,59 +10,51 @@ import me.kryniowesegryderiusz.kgenerators.xseries.XEnchantment;
 import me.kryniowesegryderiusz.kgenerators.xseries.XMaterial;
 
 public class CustomNamesStorage {
-	
+
 	private HashMap<String, String> customNames = new HashMap<String, String>();
 	private Config config;
-	
-	public CustomNamesStorage(Config config)
-	{
+
+	public CustomNamesStorage(Config config) {
 		this.config = config;
 		this.reload();
 	}
-	
-	public void reload()
-	{
-		for(String obj: config.getConfigurationSection("").getKeys(false))
-    	{
-    		customNames.put(obj, config.getString(obj));
-    	}
+
+	public void reload() {
+		for (String obj : config.getConfigurationSection("").getKeys(false)) {
+			customNames.put(obj, config.getString(obj));
+		}
 	}
-	
-    @SuppressWarnings("unlikely-arg-type")
-	public String getItemTypeName(ItemStack item)
-    {
-    	String name = "";
-    	
-    	if (item.hasItemMeta() && item.getItemMeta().hasDisplayName())
-    		name = item.getItemMeta().getDisplayName();
-    	else if (customNames.get(XMaterial.matchXMaterial(item)) != null)
-    		name = customNames.get(XMaterial.matchXMaterial(item));
-    	else
-    	{
-    		String type = item.getType().toString();
-    		type = type.toLowerCase().replaceAll("_", " ");
-    		type = type.substring(0, 1).toUpperCase() + type.substring(1);
-    		name = type;
-    	}
-    	return name;
-    }
-    
-    @SuppressWarnings("unlikely-arg-type")
-	public String getEnchantName(Enchantment enchant)
-    {
-    	String name = "";
-    	
-    	if (customNames.get(XEnchantment.matchXEnchantment(enchant)) != null)
-    		name = customNames.get(XEnchantment.matchXEnchantment(enchant));
-    	else
-    	{
-    		String type = enchant.getKey().getKey();
-    		type = type.toLowerCase().replaceAll("_", " ");
-    		type = type.substring(0, 1).toUpperCase() + type.substring(1);
-    		name = type;
-    	}
-    	
-    	return name;
-    }
+
+	public String getItemTypeName(ItemStack item) {
+		String name = "";
+
+		if (item.hasItemMeta() && item.getItemMeta().hasDisplayName())
+			name = item.getItemMeta().getDisplayName();
+		else if (customNames.get(XMaterial.matchXMaterial(item).name()) != null)
+			name = customNames.get(XMaterial.matchXMaterial(item).name());
+		else {
+			String type = item.getType().toString();
+			type = type.toLowerCase().replaceAll("_", " ");
+			type = type.substring(0, 1).toUpperCase() + type.substring(1);
+			name = type;
+		}
+		return name;
+	}
+
+	@SuppressWarnings("unlikely-arg-type")
+	public String getEnchantName(Enchantment enchant) {
+		String name = "";
+
+		if (customNames.get(XEnchantment.matchXEnchantment(enchant)) != null)
+			name = customNames.get(XEnchantment.matchXEnchantment(enchant));
+		else {
+			String type = enchant.getKey().getKey();
+			type = type.toLowerCase().replaceAll("_", " ");
+			type = type.substring(0, 1).toUpperCase() + type.substring(1);
+			name = type;
+		}
+
+		return name;
+	}
 
 }
