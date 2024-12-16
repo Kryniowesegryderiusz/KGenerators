@@ -13,6 +13,7 @@ import me.kryniowesegryderiusz.kgenerators.dependencies.hooks.EcoItemsHook;
 import me.kryniowesegryderiusz.kgenerators.dependencies.hooks.ItemsAdderHook;
 import me.kryniowesegryderiusz.kgenerators.dependencies.hooks.MMOItemsHook;
 import me.kryniowesegryderiusz.kgenerators.dependencies.hooks.MythicMobsHook;
+import me.kryniowesegryderiusz.kgenerators.dependencies.hooks.NexoHook;
 import me.kryniowesegryderiusz.kgenerators.dependencies.hooks.OraxenHook;
 import me.kryniowesegryderiusz.kgenerators.logger.Logger;
 import me.kryniowesegryderiusz.kgenerators.utils.immutable.PlayerHeadUtils;
@@ -39,6 +40,9 @@ public abstract class ItemUtils {
         	else if (splitted[0].equals("oraxen")
         			&& OraxenHook.getItemStack(splitted[1]) != null)
         		return OraxenHook.getItemStack(splitted[1]);
+        	else if (splitted[0].equals("nexo")
+        			&& NexoHook.exists(splitted[1]))
+        		return NexoHook.getItemStack(splitted[1]);
         	else if (splitted[0].equals("mmoitems")
         			&& MMOItemsHook.getItemStack(splitted[1]) != null)
         		return MMOItemsHook.getItemStack(splitted[1]);
@@ -54,7 +58,7 @@ public abstract class ItemUtils {
 		Optional<XMaterial> oxm = XMaterial.matchXMaterial(material);
 		try {
 			XMaterial xm = oxm.get();
-			if (isBlockCheck && !xm.parseMaterial().isBlock()) {
+			if (isBlockCheck && !xm.get().isBlock()) {
 				Logger.error(place + ": " + material + " is not a block! Using STONE!");
 				return XMaterial.STONE;
 			}

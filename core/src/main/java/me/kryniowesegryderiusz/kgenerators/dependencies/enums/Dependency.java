@@ -26,4 +26,5 @@ public enum Dependency
 	MYTHIC_MOBS,
 	FACTIONSUUID,
 	LANDS,
+	NEXO,
 }

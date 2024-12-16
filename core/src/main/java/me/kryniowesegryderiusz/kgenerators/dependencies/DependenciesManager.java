@@ -111,6 +111,11 @@ public class DependenciesManager {
 			Logger.debugPluginLoad("Dependencies: Detected plugin Oraxen. Hooking into it.");
 			dependencies.add(Dependency.ORAXEN);
 		}
+		
+		if (Bukkit.getPluginManager().isPluginEnabled("Nexo")) {
+			Logger.debugPluginLoad("Dependencies: Detected plugin Nexo. Hooking into it.");
+			dependencies.add(Dependency.NEXO);
+		}
 
 		if (Bukkit.getPluginManager().isPluginEnabled("WildStacker")) {
 			Logger.debugPluginLoad("Dependencies: Detected plugin WildStacker. Hooking into it.");
