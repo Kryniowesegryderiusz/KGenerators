@@ -6,7 +6,7 @@ import org.bukkit.entity.Player;
 
 import me.kryniowesegryderiusz.kgenerators.logger.Logger;
 import me.kryniowesegryderiusz.kgenerators.utils.immutable.Config;
-import me.kryniowesegryderiusz.kgenerators.xseries.XSound;
+import com.cryptomorin.xseries.XSound;
 
 public class Sound {
 

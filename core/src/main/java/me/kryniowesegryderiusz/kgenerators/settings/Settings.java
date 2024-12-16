@@ -4,6 +4,7 @@ import java.io.File;
 import java.util.ArrayList;
 import java.util.HashMap;
 
+import org.bukkit.Material;
 import org.bukkit.World;
 import org.bukkit.configuration.InvalidConfigurationException;
 import lombok.Getter;
@@ -20,8 +21,8 @@ import me.kryniowesegryderiusz.kgenerators.settings.objects.Sound;
 import me.kryniowesegryderiusz.kgenerators.utils.ItemUtils;
 import me.kryniowesegryderiusz.kgenerators.utils.immutable.Config;
 import me.kryniowesegryderiusz.kgenerators.utils.immutable.ConfigManager;
-import me.kryniowesegryderiusz.kgenerators.xseries.XMaterial;
-import me.kryniowesegryderiusz.kgenerators.xseries.XSound;
+import com.cryptomorin.xseries.XMaterial;
+import com.cryptomorin.xseries.XSound;
 
 public class Settings {
 
@@ -219,6 +220,10 @@ public class Settings {
 
 	public boolean isWorldDisabled(World world) {
 		return this.disabledWorlds.contains(world.getName());
+	}
+
+	public boolean isOnWhitelist(Material type) {
+		return this.generatingWhitelist.contains(XMaterial.matchXMaterial(type));
 	}
 
 }

@@ -4,7 +4,7 @@ import org.bukkit.Location;
 import org.bukkit.inventory.ItemStack;
 
 import me.kryniowesegryderiusz.kgenerators.utils.immutable.PlayerHeadUtils;
-import me.kryniowesegryderiusz.kgenerators.xseries.XMaterial;
+import com.cryptomorin.xseries.XMaterial;
 
 public class HeadCustomBlockData extends CustomBlockData  {
 	

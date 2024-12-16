@@ -5,6 +5,7 @@ import java.util.UUID;
 import javax.annotation.Nullable;
 
 import org.bukkit.Location;
+import org.bukkit.Material;
 import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Player;
 import org.bukkit.inventory.ItemStack;
@@ -32,7 +33,6 @@ import me.kryniowesegryderiusz.kgenerators.generators.players.objects.GeneratorP
 import me.kryniowesegryderiusz.kgenerators.lang.Lang;
 import me.kryniowesegryderiusz.kgenerators.lang.enums.Message;
 import me.kryniowesegryderiusz.kgenerators.logger.Logger;
-import me.kryniowesegryderiusz.kgenerators.xseries.XMaterial;
 
 public class GeneratorLocation implements IGeneratorLocation {
 
@@ -238,10 +238,10 @@ public class GeneratorLocation implements IGeneratorLocation {
 
 		this.generator = generator;
 		if (this.getGenerator().getType() == GeneratorType.SINGLE) {
-			Main.getMultiVersion().getBlocksUtils().setBlock(this.location, XMaterial.AIR);
+			Main.getMultiVersion().getBlocksUtils().setBlock(this.location, Material.AIR);
 		} else {
 			Main.getMultiVersion().getBlocksUtils().setBlock(this.location, this.getGenerator().getGeneratorItem());
-			Main.getMultiVersion().getBlocksUtils().setBlock(this.location.clone().add(0, 1, 0), XMaterial.AIR);
+			Main.getMultiVersion().getBlocksUtils().setBlock(this.location.clone().add(0, 1, 0), Material.AIR);
 		}
 
 		Main.getDatabases().getDb().saveGenerator(this);

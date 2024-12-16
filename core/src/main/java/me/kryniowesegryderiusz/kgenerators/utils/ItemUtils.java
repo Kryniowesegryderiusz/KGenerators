@@ -17,7 +17,7 @@ import me.kryniowesegryderiusz.kgenerators.dependencies.hooks.NexoHook;
 import me.kryniowesegryderiusz.kgenerators.dependencies.hooks.OraxenHook;
 import me.kryniowesegryderiusz.kgenerators.logger.Logger;
 import me.kryniowesegryderiusz.kgenerators.utils.immutable.PlayerHeadUtils;
-import me.kryniowesegryderiusz.kgenerators.xseries.XMaterial;
+import com.cryptomorin.xseries.XMaterial;
 
 public abstract class ItemUtils {
 	

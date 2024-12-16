@@ -21,7 +21,7 @@ import me.kryniowesegryderiusz.kgenerators.Main;
 import me.kryniowesegryderiusz.kgenerators.dependencies.hooks.NBTAPIHook;
 import me.kryniowesegryderiusz.kgenerators.logger.Logger;
 import me.kryniowesegryderiusz.kgenerators.utils.immutable.Config;
-import me.kryniowesegryderiusz.kgenerators.xseries.XEnchantment;
+import com.cryptomorin.xseries.XEnchantment;
 
 public class FilesUtils {
 
@@ -148,9 +148,9 @@ public class FilesUtils {
 				for (String s : (ArrayList<String>) map.get("enchants")) {
 					if (s != null) {
 						String[] splitted = s.split(":");
-						Optional<XEnchantment> xeo = XEnchantment.matchXEnchantment(splitted[0]);
+						Optional<XEnchantment> xeo = XEnchantment.of(splitted[0]);
 						if (xeo.isPresent()) {
-							item.addUnsafeEnchantment(xeo.get().getEnchant(), Integer.valueOf(splitted[1]));
+							item.addUnsafeEnchantment(xeo.get().get(), Integer.valueOf(splitted[1]));
 						} else
 							Logger.error(place + ": Cannot load enchantment! " + splitted[0] + " doesnt exist!");
 					}

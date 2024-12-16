@@ -1,5 +1,6 @@
 package me.kryniowesegryderiusz.kgenerators.generators.locations.handlers;
 
+import org.bukkit.Material;
 import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Player;
 
@@ -14,7 +15,6 @@ import me.kryniowesegryderiusz.kgenerators.generators.locations.objects.Generato
 import me.kryniowesegryderiusz.kgenerators.lang.Lang;
 import me.kryniowesegryderiusz.kgenerators.lang.enums.Message;
 import me.kryniowesegryderiusz.kgenerators.logger.Logger;
-import me.kryniowesegryderiusz.kgenerators.xseries.XMaterial;
 
 public class GeneratorLocationPlaceHandler {
 	
@@ -86,7 +86,7 @@ public class GeneratorLocationPlaceHandler {
     	if (generateGeneratorBlock && gLocation.getGenerator().getType() == GeneratorType.DOUBLE)
     		Main.getMultiVersion().getBlocksUtils().setBlock(gLocation.getLocation(), gLocation.getGenerator().getGeneratorItem());
     	
-    	Main.getMultiVersion().getBlocksUtils().setBlock(gLocation.getGeneratedBlockLocation(), XMaterial.AIR);
+    	Main.getMultiVersion().getBlocksUtils().setBlock(gLocation.getGeneratedBlockLocation(), Material.AIR);
     	
     	/*
     	if (gLocation.getGenerator().isGenerateImmediatelyAfterPlace())

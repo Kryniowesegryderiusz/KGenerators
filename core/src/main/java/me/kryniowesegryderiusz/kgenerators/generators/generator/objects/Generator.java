@@ -30,14 +30,15 @@ import me.kryniowesegryderiusz.kgenerators.utils.ItemUtils;
 import me.kryniowesegryderiusz.kgenerators.utils.immutable.Config;
 import me.kryniowesegryderiusz.kgenerators.utils.immutable.RandomSelector;
 import me.kryniowesegryderiusz.kgenerators.utils.objects.CustomBlockData;
-import me.kryniowesegryderiusz.kgenerators.xseries.XMaterial;
+import com.cryptomorin.xseries.XMaterial;
 
 public class Generator {
 
 	@Getter
 	private String id;
 	private ItemStack generatorItem;
-	@Getter @Setter
+	@Getter
+	@Setter
 	private int delay;
 	@Getter
 	private GeneratorType type = GeneratorType.SINGLE;
@@ -69,7 +70,7 @@ public class Generator {
 			generatorsManager.add(generatorID, this);
 		}
 	}
-	
+
 	/**
 	 * 
 	 * @param config
@@ -78,7 +79,7 @@ public class Generator {
 	 */
 	@SuppressWarnings("unchecked")
 	public boolean loadConfiguration(GeneratorsManager generatorsManager, Config config, String generatorID) {
-		
+
 		Boolean error = false;
 
 		/*
@@ -132,17 +133,17 @@ public class Generator {
 			Logger.error("Generator " + generatorID + " is lacking generator-item configuration");
 			error = true;
 		}
-		
+
 		if (this.generatorItem != null)
 			NBTAPIHook.addNBT(generatorItem, generatorID, GeneratorItemMatcher.GENERATOR_ID_NBT, generatorID);
 
 		/*
 		 * Generates section
 		 */
-		
+
 		chances.clear();
 		fullChance = 0.0;
-		
+
 		if (config.contains(generatorID + ".generates"))
 			for (Map<?, ?> generatedObjectConfig : (List<Map<?, ?>>) config.getMapList(generatorID + ".generates")) {
 
@@ -201,7 +202,7 @@ public class Generator {
 			this.actions = new Actions();
 			this.actions.load(config, generatorID);
 		}
-		
+
 		String doubledGeneratorId = generatorsManager.exactGeneratorItemExists(generatorID, this.getGeneratorItem());
 		if (doubledGeneratorId != null) {
 			Logger.error("Generators file: " + generatorID + " has same generator item as " + doubledGeneratorId);
@@ -213,8 +214,8 @@ public class Generator {
 			Logger.error("Generators file: An error appeared, while loading configuration for " + generatorID);
 			return false;
 		} else {
-			Logger.debugPluginLoad("Generators file: Loaded properly " + type + " " + generatorID + " generating variety of "
-					+ this.chances.size() + " objects every " + delay + " ticks");
+			Logger.debugPluginLoad("Generators file: Loaded properly " + type + " " + generatorID
+					+ " generating variety of " + this.chances.size() + " objects every " + delay + " ticks");
 			return true;
 		}
 
@@ -245,7 +246,7 @@ public class Generator {
 	public Set<Entry<AbstractGeneratedObject, Double>> getChancesEntryset() {
 		return this.chances.entrySet();
 	}
-	
+
 	public Set<AbstractGeneratedObject> getGeneratedObjects() {
 		return this.chances.keySet();
 	}
@@ -275,7 +276,7 @@ public class Generator {
 	public boolean isPlaceholder(ItemStack item) {
 		return this.placeholder != null && this.placeholder.isSimilar(item);
 	}
-	
+
 	public int getGeneratedObjectId(AbstractGeneratedObject ago1) {
 
 		int id = -1;
@@ -287,12 +288,13 @@ public class Generator {
 		}
 		return -1;
 	}
-	
+
 	public AbstractGeneratedObject getGeneratedObjectById(int id) {
 		int i = -1;
 		for (AbstractGeneratedObject ago : this.chances.keySet()) {
 			i++;
-			if (id == i) return ago;
+			if (id == i)
+				return ago;
 		}
 		return null;
 	}

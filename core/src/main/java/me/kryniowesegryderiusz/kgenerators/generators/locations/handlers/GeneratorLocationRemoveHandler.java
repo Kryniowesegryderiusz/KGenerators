@@ -3,6 +3,7 @@ package me.kryniowesegryderiusz.kgenerators.generators.locations.handlers;
 import javax.annotation.Nullable;
 
 import org.bukkit.Location;
+import org.bukkit.Material;
 import org.bukkit.entity.Player;
 import org.bukkit.inventory.ItemStack;
 
@@ -15,7 +16,6 @@ import me.kryniowesegryderiusz.kgenerators.dependencies.hooks.SuperiorSkyblock2H
 import me.kryniowesegryderiusz.kgenerators.generators.generator.objects.Generator;
 import me.kryniowesegryderiusz.kgenerators.generators.locations.objects.GeneratorLocation;
 import me.kryniowesegryderiusz.kgenerators.utils.PlayerUtils;
-import me.kryniowesegryderiusz.kgenerators.xseries.XMaterial;
 
 public class GeneratorLocationRemoveHandler {
 	
@@ -47,8 +47,8 @@ public class GeneratorLocationRemoveHandler {
 		
 		SuperiorSkyblock2Hook.handleGeneratorLocationRemove(gLocation);
 		
-		Main.getMultiVersion().getBlocksUtils().setBlock(location, XMaterial.AIR);
-		Main.getMultiVersion().getBlocksUtils().setBlock(gLocation.getGeneratedBlockLocation(), XMaterial.AIR);
+		Main.getMultiVersion().getBlocksUtils().setBlock(location, Material.AIR);
+		Main.getMultiVersion().getBlocksUtils().setBlock(gLocation.getGeneratedBlockLocation(), Material.AIR);
 		
 		ItemsAdderHook.handleGeneratorLocationRemove(gLocation);
 		

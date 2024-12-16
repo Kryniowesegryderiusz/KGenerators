@@ -434,6 +434,12 @@
 			<version>0.5.0</version>
 			<classifier>dev</classifier>
 			<scope>provided</scope>
+			<exclusions>
+				<exclusion>
+					<groupId>net.byteflux</groupId>
+					<artifactId>libby-bukkit</artifactId>
+				</exclusion>
+			</exclusions>
 		</dependency>
 
 	</dependencies>
@@ -493,19 +499,9 @@
 						<relocation>
 							<pattern>com.cryptomorin.xseries</pattern>
 							<shadedPattern>
-								me.kryniowesegryderiusz.kgenerators.xseries.base</shadedPattern>
+								me.kryniowesegryderiusz.kgenerators.xseries</shadedPattern>
 						</relocation>
 					</relocations>
-					<filters>
-						<filter>
-							<artifact>*:*</artifact>
-							<excludes>
-								<exclude>com/cryptomorin/xseries/XMaterial*</exclude>
-								<exclude>com/cryptomorin/xseries/XSound*</exclude>
-								<exclude>com/cryptomorin/xseries/XEnchantment*</exclude>
-							</excludes>
-						</filter>
-					</filters>
 					<artifactSet>
 						<includes>
 							<include>de.tr7zw:*</include>

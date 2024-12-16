@@ -12,25 +12,24 @@ import org.bukkit.inventory.ItemStack;
 
 import me.kryniowesegryderiusz.kgenerators.Main;
 import me.kryniowesegryderiusz.kgenerators.multiversion.interfaces.BlocksUtils;
-import me.kryniowesegryderiusz.kgenerators.xseries.XMaterial;
 
 public class BlocksUtils_1_13 implements BlocksUtils {
 	
-    public static final Set<XMaterial> CROPS = Collections.unmodifiableSet(EnumSet.of(
-            XMaterial.CARROT, XMaterial.CARROTS, XMaterial.POTATO, XMaterial.POTATOES,
-            XMaterial.NETHER_WART, XMaterial.PUMPKIN_SEEDS, XMaterial.WHEAT_SEEDS, XMaterial.WHEAT,
-            XMaterial.MELON_SEEDS, XMaterial.BEETROOT_SEEDS, XMaterial.BEETROOTS, XMaterial.SUGAR_CANE,
-            XMaterial.BAMBOO_SAPLING, XMaterial.BAMBOO, XMaterial.CHORUS_PLANT,
-            XMaterial.KELP, XMaterial.KELP_PLANT, XMaterial.SEA_PICKLE, XMaterial.BROWN_MUSHROOM, XMaterial.RED_MUSHROOM,
-            XMaterial.MELON_STEM, XMaterial.PUMPKIN_STEM, XMaterial.COCOA, XMaterial.COCOA_BEANS
+    public static final Set<Material> CROPS = Collections.unmodifiableSet(EnumSet.of(
+            Material.CARROT, Material.CARROTS, Material.POTATO, Material.POTATOES,
+            Material.NETHER_WART, Material.PUMPKIN_SEEDS, Material.WHEAT_SEEDS, Material.WHEAT,
+            Material.MELON_SEEDS, Material.BEETROOT_SEEDS, Material.BEETROOTS, Material.SUGAR_CANE,
+            Material.CHORUS_PLANT, //Material.BAMBOO_SAPLING, Material.BAMBOO, 
+            Material.KELP, Material.KELP_PLANT, Material.SEA_PICKLE, Material.BROWN_MUSHROOM, Material.RED_MUSHROOM,
+            Material.MELON_STEM, Material.PUMPKIN_STEM, Material.COCOA, Material.COCOA_BEANS
 
     ));
 
 	@Override
 	public ItemStack getItemStackByBlock(Block block) {
-		XMaterial xm = XMaterial.matchXMaterial(block.getType());
-		if (CROPS.contains(xm)) {
-			switch (xm) {
+		Material material = block.getType();
+		if (CROPS.contains(material)) {
+			switch (material) {
 				case CARROTS:
 					return new ItemStack(Material.CARROT);
 				case POTATOES:
@@ -45,7 +44,7 @@ public class BlocksUtils_1_13 implements BlocksUtils {
 					break;
 			}
 		}
-		return xm.parseItem();
+		return new ItemStack(material);
 	}
 
 	@Override
@@ -54,14 +53,8 @@ public class BlocksUtils_1_13 implements BlocksUtils {
 	}
 
 	@Override
-	public void setBlock(Location location, XMaterial xmaterial) {
-		location.getBlock().setType(xmaterial.parseMaterial());
-
-	}
-
-	@Override
-	public void setBlock(Location location, XMaterial xmaterial, boolean physics) {
-		location.getBlock().setType(xmaterial.parseMaterial(), false);
+	public void setBlock(Location location, Material material, boolean physics) {
+		location.getBlock().setType(material, false);
 	}
 
 	@Override
@@ -71,8 +64,7 @@ public class BlocksUtils_1_13 implements BlocksUtils {
 
 	@Override
 	public boolean isOnWhitelist(Block block) {
-
-		if (Main.getSettings().getGeneratingWhitelist().contains(XMaterial.matchXMaterial(block.getType()))) {
+		if (Main.getSettings().isOnWhitelist(block.getType())) {
 			return true;
 		}
 		return false;

@@ -9,11 +9,11 @@ import me.kryniowesegryderiusz.kgenerators.api.events.PreGeneratorRegenerationEv
 import me.kryniowesegryderiusz.kgenerators.api.objects.AbstractGeneratedObject;
 import me.kryniowesegryderiusz.kgenerators.generators.locations.objects.GeneratorLocation;
 import me.kryniowesegryderiusz.kgenerators.logger.Logger;
-import me.kryniowesegryderiusz.kgenerators.xseries.XMaterial;
+import com.cryptomorin.xseries.XMaterial;
 
 public class GeneratorLocationRegenerateHandler {
 	
-	static Material pistonHead = XMaterial.PISTON_HEAD.parseMaterial();
+	static Material pistonHead = XMaterial.PISTON_HEAD.get();
 	
 	public void handle(GeneratorLocation gLocation) {
 		

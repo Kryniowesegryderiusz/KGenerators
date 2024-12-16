@@ -15,6 +15,7 @@ import me.kryniowesegryderiusz.kgenerators.generators.players.objects.GeneratorP
 
 public class PlaceholdersAPIExpansion extends PlaceholderExpansion {
 
+	@SuppressWarnings("unused")
 	private final Main plugin; // The instance is created in the constructor and won't be modified, so it can
 								// be final
 

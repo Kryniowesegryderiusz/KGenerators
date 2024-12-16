@@ -4,12 +4,13 @@ import java.util.Map;
 
 import org.bukkit.inventory.ItemStack;
 
+import com.cryptomorin.xseries.XMaterial;
+
 import dev.lone.itemsadder.api.CustomBlock;
 import lombok.Getter;
 import me.kryniowesegryderiusz.kgenerators.api.interfaces.IGeneratorLocation;
 import me.kryniowesegryderiusz.kgenerators.api.objects.AbstractGeneratedObject;
 import me.kryniowesegryderiusz.kgenerators.logger.Logger;
-import me.kryniowesegryderiusz.kgenerators.xseries.XMaterial;
 
 public class GeneratedItemsAdderBlock extends AbstractGeneratedObject {
 	
