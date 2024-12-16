@@ -1,7 +1,6 @@
 /*
  * The MIT License (MIT)
  *
- * Copyright (c) 2018 Hex_27
  * Copyright (c) 2024 Crypto Morin
  *
  * Permission is hereby granted, free of charge, to any person obtaining a copy
@@ -22,6 +21,7 @@
  */
 package me.kryniowesegryderiusz.kgenerators.xseries;
 
+import com.cryptomorin.xseries.base.XBase;
 import com.google.common.base.Enums;
 import com.google.common.cache.Cache;
 import com.google.common.cache.CacheBuilder;
@@ -31,9 +31,10 @@ import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.meta.ItemMeta;
 import org.bukkit.inventory.meta.SpawnEggMeta;
 import org.jetbrains.annotations.ApiStatus;
+import org.jetbrains.annotations.NotNull;
+import org.jetbrains.annotations.Nullable;
 
-import javax.annotation.Nonnull;
-import javax.annotation.Nullable;
+import java.lang.reflect.Field;
 import java.util.*;
 import java.util.concurrent.TimeUnit;
 import java.util.regex.Matcher;
@@ -62,9 +63,10 @@ import java.util.stream.Collectors;
  * @author Crypto Morin
  * @version 12.0.0
  * @see Material
+ * @see XItemStack
  * @see ItemStack
  */
-public enum XMaterial /* implements com.cryptomorin.xseries.abstractions.Material*/ {
+public enum XMaterial implements XBase<XMaterial, Material> {
     ACACIA_BOAT("BOAT_ACACIA"),
     ACACIA_BUTTON("WOOD_BUTTON"),
     ACACIA_CHEST_BOAT,
@@ -189,12 +191,13 @@ public enum XMaterial /* implements com.cryptomorin.xseries.abstractions.Materia
      * Version 1.12+ interprets "BED" as BLACK_BED due to enum alphabetic ordering.
      */
     BLACK_BED(supports(12) ? 15 : 0, "BED_BLOCK", "BED"),
+    BLACK_BUNDLE,
     BLACK_CANDLE,
     BLACK_CANDLE_CAKE,
     BLACK_CARPET(15, "CARPET"),
     BLACK_CONCRETE(15, "CONCRETE"),
     BLACK_CONCRETE_POWDER(15, "CONCRETE_POWDER"),
-    BLACK_DYE,
+    BLACK_DYE(0, "INK_SACK", "INK_SAC"),
     BLACK_GLAZED_TERRACOTTA,
     BLACK_SHULKER_BOX,
     BLACK_STAINED_GLASS(15, "STAINED_GLASS"),
@@ -209,6 +212,7 @@ public enum XMaterial /* implements com.cryptomorin.xseries.abstractions.Materia
     BLAZE_SPAWN_EGG(61, "MONSTER_EGG"),
     BLUE_BANNER(4, "STANDING_BANNER", "BANNER"),
     BLUE_BED(supports(12) ? 11 : 0, "BED_BLOCK", "BED"),
+    BLUE_BUNDLE,
     BLUE_CANDLE,
     BLUE_CANDLE_CAKE,
     BLUE_CARPET(11, "CARPET"),
@@ -231,6 +235,7 @@ public enum XMaterial /* implements com.cryptomorin.xseries.abstractions.Materia
     BONE_MEAL(15, "INK_SACK"),
     BOOK,
     BOOKSHELF,
+    BORDURE_INDENTED_BANNER_PATTERN,
     BOW,
     BOWL,
     BRAIN_CORAL,
@@ -249,6 +254,7 @@ public enum XMaterial /* implements com.cryptomorin.xseries.abstractions.Materia
     BRICK_WALL,
     BROWN_BANNER(3, "STANDING_BANNER", "BANNER"),
     BROWN_BED(supports(12) ? 12 : 0, "BED_BLOCK", "BED"),
+    BROWN_BUNDLE,
     BROWN_CANDLE,
     BROWN_CANDLE_CAKE,
     BROWN_CARPET(12, "CARPET"),
@@ -336,6 +342,7 @@ public enum XMaterial /* implements com.cryptomorin.xseries.abstractions.Materia
     CHISELED_POLISHED_BLACKSTONE("POLISHED_BLACKSTONE"),
     CHISELED_QUARTZ_BLOCK(1, "QUARTZ_BLOCK"),
     CHISELED_RED_SANDSTONE(1, "RED_SANDSTONE"),
+    CHISELED_RESIN_BRICKS,
     CHISELED_SANDSTONE(1, "SANDSTONE"),
     CHISELED_STONE_BRICKS(3, "SMOOTH_BRICK"),
     CHISELED_TUFF,
@@ -346,6 +353,7 @@ public enum XMaterial /* implements com.cryptomorin.xseries.abstractions.Materia
     CLAY,
     CLAY_BALL,
     CLOCK("WATCH"),
+    CLOSED_EYEBLOSSOM,
     COAL,
     COAL_BLOCK,
     COAL_ORE,
@@ -402,6 +410,8 @@ public enum XMaterial /* implements com.cryptomorin.xseries.abstractions.Materia
     CRACKED_STONE_BRICKS(2, "SMOOTH_BRICK"),
     CRAFTER,
     CRAFTING_TABLE("WORKBENCH"),
+    CREAKING_HEART,
+    CREAKING_SPAWN_EGG,
     CREEPER_BANNER_PATTERN,
     CREEPER_HEAD(4, "SKULL", "SKULL_ITEM"),
     CREEPER_SPAWN_EGG(50, "MONSTER_EGG"),
@@ -435,6 +445,7 @@ public enum XMaterial /* implements com.cryptomorin.xseries.abstractions.Materia
     CUT_SANDSTONE_SLAB(1, "STEP"),
     CYAN_BANNER(6, "STANDING_BANNER", "BANNER"),
     CYAN_BED(supports(12) ? 9 : 0, "BED_BLOCK", "BED"),
+    CYAN_BUNDLE,
     CYAN_CANDLE,
     CYAN_CANDLE_CAKE,
     CYAN_CARPET(9, "CARPET"),
@@ -594,8 +605,9 @@ public enum XMaterial /* implements com.cryptomorin.xseries.abstractions.Materia
     FEATHER,
     FERMENTED_SPIDER_EYE,
     FERN(2, "LONG_GRASS"),
+    FIELD_MASONED_BANNER_PATTERN,
     /**
-     * For some reasons filled map items are really special.
+     * For some reason, filled map items are really special.
      * Their data value starts from 0 and every time a player
      * creates a new map that maps data value increases.
      * <a href="https://github.com/CryptoMorin/XSeries/issues/91">GitHub Issue</a>
@@ -671,6 +683,7 @@ public enum XMaterial /* implements com.cryptomorin.xseries.abstractions.Materia
     GRAVEL,
     GRAY_BANNER(8, "STANDING_BANNER", "BANNER"),
     GRAY_BED(supports(12) ? 7 : 0, "BED_BLOCK", "BED"),
+    GRAY_BUNDLE,
     GRAY_CANDLE,
     GRAY_CANDLE_CAKE,
     GRAY_CARPET(7, "CARPET"),
@@ -686,6 +699,7 @@ public enum XMaterial /* implements com.cryptomorin.xseries.abstractions.Materia
     GRAY_WOOL(7, "WOOL"),
     GREEN_BANNER(2, "STANDING_BANNER", "BANNER"),
     GREEN_BED(supports(12) ? 13 : 0, "BED_BLOCK", "BED"),
+    GREEN_BUNDLE,
     GREEN_CANDLE,
     GREEN_CANDLE_CAKE,
     GREEN_CARPET(13, "CARPET"),
@@ -811,6 +825,7 @@ public enum XMaterial /* implements com.cryptomorin.xseries.abstractions.Materia
     LIGHTNING_ROD,
     LIGHT_BLUE_BANNER(12, "STANDING_BANNER", "BANNER"),
     LIGHT_BLUE_BED(supports(12) ? 3 : 0, "BED_BLOCK", "BED"),
+    LIGHT_BLUE_BUNDLE,
     LIGHT_BLUE_CANDLE,
     LIGHT_BLUE_CANDLE_CAKE,
     LIGHT_BLUE_CARPET(3, "CARPET"),
@@ -826,6 +841,7 @@ public enum XMaterial /* implements com.cryptomorin.xseries.abstractions.Materia
     LIGHT_BLUE_WOOL(3, "WOOL"),
     LIGHT_GRAY_BANNER(7, "STANDING_BANNER", "BANNER"),
     LIGHT_GRAY_BED(supports(12) ? 8 : 0, "BED_BLOCK", "BED"),
+    LIGHT_GRAY_BUNDLE,
     LIGHT_GRAY_CANDLE,
     LIGHT_GRAY_CANDLE_CAKE,
     LIGHT_GRAY_CARPET(8, "CARPET"),
@@ -849,6 +865,7 @@ public enum XMaterial /* implements com.cryptomorin.xseries.abstractions.Materia
     LILY_PAD("WATER_LILY"),
     LIME_BANNER(10, "STANDING_BANNER", "BANNER"),
     LIME_BED(supports(12) ? 5 : 0, "BED_BLOCK", "BED"),
+    LIME_BUNDLE,
     LIME_CANDLE,
     LIME_CANDLE_CAKE,
     LIME_CARPET(5, "CARPET"),
@@ -869,6 +886,7 @@ public enum XMaterial /* implements com.cryptomorin.xseries.abstractions.Materia
     MACE,
     MAGENTA_BANNER(13, "STANDING_BANNER", "BANNER"),
     MAGENTA_BED(supports(12) ? 2 : 0, "BED_BLOCK", "BED"),
+    MAGENTA_BUNDLE,
     MAGENTA_CANDLE,
     MAGENTA_CANDLE_CAKE,
     MAGENTA_CARPET(2, "CARPET"),
@@ -1025,8 +1043,10 @@ public enum XMaterial /* implements com.cryptomorin.xseries.abstractions.Materia
     OCHRE_FROGLIGHT,
     OMINOUS_BOTTLE,
     OMINOUS_TRIAL_KEY,
+    OPEN_EYEBLOSSOM,
     ORANGE_BANNER(14, "STANDING_BANNER", "BANNER"),
     ORANGE_BED(supports(12) ? 1 : 0, "BED_BLOCK", "BED"),
+    ORANGE_BUNDLE,
     ORANGE_CANDLE,
     ORANGE_CANDLE_CAKE,
     ORANGE_CARPET(1, "CARPET"),
@@ -1054,6 +1074,28 @@ public enum XMaterial /* implements com.cryptomorin.xseries.abstractions.Materia
     PACKED_ICE,
     PACKED_MUD,
     PAINTING,
+    PALE_HANGING_MOSS,
+    PALE_MOSS_BLOCK,
+    PALE_MOSS_CARPET,
+    PALE_OAK_BOAT,
+    PALE_OAK_BUTTON,
+    PALE_OAK_CHEST_BOAT,
+    PALE_OAK_DOOR,
+    PALE_OAK_FENCE,
+    PALE_OAK_FENCE_GATE,
+    PALE_OAK_HANGING_SIGN,
+    PALE_OAK_LEAVES,
+    PALE_OAK_LOG,
+    PALE_OAK_PLANKS,
+    PALE_OAK_PRESSURE_PLATE,
+    PALE_OAK_SAPLING,
+    PALE_OAK_SIGN,
+    PALE_OAK_SLAB,
+    PALE_OAK_STAIRS,
+    PALE_OAK_TRAPDOOR,
+    PALE_OAK_WALL_HANGING_SIGN,
+    PALE_OAK_WALL_SIGN,
+    PALE_OAK_WOOD,
     PANDA_SPAWN_EGG,
     PAPER,
     PARROT_SPAWN_EGG(105, "MONSTER_EGG"),
@@ -1071,6 +1113,7 @@ public enum XMaterial /* implements com.cryptomorin.xseries.abstractions.Materia
     PILLAGER_SPAWN_EGG,
     PINK_BANNER(9, "STANDING_BANNER", "BANNER"),
     PINK_BED(supports(12) ? 6 : 0, "BED_BLOCK", "BED"),
+    PINK_BUNDLE,
     PINK_CANDLE,
     PINK_CANDLE_CAKE,
     PINK_CARPET(6, "CARPET"),
@@ -1142,6 +1185,7 @@ public enum XMaterial /* implements com.cryptomorin.xseries.abstractions.Materia
     POTTED_BROWN_MUSHROOM("FLOWER_POT"),
     POTTED_CACTUS("FLOWER_POT"),
     POTTED_CHERRY_SAPLING,
+    POTTED_CLOSED_EYEBLOSSOM,
     POTTED_CORNFLOWER,
     POTTED_CRIMSON_FUNGUS,
     POTTED_CRIMSON_ROOTS,
@@ -1154,8 +1198,10 @@ public enum XMaterial /* implements com.cryptomorin.xseries.abstractions.Materia
     POTTED_LILY_OF_THE_VALLEY,
     POTTED_MANGROVE_PROPAGULE,
     POTTED_OAK_SAPLING("FLOWER_POT"),
+    POTTED_OPEN_EYEBLOSSOM,
     POTTED_ORANGE_TULIP(5, "FLOWER_POT"),
     POTTED_OXEYE_DAISY(8, "FLOWER_POT"),
+    POTTED_PALE_OAK_SAPLING,
     POTTED_PINK_TULIP(7, "FLOWER_POT"),
     POTTED_POPPY("FLOWER_POT"),
     POTTED_RED_MUSHROOM("FLOWER_POT"),
@@ -1193,6 +1239,7 @@ public enum XMaterial /* implements com.cryptomorin.xseries.abstractions.Materia
     PUMPKIN_STEM,
     PURPLE_BANNER(5, "STANDING_BANNER", "BANNER"),
     PURPLE_BED(supports(12) ? 10 : 0, "BED_BLOCK", "BED"),
+    PURPLE_BUNDLE,
     PURPLE_CANDLE,
     PURPLE_CANDLE_CAKE,
     PURPLE_CARPET(10, "CARPET"),
@@ -1254,6 +1301,7 @@ public enum XMaterial /* implements com.cryptomorin.xseries.abstractions.Materia
      * Data value 14 or 0
      */
     RED_BED(supports(12) ? 14 : 0, "BED_BLOCK", "BED"),
+    RED_BUNDLE,
     RED_CANDLE,
     RED_CANDLE_CAKE,
     RED_CARPET(14, "CARPET"),
@@ -1286,6 +1334,13 @@ public enum XMaterial /* implements com.cryptomorin.xseries.abstractions.Materia
     REINFORCED_DEEPSLATE,
     REPEATER("DIODE_BLOCK_ON", "DIODE_BLOCK_OFF", "DIODE"),
     REPEATING_COMMAND_BLOCK("COMMAND", "COMMAND_REPEATING"),
+    RESIN_BLOCK,
+    RESIN_BRICK,
+    RESIN_BRICKS,
+    RESIN_BRICK_SLAB,
+    RESIN_BRICK_STAIRS,
+    RESIN_BRICK_WALL,
+    RESIN_CLUMP,
     RESPAWN_ANCHOR,
     RIB_ARMOR_TRIM_SMITHING_TEMPLATE,
     ROOTED_DIRT,
@@ -1435,6 +1490,8 @@ public enum XMaterial /* implements com.cryptomorin.xseries.abstractions.Materia
     STRIPPED_MANGROVE_WOOD,
     STRIPPED_OAK_LOG,
     STRIPPED_OAK_WOOD,
+    STRIPPED_PALE_OAK_LOG,
+    STRIPPED_PALE_OAK_WOOD,
     STRIPPED_SPRUCE_LOG,
     STRIPPED_SPRUCE_WOOD,
     STRIPPED_WARPED_HYPHAE,
@@ -1602,6 +1659,7 @@ public enum XMaterial /* implements com.cryptomorin.xseries.abstractions.Materia
     WHEAT_SEEDS("SEEDS"),
     WHITE_BANNER(15, "STANDING_BANNER", "BANNER"),
     WHITE_BED("BED_BLOCK", "BED"),
+    WHITE_BUNDLE,
     WHITE_CANDLE,
     WHITE_CANDLE_CAKE,
     WHITE_CARPET("CARPET"),
@@ -1635,6 +1693,7 @@ public enum XMaterial /* implements com.cryptomorin.xseries.abstractions.Materia
     WRITTEN_BOOK,
     YELLOW_BANNER(11, "STANDING_BANNER", "BANNER"),
     YELLOW_BED(supports(12) ? 4 : 0, "BED_BLOCK", "BED"),
+    YELLOW_BUNDLE,
     YELLOW_CANDLE,
     YELLOW_CANDLE_CAKE,
     YELLOW_CARPET(4, "CARPET"),
@@ -1750,28 +1809,29 @@ public enum XMaterial /* implements com.cryptomorin.xseries.abstractions.Materia
      *
      * @see #getLegacy()
      */
-    @Nonnull
+    @NotNull
     private final String[] legacy;
     /**
      * The cached Bukkit parsed material.
      *
-     * @see #parseMaterial()
+     * @see #get()
      * @since 9.0.0
      */
     @Nullable
     private final Material material;
 
-    XMaterial(int data, @Nonnull String... legacy) {
+    XMaterial(int data, @NotNull String... legacy) {
         this.data = (byte) data;
         this.legacy = legacy;
 
         Material mat = null;
-        if ((!Data.ISFLAT && this.isDuplicated()) || (mat = Material.getMaterial(this.name())) == null) {
-            for (int i = legacy.length - 1; i >= 0; i--) {
-                mat = Material.getMaterial(legacy[i]);
+        if ((!Data.ISFLAT && this.isDuplicated()) || (mat = Data.getExactMaterial(this.name())) == null) {
+            for (int i = legacy.length - 1; i >= 0; i--) { // Backwards checkup
+                mat = Data.getExactMaterial(legacy[i]);
                 if (mat != null) break;
             }
         }
+
         this.material = mat;
     }
 
@@ -1787,8 +1847,8 @@ public enum XMaterial /* implements com.cryptomorin.xseries.abstractions.Materia
      * @return an optional that can be empty.
      * @since 5.1.0
      */
-    @Nonnull
-    private static Optional<XMaterial> getIfPresent(@Nonnull String name) {
+    @NotNull
+    private static Optional<XMaterial> getIfPresent(@NotNull String name) {
         return Optional.ofNullable(NAMES.get(name));
     }
 
@@ -1811,7 +1871,7 @@ public enum XMaterial /* implements com.cryptomorin.xseries.abstractions.Materia
      * @since 1.0.0
      */
     @Nullable
-    private static XMaterial requestOldXMaterial(@Nonnull String name, byte data) {
+    private static XMaterial requestOldXMaterial(@NotNull String name, byte data) {
         String holder = name + data;
         XMaterial cache = NAME_CACHE.getIfPresent(holder);
         if (cache != null) return cache;
@@ -1843,8 +1903,8 @@ public enum XMaterial /* implements com.cryptomorin.xseries.abstractions.Materia
      * @see #matchXMaterial(String)
      * @since 3.0.0
      */
-    @Nonnull
-    private static Optional<XMaterial> matchXMaterialWithData(@Nonnull String name) {
+    @Nullable
+    private static Optional<XMaterial> matchXMaterialWithData(@NotNull String name) {
         int index = name.indexOf(':');
         if (index != -1) {
             String mat = format(name.substring(0, index));
@@ -1853,11 +1913,12 @@ public enum XMaterial /* implements com.cryptomorin.xseries.abstractions.Materia
                 byte data = (byte) Integer.parseInt(name.substring(index + 1).replace(" ", ""));
                 return data >= 0 && data < MAX_DATA_VALUE ? matchDefinedXMaterial(mat, data) : matchDefinedXMaterial(mat, UNKNOWN_DATA_VALUE);
             } catch (NumberFormatException ignored) {
-                return matchDefinedXMaterial(mat, UNKNOWN_DATA_VALUE);
+                return Optional.empty();
             }
         }
 
-        return Optional.empty();
+        // noinspection OptionalAssignedToNull
+        return null;
     }
 
     /**
@@ -1868,12 +1929,13 @@ public enum XMaterial /* implements com.cryptomorin.xseries.abstractions.Materia
      * @see #matchDefinedXMaterial(String, byte)
      * @since 2.0.0
      */
-    @Nonnull
-    public static Optional<XMaterial> matchXMaterial(@Nonnull String name) {
+    @SuppressWarnings("OptionalAssignedToNull")
+    @NotNull
+    public static Optional<XMaterial> matchXMaterial(@NotNull String name) {
         if (name == null || name.isEmpty())
             throw new IllegalArgumentException("Cannot match a material with null or empty material name");
         Optional<XMaterial> oldMatch = matchXMaterialWithData(name);
-        return oldMatch.isPresent() ? oldMatch : matchDefinedXMaterial(format(name), UNKNOWN_DATA_VALUE);
+        return oldMatch != null ? oldMatch : matchDefinedXMaterial(format(name), UNKNOWN_DATA_VALUE);
     }
 
     /**
@@ -1884,8 +1946,8 @@ public enum XMaterial /* implements com.cryptomorin.xseries.abstractions.Materia
      * @see #matchXMaterial(ItemStack)
      * @since 2.0.0
      */
-    @Nonnull
-    public static XMaterial matchXMaterial(@Nonnull Material material) {
+    @NotNull
+    public static XMaterial matchXMaterial(@NotNull Material material) {
         Objects.requireNonNull(material, "Cannot match null material");
         return matchDefinedXMaterial(material.name(), UNKNOWN_DATA_VALUE)
                 .orElseThrow(() -> new IllegalArgumentException("Unsupported material with no data value: " + material.name()));
@@ -1901,9 +1963,9 @@ public enum XMaterial /* implements com.cryptomorin.xseries.abstractions.Materia
      * @see #matchXMaterial(Material)
      * @since 2.0.0
      */
-    @Nonnull
+    @NotNull
     @SuppressWarnings("deprecation")
-    public static XMaterial matchXMaterial(@Nonnull ItemStack item) {
+    public static XMaterial matchXMaterial(@NotNull ItemStack item) {
         Objects.requireNonNull(item, "Cannot match null ItemStack");
         String material = item.getType().name();
 
@@ -1935,9 +1997,14 @@ public enum XMaterial /* implements com.cryptomorin.xseries.abstractions.Materia
         // If this happens to more materials in the future, I might have to change the system.
         if (supports(13) && !supports(14)) {
             // https://hub.spigotmc.org/stash/projects/SPIGOT/repos/bukkit/diff/src/main/java/org/bukkit/Material.java?until=67d908a9830c71267ee740f5bddd728ce9c64cc7
-            if (material.equals("CACTUS_GREEN")) return GREEN_DYE;
-            if (material.equals("ROSE_RED")) return RED_DYE;
-            if (material.equals("DANDELION_YELLOW")) return YELLOW_DYE;
+            switch (material) {
+                case "CACTUS_GREEN":
+                    return GREEN_DYE;
+                case "ROSE_RED":
+                    return RED_DYE;
+                case "DANDELION_YELLOW":
+                    return YELLOW_DYE;
+            }
         }
 
         // Check FILLED_MAP enum for more info.
@@ -1961,8 +2028,8 @@ public enum XMaterial /* implements com.cryptomorin.xseries.abstractions.Materia
      * @since 3.0.0
      */
     @SuppressWarnings({"DanglingJavadoc", "JavadocBlankLines"})
-    @Nonnull
-    protected static Optional<XMaterial> matchDefinedXMaterial(@Nonnull String name, byte data) {
+    @NotNull
+    protected static Optional<XMaterial> matchDefinedXMaterial(@NotNull String name, byte data) {
         // if (!Boolean.valueOf(Boolean.getBoolean(Boolean.TRUE.toString())).equals(Boolean.FALSE.booleanValue())) return null;
         Boolean duplicated = null;
         boolean isAMap = name.equalsIgnoreCase("MAP");
@@ -2012,8 +2079,8 @@ public enum XMaterial /* implements com.cryptomorin.xseries.abstractions.Materia
      * @return an enum name.
      * @since 2.0.0
      */
-    @Nonnull
-    protected static String format(@Nonnull String name) {
+    @NotNull
+    protected static String format(@NotNull String name) {
         int len = name.length();
         char[] chs = new char[len];
         int count = 0;
@@ -2069,11 +2136,11 @@ public enum XMaterial /* implements com.cryptomorin.xseries.abstractions.Materia
      * @see #parseItem()
      * @since 3.0.0
      */
-    @Nonnull
+    @NotNull
     @SuppressWarnings("deprecation")
-    public ItemStack setType(@Nonnull ItemStack item) {
+    public ItemStack setType(@NotNull ItemStack item) {
         Objects.requireNonNull(item, "Cannot set material for null ItemStack");
-        Material material = this.parseMaterial();
+        Material material = this.get();
         Objects.requireNonNull(material, () -> "Unsupported material: " + this.name());
 
         item.setType(material);
@@ -2093,7 +2160,7 @@ public enum XMaterial /* implements com.cryptomorin.xseries.abstractions.Materia
      * @return true if it's one of the legacy names, otherwise false.
      * @since 2.0.0
      */
-    private boolean anyMatchLegacy(@Nonnull String name) {
+    private boolean anyMatchLegacy(@NotNull String name) {
         for (int i = this.legacy.length - 1; i >= 0; i--) {
             if (name.equals(this.legacy[i])) return true;
         }
@@ -2115,10 +2182,10 @@ public enum XMaterial /* implements com.cryptomorin.xseries.abstractions.Materia
      * @since 3.0.0
      */
     @Override
-    @Nonnull
+    @NotNull
     public String toString() {
         return Arrays.stream(name().split("_"))
-                .map(t -> t.charAt(0) + t.substring(1).toLowerCase())
+                .map(t -> t.charAt(0) + t.substring(1).toLowerCase(Locale.ENGLISH))
                 .collect(Collectors.joining(" "));
     }
 
@@ -2135,7 +2202,7 @@ public enum XMaterial /* implements com.cryptomorin.xseries.abstractions.Materia
     public int getId() {
         // https://hub.spigotmc.org/stash/projects/SPIGOT/repos/bukkit/diff/src/main/java/org/bukkit/Material.java?until=1cb03826ebde4ef887519ce37b0a2a341494a183
         // Should start working again in 1.16+
-        Material material = this.parseMaterial();
+        Material material = this.get();
         if (material == null) return -1;
         try {
             return material.getId();
@@ -2169,7 +2236,7 @@ public enum XMaterial /* implements com.cryptomorin.xseries.abstractions.Materia
     @Nullable
     @SuppressWarnings("deprecation")
     public ItemStack parseItem() {
-        Material material = this.parseMaterial();
+        Material material = this.get();
         if (material == null) return null;
         ItemStack base = Data.ISFLAT ? new ItemStack(material) : new ItemStack(material, 1, this.data);
         // Splash Potions weren't an official material pre-flattening.
@@ -2184,10 +2251,12 @@ public enum XMaterial /* implements com.cryptomorin.xseries.abstractions.Materia
      *
      * @return the material related to this XMaterial based on the server version.
      * @since 1.0.0
+     * @deprecated Use {@link #get()} instead.
      */
     @Nullable
+    @Deprecated
     public Material parseMaterial() {
-        return this.material;
+        return get();
     }
 
     /**
@@ -2198,9 +2267,9 @@ public enum XMaterial /* implements com.cryptomorin.xseries.abstractions.Materia
      * @since 1.0.0
      */
     @SuppressWarnings("deprecation")
-    public boolean isSimilar(@Nonnull ItemStack item) {
+    public boolean isSimilar(@NotNull ItemStack item) {
         Objects.requireNonNull(item, "Cannot compare with null ItemStack");
-        if (item.getType() != this.parseMaterial()) return false;
+        if (item.getType() != this.get()) return false;
         // Special case for splash potions.
         if (this == SPLASH_POTION) {
             return Data.ISFLAT || item.getDurability() == (short) 16384;
@@ -2208,33 +2277,14 @@ public enum XMaterial /* implements com.cryptomorin.xseries.abstractions.Materia
         return Data.ISFLAT || item.getDurability() == this.data || item.getType().getMaxDurability() > 0;
     }
 
-    /**
-     * Checks if this material is supported in the current version.
-     * Suggested materials will be ignored.
-     * <p>
-     * Note that you should use {@link #parseMaterial()} or {@link #parseItem()} and check if it's null
-     * if you're going to parse and use the material/item later.
-     *
-     * @return true if the material exists in {@link Material} list.
-     * @since 2.0.0
-     */
-    public boolean isSupported() {
-        return this.material != null;
+    @Override
+    public String[] getNames() {
+        return legacy;
     }
 
-    /**
-     * Checks if this material is supported in the current version and
-     * returns itself if yes.
-     * <p>
-     * In the other case, the alternate material will get returned,
-     * no matter if it is supported or not.
-     *
-     * @param alternateMaterial the material to get if this one is not supported.
-     * @return this material or the {@code alternateMaterial} if not supported.
-     */
-    @Nullable
-    public XMaterial or(@Nullable XMaterial alternateMaterial) {
-        return isSupported() ? this : alternateMaterial;
+    @Override
+    public @Nullable Material get() {
+        return material;
     }
 
     /**
@@ -2248,7 +2298,7 @@ public enum XMaterial /* implements com.cryptomorin.xseries.abstractions.Materia
      * @return true if there's a duplicated material for this material, otherwise false.
      * @since 2.0.0
      */
-    private static boolean isDuplicated(@Nonnull String name) {
+    private static boolean isDuplicated(@NotNull String name) {
         // Don't use matchXMaterial() since this method is being called from matchXMaterial() itself and will cause a StackOverflowError.
         return DUPLICATED.contains(name);
     }
@@ -2307,13 +2357,57 @@ public enum XMaterial /* implements com.cryptomorin.xseries.abstractions.Materia
          * @since 1.0.0
          */
         private static final int VERSION;
+        private static final Map<String, Material> BUKKIT_NAME_MAPPINGS;
 
         static { // This needs to be right below VERSION because of initialization order.
-            String version = Bukkit.getVersion();
-            Matcher matcher = Pattern.compile("MC: \\d\\.(\\d+)").matcher(version);
+            // Null-checked for unit tests that don't run a server.
+            // noinspection ConstantValue
+            if (Bukkit.getServer() == null) {
+                System.err.println("Bukkit.getServer() in null. This should not happen when running a plugin normally");
+                VERSION = 21;
+            } else {
+                String version = Bukkit.getVersion();
+                Matcher matcher = Pattern.compile("MC: \\d\\.(\\d+)").matcher(version);
 
-            if (matcher.find()) VERSION = Integer.parseInt(matcher.group(1));
-            else throw new IllegalArgumentException("Failed to parse server version from: " + version);
+                if (matcher.find()) VERSION = Integer.parseInt(matcher.group(1));
+                else throw new IllegalArgumentException("Failed to parse server version from: " + version);
+            }
+        }
+
+        static {
+            // Since Minecraft v1.21.3, Paper's Material.getMaterial() has been acting weird.
+            // Material.getMaterial("WHITE_DYE") returns null, however the direct call using
+            // BY_NAME.get("WHITE_DYE") returns Material.WHITE_DYE as expected.
+            // This doesn't seem to happen with Spigot since XSeries unit tests confirms this.
+            // I'm unable to find the corresponding patch that may change this behavior on Paper.
+            // It appears the culprit is org.bukkit.craftbukkit.v1_21_R3.legacy.CraftLegacy class.
+            // And it seems like Paper does some bytecode editing to replace Material.getMaterial with this (confirmed by stacktrace)
+            // But this is obviously wrong, why does it look like this?
+            //     public static Material getMaterial(String name) {
+            //         return name.startsWith("LEGACY_") ? Material.getMaterial(name) : Material.getMaterial("LEGACY_" + name);
+            //     }
+            // Material.getMaterial(String name, boolean legacy) was also removed.
+            // I have no idea what is the intention behind this whole thing...
+            // We could use the registry, but this one is more performant until bukkit actually
+            // switches to registries entirely for materials.
+            Map<String, Material> mapping;
+            try {
+                // private static final Map<String, Material> BY_NAME;
+                Field field = Material.class.getDeclaredField("BY_NAME");
+                field.setAccessible(true);
+                // noinspection unchecked
+                mapping = (Map<String, Material>) field.get(null);
+            } catch (Throwable e) {
+                new RuntimeException("Unable to get Material.BY_NAME field", e).printStackTrace();
+                mapping = null;
+            }
+
+            BUKKIT_NAME_MAPPINGS = mapping;
+        }
+
+        private static Material getExactMaterial(String name) {
+            if (BUKKIT_NAME_MAPPINGS != null) return BUKKIT_NAME_MAPPINGS.get(name);
+            else return Material.getMaterial(name);
         }
 
         /**
