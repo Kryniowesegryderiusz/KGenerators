@@ -1,9 +1,5 @@
 package me.kryniowesegryderiusz.kgenerators.multiversion;
 
-import java.util.Collections;
-import java.util.EnumSet;
-import java.util.Set;
-
 import org.bukkit.Location;
 import org.bukkit.Material;
 import org.bukkit.block.Block;
@@ -12,39 +8,13 @@ import org.bukkit.inventory.ItemStack;
 
 import me.kryniowesegryderiusz.kgenerators.Main;
 import me.kryniowesegryderiusz.kgenerators.multiversion.interfaces.BlocksUtils;
+import me.kryniowesegryderiusz.kgenerators.utils.ItemUtils;
 
 public class BlocksUtils_1_13 implements BlocksUtils {
-	
-    public static final Set<Material> CROPS = Collections.unmodifiableSet(EnumSet.of(
-            Material.CARROT, Material.CARROTS, Material.POTATO, Material.POTATOES,
-            Material.NETHER_WART, Material.PUMPKIN_SEEDS, Material.WHEAT_SEEDS, Material.WHEAT,
-            Material.MELON_SEEDS, Material.BEETROOT_SEEDS, Material.BEETROOTS, Material.SUGAR_CANE,
-            Material.CHORUS_PLANT, //Material.BAMBOO_SAPLING, Material.BAMBOO, 
-            Material.KELP, Material.KELP_PLANT, Material.SEA_PICKLE, Material.BROWN_MUSHROOM, Material.RED_MUSHROOM,
-            Material.MELON_STEM, Material.PUMPKIN_STEM, Material.COCOA, Material.COCOA_BEANS
-
-    ));
 
 	@Override
 	public ItemStack getItemStackByBlock(Block block) {
-		Material material = block.getType();
-		if (CROPS.contains(material)) {
-			switch (material) {
-				case CARROTS:
-					return new ItemStack(Material.CARROT);
-				case POTATOES:
-					return new ItemStack(Material.POTATO);
-				case BEETROOTS:
-					return new ItemStack(Material.BEETROOT);
-				case PUMPKIN_STEM:
-					return new ItemStack(Material.PUMPKIN_SEEDS);
-				case MELON_STEM:
-					return new ItemStack(Material.MELON_SEEDS);
-				default:
-					break;
-			}
-		}
-		return new ItemStack(material);
+		return ItemUtils.getItemStackFromMaterial(block.getType());
 	}
 
 	@Override

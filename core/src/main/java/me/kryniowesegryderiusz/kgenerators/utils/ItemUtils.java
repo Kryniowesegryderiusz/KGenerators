@@ -5,6 +5,7 @@ import java.util.Arrays;
 import java.util.NoSuchElementException;
 import java.util.Optional;
 
+import org.bukkit.Material;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.meta.ItemMeta;
 
@@ -117,5 +118,24 @@ public abstract class ItemUtils {
 		item.setItemMeta(meta);
 		
 		return item;
+	}
+
+	public static ItemStack getItemStackFromMaterial(Material material) {
+		
+		if (material == null) 
+			return new ItemStack(Material.AIR);
+		else if (material == Material.CARROTS)
+			return new ItemStack(Material.CARROT);
+		else if (material == Material.POTATOES)
+			return new ItemStack(Material.POTATO);
+		else if (material == Material.BEETROOTS)
+			return new ItemStack(Material.BEETROOT);
+		else if (material == Material.PUMPKIN_STEM)
+			return new ItemStack(Material.PUMPKIN_SEEDS);
+		else if (material == Material.MELON_STEM)
+			return new ItemStack(Material.MELON_SEEDS);
+		else
+			return new ItemStack(material);
+
 	}
 }
