@@ -39,6 +39,8 @@ public class FactionsUUIDHook {
         
 		FLocation floc = new FLocation(l);
 		Faction faction = Board.getInstance().getFactionAt(floc);
+		if (faction == null)
+			return true;
 		
 		FPlayer fplayer = FPlayers.getInstance().getByPlayer(p);
 		

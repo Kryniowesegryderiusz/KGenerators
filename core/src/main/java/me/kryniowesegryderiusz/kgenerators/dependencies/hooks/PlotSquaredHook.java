@@ -34,15 +34,18 @@ public class PlotSquaredHook {
 		if (p.hasPermission("kgenerators.bypass.plotsquared"))
 			return true;   
         
-        Location pl = Location.at(l.getWorld().getName(), l.getBlockX(), l.getBlockY(), l.getBlockZ());
+        Location p2loc = Location.at(l.getWorld().getName(), l.getBlockX(), l.getBlockY(), l.getBlockZ());
         
-        if (!pl.isPlotArea())
+        //if (!pl.isPlotArea())
+        //	return false;
+        
+        if (p2loc.isPlotRoad() || p2loc.isUnownedPlotArea())
         	return false;
         
-        Plot plot = pl.getPlot();
+        Plot plot = p2loc.getPlot();
         
         if (plot == null)
-        	return false;
+        	return true;
         
         if (plot.isOwner(p.getUniqueId()) || plot.getMembers().contains(p.getUniqueId()) || plot.getTrusted().contains(p.getUniqueId()))
         	return true;
