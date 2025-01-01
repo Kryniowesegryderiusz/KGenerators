@@ -52,7 +52,6 @@ public class GeneratedItem extends AbstractGeneratedObject implements Listener {
 		if (generatedObjectConfig.containsKey("disable-gravity"))
 			this.disableGravity = (boolean) generatedObjectConfig.get("disable-gravity");
 
-
 		if (generatedObjectConfig.containsKey("item")) {
 			this.item = FilesUtils.loadItemStack((Map<?, ?>) generatedObjectConfig, "item",
 					"Generators file: GeneratedItem", false);
@@ -72,7 +71,8 @@ public class GeneratedItem extends AbstractGeneratedObject implements Listener {
 	@Override
 	public void regenerate(IGeneratorLocation generatorLocation) {
 		Location generateLocation = generatorLocation.getGeneratedBlockLocation().clone().add(0.5, 0.5, 0.5);
-		if (!Main.getMultiVersion().getBlocksUtils().isAir(generatorLocation.getGeneratedBlockLocation().getBlock()))
+		if (!Main.getMultiVersion().getBlocksUtils().isAir(generatorLocation.getGeneratedBlockLocation().getBlock()) 
+				&& !Main.getMultiVersion().getBlocksUtils().isWater(generatorLocation.getGeneratedBlockLocation().getBlock()))
 			generateLocation.add(0, 1, 0);
 		generateLocation.setPitch(-90);
 		this.entity = generatorLocation.getGeneratedBlockLocation().getWorld().dropItem(generateLocation, item);
