@@ -32,13 +32,11 @@ import me.kryniowesegryderiusz.kgenerators.lang.Lang;
 import me.kryniowesegryderiusz.kgenerators.listeners.BlockBreakListener;
 import me.kryniowesegryderiusz.kgenerators.listeners.BlockPistonListener;
 import me.kryniowesegryderiusz.kgenerators.listeners.BlockPlaceListener;
-import me.kryniowesegryderiusz.kgenerators.listeners.CraftItemListener;
-import me.kryniowesegryderiusz.kgenerators.listeners.ExplosionListener;
+import me.kryniowesegryderiusz.kgenerators.listeners.CraftingListeners;
 import me.kryniowesegryderiusz.kgenerators.listeners.FurnaceSmeltListener;
 import me.kryniowesegryderiusz.kgenerators.listeners.InventoryClickListener;
-import me.kryniowesegryderiusz.kgenerators.listeners.LeavesDecayListener;
+import me.kryniowesegryderiusz.kgenerators.listeners.GeneratorProtectionListeners;
 import me.kryniowesegryderiusz.kgenerators.listeners.PlayerInteractListener;
-import me.kryniowesegryderiusz.kgenerators.listeners.PrepareItemCraftListener;
 import me.kryniowesegryderiusz.kgenerators.logger.Logger;
 import me.kryniowesegryderiusz.kgenerators.multiversion.MultiVersionManager;
 import me.kryniowesegryderiusz.kgenerators.settings.Settings;
@@ -165,14 +163,12 @@ public class Main extends JavaPlugin {
 			Logger.debugPluginLoad("MainManager: Loading listeners");
 			this.getServer().getPluginManager().registerEvents(new BlockBreakListener(), this);
 			this.getServer().getPluginManager().registerEvents(new BlockPlaceListener(), this);
-			this.getServer().getPluginManager().registerEvents(new CraftItemListener(), this);
+			this.getServer().getPluginManager().registerEvents(new CraftingListeners(), this);
 			this.getServer().getPluginManager().registerEvents(new BlockPistonListener(), this);
-			this.getServer().getPluginManager().registerEvents(new ExplosionListener(), this);
 			this.getServer().getPluginManager().registerEvents(new PlayerInteractListener(), this);
 			this.getServer().getPluginManager().registerEvents(new InventoryClickListener(), this);
 			this.getServer().getPluginManager().registerEvents(new FurnaceSmeltListener(), this);
-			this.getServer().getPluginManager().registerEvents(new PrepareItemCraftListener(), this);
-			this.getServer().getPluginManager().registerEvents(new LeavesDecayListener(), this);
+			this.getServer().getPluginManager().registerEvents(new GeneratorProtectionListeners(), this);
 			//Chunk listeners were moved to PlacedGeneratorsManager
 			
 			/* 

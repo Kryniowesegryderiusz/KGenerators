@@ -6,14 +6,66 @@ import org.bukkit.block.Block;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
 import org.bukkit.event.block.BlockExplodeEvent;
+import org.bukkit.event.block.BlockFadeEvent;
+import org.bukkit.event.block.BlockFormEvent;
+import org.bukkit.event.block.BlockSpreadEvent;
+import org.bukkit.event.block.LeavesDecayEvent;
 import org.bukkit.event.entity.EntityExplodeEvent;
 
 import me.kryniowesegryderiusz.kgenerators.Main;
 import me.kryniowesegryderiusz.kgenerators.generators.locations.objects.GeneratorLocation;
 import me.kryniowesegryderiusz.kgenerators.logger.Logger;
 
-public class ExplosionListener implements Listener {
+public class GeneratorProtectionListeners implements Listener {
+	
+	/*
+	 * Blocks physics
+	 */
 
+	@EventHandler
+	public void onLeavesDecay(LeavesDecayEvent e) {
+		try {
+			if (Main.getPlacedGenerators().isLoaded(e.getBlock().getLocation()))
+				e.setCancelled(true);
+		} catch (Exception exception) {
+			Logger.error(exception);
+		}
+	}
+	
+	@EventHandler
+	public void onBlockFade(BlockFadeEvent e) {
+		try {
+			if (Main.getPlacedGenerators().isLoaded(e.getBlock().getLocation()))
+				e.setCancelled(true);
+		} catch (Exception exception) {
+			Logger.error(exception);
+		}
+	}
+	
+	@EventHandler
+	public void onBlockSpread(BlockSpreadEvent e) {
+		try {
+			if (Main.getPlacedGenerators().isLoaded(e.getBlock().getLocation()))
+				e.setCancelled(true);
+		} catch (Exception exception) {
+			Logger.error(exception);
+		}
+	}
+	
+	@EventHandler
+	public void onBlockForm(BlockFormEvent e) {
+		try {
+			if (Main.getPlacedGenerators().isLoaded(e.getBlock().getLocation()))
+				e.setCancelled(true);
+		} catch (Exception exception) {
+			Logger.error(exception);
+		}
+	}
+	
+	/*
+	 * Explosions
+	 */
+	
 	@EventHandler
 	public void onBlockExplode(final BlockExplodeEvent e) {
 
@@ -61,5 +113,4 @@ public class ExplosionListener implements Listener {
 		}
 		return false;
 	}
-
 }
