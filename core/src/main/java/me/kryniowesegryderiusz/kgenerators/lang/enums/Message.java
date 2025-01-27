@@ -117,8 +117,10 @@ public enum Message implements IMessage {
 	COMMANDS_TIME_LEFT_FORMAT_DAY("commands.timeleft.format.days", "d"),
 	COMMANDS_TIME_LEFT_FORMAT_NONE("commands.timeleft.format.none", "None"),
 	
-	COMMANDS_SPAWN_DONE("commands.spawn.done", "&aGenerator spawned! New generator: &e<location_info>"),
-	COMMANDS_SPAWN_USAGE("commands.spawn.usage", "&cUsage: &e/kgenerators spawn <world> <x> <y> <z> <generator> [owner]"),
+	COMMANDS_SPAWN_DONE_COORDINATES("commands.spawn.coordinates.done", "&aGenerator spawned! New generator: &e<location_info>"),
+	COMMANDS_SPAWN_DONE_WORLDEDIT("commands.spawn.worldedit.done", "&aSpawned &e<amount> &agenerators!"),
+	COMMANDS_SPAWN_USAGE_COORDINATES("commands.spawn.coordinates.usage", "&cUsage: &e/kgenerators spawn <world> <x> <y> <z> <generator> [owner]"),
+	COMMANDS_SPAWN_USAGE_WORLDEDIT("commands.spawn.worldedit.usage", "&cUsage: &e/kgenerators spawn worldedit <generator> [owner]"),
 	COMMANDS_SPAWN_NO_PERMISSION("commands.spawn.no-permission", "&cYou dont have permission &8(&7<permission>&8)&c to spawn generator!"),
 	COMMANDS_SPAWN_HELP("commands.spawn.help", "Spawns generator at location"),
 	

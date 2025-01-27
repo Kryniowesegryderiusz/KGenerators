@@ -4,6 +4,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import org.bukkit.Bukkit;
+import org.bukkit.World;
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandSender;
 import org.bukkit.command.TabCompleter;
@@ -27,11 +28,20 @@ public class CommandTabCompleter implements TabCompleter {
 			if (args[1].equals("owner")) {
 				return this.getPlayers(args[2]);
 			}
+			
+			if (args[0].equals("spawn") && args[1].equals("worldedit")) {
+				return this.getGenerators(args[2]);
+			}
 		}
 
 		if (args.length == 2) {
 			if (args[0].equals("give")) {
 				return this.getPlayers(args[1]);
+			} else if (args[0].equals("spawn")) {
+				c.add("worldedit");
+				for (World w : Main.getInstance().getServer().getWorlds()) {
+					c.add(w.getName());
+				}
 			}
 		}
 

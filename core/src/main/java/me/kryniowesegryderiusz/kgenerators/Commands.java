@@ -279,48 +279,87 @@ public class Commands implements CommandExecutor {
 				}
 				break;
 			case "spawn":
-				if (sender.hasPermission("kgenerators.spawn") || sender instanceof ConsoleCommandSender) {
-					if (args.length >= 6) {
-						if (Bukkit.getWorld(args[1]) != null) {
-							try {
-								Integer.valueOf(args[2]);
-								Integer.valueOf(args[3]);
-								Integer.valueOf(args[4]);
-
-								Generator g = Main.getGenerators().get(args[5]);
-
-								if (g != null) {
-									String owner = null;
-									if (args.length >= 7)
-										owner = args[6];
-
-									Location l = Main.getPlacedGenerators()
-											.stringToLocation(args[1] + "," + args[2] + "," + args[3] + "," + args[4]);
-
-									GeneratorLocation gl = new GeneratorLocation(-1, g, l,
-											Main.getPlacedGenerators().new ChunkInfo(l.getChunk()),
-											Main.getPlayers().getPlayer(owner), null);
-									gl.placeGenerator(sender, true);
-
-									Lang.getMessageStorage().send(sender, Message.COMMANDS_SPAWN_DONE,
-											"<location_info>", gl.toString());
-
-								} else
-									Lang.getMessageStorage().send(sender, Message.COMMANDS_ANY_GENERATOR_DOESNT_EXIST);
-
-							} catch (NumberFormatException e) {
-								Lang.getMessageStorage().send(sender, Message.COMMANDS_ANY_NOT_A_INTEGER, "<variable>",
-										args[2] + "," + args[3] + "," + args[4]);
-								return false;
-							}
-						} else
-							Lang.getMessageStorage().send(sender, Message.COMMANDS_ANY_WORLD_DOESNT_EXIST, "<world>",
-									args[1]);
-					} else
-						Lang.getMessageStorage().send(sender, Message.COMMANDS_SPAWN_USAGE);
-				} else
+				
+				if (!sender.hasPermission("kgenerators.spawn") && !(sender instanceof ConsoleCommandSender)) {
 					Lang.getMessageStorage().send(sender, Message.COMMANDS_SPAWN_NO_PERMISSION, "<permission>",
 							"kgenerators.spawn");
+					return false;
+				}
+
+				if (args.length < 3) {
+					Lang.getMessageStorage().send(sender, Message.COMMANDS_SPAWN_USAGE_COORDINATES);
+					Lang.getMessageStorage().send(sender, Message.COMMANDS_SPAWN_USAGE_WORLDEDIT);
+					return false;
+				}
+				
+				if (args[1].equalsIgnoreCase("worldedit")) {
+					
+					if (!(sender instanceof Player)) {
+						System.out.println("[KGenerators] Use that command as player!");
+						return false;
+					}
+					
+					ArrayList<Location> playerSelection = WorldEditHook.getPlayerSelection((Player) sender);
+					
+					int amount = 0;
+					
+					if (playerSelection != null) {
+						String owner = null;
+						if (args.length >= 4) {
+							owner = args[3];
+						}
+						for (Location l : playerSelection) {
+							GeneratorLocation gl = new GeneratorLocation(-1, Main.getGenerators().get(args[2]), l,
+									Main.getPlacedGenerators().new ChunkInfo(l.getChunk()),
+									Main.getPlayers().getPlayer(owner), null);
+							if (gl.placeGenerator(sender, true))
+								amount++;
+						}
+					}
+					
+					Lang.getMessageStorage().send(sender, Message.COMMANDS_SPAWN_DONE_WORLDEDIT, "<amount>", amount+"");
+					
+					return false;
+					
+				} else {
+					
+					if (Bukkit.getWorld(args[1]) == null) {
+						Lang.getMessageStorage().send(sender, Message.COMMANDS_ANY_WORLD_DOESNT_EXIST, "<world>", args[1]);
+					}
+					
+					try {
+						Integer.valueOf(args[2]);
+						Integer.valueOf(args[3]);
+						Integer.valueOf(args[4]);
+
+						Generator g = Main.getGenerators().get(args[5]);
+
+						if (g != null) {
+							String owner = null;
+							if (args.length >= 7)
+								owner = args[6];
+
+							Location l = Main.getPlacedGenerators()
+									.stringToLocation(args[1] + "," + args[2] + "," + args[3] + "," + args[4]);
+
+							GeneratorLocation gl = new GeneratorLocation(-1, g, l,
+									Main.getPlacedGenerators().new ChunkInfo(l.getChunk()),
+									Main.getPlayers().getPlayer(owner), null);
+							gl.placeGenerator(sender, true);
+
+							Lang.getMessageStorage().send(sender, Message.COMMANDS_SPAWN_DONE_COORDINATES, "<location_info>",
+									gl.toString());
+
+						} else
+							Lang.getMessageStorage().send(sender, Message.COMMANDS_ANY_GENERATOR_DOESNT_EXIST);
+
+					} catch (NumberFormatException e) {
+						Lang.getMessageStorage().send(sender, Message.COMMANDS_ANY_NOT_A_INTEGER, "<variable>",
+								args[2] + "," + args[3] + "," + args[4]);
+						return false;
+					}
+				}
+
 				break;
 			case "remove":
 
@@ -329,7 +368,7 @@ public class Commands implements CommandExecutor {
 							"kgenerators.remove");
 					return false;
 				}
-				
+
 				if (args.length < 2) {
 					Lang.getMessageStorage().send(sender, Message.COMMANDS_REMOVE_USAGE_WORLDEDIT);
 					Lang.getMessageStorage().send(sender, Message.COMMANDS_REMOVE_USAGE_OWNER);
@@ -337,13 +376,13 @@ public class Commands implements CommandExecutor {
 				}
 
 				if (args[1].toLowerCase().equals("worldedit")) {
-					
+
 					if (!(sender instanceof Player)) {
 						System.out.println("[KGenerators] Use that command as player!");
 						return false;
 					}
 					Player p = (Player) sender;
-					
+
 					ArrayList<GeneratorLocation> gls = WorldEditHook.getGeneratorsInRange(p);
 					if (gls != null) {
 						int amount = gls.size();
@@ -358,16 +397,16 @@ public class Commands implements CommandExecutor {
 						Lang.getMessageStorage().send(sender, Message.COMMANDS_REMOVE_USAGE_OWNER);
 						return false;
 					}
-					
+
 					int amount = 0;
-					
+
 					for (GeneratorLocation gl : Main.getPlacedGenerators().getAll()) {
 						if (gl.getOwner() != null && gl.getOwner().getName().equalsIgnoreCase(args[2])) {
-                            gl.removeGenerator(false, null);
-                            amount++;
-                        }
+							gl.removeGenerator(false, null);
+							amount++;
+						}
 					}
-					
+
 					ArrayList<GeneratorLocation> gls = Main.getDatabases().getDb().getGenerators(args[2]);
 					if (gls != null) {
 						for (GeneratorLocation gl : gls) {
@@ -375,10 +414,10 @@ public class Commands implements CommandExecutor {
 							amount++;
 						}
 					}
-					
+
 					Lang.getMessageStorage().send(sender, Message.COMMANDS_REMOVE_DONE, "<amount>",
 							String.valueOf(amount));
-					
+
 				}
 
 				break;
