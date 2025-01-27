@@ -5,7 +5,7 @@ author: Kryniowesegryderiusz (Krynio_ on spigot)
 website: https://www.spigotmc.org/resources/79246/
 description: Create your custom generators
 loadbefore: [SuperiorSkyblock2]
-softdepend: [ItemsAdder]
+softdepend: [ItemsAdder, PlaceholderAPI]
 api-version: 1.13
 commands:
   kgenerators:
