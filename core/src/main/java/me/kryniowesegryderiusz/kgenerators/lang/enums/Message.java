@@ -54,6 +54,7 @@ public enum Message implements IMessage {
 	UPGRADES_NOT_A_GENERATOR("upgrades.not-a-generator", "&cYou dont have generator in hand!"),
 	UPGRADES_COST_EXP("upgrades.costs.exp","xp"),
 	UPGRADES_COST_EXP_LEVELS("upgrades.costs.exp-levels","xp levels"),
+	UPGRADES_COST_PLAYERPOINTS("upgrades.costs.player-points-hook","player points"),
 	
 	HOOKS_EXPLODE_PICKAXE_CANNOT_USE_ON_DOUBLE("hooks.explode-pickaxe.cannot-use-on-double", "&cYou cannot use explosion pickaxe on type double generator!"),
 	

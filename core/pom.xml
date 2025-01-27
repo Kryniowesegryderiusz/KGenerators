@@ -86,6 +86,12 @@
 			<url>https://repo.nexomc.com/releases</url>
 		</repository>
 
+		<!-- PlayerPoints -->
+		<repository>
+			<id>rosewood-repo</id>
+			<url>https://repo.rosewooddev.io/repository/public/</url>
+		</repository>
+
 		<repository>
 			<id>phoenix</id>
 			<url>https://nexus.phoenixdevt.fr/repository/maven-public/</url>
@@ -112,14 +118,14 @@
 	</dependencyManagement>
 
 	<dependencies>
-		
+
 		<!-- NBT-API -->
 		<dependency>
 			<groupId>de.tr7zw</groupId>
 			<artifactId>item-nbt-api</artifactId>
 			<version>2.14.1</version>
 		</dependency>
-		
+
 		<!-- XSeries -->
 		<dependency>
 			<groupId>com.github.cryptomorin</groupId>
@@ -441,6 +447,14 @@
 			</exclusions>
 		</dependency>
 
+		<!-- PlayerPoints -->
+		<dependency>
+			<groupId>org.black_ixx</groupId>
+			<artifactId>playerpoints</artifactId>
+			<version>3.3.0</version>
+			<scope>provided</scope>
+		</dependency>
+
 	</dependencies>
 
 	<build>
@@ -505,7 +519,8 @@
 						</relocation>
 						<relocation>
 							<pattern>com.cryptomorin.xseries</pattern>
-							<shadedPattern>me.kryniowesegryderiusz.kgenerators.dependencies.shaded.xseries</shadedPattern>
+							<shadedPattern>
+								me.kryniowesegryderiusz.kgenerators.dependencies.shaded.xseries</shadedPattern>
 						</relocation>
 					</relocations>
 				</configuration>

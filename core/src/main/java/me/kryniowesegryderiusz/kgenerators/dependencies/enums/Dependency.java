@@ -27,4 +27,5 @@ public enum Dependency
 	FACTIONSUUID,
 	LANDS,
 	NEXO,
+	PLAYERPOINTS,
 }

@@ -12,6 +12,7 @@ import me.kryniowesegryderiusz.kgenerators.dependencies.hooks.IridiumSkyblockHoo
 import me.kryniowesegryderiusz.kgenerators.dependencies.hooks.JetsMinionsHook;
 import me.kryniowesegryderiusz.kgenerators.dependencies.hooks.LitMinionsHook;
 import me.kryniowesegryderiusz.kgenerators.dependencies.hooks.MinionsHook;
+import me.kryniowesegryderiusz.kgenerators.dependencies.hooks.PlayerPointsHook;
 import me.kryniowesegryderiusz.kgenerators.dependencies.hooks.SlimefunHook;
 import me.kryniowesegryderiusz.kgenerators.dependencies.hooks.SuperiorSkyblock2Hook;
 import me.kryniowesegryderiusz.kgenerators.dependencies.hooks.VaultHook;
@@ -144,6 +145,12 @@ public class DependenciesManager {
 			Logger.debugPluginLoad("Dependencies: Detected plugin Lands. Hooking into it.");
 			dependencies.add(Dependency.LANDS);
 		}
+		
+		if (Bukkit.getPluginManager().isPluginEnabled("PlayerPoints")) {
+			Logger.debugPluginLoad("Dependencies: Detected plugin PlayerPoints. Hooking into it.");
+			dependencies.add(Dependency.PLAYERPOINTS);
+			PlayerPointsHook.setupPlayerPoints();
+		}
 
 		if (Main.getMultiVersion().getWorldGuardUtils() != null
 				&& Main.getMultiVersion().getWorldGuardUtils().isWorldGuardHooked()) {
@@ -174,6 +181,7 @@ public class DependenciesManager {
 			dependencies.add(Dependency.SUPERIOR_SKYBLOCK_2);
 			SuperiorSkyblock2Hook.setup();
 		}
+
 	}
 
 	public boolean isEnabled(Dependency dep) {

@@ -14,6 +14,8 @@ import lombok.Getter;
 import me.kryniowesegryderiusz.kgenerators.Main;
 import me.kryniowesegryderiusz.kgenerators.api.exceptions.CannnotLoadUpgradeException;
 import me.kryniowesegryderiusz.kgenerators.api.interfaces.IUpgradeCost;
+import me.kryniowesegryderiusz.kgenerators.dependencies.enums.Dependency;
+import me.kryniowesegryderiusz.kgenerators.dependencies.hooks.PlayerPointsHook;
 import me.kryniowesegryderiusz.kgenerators.generators.generator.objects.Generator;
 import me.kryniowesegryderiusz.kgenerators.generators.upgrades.objects.Upgrade;
 import me.kryniowesegryderiusz.kgenerators.generators.upgrades.objects.UpgradeCostExp;
@@ -131,6 +133,8 @@ public class UpgradesManager {
 			this.registerUpgradeCost(UpgradeCostExp.class);
 			this.registerUpgradeCost(UpgradeCostExpLevel.class);
 			this.registerUpgradeCost(UpgradeCostItems.class);
+			if (Main.getDependencies().isEnabled(Dependency.PLAYERPOINTS))
+				PlayerPointsHook.registerUpgradeCost(this);
 		}
 
 		public <T extends IUpgradeCost> void registerUpgradeCost(Class<T> c) {
