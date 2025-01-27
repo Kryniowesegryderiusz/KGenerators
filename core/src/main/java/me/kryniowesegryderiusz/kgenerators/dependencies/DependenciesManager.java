@@ -8,6 +8,7 @@ import lombok.Getter;
 import me.kryniowesegryderiusz.kgenerators.Main;
 import me.kryniowesegryderiusz.kgenerators.dependencies.enums.Dependency;
 import me.kryniowesegryderiusz.kgenerators.dependencies.hooks.BentoBoxHook;
+import me.kryniowesegryderiusz.kgenerators.dependencies.hooks.FancyHologramsHook;
 import me.kryniowesegryderiusz.kgenerators.dependencies.hooks.IridiumSkyblockHook;
 import me.kryniowesegryderiusz.kgenerators.dependencies.hooks.JetsMinionsHook;
 import me.kryniowesegryderiusz.kgenerators.dependencies.hooks.LitMinionsHook;
@@ -163,12 +164,16 @@ public class DependenciesManager {
 			}
 		}
 
-		if (Bukkit.getPluginManager().isPluginEnabled("HolographicDisplays")) {
-			Logger.debugPluginLoad("Dependencies: Detected plugin HolographicDisplays. Hooked holograms into it.");
-			dependencies.add(Dependency.HOLOGRAPHIC_DISPLAYS);
+		if (Bukkit.getPluginManager().isPluginEnabled("FancyHolograms")) {
+			Logger.debugPluginLoad("Dependencies: Detected plugin FancyHolograms. Hooked holograms into it.");
+			dependencies.add(Dependency.FANCY_HOLOGRAMS);
+			FancyHologramsHook.loadConfigValues();
 		} else if (Bukkit.getPluginManager().isPluginEnabled("DecentHolograms")) {
 			Logger.debugPluginLoad("Dependencies: Detected plugin DecentHolograms. Hooked holograms into it.");
 			dependencies.add(Dependency.DECENT_HOLOGRAMS);
+		} else if (Bukkit.getPluginManager().isPluginEnabled("HolographicDisplays")) {
+			Logger.debugPluginLoad("Dependencies: Detected plugin HolographicDisplays. Hooked holograms into it.");
+			dependencies.add(Dependency.HOLOGRAPHIC_DISPLAYS);
 		} else if (Bukkit.getPluginManager().isPluginEnabled("CMI")) {
 			Logger.debugPluginLoad("Dependencies: Detected plugin CMI. Hooked holograms into it.");
 			dependencies.add(Dependency.CMI_HOLOGRAMS);

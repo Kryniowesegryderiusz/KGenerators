@@ -18,6 +18,8 @@ import me.kryniowesegryderiusz.kgenerators.api.events.PluginReloadEvent;
 import me.kryniowesegryderiusz.kgenerators.data.DatabaseManager;
 import me.kryniowesegryderiusz.kgenerators.dependencies.DependenciesManager;
 import me.kryniowesegryderiusz.kgenerators.dependencies.enums.Dependency;
+import me.kryniowesegryderiusz.kgenerators.dependencies.hooks.BentoBoxHook;
+import me.kryniowesegryderiusz.kgenerators.dependencies.hooks.FancyHologramsHook;
 import me.kryniowesegryderiusz.kgenerators.dependencies.hooks.ItemsAdderHook;
 import me.kryniowesegryderiusz.kgenerators.generators.generator.GeneratorsManager;
 import me.kryniowesegryderiusz.kgenerators.generators.holograms.HologramsManager;
@@ -125,6 +127,8 @@ public class Main extends JavaPlugin {
     	limits = new LimitsManager();
     	Lang.loadFromFiles();
     	this.getServer().getPluginManager().callEvent(new PluginReloadEvent());
+    	if (Main.getDependencies().isEnabled(Dependency.FANCY_HOLOGRAMS))
+    		FancyHologramsHook.loadConfigValues();
     	Logger.info("Reload: KGenerators reloaded successfully");
     }
     

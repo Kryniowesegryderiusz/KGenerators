@@ -28,4 +28,5 @@ public enum Dependency
 	LANDS,
 	NEXO,
 	PLAYERPOINTS,
+	FANCY_HOLOGRAMS,
 }

@@ -16,6 +16,7 @@ import me.kryniowesegryderiusz.kgenerators.addons.events.HologramReplaceLinesEve
 import me.kryniowesegryderiusz.kgenerators.dependencies.enums.Dependency;
 import me.kryniowesegryderiusz.kgenerators.dependencies.objects.CMIHologramsProvider;
 import me.kryniowesegryderiusz.kgenerators.dependencies.objects.DecentHologramsProvider;
+import me.kryniowesegryderiusz.kgenerators.dependencies.objects.FancyHologramsProvider;
 import me.kryniowesegryderiusz.kgenerators.dependencies.objects.HolographicDisplaysProvider;
 import me.kryniowesegryderiusz.kgenerators.generators.generator.objects.Generator;
 import me.kryniowesegryderiusz.kgenerators.generators.holograms.interfaces.IHologramProvider;
@@ -35,7 +36,10 @@ public class HologramsManager {
 
 		Logger.debugPluginLoad("HologramsManager: Setting up manager");
 
-		if (Main.getDependencies().isEnabled(Dependency.DECENT_HOLOGRAMS)) {
+		if (Main.getDependencies().isEnabled(Dependency.FANCY_HOLOGRAMS)) {
+			hologramProvider = new FancyHologramsProvider();
+			Logger.debugPluginLoad("Holograms: Enabling FancyHologramsProvider");
+		} else if (Main.getDependencies().isEnabled(Dependency.DECENT_HOLOGRAMS)) {
 			hologramProvider = new DecentHologramsProvider();
 			Logger.debugPluginLoad("Holograms: Enabling DecentHologramsProvider");
 		} else if (Main.getDependencies().isEnabled(Dependency.HOLOGRAPHIC_DISPLAYS)) {
