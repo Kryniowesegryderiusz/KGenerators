@@ -24,22 +24,25 @@ public class GeneratorLocationActionHandler {
 	 */
 	public boolean handle(GeneratorLocation gLocation, InteractionType usedActionType, Player player) {
 		
-		if (!WorldGuardHook.isPlayerAllowedToInteract(player, gLocation.getLocation())
-				|| !PlotSquaredHook.isPlayerAllowedToInteract(player, gLocation.getLocation())
-				|| !LandsHook.isPlayerAllowedToInteract(player, gLocation.getLocation())
-				|| !FactionsUUIDHook.isPlayerAllowedToInteract(player, gLocation.getLocation())) {
-				
-			Lang.getMessageStorage().send(player, Message.GENERATORS_ACTION_CANT_HERE);
-			return true;
-		}
-		
 		Set<Entry<ActionType, GeneratorAction>> entryset = Main.getSettings().getActions().getEntrySet();
 
 		if (gLocation.getGenerator().getActions() != null)
 			entryset = gLocation.getGenerator().getActions().getEntrySet();
 
 		for (Entry<ActionType, GeneratorAction> e : entryset) {
+			
 			if (e.getValue().requirementsMet(usedActionType, player)) {
+				
+				if (!WorldGuardHook.isPlayerAllowedToInteract(player, gLocation.getLocation())
+						|| !PlotSquaredHook.isPlayerAllowedToInteract(player, gLocation.getLocation())
+						|| !LandsHook.isPlayerAllowedToInteract(player, gLocation.getLocation())
+						|| !FactionsUUIDHook.isPlayerAllowedToInteract(player, gLocation.getLocation())) {
+						
+					Lang.getMessageStorage().send(player, Message.GENERATORS_ACTION_CANT_HERE);
+					
+					return true;
+				}
+				
 				ActionType action = e.getKey();
 				switch (action) {
 				case PICKUP:
