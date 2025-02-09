@@ -5,6 +5,7 @@ import org.bukkit.event.EventHandler;
 import org.bukkit.event.EventPriority;
 import org.bukkit.event.Listener;
 import org.bukkit.event.inventory.InventoryClickEvent;
+import org.bukkit.event.inventory.InventoryCloseEvent;
 import org.bukkit.event.inventory.InventoryType;
 
 import me.kryniowesegryderiusz.kgenerators.Main;
@@ -15,6 +16,7 @@ import me.kryniowesegryderiusz.kgenerators.gui.menus.LimitsMenu;
 import me.kryniowesegryderiusz.kgenerators.gui.menus.MainMenu;
 import me.kryniowesegryderiusz.kgenerators.gui.menus.RecipeMenu;
 import me.kryniowesegryderiusz.kgenerators.gui.menus.UpgradeMenu;
+import me.kryniowesegryderiusz.kgenerators.gui.objects.MenuPlayer;
 import me.kryniowesegryderiusz.kgenerators.lang.Lang;
 import me.kryniowesegryderiusz.kgenerators.lang.enums.MenuInventoryType;
 import me.kryniowesegryderiusz.kgenerators.lang.enums.Message;
@@ -89,6 +91,16 @@ public class InventoryClickListener implements Listener {
 		} catch (Exception exception) {
 			Logger.error(exception);
 		}
+	}
+	
+	@EventHandler
+	public void inventoryCloseEvent(InventoryCloseEvent e) {
+		
+		MenuPlayer mp =  Main.getMenus().getMenuPlayer((Player) e.getPlayer());
+		if (mp != null && mp.getInventory() == e.getInventory()) {
+			Main.getMenus().closeInv((Player) e.getPlayer());
+		}
+
 	}
 
 }
