@@ -1,0 +1,51 @@
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 https://maven.apache.org/xsd/maven-4.0.0.xsd">
+  <modelVersion>4.0.0</modelVersion>
+  <artifactId>kgenerators-v1_21</artifactId>
+  <packaging>jar</packaging>
+  <parent>
+    <groupId>me.kryniowesegryderiusz</groupId>
+    <artifactId>kgenerators-parent</artifactId>
+    <version>7.3</version>
+  </parent>
+  
+  <properties>
+    <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
+    <project.reporting.outputEncoding>UTF-8</project.reporting.outputEncoding>
+</properties>
+  
+
+	<repositories>
+		<repository>
+			<id>paper-repo</id>
+			<url>https://repo.papermc.io/repository/maven-public/</url>
+		</repository>
+	</repositories>
+	
+	<dependencies>
+		<dependency>
+			<groupId>io.papermc.paper</groupId>
+			<artifactId>paper-api</artifactId>
+			<version>1.21.5-R0.1-SNAPSHOT</version>
+			<scope>provided</scope>
+		</dependency>
+        <dependency>
+               <groupId>me.kryniowesegryderiusz</groupId>
+               <artifactId>kgenerators-core</artifactId>
+               <version>${project.version}</version>
+        </dependency>
+	</dependencies>
+
+   <build>
+       <plugins>
+           <plugin>
+               <artifactId>maven-compiler-plugin</artifactId>
+               <version>3.7.0</version>
+               <configuration>
+                   <source>1.8</source>
+                   <target>1.8</target>
+               </configuration>
+           </plugin>
+       </plugins>
+   </build>  
+  
+</project>

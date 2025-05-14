@@ -47,12 +47,6 @@
 			<url>https://repo.bg-software.com/repository/api/</url>
 		</repository>
 
-		<!-- GameProfile -->
-		<repository>
-			<id>authlib</id>
-			<url>https://papermc.io/repo/repository/maven-releases/</url>
-		</repository>
-
 		<!-- PlaceholderAPI -->
 		<repository>
 			<id>placeholderapi</id>
@@ -330,14 +324,6 @@
 			<groupId>com.bgsoftware</groupId>
 			<artifactId>WildStackerAPI</artifactId>
 			<version>3.7.0</version>
-		</dependency>
-
-		<!-- GameProfile -->
-		<dependency>
-			<groupId>com.mojang</groupId>
-			<artifactId>authlib</artifactId>
-			<version>1.5.25</version>
-			<scope>provided</scope>
 		</dependency>
 
 		<!-- CMI -->

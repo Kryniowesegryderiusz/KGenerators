@@ -44,8 +44,9 @@ public class CustomBlockData {
 	public static CustomBlockData load(String configString, String place) {
 		if (configString.contains(":")) {
 			String[] splitted = configString.split(":");
-			if (splitted[0].contains("customhead"))
+			if (splitted[0].contains("customhead")) {
 				return new HeadCustomBlockData(XMaterial.PLAYER_HEAD, splitted[1]);
+			}
 		}
 		
 		return new CustomBlockData(ItemUtils.getXMaterial(configString, place+" CustomBlockData:", true));

@@ -46,6 +46,11 @@
 			<artifactId>kgenerators-v1_16</artifactId>
 			<version>${project.parent.version}</version>
 		</dependency>
+		<dependency>
+			<groupId>me.kryniowesegryderiusz</groupId>
+			<artifactId>kgenerators-v1_21</artifactId>
+			<version>${project.parent.version}</version>
+		</dependency>
 	</dependencies>
 
 	<build>
