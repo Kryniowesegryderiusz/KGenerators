@@ -4,11 +4,12 @@
 </p>
 
 <p align="center">
-  <img src="https://img.shields.io/jenkins/build?jobUrl=https%3A%2F%2Fci.codemc.io%2Fjob%2FKryniowesegryderiusz%2Fjob%2FKGenerators%2F&style=for-the-badge">
-  <img src="https://img.shields.io/tokei/lines/github/Kryniowesegryderiusz/KGenerators?style=for-the-badge">
-  <img src="https://img.shields.io/spiget/downloads/79246?style=for-the-badge">
-  <img src="https://img.shields.io/spiget/rating/79246?style=for-the-badge">
-  <img src="https://img.shields.io/github/last-commit/Kryniowesegryderiusz/KGenerators?style=for-the-badge">
+  <img src="https://img.shields.io/jenkins/build?jobUrl=https%3A%2F%2Fci.codemc.io%2Fjob%2FKryniowesegryderiusz%2Fjob%2FKGenerators%2F&style=for-the-badge&color=blue">
+  <img src="https://img.shields.io/spiget/version/79246?style=for-the-badge&label=version&color=blue">
+  <img src="https://img.shields.io/spiget/downloads/79246?style=for-the-badge&color=blue">
+  <img alt="bStats Servers" src="https://img.shields.io/bstats/servers/7871?style=for-the-badge&color=blue">
+  <img src="https://img.shields.io/spiget/rating/79246?style=for-the-badge&color=blue">
+  <img src="https://img.shields.io/github/last-commit/Kryniowesegryderiusz/KGenerators?style=for-the-badge&color=blue">
 </p>
 
 <p align="center">
