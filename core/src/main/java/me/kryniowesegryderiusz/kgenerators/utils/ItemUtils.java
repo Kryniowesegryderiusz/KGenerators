@@ -118,23 +118,27 @@ public abstract class ItemUtils {
 		
 		return item;
 	}
+	
+	public static ItemStack getItemStackFromMaterial(Material m) {
+		return getItemStackFromMaterial(XMaterial.matchXMaterial(m));
+	}
 
-	public static ItemStack getItemStackFromMaterial(Material material) {
+	public static ItemStack getItemStackFromMaterial(XMaterial xm) {
 		
-		if (material == null) 
-			return new ItemStack(Material.AIR);
-		else if (material == Material.CARROTS)
-			return new ItemStack(Material.CARROT);
-		else if (material == Material.POTATOES)
-			return new ItemStack(Material.POTATO);
-		else if (material == Material.BEETROOTS)
-			return new ItemStack(Material.BEETROOT);
-		else if (material == Material.PUMPKIN_STEM)
-			return new ItemStack(Material.PUMPKIN_SEEDS);
-		else if (material == Material.MELON_STEM)
-			return new ItemStack(Material.MELON_SEEDS);
+		if (xm == null) 
+			return XMaterial.AIR.parseItem();
+		else if (xm == XMaterial.CARROTS)
+			return XMaterial.CARROT.parseItem();
+		else if (xm == XMaterial.POTATOES)
+			return XMaterial.POTATO.parseItem();
+		else if (xm == XMaterial.BEETROOTS)
+			return XMaterial.BEETROOT.parseItem();
+		else if (xm == XMaterial.PUMPKIN_STEM)
+			return XMaterial.PUMPKIN_SEEDS.parseItem();
+		else if (xm == XMaterial.MELON_STEM)
+			return XMaterial.MELON_SEEDS.parseItem();
 		else
-			return new ItemStack(material);
+			return xm.parseItem();
 
 	}
 }

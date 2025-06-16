@@ -25,7 +25,7 @@ public class CustomBlockData {
 	}
 	
 	public ItemStack getItem() {
-		return ItemUtils.getItemStackFromMaterial(xMaterial.get());
+		return ItemUtils.getItemStackFromMaterial(xMaterial);
 	}
 	
 	public String toString() {
