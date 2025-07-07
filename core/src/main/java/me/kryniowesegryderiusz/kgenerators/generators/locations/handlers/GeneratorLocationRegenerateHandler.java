@@ -14,7 +14,6 @@ import com.cryptomorin.xseries.XMaterial;
 public class GeneratorLocationRegenerateHandler {
 	
 	static Material pistonHead = XMaterial.PISTON_HEAD.get();
-	static Material pistonMoving = XMaterial.MOVING_PISTON.get();
 	
 	public void handle(GeneratorLocation gLocation) {
 		
@@ -30,7 +29,7 @@ public class GeneratorLocationRegenerateHandler {
 		Location generatingLocation = gLocation.getGeneratedBlockLocation();
 		Block generatingLocationBlock = generatingLocation.getBlock();
 		
-		if (generatingLocationBlock.getType() == pistonHead || generatingLocationBlock.getType() == pistonMoving) {
+		if (generatingLocationBlock.getType() == pistonHead) {
 			gLocation.scheduleGeneratorRegeneration();
 			return;
 		}
