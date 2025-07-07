@@ -347,9 +347,7 @@
 		<dependency>
 			<groupId>com.zaxxer</groupId>
 			<artifactId>HikariCP</artifactId>
-			<version>4.0.3</version>
-			<scope>compile</scope>
-			<type>jar</type>
+			<version>6.3.0</version>
 		</dependency>
 
 		<!-- https://mvnrepository.com/artifact/org.slf4j/slf4j-api -->
@@ -523,6 +521,12 @@
 							<pattern>com.cryptomorin.xseries</pattern>
 							<shadedPattern>
 								me.kryniowesegryderiusz.kgenerators.dependencies.shaded.xseries</shadedPattern>
+						</relocation>
+						<relocation>
+							<pattern>com.zaxxer.hikari</pattern>
+							<shadedPattern>
+								me.kryniowesegryderiusz.kgenerators.dependencies.shaded.hikaricp
+							</shadedPattern>
 						</relocation>
 					</relocations>
 				</configuration>
