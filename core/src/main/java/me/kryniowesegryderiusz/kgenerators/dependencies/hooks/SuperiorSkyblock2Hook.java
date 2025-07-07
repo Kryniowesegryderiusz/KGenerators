@@ -61,7 +61,7 @@ public class SuperiorSkyblock2Hook implements Listener {
 					"Dependencies: SuperiorSkyblock2: Other party plugin tried to initialise additional privilages, but failed! IslandPrivileges are not added yet!");
 	}
 
-	@EventHandler
+	@EventHandler (priority = EventPriority.MONITOR, ignoreCancelled = true)
 	public void onDeleteEvent(IslandDisbandEvent e) {
 
 		Location min = e.getIsland().getMinimum();
