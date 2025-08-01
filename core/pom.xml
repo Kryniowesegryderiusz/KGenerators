@@ -123,7 +123,7 @@
 		<!-- NBT-API -->
 		<dependency>
 			<groupId>de.tr7zw</groupId>
-			<artifactId>item-nbt-api</artifactId>
+			<artifactId>item-nbt-api-plugin</artifactId>
 			<version>2.15.1</version>
 			<scope>provided</scope>
 		</dependency>
@@ -513,11 +513,6 @@
 						</includes>
 					</artifactSet>
 					<relocations>
-						<relocation>
-							<pattern>de.tr7zw.changeme.nbtapi</pattern>
-							<shadedPattern>
-								me.kryniowesegryderiusz.kgenerators.dependencies.shaded.nbtapi</shadedPattern>
-						</relocation>
 						<relocation>
 							<pattern>com.cryptomorin.xseries</pattern>
 							<shadedPattern>

@@ -2,7 +2,7 @@ package me.kryniowesegryderiusz.kgenerators.dependencies.hooks;
 
 import org.bukkit.inventory.ItemStack;
 
-import de.tr7zw.changeme.nbtapi.NBT;
+import de.tr7zw.nbtapi.NBT;
 import me.kryniowesegryderiusz.kgenerators.logger.Logger;
 
 public class NBTAPIHook {
